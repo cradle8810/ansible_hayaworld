@@ -1,0 +1,72 @@
+---
+- hosts: rui
+  remote_user: hayato
+  gather_facts: no
+  become: yes
+
+  vars_files:
+    - inventories/group_vars/networks.yml
+    - inventories/host_vars/rui.yml
+
+  tasks:
+    - name: Set Hostname
+      ansible.builtin.hostname:
+        name: "{{ network.rui.hostname }}"
+      tags:
+        - network
+
+    - name: Set IP Address
+      community.general.nmcli:
+        conn_name: "{{ network.rui.interface }}"
+        ip4: "{{ network.rui.ipv4 }}/{{ network.rui.subnet }}"
+        gw4: "{{ network.rui.gw4 }}"
+        dns4: "{{ network.rui.dns4 }}"
+        state: present
+        type: ethernet
+      tags:
+        - network
+
+    - name: Mount skylark for yum(1)
+      ansible.posix.mount:
+        src: 192.168.1.200:/Raspi
+        path: /mnt
+        opts: rw,sync
+        state: mounted
+        fstype: nfs
+      tags:
+        - yum
+
+    - name: Make symbolic link for yum(1)
+      ansible.builtin.file:
+        src: /mnt/cache/raspi3_armhfp
+        dest: /var/cache/yum/armhfp
+        owner: root
+        group: root
+        state: link
+      tags:
+        - yum
+
+    - name: Install Applications
+      yum:
+        name: "{{ yum }}"
+        state: present
+      tags:
+        - yum
+
+    - name: Set firewalld as SSH allowed
+      ansible.posix.firewalld:
+        zone: dmz
+        service: ssh
+        permanent: yes
+        state: enabled
+      tags:
+        - firewalld
+
+    - name: Set firewalld as DNS server allowed
+      ansible.posix.firewalld:
+        zone: dmz
+        service: dns
+        permanent: yes
+        state: enabled
+      tags:
+        - firewalld
