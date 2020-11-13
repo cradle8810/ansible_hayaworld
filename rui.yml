@@ -6,6 +6,9 @@
 
   vars_files:
     - inventories/group_vars/networks.yml
+    - inventories/host_vars/cnames.yml
+    - inventories/host_vars/dhcphosts.yml
+    - inventories/host_vars/NXDOMAIN.yml
     - inventories/host_vars/rui.yml
 
   tasks:
@@ -70,3 +73,51 @@
         state: enabled
       tags:
         - firewalld
+
+    - name: Add dnsmasq.conf
+      ansible.builtin.template:
+        src: templates/etc/dnsmasq.conf.j2
+        dest: /etc/dnsmasq.conf
+        owner: root
+        group: root
+      tags:
+        - dnsmasq
+
+    - name: Show dnsmasq.conf
+      debug:
+        msg: "{{ lookup('template', './templates/etc/dnsmasq.conf.j2') }}"
+      tags:
+        - debug
+        - dryrun
+
+    - name: Add dnsmasq.resolv.txt
+      ansible.builtin.template:
+        src: templates/etc/dnsmasq.d/resolv.txt.j2
+        dest: /etc/dnsmasq.d/resolv.txt
+        owner: root
+        group: root
+      tags:
+        - dnsmasq
+
+    - name: Show dnsmasq.resolv.txt
+      debug:
+        msg: "{{ lookup('template', './templates/etc/dnsmasq.d/resolv.txt.j2') }}"
+      tags:
+        - debug
+        - dryrun
+
+    - name: Add static DHCP config
+      ansible.builtin.template:
+        src: templates/etc/dnsmasq.d/dhcp_static.conf.j2
+        dest: /etc/dnsmasq.d/dhcp_static.conf
+        owner: root
+        group: root
+      tags:
+        - dnsmasq
+
+    - name: Show static DHCP config
+      debug:
+        msg: "{{ lookup('template', './templates/etc/dnsmasq.d/dhcp_static.conf.j2') }}"
+      tags:
+        - debug
+        - dryrun

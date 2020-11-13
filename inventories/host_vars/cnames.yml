@@ -1,0 +1,6 @@
+---
+cnames:
+  - A: raspi2.local
+    CNAME: rui.local
+  - A: raspi3.local
+    CNAME: mai.local

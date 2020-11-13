@@ -1,0 +1,36 @@
+conf-dir=/etc/dnsmasq.d,*.conf
+
+domain={{ dnsmasq.domain }}
+local={{ dnsmasq.local }}
+
+listen-address={{ dnsmasq.listen_address }}
+interface={{ dnsmasq.interface }}
+
+dhcp-range=lan,{{ dnsmasq.dhcp_range.start }},{{ dnsmasq.dhcp_range.end }},{{ dnsmasq.dhcp_range.netmask }},{{ dnsmasq.dhcp_range.ttl }}
+
+dhcp-option=option:dns-server,{{ dnsmasq.dhcp_option.dns_server }}
+dhcp-option=option:netmask,{{ dnsmasq.dhcp_option.netmask }}
+dhcp-option=option:ntp-server,{{ dnsmasq.dhcp_option.ntp_server }}
+dhcp-option=option:router,{{ dnsmasq.dhcp_option.router }}
+
+cache-size={{ dnsmasq.dns.cache_size }}
+dhcp-sequential-ip
+
+resolv-file=/etc/dnsmasq.d/resolv.txt
+
+addn-hosts=/etc/Adhosts/hosts.adbanner
+addn-hosts=/etc/Adhosts/hosts.adweb
+addn-hosts=/etc/Adhosts/hosts.iOS
+
+# IPv4 NGN Forwarding
+server=/flets/123.107.190.5
+server=/v4flets-east.jp/123.107.190.5
+server=/speed.flets/123.107.190.5
+
+#log-queries
+log-dhcp
+log-facility={{ dnsmasq.logs.log_facility }}
+
+### CNAME ###
+cname=raspi2.local,rui.local
+cname=raspi3.local,mai.local

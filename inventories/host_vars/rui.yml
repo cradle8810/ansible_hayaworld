@@ -6,3 +6,29 @@ yum:
   - rsync-3.1.2-10.el7.armv7hl
   - vim-minimal-7.4.629-6.el7.armv7hl
   - zsh-5.0.2-34.el7_8.2.armv7hl
+
+dnsmasq:
+  domain: local
+  local: /local/
+  listen_address: "{{ network.rui.ipv4 }}"
+  interface: "{{ network.rui.interface }}"
+  dhcp_range:
+    start: 192.168.1.20
+    end: 192.168.1.49
+    netmask: 255.255.255.0
+    ttl: "12h"
+  dhcp_option:
+    ntp_server: 210.130.188.10
+    dns_server: "{{ network.rui.ipv4 }}"
+    router: "{{ network.rui.gw4 }}"
+    netmask: "255.255.255.0"
+  dns:
+    cache_size: 4000
+    addn_hosts:
+      - /etc/Adhosts/hosts.adbanner
+      - /etc/Adhosts/hosts.adweb
+      - /etc/Adhosts/hosts.iOS
+    NXDOMAIN_hosts: /etc/dnsmasq.d/NXDOMAIN.conf
+    dhcp_static: /etc/dnsmasq.d/dhcp_static.conf
+  logs:
+    log_facility: /tmp/dnsmasq.log
