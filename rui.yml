@@ -121,3 +121,19 @@
       tags:
         - debug
         - dryrun
+
+    - name: Add cname config
+      ansible.builtin.template:
+        src: templates/etc/dnsmasq.d/cname.conf.j2
+        dest: /etc/dnsmasq.d/cname.conf
+        owner: root
+        group: root
+      tags:
+        - dnsmasq
+
+    - name: Show cname config
+      debug:
+        msg: "{{ lookup('template', './templates/etc/dnsmasq.d/cname.conf.j2') }}"
+      tags:
+        - debug
+        - dryrun
