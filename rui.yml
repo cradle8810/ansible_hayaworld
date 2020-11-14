@@ -10,6 +10,7 @@
     - inventories/host_vars/dhcphosts.yml
     - inventories/host_vars/NXDOMAIN.yml
     - inventories/host_vars/rui.yml
+    - inventories/host_vars/skylark_hosts_A.yml
 
   tasks:
     - name: Set Hostname
@@ -134,6 +135,22 @@
     - name: Show cname config
       debug:
         msg: "{{ lookup('template', './templates/etc/dnsmasq.d/cname.conf.j2') }}"
+      tags:
+        - debug
+        - dryrun
+
+    - name: Add hosts(5)
+      ansible.builtin.template:
+        src: templates/etc/hosts.j2
+        dest: /etc/hosts
+        owner: root
+        group: root
+      tags:
+        - dnsmasq
+
+    - name: Show hosts(5)
+      debug:
+        msg: "{{ lookup('template', './templates/etc/hosts.j2') }}"
       tags:
         - debug
         - dryrun
