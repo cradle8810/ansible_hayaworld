@@ -8,9 +8,12 @@
     - inventories/group_vars/networks.yml
     - inventories/host_vars/cnames.yml
     - inventories/host_vars/dhcphosts.yml
-    - inventories/host_vars/NXDOMAIN.yml
+    - inventories/host_vars/ads_hosts/NXDOMAIN.yml
     - inventories/host_vars/rui.yml
     - inventories/host_vars/skylark_hosts_A.yml
+
+  handlers:
+    - include: handlers/main.yml
 
   tasks:
     - name: Set Hostname
