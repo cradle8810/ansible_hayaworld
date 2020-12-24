@@ -7,7 +7,7 @@ fi
 
 cat "$@" | \
 sort | uniq -c | sort | \
-grep -E -v '^(\s)+1' > /tmp/result
+grep -E -v '^(\s)+1 ' > /tmp/result
 
 duplines=$(wc -l /tmp/result | awk '{print $1}')
 
