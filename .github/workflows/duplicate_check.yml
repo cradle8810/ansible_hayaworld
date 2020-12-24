@@ -1,0 +1,22 @@
+---
+name: Validate Domain Duplication 
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  Duplicate_Check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Add exec flag to dupcheck.sh
+        run: "chmod +x ./dupcheck.sh"
+
+      - name: NXDOMAIN_Duplicate_Check
+        run: >
+          "./dupcheck.sh"
+          "inventories/host_vars/ads_hosts/NXDOMAIN.yml"
