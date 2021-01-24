@@ -54,7 +54,7 @@
         - yum
 
     - name: Install Applications
-      yum:
+      ansible.builtin.yum:
         name: "{{ yum }}"
         state: present
       tags:
