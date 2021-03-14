@@ -1,0 +1,14 @@
+---
+stages:
+  - lint
+
+duplicate_check:
+  image: alpine:latest
+  stage: lint
+  script:
+    - "chmod +x ./dupcheck.sh"
+    - >
+        "./dupcheck.sh"
+        "inventories/host_vars/ads_hosts/NXDOMAIN.yml"
+  tags: 
+    - docker
