@@ -87,3 +87,4 @@
         - dryrun
 
     - include: tasks/dnsmasq.yml
+    - include: tasks/avahi-daemon.yml

@@ -1,0 +1,10 @@
+---
+- name: Add ssh service
+  ansible.builtin.template:
+    src: templates/etc/avahi/services/ssh.service
+    dest: /etc/avahi/services/ssh.service
+    owner: root
+    group: root
+  notify: "Restart avahi-daemon"
+  tags:
+    - avahi-daemon

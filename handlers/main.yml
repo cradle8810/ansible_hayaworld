@@ -4,3 +4,9 @@
     name: dnsmasq
     state: restarted
   listen: "Restart dnsmasq"
+
+- name: Restart avahi-daemon
+  ansible.builtin.service:
+    name: avahi-daemon
+    state: restarted
+  listen: "Restart avahi-daemon"
