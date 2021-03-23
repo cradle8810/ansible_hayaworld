@@ -1,5 +1,6 @@
 ---
 yum:
+  - avahi-0.6.31-20.el7.armv7hl
   - bind-utils-9.11.4-26.P2.el7_9.4.armv7hl
   - binutils-2.27-44.base.el7.armv7hl
   - coreutils-8.22-24.el7_9.2.armv7hl
