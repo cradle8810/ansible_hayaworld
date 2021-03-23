@@ -34,6 +34,8 @@
       tags:
         - network
 
+    - include: tasks/authorized_keys.yml
+
     - name: Mount skylark for yum(1)
       ansible.posix.mount:
         src: 192.168.1.200:/Raspi
