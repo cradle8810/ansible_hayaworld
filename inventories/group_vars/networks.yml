@@ -1,11 +1,7 @@
 ---
 network:
-  rui:
-    hostname: rui.local
+  mai:
+    hostname: mai.local
     interface: eth0
-    ipv4: 192.168.1.51
+    ipv4: 192.168.1.50
     subnet: 24
-    gw4: 192.168.1.1
-    dns4:
-      - 202.232.2.3
-      - 202.232.2.2
