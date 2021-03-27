@@ -10,3 +10,9 @@
     name: avahi-daemon
     state: restarted
   listen: "Restart avahi-daemon"
+
+- name: Restart docker
+  ansible.builtin.service:
+    name: docker
+    state: restarted
+  listen: "Restart docker"

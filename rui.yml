@@ -5,7 +5,6 @@
   become: yes
 
   vars_files:
-    - inventories/group_vars/networks.yml
     - inventories/host_vars/cnames.yml
     - inventories/host_vars/dhcphosts.yml
     - inventories/host_vars/ads_hosts/NXDOMAIN.yml
@@ -36,6 +35,26 @@
 
     - include: tasks/authorized_keys.yml
 
+    - name: put motd
+      ansible.builtin.copy:
+        src: templates/etc/motd.rui
+        dest: /etc/motd
+        owner: root
+        group: root
+        mode: '0644'
+      tags:
+        - system
+
+    - name: Disable SELinux
+      ansible.builtin.copy:
+        src: templates/etc/selinux/config
+        dest: /etc/selinux/config
+        owner: root
+        group: root
+        mode: '0644'
+      tags:
+        - system
+
     - name: Mount skylark for yum(1)
       ansible.posix.mount:
         src: 192.168.1.200:/Raspi
@@ -45,16 +64,24 @@
         fstype: nfs
       tags:
         - yum
+        - system
+
+    - name: Make parent directory for symbolic link for yum(1)
+      ansible.builtin.file:
+        dest: /var/cache/yum
+        state: directory
+      tags:
+        - yum
+        - system
 
     - name: Make symbolic link for yum(1)
       ansible.builtin.file:
         src: /mnt/cache/raspi3_armhfp
         dest: /var/cache/yum/armhfp
-        owner: root
-        group: root
         state: link
       tags:
         - yum
+        - system
 
     - name: Install Applications
       ansible.builtin.yum:
@@ -71,6 +98,7 @@
         state: enabled
       tags:
         - firewalld
+        - system
 
     - name: Set firewalld as DNS server allowed
       ansible.posix.firewalld:
@@ -80,6 +108,7 @@
         state: enabled
       tags:
         - firewalld
+        - system
 
     - name: Show hosts(5)
       debug:
@@ -90,3 +119,6 @@
 
     - include: tasks/dnsmasq.yml
     - include: tasks/avahi-daemon.yml
+
+
+
