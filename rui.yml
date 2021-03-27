@@ -5,7 +5,6 @@
   become: yes
 
   vars_files:
-    - inventories/group_vars/networks.yml
     - inventories/host_vars/cnames.yml
     - inventories/host_vars/dhcphosts.yml
     - inventories/host_vars/ads_hosts/NXDOMAIN.yml

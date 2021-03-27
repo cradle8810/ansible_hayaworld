@@ -8,3 +8,13 @@
   notify: "Restart avahi-daemon"
   tags:
     - avahi-daemon
+
+- name: Put Avahi configuration file
+  ansible.builtin.copy:
+    src: templates/etc/avahi/avahi-daemon.conf
+    dest: /etc/avahi/avahi-daemon.conf
+    owner: root
+    group: root
+  notify: "Restart avahi-daemon"
+  tags:
+    - avahi-daemon
