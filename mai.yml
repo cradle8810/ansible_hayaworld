@@ -22,6 +22,16 @@
       tags:
         - system
 
+    - name: Mount tmpfs as /var/log
+      ansible.posix.mount:
+        path: /var/log
+        src: tmpfs
+        opts: size=128m
+        state: mounted
+        fstype: tmpfs
+      tags:
+        - system
+
     - name: append docker privilige to hayato
       ansible.builtin.user:
         name: hayato
