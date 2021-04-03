@@ -1,0 +1,20 @@
+---
+- name: Stop and remove apt-daily.timer
+  ansible.builtin.service:
+    name: apt-daily.timer
+    state: stopped
+    enabled: no
+
+- name: Stop and remove apt-daily.service
+  ansible.builtin.service:
+    name: apt-daily.service
+    state: stopped
+    enabled: no
+
+- name: put 10periodic(5)
+  ansible.builtin.copy:
+    src: templates/etc/apt/apt.conf.d/10periodic
+    dest: /etc/apt/apt.conf.d/10periodic
+    owner: root
+    group: root
+    mode: '0644'

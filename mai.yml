@@ -75,3 +75,15 @@
     - include: tasks/docker-ubuntu-arm64.yml
       tags:
         - docker
+
+    - include: tasks/stop-apt-daily.yml
+      tags:
+        - stop_daemon
+
+    - include: tasks/stop-cloud-init.yml
+      tags:
+        - stop_daemon
+
+    - include: tasks/stop-wpa_supplicant.yml
+      tags:
+        - stop_daemon
