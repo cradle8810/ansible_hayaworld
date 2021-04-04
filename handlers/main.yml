@@ -16,3 +16,9 @@
     name: docker
     state: restarted
   listen: "Restart docker"
+
+- name: Restart rsyslog
+  ansible.builtin.service:
+    name: rsyslog
+    state: restarted
+  listen: "Restart rsyslog"

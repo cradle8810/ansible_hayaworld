@@ -120,5 +120,7 @@
     - include: tasks/dnsmasq.yml
     - include: tasks/avahi-daemon.yml
 
-
-
+    - include: tasks/rsyslog-rui.yml
+      tags:
+        - rsyslog
+        - dnsmasq
