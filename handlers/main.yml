@@ -22,3 +22,9 @@
     name: rsyslog
     state: restarted
   listen: "Restart rsyslog"
+
+- name: Restart systemd-journald
+  ansible.builtin.service:
+    name: systemd-journald
+    state: restarted
+  listen: "Restart systemd-journald"
