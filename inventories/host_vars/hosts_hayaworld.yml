@@ -1,5 +1,5 @@
 ---
-skylark_hosts:
+hosts_hayaworld:
   - A: g
     IP: 0.0.0.0
   - A: g.local
