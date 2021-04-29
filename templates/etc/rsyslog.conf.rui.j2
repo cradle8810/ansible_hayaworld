@@ -42,6 +42,12 @@ $OmitLocalLogging on
 # File to store the position in the journal
 $IMJournalStateFile imjournal.state
 
+$DirCreateMode 0750
+$FileCreateMode 0640
+$DirGroup wheel
+$FileGroup wheel
+$umask 0027
+
 #### RULES ####
 #:fromhost-ip, isequal, "192.168.1.200" /var/log/skylark.log
 
