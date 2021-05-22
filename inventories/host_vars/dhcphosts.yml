@@ -1,14 +1,18 @@
 ---
 dhcp_hosts:
-  - hostname: skylark
+  - hostname: skylark.local
     ipaddr: 192.168.1.200
     macaddr: 10:bf:48:8a:96:9f
     ttl: infinite
-  - hostname: nswitch
-    ipaddr: 192.168.1.19
+  - hostname: nswitch.local
+    ipaddr: 192.168.1.52
     macaddr: a4:38:cc:cc:d8:85
     ttl: infinite
-  - hostname: remotecon
-    ipaddr: 192.168.1.18
+  - hostname: remotecon.local
+    ipaddr: 192.168.1.53
     macaddr: 80:c5:f2:a4:07:0f
     ttl: infinite
+  - hostname: surface.local
+    ipaddr: 192.168.1.54
+    macaddr: 74:03:BD:7F:57:D7
+    ttl: infinate
