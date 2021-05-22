@@ -55,34 +55,6 @@
       tags:
         - system
 
-    - name: Mount skylark for yum(1)
-      ansible.posix.mount:
-        src: 192.168.1.200:/Raspi
-        path: /mnt
-        opts: rw,sync
-        state: mounted
-        fstype: nfs
-      tags:
-        - yum
-        - system
-
-    - name: Make parent directory for symbolic link for yum(1)
-      ansible.builtin.file:
-        dest: /var/cache/yum
-        state: directory
-      tags:
-        - yum
-        - system
-
-    - name: Make symbolic link for yum(1)
-      ansible.builtin.file:
-        src: /mnt/cache/raspi3_armhfp
-        dest: /var/cache/yum/armhfp
-        state: link
-      tags:
-        - yum
-        - system
-
     - name: Install Applications
       ansible.builtin.yum:
         name: "{{ yum }}"
@@ -104,6 +76,16 @@
       ansible.posix.firewalld:
         zone: dmz
         service: dns
+        permanent: yes
+        state: enabled
+      tags:
+        - firewalld
+        - system
+
+    - name: Set firewalld as DHCP server allowed
+      ansible.posix.firewalld:
+        zone: dmz
+        service: dhcp
         permanent: yes
         state: enabled
       tags:
