@@ -4,5 +4,9 @@ hosts_hayaworld:
     IP: 0.0.0.0
   - A: g.local
     IP: 0.0.0.0
-  - A: skylark
+  - A: skylark.local
     IP: 192.168.1.200
+  - A: nuc01.local
+    IP: 192.168.1.11
+  - A: vcsa.local
+    IP: 192.168.1.10
