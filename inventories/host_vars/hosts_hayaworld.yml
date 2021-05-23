@@ -10,3 +10,9 @@ hosts_hayaworld:
     IP: 192.168.1.11
   - A: vcsa.local
     IP: 192.168.1.10
+  - A: rui.local
+    IP: 192.168.1.100
+  - A: win10.local
+    IP: 192.168.1.101
+  - A: vpn.local
+    IP: 192.168.1.102
