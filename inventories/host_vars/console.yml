@@ -1,0 +1,8 @@
+---
+
+apt:
+  - network-manager
+  - libnm-dev
+  - curl
+  - git
+  - zsh

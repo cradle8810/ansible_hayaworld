@@ -1,0 +1,59 @@
+---
+- hosts: console
+  remote_user: hayato
+  gather_facts: no
+  become: yes
+
+  vars_files:
+    - inventories/host_vars/console.yml
+    - inventories/host_vars/networks.yml
+
+  handlers:
+    - include: handlers/main.yml
+
+  tasks:
+    - name: Set Hostname
+      ansible.builtin.hostname:
+        name: "{{ network.console.hostname }}"
+      tags:
+        - network
+
+    - name: Set IP Address
+      community.general.nmcli:
+        conn_name: "{{ network.console.interface }}"
+        ip4: "{{ network.console.ipv4 }}/{{ network.subnet }}"
+        gw4: "{{ network.gw4 }}"
+        dns4: "{{ network.dns4 }}"
+        state: present
+        type: ethernet
+      tags:
+        - network
+
+    - include: tasks/authorized_keys.yml
+
+    - name: put motd
+      ansible.builtin.copy:
+        src: templates/etc/motd.console
+        dest: /etc/motd
+        owner: root
+        group: root
+        mode: '0644'
+      tags:
+        - system
+
+    - name: Disable SELinux
+      ansible.builtin.copy:
+        src: templates/etc/selinux/config
+        dest: /etc/selinux/config
+        owner: root
+        group: root
+        mode: '0644'
+      tags:
+        - system
+
+    - name: Install Applications
+      ansible.builtin.apt:
+        name: "{{ apt }}"
+        state: present
+      tags:
+        - apt

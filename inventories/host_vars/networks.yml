@@ -1,0 +1,27 @@
+---
+network:
+  console:
+    hostname: console.local
+    interface: ens160
+    ipv4: 192.168.1.105
+  gitlab:
+    hostname: gitlab.local
+    interface: ens160
+    ipv4: 192.168.1.103
+  runner:
+    hostname: runner.local
+    interface: ens160
+    ipv4: 192.168.1.104
+  docker:
+    hostname: docker.local
+    interface: ens160
+    ipv4: 192.168.1.106
+  zabbix:
+    hostname: zabbix.local
+    interface: ens160
+    ipv4: 192.168.1.107 
+  subnet: 24
+  gw4: 192.168.1.1
+  dns4:
+    - 192.168.1.50
+    - 202.232.2.3
