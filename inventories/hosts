@@ -1,2 +1,15 @@
 [rui]
 192.168.1.100 ansible_user=hayato
+
+[console]
+192.168.1.105 ansible_user=hayato
+
+[gitlab]
+192.168.1.103 ansible_user=hayato
+192.168.1.104 ansible_user=hayato
+
+[docker]
+192.168.1.106 ansible_user=hayato
+
+[zabbix]
+192.168.1.107 ansible_user=hayato
