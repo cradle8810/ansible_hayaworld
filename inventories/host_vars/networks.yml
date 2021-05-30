@@ -19,9 +19,13 @@ network:
   zabbix:
     hostname: zabbix.local
     interface: ens160
-    ipv4: 192.168.1.107 
+    ipv4: 192.168.1.107
+  redmine:
+    hostname: redmine.local
+    interface: ens160
+    ipv4: 192.168.1.108
   subnet: 24
   gw4: 192.168.1.1
   dns4:
-    - 192.168.1.50
+    - 192.168.1.100
     - 202.232.2.3
