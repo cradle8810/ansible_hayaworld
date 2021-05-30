@@ -1,0 +1,56 @@
+---
+- hosts: redmine
+  remote_user: hayato
+  gather_facts: no
+  become: yes
+
+  vars_files:
+#    - inventories/host_vars/redmine.yml
+    - inventories/host_vars/networks.yml
+
+  handlers:
+    - include: handlers/main.yml
+
+  tasks:
+    - name: Set Hostname
+      ansible.builtin.hostname:
+        name: "{{ network.redmine.hostname }}"
+      tags:
+        - network
+
+    - name: Set IP Address
+      include_role:
+        name: mrlesmithjr.netplan
+      vars:
+        netplan_config_file: 
+          /etc/netplan/99-staticip.yaml
+        netplan_configuration:
+          network:
+            ethernets:
+              ens160:
+                addresses:
+                - "{{ network.redmine.ipv4 }}/{{ network.subnet }}"
+                gateway4: "{{ network.gw4 }}"
+                nameservers:
+                  addresses: "{{ network.dns4 }}"
+            version: 2
+      tags:
+        - network
+
+    - include: tasks/authorized_keys.yml
+
+    - name: Disable SELinux
+      ansible.builtin.copy:
+        src: templates/etc/selinux/config
+        dest: /etc/selinux/config
+        owner: root
+        group: root
+        mode: '0644'
+      tags:
+        - system
+
+    - name: install redmine
+      include_role: 
+        name: coffeeitworks.ansible_role_redmine
+      tags:
+        - redmine
