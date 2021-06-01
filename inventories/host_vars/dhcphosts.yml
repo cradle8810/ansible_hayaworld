@@ -12,7 +12,3 @@ dhcp_hosts:
     ipaddr: 192.168.1.53
     macaddr: 80:c5:f2:a4:07:0f
     ttl: infinite
-  - hostname: surface.local
-    ipaddr: 192.168.1.54
-    macaddr: 74:03:BD:7F:57:D7
-    ttl: infinate
