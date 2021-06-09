@@ -1,0 +1,27 @@
+---
+- hosts: gitlab
+  remote_user: hayato
+  gather_facts: yes
+  become: yes
+
+  vars_files:
+    - inventories/host_vars/networks.yml
+
+  handlers:
+    - include: handlers/main.yml
+
+  tasks:
+    - name: Set Hostname
+      ansible.builtin.hostname:
+        name: "{{ network.gitlab.hostname }}"
+      tags:
+        - network
+        - system
+
+    - include: tasks/authorized_keys.yml
+      tags:
+        - system
+
+    - name: Install GitLab CE
+      include_role:
+        name: alvistack.gitlab.gitlab_ce
