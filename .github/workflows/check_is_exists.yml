@@ -1,0 +1,22 @@
+---
+name: Check does domain exist
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  IsExists:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install yq
+        run: "apt install -y yq"
+
+      - name: ping check
+        run: yq -r '.NXDOMAIN[]' < inventories/host_vars/ads_hosts/NXDOMAIN.yml | xargs -n1 ping -c 1
+
+      

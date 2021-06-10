@@ -12,3 +12,12 @@ duplicate_check:
         "inventories/host_vars/ads_hosts/NXDOMAIN.yml"
   tags: 
     - docker
+
+exists_check:
+  image: alpine:latest
+  stage: lint
+  script:
+    - apk install yq
+    - yq -r '.NXDOMAIN[]' < inventories/host_vars/ads_hosts/NXDOMAIN.yml | xargs -n1 ping -c 1
+  tags: 
+    - docker
