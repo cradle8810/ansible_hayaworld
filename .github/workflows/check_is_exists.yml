@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install yq
-        run: "apt install -y yq"
+        run: "sudo apt install -y yq"
 
       - name: ping check
         run: yq -r '.NXDOMAIN[]' < inventories/host_vars/ads_hosts/NXDOMAIN.yml | xargs -n1 ping -c 1
