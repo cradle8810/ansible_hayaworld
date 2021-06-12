@@ -1,0 +1,6 @@
+---
+roles:
+  - name: brianhartsock.avahi
+
+collections:
+  - name: alvistack.gitlab
