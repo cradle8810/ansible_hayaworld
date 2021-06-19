@@ -7,7 +7,7 @@
 [gitlab]
 192.168.1.103 ansible_user=hayato
 
-[gitlab-runner]
+[runner]
 192.168.1.104 ansible_user=hayato
 
 [docker]
