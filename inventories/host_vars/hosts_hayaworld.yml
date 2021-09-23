@@ -30,3 +30,5 @@ hosts_hayaworld:
     IP: 192.168.1.108
   - A: bsd.local
     IP: 192.168.1.109
+  - A: mai.local
+    IP: 192.168.1.110
