@@ -4,10 +4,6 @@ network:
     hostname: console.local
     interface: ens160
     ipv4: 192.168.1.105
-  gitlab:
-    hostname: gitlab.local
-    interface: ens160
-    ipv4: 192.168.1.103
   runner:
     hostname: runner.local
     interface: ens160
@@ -16,14 +12,10 @@ network:
     hostname: docker.local
     interface: ens160
     ipv4: 192.168.1.106
-  zabbix:
-    hostname: zabbix.local
+  bsd:
+    hostname: bsd.local
     interface: ens160
-    ipv4: 192.168.1.107
-  redmine:
-    hostname: redmine.local
-    interface: ens160
-    ipv4: 192.168.1.108
+    ipv4: 192.168.1.109
   subnet: 24
   gw4: 192.168.1.1
   dns4:
