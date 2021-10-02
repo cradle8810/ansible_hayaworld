@@ -24,3 +24,5 @@ hosts_hayaworld:
     IP: 192.168.1.109
   - A: mai.local
     IP: 192.168.1.110
+  - A: jenkins.local
+    IP: 192.168.1.111
