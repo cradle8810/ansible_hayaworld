@@ -14,20 +14,12 @@ hosts_hayaworld:
     IP: 192.168.1.100
   - A: win10.local
     IP: 192.168.1.101
-  - A: vpn.local
-    IP: 192.168.1.102
-  - A: gitlab.local
-    IP: 192.168.1.103
   - A: runner.local
     IP: 192.168.1.104
   - A: console.local
     IP: 192.168.1.105
   - A: docker.local
     IP: 192.168.1.106
-  - A: zabbix.local
-    IP: 192.168.1.107
-  - A: redmine.local
-    IP: 192.168.1.108
   - A: bsd.local
     IP: 192.168.1.109
   - A: mai.local
