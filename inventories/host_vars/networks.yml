@@ -16,6 +16,10 @@ network:
     hostname: bsd.local
     interface: ens160
     ipv4: 192.168.1.109
+  jenkins:
+    hostname: jenkins.local
+    interface: ens160
+    ipv4: 192.168.1.111
   subnet: 24
   gw4: 192.168.1.1
   dns4:

@@ -1,0 +1,72 @@
+---
+- hosts: jenkins
+  remote_user: hayato
+  gather_facts: yes
+  become: yes
+
+  vars_files:
+    - inventories/host_vars/networks.yml
+ #   - inventories/host_vars/jenkins.yml
+
+  handlers:
+    - include: handlers/main.yml
+
+  tasks:
+    - name: Set Hostname
+      ansible.builtin.hostname:
+        name: "{{ network.jenkins.hostname }}"
+      tags:
+        - network
+        - system
+
+    - include: tasks/authorized_keys.yml
+      tags:
+        - system
+
+    - name: Install Jenkins Dependency
+      ansible.builtin.apt:
+        name: "{{ item }}"
+      loop:
+        - "default-jdk"
+
+    - name: Add Jenkins apt key
+      ansible.builtin.apt_key:
+        url: https://pkg.jenkins.io/debian/jenkins.io.key
+        state: present
+
+    - name: Add Jenkins repository into sources list
+      ansible.builtin.apt_repository:
+        repo: deb http://pkg.jenkins.io/debian-stable binary partner
+        state: present
+
+    - name: Install Jenkins
+      ansible.builtin.apt:
+        name: "{{ item }}"
+      loop:
+        - jenkins
+
+    - name: Install Avahi Dependency
+      ansible.builtin.apt:
+        name: "{{ item }}"
+      loop:
+        - avahi-daemon
+      tags:
+        - avahi
+
+    - name: Install Avahi
+      include_role:
+        name: brianhartsock.avahi
+      vars:
+        avahi_services:
+          - name: sshd
+            services:
+              - type: _ssh._tcp
+                port: 22
+          - name: http
+            services:
+              - type: _http._tcp
+                port: 8080
+        avahi_replace_wildcards: yes
+        avahi_network_name: '%h'
+      tags:
+        - avahi
