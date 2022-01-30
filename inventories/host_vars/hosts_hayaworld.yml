@@ -20,6 +20,8 @@ hosts_hayaworld:
     IP: 192.168.1.105
   - A: docker.local
     IP: 192.168.1.106
+  - A: macos.local
+    IP: 192.168.1.107
   - A: bsd.local
     IP: 192.168.1.109
   - A: mai.local
