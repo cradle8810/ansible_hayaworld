@@ -1,23 +1,23 @@
 ---
 network:
   console:
-    hostname: console.local
+    hostname: console.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.105
   runner:
-    hostname: runner.local
+    hostname: runner.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.104
   docker:
-    hostname: docker.local
+    hostname: docker.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.106
   bsd:
-    hostname: bsd.local
+    hostname: bsd.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.109
   jenkins:
-    hostname: jenkins.local
+    hostname: jenkins.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.111
   subnet: 24

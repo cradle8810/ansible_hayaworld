@@ -2,31 +2,31 @@
 hosts_hayaworld:
   - A: g
     IP: 0.0.0.0
-  - A: g.local
+  - A: g.hayaworld.local
     IP: 0.0.0.0
-  - A: skylark.local
+  - A: skylark.hayaworld.local
     IP: 192.168.1.200
-  - A: nuc01.local
+  - A: nuc01.hayaworld.local
     IP: 192.168.1.11
-  - A: vcsa.local
+  - A: vcsa.hayaworld.local
     IP: 192.168.1.10
-  - A: rui.local
+  - A: rui.hayaworld.local
     IP: 192.168.1.100
-  - A: win10.local
+  - A: win10.hayaworld.local
     IP: 192.168.1.101
-  - A: runner.local
+  - A: runner.hayaworld.local
     IP: 192.168.1.104
-  - A: console.local
+  - A: console.hayaworld.local
     IP: 192.168.1.105
-  - A: docker.local
+  - A: docker.hayaworld.local
     IP: 192.168.1.106
-  - A: macos.local
+  - A: macos.hayaworld.local
     IP: 192.168.1.107
-  - A: bsd.local
+  - A: bsd.hayaworld.local
     IP: 192.168.1.109
-  - A: mai.local
+  - A: mai.hayaworld.local
     IP: 192.168.1.110
-  - A: jenkins.local
+  - A: jenkins.hayaworld.local
     IP: 192.168.1.111
   - A: k8s00.k8s.hayaworld.local
     IP: 192.168.1.120
