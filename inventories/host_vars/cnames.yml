@@ -1,4 +1,4 @@
 ---
 cnames:
-  - A: rui.local
-    CNAME: dns.local
+  - A: rui.hayaworld.local
+    CNAME: dns.hayaworld.local
