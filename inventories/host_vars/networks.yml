@@ -12,6 +12,10 @@ network:
     hostname: docker.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.106
+  haru:
+    hostname: haru.hayaworld.local
+    interface: ens160
+    ipv4: 192.168.1.108
   bsd:
     hostname: bsd.hayaworld.local
     interface: ens160
