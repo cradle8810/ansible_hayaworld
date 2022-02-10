@@ -22,6 +22,8 @@ hosts_hayaworld:
     IP: 192.168.1.106
   - A: macos.hayaworld.local
     IP: 192.168.1.107
+  - A: haru.hayaworld.local
+    IP: 192.168.1.108
   - A: bsd.hayaworld.local
     IP: 192.168.1.109
   - A: mai.hayaworld.local
