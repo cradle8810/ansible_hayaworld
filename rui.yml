@@ -22,17 +22,6 @@
       tags:
         - network
 
-    - name: Set IP Address
-      community.general.nmcli:
-        conn_name: "{{ network.rui.interface }}"
-        ip4: "{{ network.rui.ipv4 }}/{{ network.rui.subnet }}"
-        gw4: "{{ network.rui.gw4 }}"
-        dns4: "{{ network.rui.dns4 }}"
-        state: present
-        type: ethernet
-      tags:
-        - network
-
     - include: tasks/authorized_keys.yml
 
     - name: put motd
@@ -55,43 +44,6 @@
       tags:
         - system
 
-    - name: Install Applications
-      ansible.builtin.yum:
-        name: "{{ yum }}"
-        state: present
-      tags:
-        - yum
-
-    - name: Set firewalld as SSH allowed
-      ansible.posix.firewalld:
-        zone: dmz
-        service: ssh
-        permanent: yes
-        state: enabled
-      tags:
-        - firewalld
-        - system
-
-    - name: Set firewalld as DNS server allowed
-      ansible.posix.firewalld:
-        zone: dmz
-        service: dns
-        permanent: yes
-        state: enabled
-      tags:
-        - firewalld
-        - system
-
-    - name: Set firewalld as DHCP server allowed
-      ansible.posix.firewalld:
-        zone: dmz
-        service: dhcp
-        permanent: yes
-        state: enabled
-      tags:
-        - firewalld
-        - system
-
     - name: Show hosts(5)
       debug:
         msg: "{{ lookup('template', './templates/etc/hosts.j2') }}"
@@ -100,10 +52,7 @@
         - dryrun
 
     - include: tasks/dnsmasq.yml
-    - include: tasks/avahi-daemon.yml
-
     - include: tasks/journalctl.yml
-
     - include: tasks/rsyslog-rui.yml
       tags:
         - rsyslog

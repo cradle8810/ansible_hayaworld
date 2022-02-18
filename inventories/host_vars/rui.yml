@@ -1,7 +1,7 @@
 ---
 network:
   rui:
-    hostname: rui.local
+    hostname: rui.hayaworld.local
     interface: ens192
     ipv4: 192.168.1.100
     subnet: 24
@@ -10,8 +10,8 @@ network:
       - 202.232.2.3
       - 202.232.2.2
 
-yum:
-  - avahi
+apt:
+  - avahi-daemon
   - binutils
   - coreutils
   - curl
@@ -29,8 +29,8 @@ yum:
   - zsh
 
 dnsmasq:
-  domain: local
-  local: /local/
+  domain: hayaworld.local
+  local: /hayaworld.local/
   listen_address: "{{ network.rui.ipv4 }}"
   interface: "{{ network.rui.interface }}"
   dhcp_range:
