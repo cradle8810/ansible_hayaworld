@@ -14,13 +14,11 @@ hosts_hayaworld:
     IP: 192.168.1.100
   - A: win10.hayaworld.local
     IP: 192.168.1.101
-  - A: runner.hayaworld.local
-    IP: 192.168.1.104
   - A: console.hayaworld.local
     IP: 192.168.1.105
   - A: docker.hayaworld.local
     IP: 192.168.1.106
-  - A: mai.hayaworld.local
+  - A: ubuntu.hayaworld.local
     IP: 192.168.1.110
   - A: jenkins.hayaworld.local
     IP: 192.168.1.131
