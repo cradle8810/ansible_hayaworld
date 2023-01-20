@@ -8,6 +8,8 @@ hosts_hayaworld:
     IP: 192.168.1.200
   - A: nuc01.hayaworld.local
     IP: 192.168.1.11
+  - A: nuc02.hayaworld.local
+    IP: 192.168.1.12
   - A: vcsa.hayaworld.local
     IP: 192.168.1.10
   - A: rui.hayaworld.local
