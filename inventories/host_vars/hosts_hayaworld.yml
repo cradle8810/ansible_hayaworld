@@ -18,7 +18,7 @@ hosts_hayaworld:
     IP: 192.168.1.101
   - A: console.hayaworld.local
     IP: 192.168.1.105
-  - A: docker.hayaworld.local
+  - A: zabbix.hayaworld.local
     IP: 192.168.1.106
   - A: ubuntu.hayaworld.local
     IP: 192.168.1.110
