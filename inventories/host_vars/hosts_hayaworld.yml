@@ -38,3 +38,5 @@ hosts_hayaworld:
     IP: 192.168.1.151
   - A: vesxi02.hayaworld.local
     IP: 192.168.1.152
+  - A: vrli.hayaworld.local
+    IP: 192.168.1.160
