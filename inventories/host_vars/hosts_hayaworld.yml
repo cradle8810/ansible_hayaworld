@@ -34,3 +34,7 @@ hosts_hayaworld:
     IP: 192.168.1.142
   - A: glusternfs003.hayaworld.local
     IP: 192.168.1.143
+  - A: vesxi01.hayaworld.local
+    IP: 192.168.1.151
+  - A: vesxi02.hayaworld.local
+    IP: 192.168.1.152
