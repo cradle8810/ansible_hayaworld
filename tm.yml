@@ -1,11 +1,11 @@
 ---
-- hosts: vskylark
+- hosts: tm
   remote_user: hayato
   gather_facts: no
   become: yes
 
   vars_files:
-    - inventories/host_vars/vskylark.yml
+    - inventories/host_vars/tm.yml
     - inventories/host_vars/networks.yml
 
   handlers:
@@ -14,7 +14,7 @@
   tasks:
     - name: Set Hostname
       ansible.builtin.hostname:
-        name: "{{ network.vskylark.hostname }}"
+        name: "{{ network.tm.hostname }}"
       tags:
         - network
 
@@ -22,7 +22,7 @@
 
     - name: put motd
       ansible.builtin.copy:
-        src: templates/vskylark/etc/motd
+        src: templates/tm/etc/motd
         dest: /etc/motd
         owner: root
         group: root
