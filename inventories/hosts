@@ -16,5 +16,5 @@
 [jenkins]
 192.168.1.111 ansible_user=hayato
 
-[vskylark]
-192.168.1.112 ansible_user=hayato
+[skylark]
+192.168.1.200 ansible_user=hayato
