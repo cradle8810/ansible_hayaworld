@@ -24,7 +24,9 @@ hosts_hayaworld:
     IP: 192.168.1.107
   - A: ubuntu.hayaworld.local
     IP: 192.168.1.110
-  - A: vskylark.hayaworld.local
+  - A: step.hayaworld.local
+    IP: 192.168.1.111
+  - A: tm.hayaworld.local
     IP: 192.168.1.112
   - A: jenkins.hayaworld.local
     IP: 192.168.1.131
