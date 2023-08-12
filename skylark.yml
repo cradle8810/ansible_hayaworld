@@ -47,3 +47,7 @@
     - include: tasks/skylark/install-supplicant-programs.yml
 
     - include: tasks/zabbix-agent2.yml
+
+    - include: tasks/stop-apt-daily.yml
+    - include: tasks/stop-cloud-init.yml
+    - include: tasks/stop-wpa_supplicant.yml
