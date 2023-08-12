@@ -1,0 +1,12 @@
+---
+drives:
+  skylark:
+    uuid: a2288da0-8a90-4f96-ac3a-a859f01ac187
+    mountpoint: /skylark
+    filesystem: "xfs"
+    options: "defaults,noatime"
+  backup:
+    uuid: 77af48a6-5a47-4e06-a106-c5c74b6d1449
+    mountpoint: /backup
+    filesystem: "xfs"
+    options: "defaults,users"
