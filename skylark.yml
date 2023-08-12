@@ -1,11 +1,11 @@
 ---
-- hosts: tm
+- hosts: skylark
   remote_user: hayato
   gather_facts: no
   become: yes
 
   vars_files:
-    - inventories/host_vars/tm.yml
+    - inventories/host_vars/skylark.yml
     - inventories/host_vars/networks.yml
 
   handlers:
@@ -14,7 +14,7 @@
   tasks:
     - name: Set Hostname
       ansible.builtin.hostname:
-        name: "{{ network.tm.hostname }}"
+        name: "{{ network.skylark.hostname }}"
       tags:
         - network
 
