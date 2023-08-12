@@ -1,0 +1,55 @@
+---
+- hosts: skylark
+  remote_user: hayato
+  gather_facts: no
+  become: yes
+
+  vars_files:
+    - inventories/host_vars/skylark.yml
+    - inventories/host_vars/networks.yml
+
+  handlers:
+    - include: handlers/main.yml
+
+  tasks:
+    - name: Set Hostname
+      ansible.builtin.hostname:
+        name: "{{ network.skylark.hostname }}"
+      tags:
+        - network
+
+    - include: tasks/authorized_keys.yml
+
+    - name: put motd
+      ansible.builtin.copy:
+        src: templates/skylark/etc/motd
+        dest: /etc/motd
+        owner: root
+        group: root
+        mode: '0644'
+      tags:
+        - system
+
+    - name: Disable SELinux
+      ansible.builtin.copy:
+        src: templates/etc/selinux/config
+        dest: /etc/selinux/config
+        owner: root
+        group: root
+        mode: '0644'
+      tags:
+        - system
+
+    - include: tasks/timezone.yml
+
+    - include: tasks/skylark/mount.yml
+    - include: tasks/skylark/xfs_tuning.yml
+
+    - include: tasks/skylark/samba.yml
+    - include: tasks/skylark/install-supplicant-programs.yml
+
+    - include: tasks/zabbix-agent2.yml
+
+    - include: tasks/stop-apt-daily.yml
+    - include: tasks/stop-cloud-init.yml
+    - include: tasks/stop-multipathd-syslog.yml

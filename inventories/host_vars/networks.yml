@@ -24,6 +24,14 @@ network:
     hostname: jenkins.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.111
+  tm:
+    hostname: tm.hayaworld.local
+    interface: ens160
+    ipv4: 192.168.1.112
+  skylark:
+    hostname: skylark.hayaworld.local
+    interface: ens160
+    ipv4: 192.168.1.200
   subnet: 24
   gw4: 192.168.1.1
   dns4:

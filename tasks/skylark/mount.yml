@@ -1,0 +1,16 @@
+---
+- name: Mount up device skylark
+  ansible.posix.mount:
+    path: "{{ drives.skylark.mountpoint }}"
+    src: "UUID={{ drives.skylark.uuid }}"
+    fstype: "{{ drives.skylark.filesystem }}"
+    opts: "{{ drives.skylark.options }}"
+    state: present
+
+- name: Mount up device backup
+  ansible.posix.mount:
+    path: "{{ drives.backup.mountpoint }}"
+    src: "UUID={{ drives.backup.uuid }}"
+    fstype: "{{ drives.backup.filesystem }}"
+    opts: "{{ drives.backup.options }}"
+    state: present
