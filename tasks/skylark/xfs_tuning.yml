@@ -1,0 +1,14 @@
+---
+
+- name: XFS tuning
+  ansible.builtin.copy:
+    src: templates/skylark/etc/sysctl.d/20-xfs-sync-interval.conf
+    dest: /etc/sysctl.d/20-xfs-sync-interval.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- ansible.posix.sysctl:
+    name: fs.xfs.xfssyncd_centisecs
+    value: '5000'
+    state: present
