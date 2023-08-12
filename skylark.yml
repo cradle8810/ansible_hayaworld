@@ -42,3 +42,4 @@
 
     - include: tasks/skylark/samba.yml
     - include: tasks/skylark/xfs_tuning.yml
+    - include: tasks/skylark/install-supplicant-programs.yml
