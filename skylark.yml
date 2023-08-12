@@ -22,7 +22,7 @@
 
     - name: put motd
       ansible.builtin.copy:
-        src: templates/tm/etc/motd
+        src: templates/skylark/etc/motd
         dest: /etc/motd
         owner: root
         group: root
