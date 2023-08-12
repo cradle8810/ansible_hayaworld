@@ -39,3 +39,5 @@
         mode: '0644'
       tags:
         - system
+
+    - include: tasks/skylark/samba.yml
