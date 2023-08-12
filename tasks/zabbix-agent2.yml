@@ -10,7 +10,7 @@
     - zabbix-agent2 
     - zabbix-agent2-plugin-*
 
-- name: Put journald.conf(5)
+- name: Put zabbix-agent2.conf
   ansible.builtin.copy:
     src: templates/etc/zabbix/zabbix_agent2.conf
     dest: /etc/zabbix/zabbix_agent2.conf
