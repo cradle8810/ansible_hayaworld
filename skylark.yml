@@ -1,0 +1,41 @@
+---
+- hosts: tm
+  remote_user: hayato
+  gather_facts: no
+  become: yes
+
+  vars_files:
+    - inventories/host_vars/tm.yml
+    - inventories/host_vars/networks.yml
+
+  handlers:
+    - include: handlers/main.yml
+
+  tasks:
+    - name: Set Hostname
+      ansible.builtin.hostname:
+        name: "{{ network.tm.hostname }}"
+      tags:
+        - network
+
+    - include: tasks/authorized_keys.yml
+
+    - name: put motd
+      ansible.builtin.copy:
+        src: templates/tm/etc/motd
+        dest: /etc/motd
+        owner: root
+        group: root
+        mode: '0644'
+      tags:
+        - system
+
+    - name: Disable SELinux
+      ansible.builtin.copy:
+        src: templates/etc/selinux/config
+        dest: /etc/selinux/config
+        owner: root
+        group: root
+        mode: '0644'
+      tags:
+        - system
