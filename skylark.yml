@@ -45,3 +45,5 @@
 
     - include: tasks/skylark/samba.yml
     - include: tasks/skylark/install-supplicant-programs.yml
+
+    - include: tasks/zabbix-agent2.yml
