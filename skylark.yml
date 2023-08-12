@@ -48,6 +48,8 @@
     - include: tasks/skylark/samba.yml
     - include: tasks/skylark/install-supplicant-programs.yml
 
+    - include: tasks/skylark/firewall.yml
+
     - include: tasks/zabbix-agent2.yml
 
     - include: tasks/stop-apt-daily.yml
