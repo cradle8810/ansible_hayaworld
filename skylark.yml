@@ -50,4 +50,4 @@
 
     - include: tasks/stop-apt-daily.yml
     - include: tasks/stop-cloud-init.yml
-    - include: tasks/stop-wpa_supplicant.yml
+    - include: tasks/stop-multipathd-syslog.yml
