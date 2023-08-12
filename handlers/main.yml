@@ -34,3 +34,9 @@
     name: zabbix-agent2
     state: restarted
   listen: "Restart zabbix-agent2"
+
+- name: Restart multipathd
+  ansible.builtin.service:
+    name: multipathd
+    state: restarted
+  listen: "Restart multipathd"
