@@ -5,11 +5,11 @@
   become: yes
 
   vars_files:
-    - inventories/host_vars/cnames.yml
-    - inventories/host_vars/dhcphosts.yml
-    - inventories/host_vars/ads_hosts/NXDOMAIN.yml
-    - inventories/host_vars/ads_hosts/NXDOMAIN_book_scam.yml
-    - inventories/host_vars/rui.yml
+    - inventories/host_vars/rui/cnames.yml
+    - inventories/host_vars/rui/dhcphosts.yml
+    - inventories/host_vars/rui/ads_hosts/NXDOMAIN.yml
+    - inventories/host_vars/rui/ads_hosts/NXDOMAIN_book_scam.yml
+    - inventories/host_vars/rui/rui.yml
     - inventories/host_vars/hosts_hayaworld.yml
 
   handlers:
@@ -26,7 +26,7 @@
 
     - name: put motd
       ansible.builtin.copy:
-        src: templates/etc/motd.rui
+        src: templates/rui/etc/motd
         dest: /etc/motd
         owner: root
         group: root
@@ -46,14 +46,14 @@
 
     - name: Show hosts(5)
       debug:
-        msg: "{{ lookup('template', './templates/etc/hosts.j2') }}"
+        msg: "{{ lookup('template', './templates/rui/etc/hosts.j2') }}"
       tags:
         - debug
         - dryrun
 
-    - include: tasks/dnsmasq.yml
-    - include: tasks/journalctl.yml
-    - include: tasks/rsyslog-rui.yml
+    - include: tasks/rui/dnsmasq.yml
+    - include: tasks/rui/journalctl.yml
+    - include: tasks/rui/rsyslog-rui.yml
       tags:
         - rsyslog
         - dnsmasq
