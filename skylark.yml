@@ -40,6 +40,8 @@
       tags:
         - system
 
+    - include: tasks/timezone.yml
+
     - include: tasks/skylark/mount.yml
     - include: tasks/skylark/xfs_tuning.yml
 
