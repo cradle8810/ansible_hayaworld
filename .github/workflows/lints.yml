@@ -12,9 +12,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
- 
-      - name: Stop line-length Warning
-        run: yamllint disable rule:line-length
 
       - name: Run YAML Lint
         run: yamllint --strict --format github .
