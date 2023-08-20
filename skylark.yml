@@ -1,8 +1,8 @@
 ---
 - hosts: skylark
   remote_user: hayato
-  gather_facts: no
-  become: yes
+  gather_facts: false
+  become: true
 
   vars_files:
     - inventories/host_vars/skylark.yml

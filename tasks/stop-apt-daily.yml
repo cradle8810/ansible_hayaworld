@@ -3,13 +3,13 @@
   ansible.builtin.service:
     name: apt-daily.timer
     state: stopped
-    enabled: no
+    enabled: false
 
 - name: Stop and remove apt-daily.service
   ansible.builtin.service:
     name: apt-daily.service
     state: stopped
-    enabled: no
+    enabled: false
 
 - name: put 10periodic(5)
   ansible.builtin.copy:
