@@ -1,6 +1,6 @@
 ---
 - name: Move Docker Container Volume path
-  ansible.builtin.file:    
+  ansible.builtin.file:
     src: /mnt/Raspi3_mai/var/lib/containerd
     dest: /var/lib/containerd
     owner: root
@@ -11,7 +11,7 @@
     - docker_config
 
 - name: Move Docker Container Image path
-  ansible.builtin.file:    
+  ansible.builtin.file:
     src: /mnt/Raspi3_mai/var/lib/docker
     dest: /var/lib/docker
     owner: root
@@ -46,7 +46,7 @@
     state: present
     update_cache: yes
   loop:
-    - docker-ce 
+    - docker-ce
     - docker-ce-cli
     - containerd.io
   tags:

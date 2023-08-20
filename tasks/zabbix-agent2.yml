@@ -7,7 +7,7 @@
 - name: Zabbix-agent2 install
   ansible.builtin.apt:
     pkg:
-    - zabbix-agent2 
+    - zabbix-agent2
     - zabbix-agent2-plugin-*
 
 - name: Put zabbix-agent2.conf

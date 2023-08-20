@@ -10,5 +10,5 @@ duplicate_check:
     - >
         "./dupcheck.sh"
         "inventories/host_vars/ads_hosts/NXDOMAIN.yml"
-  tags: 
+  tags:
     - docker

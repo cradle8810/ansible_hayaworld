@@ -1,5 +1,5 @@
 ---
-name: Validate Domain Duplication 
+name: Validate Domain Duplication
 
 on:
   push:
