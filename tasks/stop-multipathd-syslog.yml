@@ -1,3 +1,5 @@
+---
+
 - name: Put rsyslog.conf(5)
   ansible.builtin.template:
     src: templates/etc/multipath.conf
@@ -6,4 +8,3 @@
     group: root
     mode: 0644
   notify: "Restart multipathd"
-  

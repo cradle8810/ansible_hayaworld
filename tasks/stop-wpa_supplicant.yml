@@ -3,4 +3,4 @@
   ansible.builtin.service:
     name: wpa_supplicant.service
     state: stopped
-    enabled: no
+    enabled: false

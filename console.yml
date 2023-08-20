@@ -1,15 +1,15 @@
 ---
 - hosts: console
   remote_user: hayato
-  gather_facts: no
-  become: yes
+  gather_facts: false
+  become: true
 
   vars_files:
     - inventories/host_vars/console.yml
     - inventories/host_vars/networks.yml
 
   handlers:
-    - include: handlers/main.yml
+    - import_tasks: handlers/main.yml
 
   tasks:
     - name: Set Hostname

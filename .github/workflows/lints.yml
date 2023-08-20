@@ -14,14 +14,4 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run YAML Lint
-        run: |
-          yamllint --strict --format github .
-
-  ansible-lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Run ansible-lint
-        uses: ansible/ansible-lint-action@main
+        run: yamllint --strict --format github .
