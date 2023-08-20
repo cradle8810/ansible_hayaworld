@@ -9,7 +9,7 @@
     - inventories/host_vars/networks.yml
 
   handlers:
-    - include: handlers/main.yml
+    - import_tasks: handlers/main.yml
 
   tasks:
     - name: Set Hostname
