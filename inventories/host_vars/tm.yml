@@ -1,2 +1,4 @@
+---
+
 apt:
   - avahi-daemon
