@@ -3,8 +3,8 @@
 - name: Install Samba and macOS modules
   ansible.builtin.apt:
     pkg:
-    - samba=2:4.15.13+dfsg-0ubuntu0.20.04.3
-    - samba-vfs-modules:amd64=2:4.15.13+dfsg-0ubuntu0.20.04.3
+      - samba=2:4.15.13+dfsg-0ubuntu0.20.04.3
+      - samba-vfs-modules:amd64=2:4.15.13+dfsg-0ubuntu0.20.04.3
 
 - name: Put smb.conf
   ansible.builtin.copy:

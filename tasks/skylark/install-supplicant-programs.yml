@@ -3,6 +3,6 @@
 - name: Install Supplicant Files
   ansible.builtin.apt:
     pkg:
-    - ffmpeg
-    - renameutils
-    - wget
+      - ffmpeg
+      - renameutils
+      - wget
