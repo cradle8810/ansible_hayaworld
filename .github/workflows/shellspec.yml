@@ -21,4 +21,3 @@ jobs:
 
       - name: Run Shellspec
         run: "~/.local/lib/shellspec/shellspec"
-
