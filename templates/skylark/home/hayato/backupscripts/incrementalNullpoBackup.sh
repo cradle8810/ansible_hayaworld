@@ -27,5 +27,12 @@ touch ${DESTDIR}/sentinel
 
 echo "rsync -av8  --link-dest=../${LINKDEST}/ ${NULLPODIR} ${DESTDIR}/${TODAY}"
 rsync -av8 --link-dest=../${LINKDEST}/ ${NULLPODIR} ${DESTDIR}/${TODAY}
+RETVAL=$?
+
+if [ ! $RETVAL ]; then
+    echo "[ERROR] Some error occured on running rsync." >&2
+    exit 3
+    # エラー時にはsentinelファイルを消さない
+fi
 
 rm ${DESTDIR}/sentinel
