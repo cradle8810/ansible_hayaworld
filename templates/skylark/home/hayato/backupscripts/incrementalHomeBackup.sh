@@ -2,9 +2,13 @@
 
 NULLPODIR='/skylark/hayato/'
 DESTDIR='/backup/hayato'
+DESTDEVICE='/dev/sdc1'
 
-if [ ! -d ${NULLPODIR} ]; then
-    echo "[ERROR] There is no Nullpo directory in ${NULLPODIR}." >&2
+# マウントされていれば1
+ISMOUNT=$(mount | grep "${DESTDEVICE}" | wc -l)
+
+if [ ${ISMOUNT} ]; then
+    echo "[ERROR] Device ${DESTDEVICE} does not mount." >&2
     echo "Exit Abnormally." >&2
     exit 1
 fi
