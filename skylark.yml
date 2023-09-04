@@ -55,3 +55,5 @@
     - include: tasks/stop-apt-daily.yml
     - include: tasks/stop-cloud-init.yml
     - include: tasks/stop-multipathd-syslog.yml
+
+    - include: tasks/skylark/backupscripts.yml
