@@ -1,0 +1,22 @@
+---
+- name: Put Backup Script Directory
+  ansible.builtin.file:
+    path: /home/hayato/backupscripts/
+    state: directory
+    mode: '0755'
+
+- name: Put Nullpo Backup Script
+  ansible.builtin.copy:
+    src: templates/skylark/home/hayato/backupscripts/incrementalNullpoBackup.sh
+    dest: /home/hayato/backupscripts/incrementalNullpoBackup.sh
+    owner: hayato
+    group: hayato
+    mode: '0755'
+
+- name: Put HomeDir Backup Script
+  ansible.builtin.copy:
+    src: templates/skylark/home/hayato/backupscripts/incrementalHomeBackup.sh
+    dest: /home/hayato/backupscripts/incrementalHomeBackup.sh
+    owner: hayato
+    group: hayato
+    mode: '0755'
