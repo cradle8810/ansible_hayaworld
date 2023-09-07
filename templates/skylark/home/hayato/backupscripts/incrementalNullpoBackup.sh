@@ -7,7 +7,7 @@ DESTDEVICE='/dev/sdc1'
 # マウントされていれば1
 ISMOUNT=$(mount | grep "${DESTDEVICE}" | wc -l)
 
-if [ ${ISMOUNT} ]; then
+if [ ! ${ISMOUNT} ]; then
     echo "[ERROR] Device ${DESTDEVICE} does not mount." >&2
     echo "Exit Abnormally." >&2
     exit 1
