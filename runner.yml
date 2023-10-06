@@ -1,0 +1,48 @@
+---
+- hosts: runner
+  remote_user: hayato
+  gather_facts: false
+  become: true
+
+  vars_files:
+    - inventories/host_vars/networks.yml
+
+  handlers:
+    - include: handlers/main.yml
+
+  tasks:
+    - name: Set Hostname
+      ansible.builtin.hostname:
+        name: "{{ network.runner.hostname }}"
+      tags:
+        - network
+
+    - include: tasks/authorized_keys.yml
+
+    - name: put motd
+      ansible.builtin.copy:
+        src: templates/runner/etc/motd
+        dest: /etc/motd
+        owner: root
+        group: root
+        mode: '0644'
+      tags:
+        - system
+
+    - name: Disable SELinux
+      ansible.builtin.copy:
+        src: templates/etc/selinux/config
+        dest: /etc/selinux/config
+        owner: root
+        group: root
+        mode: '0644'
+      tags:
+        - system
+
+    - include: tasks/timezone.yml
+
+    - include: tasks/zabbix-agent2.yml
+
+    - include: tasks/stop-apt-daily.yml
+    - include: tasks/stop-cloud-init.yml
+    - include: tasks/stop-multipathd-syslog.yml
