@@ -30,6 +30,8 @@ hosts_hayaworld:
     IP: 192.168.1.112
   - A: jenkins.hayaworld.local
     IP: 192.168.1.131
+  - A: runner.hayaworld.local
+    IP: 192.168.1.132
   - A: glusternfs.hayaworld.local
     IP: 192.168.1.140
   - A: glusternfs001.hayaworld.local

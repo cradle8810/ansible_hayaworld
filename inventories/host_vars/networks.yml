@@ -4,10 +4,6 @@ network:
     hostname: console.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.105
-  runner:
-    hostname: runner.hayaworld.local
-    interface: ens160
-    ipv4: 192.168.1.104
   docker:
     hostname: docker.hayaworld.local
     interface: ens160
@@ -28,6 +24,10 @@ network:
     hostname: tm.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.112
+  runner:
+    hostname: runner.hayaworld.local
+    interface: ens160
+    ipv4: 192.168.1.132
   skylark:
     hostname: skylark.hayaworld.local
     interface: ens160
