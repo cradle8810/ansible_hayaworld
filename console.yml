@@ -9,7 +9,7 @@
     - inventories/host_vars/networks.yml
 
   handlers:
-    - import_tasks: handlers/main.yml
+    - include: handlers/main.yml
 
   tasks:
     - name: Set Hostname
@@ -18,25 +18,24 @@
       tags:
         - network
 
-    - name: Set IP Address
-      community.general.nmcli:
-        conn_name: "{{ network.console.interface }}"
-        ip4: "{{ network.console.ipv4 }}/{{ network.subnet }}"
-        gw4: "{{ network.gw4 }}"
-        dns4: "{{ network.dns4 }}"
-        state: present
-        type: ethernet
-      tags:
-        - network
-
     - include: tasks/authorized_keys.yml
 
     - name: put motd
       ansible.builtin.copy:
-        src: templates/etc/motd.console
+        src: templates/console/etc/motd
         dest: /etc/motd
         owner: root
         group: root
+        mode: '0644'
+      tags:
+        - system
+
+    - name: put GUI session rc
+      ansible.builtin.copy:
+        src: templates/console/home/hayato/.xsessionrc
+        dest: /home/hayato/.xsessionrc
+        owner: hayato
+        group: hayato
         mode: '0644'
       tags:
         - system
@@ -51,9 +50,10 @@
       tags:
         - system
 
-    - name: Install Applications
-      ansible.builtin.apt:
-        name: "{{ apt }}"
-        state: present
-      tags:
-        - apt
+    - include: tasks/timezone.yml
+
+    - include: tasks/console/firewall.yml
+
+    - include: tasks/console/apt.yml
+
+    - include: tasks/stop-apt-daily.yml

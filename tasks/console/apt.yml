@@ -1,0 +1,12 @@
+- name: Install Console modules
+  ansible.builtin.apt:
+    pkg:
+      - ffmpegthumbnailer
+      - gimp
+      - heif-thumbnailer 
+      - libheif1
+      - openssh-server
+      - samba-common
+      - vlc
+      - wireshark
+      - xrdp
