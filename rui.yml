@@ -13,7 +13,7 @@
     - inventories/host_vars/hosts_hayaworld.yml
 
   handlers:
-    - include: handlers/main.yml
+    - import_tasks: handlers/main.yml
 
   tasks:
     - name: Set Hostname
@@ -22,7 +22,7 @@
       tags:
         - network
 
-    - include: tasks/authorized_keys.yml
+    - import_tasks: tasks/authorized_keys.yml
 
     - name: put motd
       ansible.builtin.copy:
@@ -51,9 +51,9 @@
         - debug
         - dryrun
 
-    - include: tasks/rui/dnsmasq.yml
-    - include: tasks/rui/journalctl.yml
-    - include: tasks/rui/rsyslog-rui.yml
+    - import_tasks: tasks/rui/dnsmasq.yml
+    - import_tasks: tasks/rui/journalctl.yml
+    - import_tasks: tasks/rui/rsyslog-rui.yml
       tags:
         - rsyslog
         - dnsmasq
