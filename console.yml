@@ -9,7 +9,7 @@
     - inventories/host_vars/networks.yml
 
   handlers:
-    - include: handlers/main.yml
+    - import_tasks: handlers/main.yml
 
   tasks:
     - name: Set Hostname
@@ -18,7 +18,7 @@
       tags:
         - network
 
-    - include: tasks/authorized_keys.yml
+    - import_tasks: tasks/authorized_keys.yml
 
     - name: put motd
       ansible.builtin.copy:
@@ -50,10 +50,11 @@
       tags:
         - system
 
-    - include: tasks/timezone.yml
+    - import_tasks: tasks/timezone.yml
 
-    - include: tasks/console/firewall.yml
+    - import_tasks: tasks/console/firewall.yml
 
-    - include: tasks/console/apt.yml
+    - import_tasks: tasks/console/apt.yml
+    - import_tasks: tasks/console/install_rename.yml
 
-    - include: tasks/stop-apt-daily.yml
+    - import_tasks: tasks/stop-apt-daily.yml
