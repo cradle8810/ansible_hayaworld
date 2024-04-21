@@ -1,0 +1,26 @@
+---
+- name: Make symlinks for User
+  ansible.builtin.file:
+    src: "{{ item['src'] }}"
+    dest: "{{ item['dest'] }}"
+    owner: "{{ item['owner'] }}"
+    group: "{{ item['group'] }}"
+    state: link
+    follow: false
+  loop: "{{ symlinks_user }}"
+  tags:
+    - symlink
+
+- name: Make symlinks for System (BECOME)
+  ansible.builtin.file:
+    src: "{{ item['src'] }}"
+    dest: "{{ item['dest'] }}"
+    owner: "{{ item['owner'] }}"
+    group: "{{ item['group'] }}"
+    state: link
+    follow: false
+  loop: "{{ symlinks_system }}"
+  become: true
+  tags:
+    - symlink
+  

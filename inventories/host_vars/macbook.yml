@@ -1,0 +1,109 @@
+---
+
+brew_taps:
+  - ansible
+  - cmigemo
+  - figlet
+  - gnupg
+  - htop
+  - imagemagick
+  - libaacs
+  - libde265
+  - libheif
+  - nkf
+  - p7zip
+  - pdftoipe
+  - toilet
+  - wget
+  - x264
+  - x265
+  - yt-dlp
+  - zsh
+
+symlinks_user:
+  - src: /Volumes/RAMDisk
+    dest: ~/Downloads
+    owner: hayato
+    group: staff
+  - src: /Volumes/RAMDisk
+    dest: ~/RAMDisk
+    owner: hayato
+    group: staff
+  - src: "/Volumes/RAMDisk/.logs/"
+    dest: "~/Library/Logs"
+    owner: hayato
+    group: staff
+  - src: "/Volumes/RAMDisk/.Saved Application State"
+    dest: "~/Library/Saved Application State"
+    owner: hayato
+    group: staff
+  - src: "/Volumes/RAMDisk/.cache/com.overmacs.photosweeperpaddle/"
+    dest: "~/Library/Application Support/com.overmacs.photosweeperpaddle"
+    owner: hayato
+    group: staff
+  - src: "/Volumes/RAMDisk"
+    dest: "~/Library/Application Support/iMazing/Library/Apps"
+    owner: hayato
+    group: staff
+  - src: "/Volumes/RAMDisk/.cache/Chrome/Sync Data/"
+    dest: "~/Library/Application Support/Google/Chrome/Default/Sync Data"
+    owner: hayato
+    group: staff
+  - src: "/Volumes/RAMDisk/.cache/com.overmacs.photosweeperpaddle/"
+    dest: "~/Library/Application Support/PhotoSweeper X"
+    owner: hayato
+    group: staff
+  - src: "/Volumes/RAMDisk/.Saved Application State"
+    dest: "~/Library/Saved Application State"
+    owner: hayato
+    group: staff
+  - src: "/Volumes/RAMDisk/.logs/"
+    dest: "~/Library/Logs"
+    owner: hayato
+    group: staff
+  - src: "/Volumes/RAMDisk/.cache/QuickLook"
+    dest: "~/Library/Caches/QuickLook32"
+    owner: hayato
+    group: staff
+  - src: "/Volumes/RAMDisk/.cache/com.overmacs.photosweeperpaddle"
+    dest: "~/Library/Caches/com.overmacs.photosweeperpaddle"
+    owner: hayato
+    group: staff
+  - src: "/Volumes/RAMDisk/.cache/QuickLook"
+    dest: "~/Library/Caches/QuickLook"
+    owner: hayato
+    group: staff
+  - src: "/Volumes/RAMDisk/.cache/Chrome/"
+    dest: "~/Library/Caches/Google/Chrome"
+    owner: hayato
+    group: staff
+  - src: "/Volumes/RAMDisk/.cache/Homebrew/"
+    dest: "~/Library/Caches/Homebrew/downloads"
+    owner: hayato
+    group: staff
+  - src: "/Volumes/Home/Symlinks/BookMaker/"
+    dest: "~/Library/Application Support/Plustek/BookMaker"
+    owner: hayato
+    group: staff
+  - src: "/Volumes/Home/Symlinks/Sessions/"
+    dest: "~/Library/Application Support/Google/Chrome/Default/Sessions"
+    owner: hayato
+    group: staff
+  - src: "/Volumes/Home/Symlinks/CDAT/"
+    dest: "~/Documents/.CDAT"
+    owner: hayato
+    group: staff
+  - src: "/Volumes/RAMDisk/.cache/Homebrew/"
+    dest: "~/Library/Caches/Homebrew/Downloads"
+    owner: hayato
+    group: staff
+  - src: "/Volumes/RAMDisk/.cache/qlmanage/"
+    dest: "$TMPDIR/../C/com.apple.quicklook.ThumbnailsAgent"
+    owner: hayato
+    group: staff
+
+symlinks_system:
+  - src: /Volumes/RAMDisk/.logs
+    dest: /private/var/logs
+    owner: root
+    group: wheel

@@ -1,0 +1,23 @@
+---
+- hosts: macbook
+  connection: local
+  remote_user: hayato
+  gather_facts: false
+
+  vars_files:
+    - inventories/host_vars/macbook.yml
+    - inventories/host_vars/networks.yml
+
+  handlers:
+    - include: handlers/main.yml
+
+  tasks:
+    - name: Set Hostname
+      ansible.builtin.hostname:
+        name: "{{ network.macbook.hostname }}"
+      become: true
+      tags:
+        - network
+
+    - import_tasks: tasks/macbook/brew.yml
+    - import_tasks: tasks/macbook/symlinks.yml

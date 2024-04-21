@@ -1,0 +1,6 @@
+---
+- name: Install Macbook brew taps
+  ansible.builtin.homebrew:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ brew_taps }}"
