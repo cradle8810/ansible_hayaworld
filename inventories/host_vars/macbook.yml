@@ -4,6 +4,7 @@ brew_taps:
   - ansible
   - cmigemo
   - figlet
+  - gnupg
   - htop
   - imagemagick
   - libaacs
