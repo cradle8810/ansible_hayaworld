@@ -20,3 +20,4 @@
         - network
 
     - import_tasks: tasks/macbook/brew.yml
+    - import_tasks: tasks/macbook/symlinks.yml
