@@ -15,3 +15,12 @@ jobs:
 
       - name: Run YAML Lint
         run: yamllint --strict --format github .
+
+  AnsibleLint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Ansible-lint
+        uses: ansible/ansible-lint@main
