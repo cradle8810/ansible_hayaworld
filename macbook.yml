@@ -18,3 +18,5 @@
       become: true
       tags:
         - network
+
+    - import_tasks: tasks/macbook/brew.yml
