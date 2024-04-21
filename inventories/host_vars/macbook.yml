@@ -97,7 +97,7 @@ symlinks_user:
     owner: hayato
     group: staff
   - src: "/Volumes/RAMDisk/.cache/qlmanage/"
-    dest: "/var/folders/fj/c3srpxpx41q080qnz4s_p1400000gn/C/com.apple.quicklook.ThumbnailsAgent"
+    dest: "$TMPDIR/../C/com.apple.quicklook.ThumbnailsAgent"
     owner: hayato
     group: staff
 
