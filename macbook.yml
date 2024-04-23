@@ -1,5 +1,6 @@
 ---
-- hosts: macbook
+- name: Play for macbook.hayaworld.local
+  hosts: macbook
   connection: local
   remote_user: hayato
   gather_facts: false
@@ -7,9 +8,6 @@
   vars_files:
     - inventories/host_vars/macbook.yml
     - inventories/host_vars/networks.yml
-
-  handlers:
-    - include: handlers/main.yml
 
   tasks:
     - name: Set Hostname
@@ -19,5 +17,15 @@
       tags:
         - network
 
-    - import_tasks: tasks/macbook/brew.yml
-    - import_tasks: tasks/macbook/symlinks.yml
+    - name: Brew install
+      ansible.builtin.import_tasks:
+        file: tasks/macbook/brew.yml
+      tags:
+        - brew
+
+    - name: Make symlinks
+      ansible.builtin.import_tasks:
+        file: tasks/macbook/symlinks.yml
+      tags:
+        - symlink
+        - symlinks
