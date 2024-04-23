@@ -1,5 +1,6 @@
 ---
-- hosts: rui
+- name: Play for rui.hayaworld.local
+  hosts: rui
   remote_user: hayato
   gather_facts: false
   become: true
@@ -13,7 +14,9 @@
     - inventories/host_vars/hosts_hayaworld.yml
 
   handlers:
-    - import_tasks: handlers/main.yml
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
 
   tasks:
     - name: Set Hostname
@@ -22,9 +25,11 @@
       tags:
         - network
 
-    - import_tasks: tasks/authorized_keys.yml
+    - name: Put authorized Key
+      ansible.builtin.import_tasks:
+        file: tasks/authorized_keys.yml
 
-    - name: put motd
+    - name: Put motd
       ansible.builtin.copy:
         src: templates/rui/etc/motd
         dest: /etc/motd
@@ -45,15 +50,23 @@
         - system
 
     - name: Show hosts(5)
-      debug:
+      ansible.builtin.debug:
         msg: "{{ lookup('template', './templates/rui/etc/hosts.j2') }}"
       tags:
         - debug
         - dryrun
 
-    - import_tasks: tasks/rui/dnsmasq.yml
-    - import_tasks: tasks/rui/journalctl.yml
-    - import_tasks: tasks/rui/rsyslog-rui.yml
+    - name: Setup dnsmask
+      ansible.builtin.import_tasks:
+        file: tasks/rui/dnsmasq.yml
+
+    - name: Setup journalctl
+      ansible.builtin.import_tasks:
+        file: tasks/rui/journalctl.yml
+
+    - name: Setup rsyslog
+      ansible.builtin.import_tasks:
+        file: tasks/rui/rsyslog-rui.yml
       tags:
         - rsyslog
         - dnsmasq
