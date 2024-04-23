@@ -12,6 +12,7 @@
     - inventories/host_vars/rui/ads_hosts/NXDOMAIN_book_scam.yml
     - inventories/host_vars/rui/rui.yml
     - inventories/host_vars/hosts_hayaworld.yml
+    - inventories/host_vars/networks.yml
 
   handlers:
     - name: Restart handler tasks
@@ -29,15 +30,11 @@
       ansible.builtin.import_tasks:
         file: tasks/authorized_keys.yml
 
-    - name: Put motd
-      ansible.builtin.copy:
-        src: templates/rui/etc/motd
-        dest: /etc/motd
-        owner: root
-        group: root
-        mode: '0644'
-      tags:
-        - system
+    - name: Put motd file
+      ansible.builtin.import_tasks:
+        file: tasks/motd.yml
+      vars:
+        shortname: "{{ network.rui.shortname }}"
 
     - name: Disable SELinux
       ansible.builtin.copy:

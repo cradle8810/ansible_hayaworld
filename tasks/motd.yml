@@ -1,0 +1,10 @@
+---
+- name: Put motd
+  ansible.builtin.copy:
+    src: "templates/{{ shortname }}/etc/motd"
+    dest: /etc/motd
+    owner: root
+    group: root
+    mode: '0644'
+  tags:
+    - system

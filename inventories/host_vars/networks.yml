@@ -1,39 +1,53 @@
 ---
 network:
+  rui:
+    hostname: rui.hayaworld.local
+    interface: ens160
+    ipv4: 192.168.1.100
+    shortname: rui
   console:
     hostname: console.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.105
+    shortname: console
   runner:
     hostname: runner.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.104
+    shortname: runner
   docker:
     hostname: docker.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.106
+    shortname: docker
   haru:
     hostname: haru.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.108
+    shortname: haru
   bsd:
     hostname: bsd.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.109
+    shortname: bsd
   jenkins:
     hostname: jenkins.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.111
+    shortname: jenkins
   tm:
     hostname: tm.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.112
+    shortname: tm
   skylark:
     hostname: skylark.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.200
+    shortname: skylark
   macbook:
     hostname: HayabookAir2023.hayaworld.local
+    shortname: HayabookAir2023
   subnet: 24
   gw4: 192.168.1.1
   dns4:

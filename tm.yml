@@ -25,15 +25,11 @@
       ansible.builtin.import_tasks:
         file: tasks/authorized_keys.yml
 
-    - name: Put motd
-      ansible.builtin.copy:
-        src: templates/tm/etc/motd
-        dest: /etc/motd
-        owner: root
-        group: root
-        mode: '0644'
-      tags:
-        - system
+    - name: Put motd file
+      ansible.builtin.import_tasks:
+        file: tasks/motd.yml
+      vars:
+        shortname: "{{ network.tm.shortname }}"
 
     - name: Disable SELinux
       ansible.builtin.copy:
