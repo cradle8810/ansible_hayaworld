@@ -1,5 +1,6 @@
 ---
-- hosts: skylark
+- name: Play for skylark.hayaworld.local
+  hosts: skylark
   remote_user: hayato
   gather_facts: false
   become: true
@@ -9,7 +10,9 @@
     - inventories/host_vars/networks.yml
 
   handlers:
-    - include: handlers/main.yml
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
 
   tasks:
     - name: Set Hostname
@@ -18,9 +21,11 @@
       tags:
         - network
 
-    - include: tasks/authorized_keys.yml
+    - name: Put authorized Key
+      ansible.builtin.import_tasks:
+        file: tasks/authorized_keys.yml
 
-    - name: put motd
+    - name: Put motd
       ansible.builtin.copy:
         src: templates/skylark/etc/motd
         dest: /etc/motd
@@ -40,20 +45,46 @@
       tags:
         - system
 
-    - include: tasks/timezone.yml
+    - name: Set Timezones
+      ansible.builtin.import_tasks:
+        file: tasks/timezone.yml
 
-    - include: tasks/skylark/mount.yml
-    - include: tasks/skylark/xfs_tuning.yml
+    - name: Set mount(5)
+      ansible.builtin.import_tasks:
+        file: tasks/skylark/mount.yml
 
-    - include: tasks/skylark/samba.yml
-    - include: tasks/skylark/install-supplicant-programs.yml
+    - name: Set XFS tuning
+      ansible.builtin.import_tasks:
+        file: tasks/skylark/xfs_tuning.yml
 
-    - include: tasks/skylark/firewall.yml
+    - name: Set samba
+      ansible.builtin.import_tasks:
+        file: tasks/skylark/samba.yml
 
-    - include: tasks/zabbix-agent2.yml
+    - name: Install supplicant programs
+      ansible.builtin.import_tasks:
+        file: tasks/skylark/install-supplicant-programs.yml
 
-    - include: tasks/stop-apt-daily.yml
-    - include: tasks/stop-cloud-init.yml
-    - include: tasks/stop-multipathd-syslog.yml
+    - name: Set Firewalls
+      ansible.builtin.import_tasks:
+        file: tasks/console/firewall.yml
 
-    - include: tasks/skylark/backupscripts.yml
+    - name: Set zabbix agent
+      ansible.builtin.import_tasks:
+        file: tasks/zabbix-agent2.yml
+
+    - name: Stop Apt-daily
+      ansible.builtin.import_tasks:
+        file: tasks/stop-apt-daily.yml
+
+    - name: Stop cloud-init
+      ansible.builtin.import_tasks:
+        file: tasks/stop-cloud-init.yml
+
+    - name: Stop multipathd logging when running on VM
+      ansible.builtin.import_tasks:
+        file: tasks/stop-multipathd-syslog.yml
+
+    - name: Put backup scripts
+      ansible.builtin.import_tasks:
+        file: tasks/skylark/backupscripts.yml
