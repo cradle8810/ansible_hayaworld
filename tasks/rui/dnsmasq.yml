@@ -5,12 +5,13 @@
     dest: /etc/dnsmasq.conf
     owner: root
     group: root
+    mode: '0644'
   notify: "Restart dnsmasq"
   tags:
     - dnsmasq
 
 - name: Show dnsmasq.conf
-  debug:
+  ansible.builtin.debug:
     msg: "{{ lookup('template', './templates/rui/etc/dnsmasq.conf.j2') }}"
   tags:
     - debug
@@ -22,12 +23,13 @@
     dest: /etc/dnsmasq.d/resolv.txt
     owner: root
     group: root
+    mode: '0644'
   notify: "Restart dnsmasq"
   tags:
     - dnsmasq
 
 - name: Show dnsmasq.resolv.txt
-  debug:
+  ansible.builtin.debug:
     msg: "{{ lookup('template', './templates/rui/etc/dnsmasq.d/resolv.txt.j2') }}"
   tags:
     - debug
@@ -39,12 +41,13 @@
     dest: /etc/dnsmasq.d/dhcp_static.conf
     owner: root
     group: root
+    mode: '0644'
   notify: "Restart dnsmasq"
   tags:
     - dnsmasq
 
 - name: Show static DHCP config
-  debug:
+  ansible.builtin.debug:
     msg: "{{ lookup('template', './templates/rui/etc/dnsmasq.d/dhcp_static.conf.j2') }}"
   tags:
     - debug
@@ -56,12 +59,13 @@
     dest: /etc/dnsmasq.d/cname.conf
     owner: root
     group: root
+    mode: '0644'
   notify: "Restart dnsmasq"
   tags:
     - dnsmasq
 
 - name: Show cname config
-  debug:
+  ansible.builtin.debug:
     msg: "{{ lookup('template', './templates/rui/etc/dnsmasq.d/cname.conf.j2') }}"
   tags:
     - debug
@@ -73,12 +77,13 @@
     dest: /etc/dnsmasq.d/blocklist.conf
     owner: root
     group: root
+    mode: '0644'
   notify: "Restart dnsmasq"
   tags:
     - dnsmasq
 
 - name: Show cname config
-  debug:
+  ansible.builtin.debug:
     msg: "{{ lookup('template', './templates/rui/etc/dnsmasq.d/blocklist.conf.j2') }}"
   tags:
     - debug
@@ -90,6 +95,7 @@
     dest: /etc/hosts
     owner: root
     group: root
+    mode: '0644'
   notify: "Restart dnsmasq"
   tags:
     - dnsmasq

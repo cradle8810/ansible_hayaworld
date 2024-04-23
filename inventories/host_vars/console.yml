@@ -1,5 +1,4 @@
 ---
-
 apt:
   - ansible
   - curl
@@ -10,10 +9,10 @@ apt:
   - golang
   - gpgv2
   - gprename
-  - heif-thumbnailer 
+  - heif-thumbnailer
   - htop
   - jq
-  - libaacs0 
+  - libaacs0
   - libbluray-bdj
   - libbluray2
   - libdvd-pkg

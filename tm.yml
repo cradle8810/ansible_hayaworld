@@ -1,5 +1,6 @@
 ---
-- hosts: tm
+- name: Play for tm.hayaworld.local
+  hosts: tm
   remote_user: hayato
   gather_facts: false
   become: true
@@ -9,7 +10,9 @@
     - inventories/host_vars/networks.yml
 
   handlers:
-    - include: handlers/main.yml
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
 
   tasks:
     - name: Set Hostname
@@ -18,9 +21,11 @@
       tags:
         - network
 
-    - include: tasks/authorized_keys.yml
+    - name: Put authorized Key
+      ansible.builtin.import_tasks:
+        file: tasks/authorized_keys.yml
 
-    - name: put motd
+    - name: Put motd
       ansible.builtin.copy:
         src: templates/tm/etc/motd
         dest: /etc/motd

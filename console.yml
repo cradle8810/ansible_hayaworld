@@ -1,5 +1,6 @@
 ---
-- hosts: console
+- name: Play for console.hayaworld.local
+  hosts: console
   remote_user: hayato
   gather_facts: false
   become: true
@@ -9,7 +10,9 @@
     - inventories/host_vars/networks.yml
 
   handlers:
-    - import_tasks: handlers/main.yml
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
 
   tasks:
     - name: Set Hostname
@@ -18,9 +21,11 @@
       tags:
         - network
 
-    - import_tasks: tasks/authorized_keys.yml
+    - name: Put authorized Key
+      ansible.builtin.import_tasks:
+        file: tasks/authorized_keys.yml
 
-    - name: put motd
+    - name: Put /etc/motd
       ansible.builtin.copy:
         src: templates/console/etc/motd
         dest: /etc/motd
@@ -30,7 +35,7 @@
       tags:
         - system
 
-    - name: put GUI session rc
+    - name: Put GUI session rc
       ansible.builtin.copy:
         src: templates/console/home/hayato/.xsessionrc
         dest: /home/hayato/.xsessionrc
@@ -50,11 +55,22 @@
       tags:
         - system
 
-    - import_tasks: tasks/timezone.yml
+    - name: Set Timezones
+      ansible.builtin.import_tasks:
+        file: tasks/timezone.yml
 
-    - import_tasks: tasks/console/firewall.yml
+    - name: Set Firewalls
+      ansible.builtin.import_tasks:
+        file: tasks/console/firewall.yml
 
-    - import_tasks: tasks/console/apt.yml
-    - import_tasks: tasks/console/install_rename.yml
+    - name: Apt install
+      ansible.builtin.import_tasks:
+        file: tasks/console/apt.yml
 
-    - import_tasks: tasks/stop-apt-daily.yml
+    - name: Install Pre-builded Rename-util
+      ansible.builtin.import_tasks:
+        file: tasks/console/install_rename.yml
+
+    - name: Stop Apt-daily
+      ansible.builtin.import_tasks:
+        file: tasks/stop-apt-daily.yml

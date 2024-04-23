@@ -23,4 +23,3 @@
   become: true
   tags:
     - symlink
-  

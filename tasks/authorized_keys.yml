@@ -1,5 +1,5 @@
 ---
-- name: "mkdir ~/.ssh/"
+- name: "Make directory ~/.ssh/"
   ansible.builtin.file:
     path: /home/hayato/.ssh/
     state: directory
@@ -7,7 +7,7 @@
   tags:
     - authorized_keys
 
-- name: "put authorized_keys"
+- name: "Put authorized_keys"
   ansible.builtin.file:
     src:
     dest: /home/hayato/.ssh/authorized_keys
