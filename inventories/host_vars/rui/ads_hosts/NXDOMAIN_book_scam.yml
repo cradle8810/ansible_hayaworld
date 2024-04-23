@@ -1,5 +1,5 @@
 ---
-NXDOMAIN_BOOK_SCAM:
+nxdomain_book_scam:
   - api.bp.demo.unhaggle.com
   - api.guiase.com.br
   - bcts.bergen.org
