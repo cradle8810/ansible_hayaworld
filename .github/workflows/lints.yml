@@ -22,5 +22,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Restore pip cache
+        uses: actions/cache/restore@v4
+        with:
+          path: /home/runner/.cache/pip
+          key: ansible-hayaworld-pip-cache
+
       - name: Run Ansible-lint
         uses: ansible/ansible-lint@main
+
+      - name: Store pip cache
+        uses: actions/cache/save@v4
+        with:
+          path: /home/runner/.cache/pip
+          key: ansible-hayaworld-pip-cache
