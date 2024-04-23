@@ -5,6 +5,7 @@
     dest: /etc/avahi/services/ssh.service
     owner: root
     group: root
+    mode: '0644'
   notify: "Restart avahi-daemon"
   tags:
     - avahi-daemon
@@ -15,6 +16,7 @@
     dest: /etc/avahi/avahi-daemon.conf
     owner: root
     group: root
+    mode: '0644'
   notify: "Restart avahi-daemon"
   tags:
     - avahi-daemon
