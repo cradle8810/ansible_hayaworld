@@ -10,7 +10,7 @@
     - inventories/host_vars/rui/dhcphosts.yml
     - inventories/host_vars/rui/ads_hosts/NXDOMAIN.yml
     - inventories/host_vars/rui/ads_hosts/NXDOMAIN_book_scam.yml
-    - inventories/host_vars/rui/rui.yml
+    - inventories/host_vars/rui.yml
     - inventories/host_vars/hosts_hayaworld.yml
     - inventories/host_vars/networks.yml
 

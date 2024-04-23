@@ -1,15 +1,4 @@
 ---
-network:
-  rui:
-    hostname: rui.hayaworld.local
-    interface: ens160
-    ipv4: 192.168.1.100
-    subnet: 24
-    gw4: 192.168.1.1
-    dns4:
-      - 202.232.2.3
-      - 202.232.2.2
-
 apt:
   - avahi-daemon
   - binutils
@@ -41,7 +30,7 @@ dnsmasq:
   dhcp_option:
     ntp_server: 210.130.188.10
     dns_server: "{{ network.rui.ipv4 }}"
-    router: "{{ network.rui.gw4 }}"
+    router: "{{ network.gw4 }}"
     netmask: "255.255.255.0"
   dns:
     cache_size: 4000
