@@ -14,6 +14,7 @@ brew_taps:
   - p7zip
   - pdftoipe
   - toilet
+  - util-linux
   - wget
   - x264
   - x265
