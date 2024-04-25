@@ -7,8 +7,6 @@
     group: root
     mode: '0644'
   notify: "Restart dnsmasq"
-  tags:
-    - dnsmasq
 
 - name: Add dnsmasq.resolv.txt
   ansible.builtin.template:
@@ -18,8 +16,6 @@
     group: root
     mode: '0644'
   notify: "Restart dnsmasq"
-  tags:
-    - dnsmasq
 
 - name: Add static DHCP config
   ansible.builtin.template:
@@ -29,8 +25,6 @@
     group: root
     mode: '0644'
   notify: "Restart dnsmasq"
-  tags:
-    - dnsmasq
 
 - name: Add cname config
   ansible.builtin.template:
@@ -40,8 +34,6 @@
     group: root
     mode: '0644'
   notify: "Restart dnsmasq"
-  tags:
-    - dnsmasq
 
 - name: Add NXDOMAIN (Ads Block) config
   ansible.builtin.template:
@@ -51,8 +43,6 @@
     group: root
     mode: '0644'
   notify: "Restart dnsmasq"
-  tags:
-    - dnsmasq
 
 - name: Add hosts(5)
   ansible.builtin.template:
@@ -62,5 +52,3 @@
     group: root
     mode: '0644'
   notify: "Restart dnsmasq"
-  tags:
-    - dnsmasq
