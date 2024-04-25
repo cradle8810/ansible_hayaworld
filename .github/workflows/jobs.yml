@@ -1,0 +1,63 @@
+---
+name: Hayaworld Ansible Jobs
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  Yamllint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run YAML Lint
+        run: yamllint --strict --format github .
+
+  AnsibleLint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Ansible-lint
+        uses: ansible/ansible-lint@main
+
+  Duplicate_Check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Add exec flag to dupcheck.sh
+        run: "chmod +x ./dupcheck.sh"
+
+      - name: NXDOMAIN_Duplicate_Check
+        run: >
+          "./dupcheck.sh"
+          "inventories/host_vars/rui/ads_hosts/NXDOMAIN.yml"
+
+  Ansible-rui-dns:
+    needs:
+      - Yamllint
+      - AnsibleLint
+      - Duplicate_Check
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare environments (ansible-galaxy)
+        run: |
+          ansible-galaxy install -r requirements.yml
+
+      - name: "ansible-playbook -C --tags dnsmasq rui.yml"
+        run: |
+          ansible-playbook \
+            -i inventories \
+            -C \
+            --tags dnsmasq \
+            --ssh-extra-args='-o StrictHostKeyChecking=no' \
+            --extra-vars "ansible_sudo_pass=${{ secrets.SUDO }}" \
+            rui.yml

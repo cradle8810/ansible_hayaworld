@@ -1,0 +1,22 @@
+---
+name: Update DNS for rui
+
+on:
+  workflow_run:
+    workflows: ["AnsibleLint"]
+    types: ["completed"]
+
+jobs:
+  Dryrun:
+    runs-on: self-hosted
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: "ansible-play -C --tags dnsmasq rui.yml"
+        run: |
+          ansible-playbook \
+            -i inventories -C \
+            --tags dnsmasq \
+            rui.yml
