@@ -1,0 +1,107 @@
+---
+name: Hayaworld Ansible Jobs
+on:
+  push:
+    branches:
+      - '**'
+  workflow_dispatch:
+
+jobs:
+  Yamllint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run YAML Lint
+        run: yamllint --strict --format github .
+
+  AnsibleLint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Ansible-lint
+        uses: ansible/ansible-lint@main
+
+  Duplicate_Check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Add exec flag to dupcheck.sh
+        run: "chmod +x ./dupcheck.sh"
+
+      - name: NXDOMAIN_Duplicate_Check
+        run: >
+          "./dupcheck.sh"
+          "inventories/host_vars/rui/ads_hosts/NXDOMAIN.yml"
+
+  Detect_File_Changed:
+    runs-on: ubuntu-latest
+    outputs:
+      rui: ${{ steps.changes.outputs.rui }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check What file were changed
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            rui:
+              - 'rui.yml'
+              - 'tasks/rui/dnsmasq.yml'
+              - 'inventories/host_vars/rui/**'
+
+  Dry_Run_ansible:
+    if: ${{ needs.Detect_File_Changed.outputs.rui == 'true' }}
+    needs:
+      - Yamllint
+      - AnsibleLint
+      - Duplicate_Check
+      - Detect_File_Changed
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare environments (ansible-galaxy)
+        run: |
+          ansible-galaxy install -r requirements.yml
+
+      - name: "ansible-playbook -C --tags dnsmasq rui.yml"
+        run: |
+          ansible-playbook \
+            -i inventories \
+            -C \
+            --tags dnsmasq \
+            --ssh-extra-args='-o StrictHostKeyChecking=no' \
+            --extra-vars "ansible_sudo_pass=${{ secrets.SUDO }}" \
+            rui.yml
+
+  Run_ansible:
+    # if file for rui changed and master branch
+    if: "${{ needs.Detect_File_Changed.outputs.rui == 'true' && github.ref == 'refs/heads/master'}}"
+    needs:
+      - Dry_Run_ansible
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare environments (ansible-galaxy)
+        run: |
+          ansible-galaxy install -r requirements.yml
+
+      - name: "ansible-playbook --tags dnsmasq rui.yml"
+        run: |
+          ansible-playbook \
+            -i inventories \
+            --tags dnsmasq \
+            --ssh-extra-args='-o StrictHostKeyChecking=no' \
+            --extra-vars "ansible_sudo_pass=${{ secrets.SUDO }}" \
+            rui.yml

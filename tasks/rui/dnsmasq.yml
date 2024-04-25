@@ -7,15 +7,6 @@
     group: root
     mode: '0644'
   notify: "Restart dnsmasq"
-  tags:
-    - dnsmasq
-
-- name: Show dnsmasq.conf
-  ansible.builtin.debug:
-    msg: "{{ lookup('template', './templates/rui/etc/dnsmasq.conf.j2') }}"
-  tags:
-    - debug
-    - dryrun
 
 - name: Add dnsmasq.resolv.txt
   ansible.builtin.template:
@@ -25,15 +16,6 @@
     group: root
     mode: '0644'
   notify: "Restart dnsmasq"
-  tags:
-    - dnsmasq
-
-- name: Show dnsmasq.resolv.txt
-  ansible.builtin.debug:
-    msg: "{{ lookup('template', './templates/rui/etc/dnsmasq.d/resolv.txt.j2') }}"
-  tags:
-    - debug
-    - dryrun
 
 - name: Add static DHCP config
   ansible.builtin.template:
@@ -43,15 +25,6 @@
     group: root
     mode: '0644'
   notify: "Restart dnsmasq"
-  tags:
-    - dnsmasq
-
-- name: Show static DHCP config
-  ansible.builtin.debug:
-    msg: "{{ lookup('template', './templates/rui/etc/dnsmasq.d/dhcp_static.conf.j2') }}"
-  tags:
-    - debug
-    - dryrun
 
 - name: Add cname config
   ansible.builtin.template:
@@ -61,15 +34,6 @@
     group: root
     mode: '0644'
   notify: "Restart dnsmasq"
-  tags:
-    - dnsmasq
-
-- name: Show cname config
-  ansible.builtin.debug:
-    msg: "{{ lookup('template', './templates/rui/etc/dnsmasq.d/cname.conf.j2') }}"
-  tags:
-    - debug
-    - dryrun
 
 - name: Add NXDOMAIN (Ads Block) config
   ansible.builtin.template:
@@ -79,15 +43,6 @@
     group: root
     mode: '0644'
   notify: "Restart dnsmasq"
-  tags:
-    - dnsmasq
-
-- name: Show cname config
-  ansible.builtin.debug:
-    msg: "{{ lookup('template', './templates/rui/etc/dnsmasq.d/blocklist.conf.j2') }}"
-  tags:
-    - debug
-    - dryrun
 
 - name: Add hosts(5)
   ansible.builtin.template:
@@ -97,5 +52,3 @@
     group: root
     mode: '0644'
   notify: "Restart dnsmasq"
-  tags:
-    - dnsmasq
