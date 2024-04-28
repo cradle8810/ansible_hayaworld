@@ -30,7 +30,7 @@ dnsmasq:
   dhcp_option:
     ntp_server: 210.130.188.10
     dns_server: "{{ network.rui.ipv4 }}"
-    router: "{{ network.gw4 }}"
+    router: "{{ subnet.gw4 }}"
     netmask: "255.255.255.0"
   dns:
     cache_size: 4000

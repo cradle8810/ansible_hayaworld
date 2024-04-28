@@ -29,3 +29,9 @@
       tags:
         - symlink
         - symlinks
+
+    - name: Put ~/.ssh/config
+      ansible.builtin.import_tasks:
+        file: tasks/macbook/home_ssh_config.yml
+      tags:
+        - ssh
