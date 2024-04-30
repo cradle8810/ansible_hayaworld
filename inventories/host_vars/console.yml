@@ -24,6 +24,7 @@ apt:
   - p7zip-full
   - python3-pip
   - samba-common
+  - sshpass
   - vim
   - vlc
   - wireshark
