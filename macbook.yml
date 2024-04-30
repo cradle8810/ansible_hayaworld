@@ -12,7 +12,7 @@
   tasks:
     - name: Set Hostname
       ansible.builtin.hostname:
-        name: "{{ network.macbook.hostname }}"
+        name: "{{ network_dhcp.macbook.hostname }}"
       become: true
       tags:
         - network
