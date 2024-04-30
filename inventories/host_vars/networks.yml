@@ -1,5 +1,20 @@
 ---
 network:
+  vcsa:
+    hostname: vcsa.hayaworld.local
+    interface: ens160
+    ipv4: 192.168.1.10
+    shortname: vcsa
+  nuc01:
+    hostname: nuc01.hayaworld.local
+    interface: vmk0
+    ipv4: 192.168.1.11
+    shortname: nuc01
+  nuc02:
+    hostname: nuc02.hayaworld.local
+    interface: vmk0
+    ipv4: 192.168.1.12
+    shortname: nuc02
   rui:
     hostname: rui.hayaworld.local
     interface: ens160
