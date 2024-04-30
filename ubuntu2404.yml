@@ -74,3 +74,15 @@
     - name: Stop Apt-daily
       ansible.builtin.import_tasks:
         file: tasks/stop-apt-daily.yml
+
+    - name: Enable RDP daemon
+      ansible.builtin.service:
+        name: xrdp
+        enabled: true
+        state: started
+
+    - name: Enable ssh daemon
+      ansible.builtin.service:
+        name: ssh
+        enabled: true
+        state: started
