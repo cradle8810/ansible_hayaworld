@@ -10,6 +10,7 @@ brew_taps:
   - libaacs
   - libde265
   - libheif
+  - mas
   - nkf
   - p7zip
   - pdftoipe
