@@ -9,7 +9,7 @@
 
 - name: "Put authorized_keys"
   ansible.builtin.file:
-    src:
+    src: templates/home/hayato/.ssh/authorized_keys
     dest: /home/hayato/.ssh/authorized_keys
     owner: hayato
     group: hayato
