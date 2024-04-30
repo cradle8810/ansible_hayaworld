@@ -2,3 +2,4 @@
 
 apt:
   - avahi-daemon
+  - open-vm-tools
