@@ -1,0 +1,30 @@
+---
+apt:
+  - ansible
+  - curl
+  - emacs
+  - ffmpegthumbnailer
+  - gimp
+  - git
+  - golang
+  - google-chrome-stable
+  - gpg
+  - gprename
+  - heif-thumbnailer
+  - htop
+  - jq
+  - libaacs0
+  - libbluray-bdj
+  - libbluray2
+  - libdvd-pkg
+  - libheif1
+  - openssh-server
+  - openssl
+  - p7zip-full
+  - python3-pip
+  - samba-common
+  - vim
+  - vlc
+  - wireshark
+  - xrdp
+  - zsh
