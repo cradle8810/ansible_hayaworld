@@ -10,3 +10,9 @@ drives:
     mountpoint: /backup
     filesystem: "xfs"
     options: "defaults,users"
+
+apt:
+  - open-vm-tools
+  - ffmpeg
+  - renameutils
+  - wget

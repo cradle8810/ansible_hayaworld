@@ -9,6 +9,7 @@ apt:
   - expat
   - git
   - iptables
+  - open-vm-tools
   - perl
   - python3
   - rsync
