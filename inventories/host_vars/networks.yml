@@ -25,16 +25,6 @@ network:
     interface: ens160
     ipv4: 192.168.1.106
     shortname: zabbix
-  haru:
-    hostname: haru.hayaworld.local
-    interface: ens160
-    ipv4: 192.168.1.108
-    shortname: haru
-  bsd:
-    hostname: bsd.hayaworld.local
-    interface: ens160
-    ipv4: 192.168.1.109
-    shortname: bsd
   step:
     hostname: step.hayaworld.local
     interface: ens160
