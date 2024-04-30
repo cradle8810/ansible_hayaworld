@@ -5,6 +5,11 @@ network:
     interface: ens160
     ipv4: 192.168.1.100
     shortname: rui
+  win10:
+    hostname: step.hayaworld.local
+    interface: ens160
+    ipv4: 192.168.1.101
+    shortname: win10
   console:
     hostname: console.hayaworld.local
     interface: ens160
@@ -15,11 +20,11 @@ network:
     interface: ens160
     ipv4: 192.168.1.104
     shortname: runner
-  docker:
-    hostname: docker.hayaworld.local
+  zabbix:
+    hostname: zabbix.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.106
-    shortname: docker
+    shortname: zabbix
   haru:
     hostname: haru.hayaworld.local
     interface: ens160
@@ -30,36 +35,27 @@ network:
     interface: ens160
     ipv4: 192.168.1.109
     shortname: bsd
-  jenkins:
-    hostname: jenkins.hayaworld.local
-    interface: ens160
-    ipv4: 192.168.1.131
-    shortname: jenkins
-  tm:
-    hostname: tm.hayaworld.local
-    interface: ens160
-    ipv4: 192.168.1.112
-    shortname: tm
-  skylark:
-    hostname: skylark.hayaworld.local
-    interface: ens160
-    ipv4: 192.168.1.200
-    shortname: skylark
   step:
     hostname: step.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.111
     shortname: step
-  win10:
-    hostname: step.hayaworld.local
+  tm:
+    hostname: tm.hayaworld.local
     interface: ens160
-    ipv4: 192.168.1.101
-    shortname: win10
-  zabbix:
-    hostname: zabbix.hayaworld.local
+    ipv4: 192.168.1.112
+    shortname: tm
+  jenkins:
+    hostname: jenkins.hayaworld.local
     interface: ens160
-    ipv4: 192.168.1.106
-    shortname: zabbix
+    ipv4: 192.168.1.131
+    shortname: jenkins
+  skylark:
+    hostname: skylark.hayaworld.local
+    interface: ens160
+    ipv4: 192.168.1.200
+    shortname: skylark
+
 
 network_dhcp:
   macbook:
