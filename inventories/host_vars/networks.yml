@@ -45,10 +45,11 @@ network:
     interface: ens160
     ipv4: 192.168.1.200
     shortname: skylark
+
+network_dhcp:
   macbook:
     hostname: HayabookAir2023.hayaworld.local
     shortname: HayabookAir2023
-
 
 subnet:
   mask: 24
