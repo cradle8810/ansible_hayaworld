@@ -25,6 +25,11 @@ network:
     interface: ens160
     ipv4: 192.168.1.106
     shortname: zabbix
+  ubuntu2404:
+    hostname: ubuntu2404.hayaworld.local
+    interface: ens160
+    ipv4: 192.168.1.107
+    shortname: ubuntu2404
   step:
     hostname: step.hayaworld.local
     interface: ens160
