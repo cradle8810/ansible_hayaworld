@@ -29,7 +29,7 @@
       ansible.builtin.import_tasks:
         file: tasks/motd.yml
       vars:
-        shortname: "{{ network.console.shortname }}"
+        shortname: "{{ network.ubuntu2404.shortname }}"
 
     - name: Put GUI session rc
       ansible.builtin.copy:
