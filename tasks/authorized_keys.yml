@@ -8,7 +8,7 @@
     - authorized_keys
 
 - name: "Put authorized_keys"
-  ansible.builtin.file:
+  ansible.builtin.copy:
     src: templates/home/hayato/.ssh/authorized_keys
     dest: /home/hayato/.ssh/authorized_keys
     owner: hayato
