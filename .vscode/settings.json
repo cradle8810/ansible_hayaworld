@@ -1,5 +1,0 @@
-{
-  "yaml.schemas": {
-    "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible-lint-config.json": "file:///home/hayato/Git/ansible_hayaworld/tasks/sns_dl_linux.yml"
-  }
-}
