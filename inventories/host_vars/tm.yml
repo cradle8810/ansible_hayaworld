@@ -1,5 +1,11 @@
 ---
-
 apt:
   - avahi-daemon
   - open-vm-tools
+
+drives:
+  tm:
+    uuid: 73830e17-83a3-4e66-807c-035db619fb63
+    mountpoint: /tm
+    filesystem: "xfs"
+    options: "defaults,noatime"
