@@ -1,0 +1,8 @@
+---
+- name: Mount up device tm
+  ansible.posix.mount:
+    path: "{{ drives.tm.mountpoint }}"
+    src: "UUID={{ drives.tm.uuid }}"
+    fstype: "{{ drives.tm.filesystem }}"
+    opts: "{{ drives.tm.options }}"
+    state: present

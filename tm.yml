@@ -2,7 +2,7 @@
 - name: Play for tm.hayaworld.local
   hosts: tm
   remote_user: hayato
-  gather_facts: false
+  gather_facts: true
   become: true
 
   vars_files:
@@ -32,11 +32,37 @@
         shortname: "{{ network.tm.shortname }}"
 
     - name: Disable SELinux
-      ansible.builtin.copy:
-        src: templates/etc/selinux/config
-        dest: /etc/selinux/config
-        owner: root
-        group: root
-        mode: '0644'
-      tags:
-        - system
+      ansible.builtin.import_tasks:
+        file: tasks/stop-selinux.yml
+
+    - name: Set Timezones
+      ansible.builtin.import_tasks:
+        file: tasks/timezone.yml
+
+    - name: Set mount(5)
+      ansible.builtin.import_tasks:
+        file: tasks/tm/mount.yml
+
+    - name: Set XFS tuning
+      ansible.builtin.import_tasks:
+        file: tasks/skylark/xfs_tuning.yml
+
+    - name: Set samba
+      ansible.builtin.import_tasks:
+        file: tasks/tm/samba.yml
+
+    - name: Set zabbix agent
+      ansible.builtin.import_tasks:
+        file: tasks/zabbix-agent2.yml
+
+    - name: Stop Apt-daily
+      ansible.builtin.import_tasks:
+        file: tasks/stop-apt-daily.yml
+
+    - name: Stop cloud-init
+      ansible.builtin.import_tasks:
+        file: tasks/stop-cloud-init.yml
+
+    - name: Stop multipathd logging when running on VM
+      ansible.builtin.import_tasks:
+        file: tasks/stop-multipathd-syslog.yml
