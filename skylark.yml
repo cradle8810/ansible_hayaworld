@@ -2,7 +2,7 @@
 - name: Play for skylark.hayaworld.local
   hosts: skylark
   remote_user: hayato
-  gather_facts: false
+  gather_facts: true
   become: true
 
   vars_files:

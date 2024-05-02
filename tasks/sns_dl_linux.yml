@@ -19,7 +19,13 @@
     remote_src: true
     mode: "0755"
 
- # https://github.com/instaloader/instaloader
-- name: Download instaloader
+ # https://gihub.com/instaloader/instaloader
+- name: Download instaloader (Linux)
   ansible.builtin.pip:
     name: instaloader
+  when: ansible_distribution != 'Darwin' 
+
+- name: Download instaloader (macOS)
+  community.general.pipx:
+    name: instaloader  
+  when: ansible_distribution == 'Darwin' 

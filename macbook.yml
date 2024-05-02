@@ -3,7 +3,7 @@
   hosts: macbook
   connection: local
   remote_user: hayato
-  gather_facts: false
+  gather_facts: true
 
   vars_files:
     - inventories/host_vars/macbook.yml
