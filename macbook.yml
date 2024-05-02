@@ -23,6 +23,11 @@
       tags:
         - brew
 
+    - name: Install Pre-builded SNS downloaders
+      ansible.builtin.import_tasks:
+        file: tasks/sns_dl_linux.yml
+      become: true
+
     - name: Make symlinks
       ansible.builtin.import_tasks:
         file: tasks/macbook/symlinks.yml

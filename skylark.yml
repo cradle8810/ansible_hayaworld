@@ -69,6 +69,10 @@
       ansible.builtin.import_tasks:
         file: tasks/zabbix-agent2.yml
 
+    - name: Install Pre-builded SNS downloaders
+      ansible.builtin.import_tasks:
+        file: tasks/sns_dl_linux.yml
+
     - name: Stop Apt-daily
       ansible.builtin.import_tasks:
         file: tasks/stop-apt-daily.yml
