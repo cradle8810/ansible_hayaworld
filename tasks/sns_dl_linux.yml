@@ -10,10 +10,14 @@
     url: https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux
     dest: /opt/bin/yt-dlp
     checksum: sha256:6a04fddc3609d22736c39a23ba61913332689ade8380892aac846f4ced753c7b
-    mode: '0755'
+    mode: "0755"
 
- # - name: Download twitter-loader
- # https://github.com/mmpx12/twitter-media-downloader/releases/tag/v1.13.2
+- name: Download twitter-loader
+  ansible.builtin.unarchive:
+    src: "https://github.com/mmpx12/twitter-media-downloader/releases/download/v1.13.2/twitter-media-downloader-v1.13.2-linux-amd64.tar.gz"
+    dest: /opt/bin/
+    remote_src: true
+    mode: "0755"
 
  # https://github.com/instaloader/instaloader
 - name: Download instaloader
