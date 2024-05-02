@@ -20,6 +20,13 @@
     mode: "0755"
 
  # https://github.com/instaloader/instaloader
-- name: Download instaloader
+- name: Download instaloader (Linux)
   ansible.builtin.pip:
     name: instaloader
+  when: ansible_distribution != 'MacOSX'
+
+- name: Download instaloader (macOS)
+  ansible.builtin.pip:
+    name: instaloader
+    extra_args: "--break-system-packages --user"
+  when: ansible_distribution == 'MacOSX'

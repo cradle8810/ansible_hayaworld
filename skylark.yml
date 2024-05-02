@@ -2,7 +2,7 @@
 - name: Play for skylark.hayaworld.local
   hosts: skylark
   remote_user: hayato
-  gather_facts: false
+  gather_facts: true
   become: true
 
   vars_files:
@@ -68,6 +68,10 @@
     - name: Set zabbix agent
       ansible.builtin.import_tasks:
         file: tasks/zabbix-agent2.yml
+
+    - name: Install Pre-builded SNS downloaders
+      ansible.builtin.import_tasks:
+        file: tasks/sns_dl_linux.yml
 
     - name: Stop Apt-daily
       ansible.builtin.import_tasks:

@@ -4,6 +4,7 @@ brew_taps:
   - ansible
   - cmigemo
   - figlet
+  - gnu-tar
   - gnupg
   - htop
   - imagemagick
@@ -13,8 +14,10 @@ brew_taps:
   - mas
   - nkf
   - p7zip
+  - pipx
   - pdftoipe
   - toilet
+  - unzip
   - util-linux
   - wget
   - x264
