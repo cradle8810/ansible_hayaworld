@@ -23,9 +23,9 @@
 - name: Download instaloader (Linux)
   ansible.builtin.pip:
     name: instaloader
-  when: ansible_distribution != 'Darwin' 
+  when: ansible_distribution != 'MacOSX'
 
 - name: Download instaloader (macOS)
   community.general.pipx:
-    name: instaloader  
-  when: ansible_distribution == 'Darwin' 
+    name: instaloader
+  when: ansible_distribution == 'MacOSX'
