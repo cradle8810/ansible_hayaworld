@@ -27,6 +27,8 @@
       ansible.builtin.import_tasks:
         file: tasks/sns_dl_linux.yml
       become: true
+      tags:
+        - install
 
     - name: Make symlinks
       ansible.builtin.import_tasks:
