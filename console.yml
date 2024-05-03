@@ -14,6 +14,28 @@
       ansible.builtin.import_tasks:
         file: handlers/main.yml
 
+  roles:
+    - role: mrlesmithjr.netplan
+      any_errors_fatal: true
+      become: true
+      netplan_enabled: true
+      netplan_renderer: networkd
+      netplan_configuration:
+        network:
+          version: 2
+          ethernets:
+            ens160:
+              addresses:
+                - "{{ network.console.ipv4 }}/{{ subnet.mask }}"
+              nameservers:
+                addresses:
+                  "{{ subnet.dns4 }}"
+                search:
+                  "{{ subnet.search }}"
+              gateway4: "{{ subnet.gw4 }}"
+      tags:
+        - network
+
   tasks:
     - name: Set Hostname
       ansible.builtin.hostname:

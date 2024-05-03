@@ -1,6 +1,7 @@
 ---
 roles:
   - name: brianhartsock.avahi
+  - name: mrlesmithjr.netplan
 
 collections:
   - name: alvistack.gitlab
