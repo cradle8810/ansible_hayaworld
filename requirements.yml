@@ -3,6 +3,7 @@ roles:
   - name: brianhartsock.avahi
   - name: mrlesmithjr.netplan
   - name: geerlingguy.docker
+  - name: geerlingguy.jenkins
 
 collections:
   - name: alvistack.gitlab
