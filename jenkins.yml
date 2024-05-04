@@ -1,0 +1,51 @@
+---
+- name: Play for jenkins.hayaworld.local
+  hosts: jenkins
+  remote_user: hayato
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - inventories/host_vars/jenkins.yml
+    - inventories/host_vars/networks.yml
+
+  tasks:
+    - name: Set Hostname
+      ansible.builtin.hostname:
+        name: "{{ network.jenkins.hostname }}"
+      tags:
+        - network
+
+    - name: Put authorized Key
+      ansible.builtin.import_tasks:
+        file: tasks/authorized_keys.yml
+
+    - name: Put motd file
+      ansible.builtin.import_tasks:
+        file: tasks/motd.yml
+      vars:
+        shortname: "{{ network.jenkins.shortname }}"
+
+    - name: Disable SELinux
+      ansible.builtin.import_tasks:
+        file: tasks/stop-selinux.yml
+
+    - name: Set Timezones
+      ansible.builtin.import_tasks:
+        file: tasks/timezone.yml
+
+    - name: Set zabbix agent
+      ansible.builtin.import_tasks:
+        file: tasks/zabbix-agent2.yml
+
+    - name: Stop Apt-daily
+      ansible.builtin.import_tasks:
+        file: tasks/stop-apt-daily.yml
+
+    - name: Stop cloud-init
+      ansible.builtin.import_tasks:
+        file: tasks/stop-cloud-init.yml
+
+    - name: Stop multipathd logging when running on VM
+      ansible.builtin.import_tasks:
+        file: tasks/stop-multipathd-syslog.yml
