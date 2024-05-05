@@ -1,7 +1,7 @@
 ---
 drives:
   skylark:
-    uuid: a2288da0-8a90-4f96-ac3a-a859f01ac187
+    uuid: e456364a-f704-4602-9962-334898e05359
     mountpoint: /skylark
     filesystem: "xfs"
     options: "defaults,noatime"
