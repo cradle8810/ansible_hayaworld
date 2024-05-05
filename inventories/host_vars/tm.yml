@@ -5,7 +5,7 @@ apt:
 
 drives:
   tm:
-    uuid: 73830e17-83a3-4e66-807c-035db619fb63
+    uuid: 60688a7e-9c41-46f5-9b33-1e6d5996faff
     mountpoint: /tm
     filesystem: "xfs"
     options: "defaults,noatime"
