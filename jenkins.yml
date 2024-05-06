@@ -54,3 +54,10 @@
       tags:
         - jenkins
 
+    - name: Apt install
+      ansible.builtin.import_tasks:
+        file: tasks/console/apt.yml
+
+    - name: Install Pre-builded SNS downloaders
+      ansible.builtin.import_tasks:
+        file: tasks/sns_dl_linux.yml
