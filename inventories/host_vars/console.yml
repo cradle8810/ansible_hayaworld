@@ -17,7 +17,6 @@ apt:
   - libbluray-bdj
   - libbluray2
   - libdvd-pkg
-  - libdvdcss
   - libheif1
   - open-vm-tools
   - open-vm-tools-desktop
