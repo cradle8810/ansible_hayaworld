@@ -1,1 +1,4 @@
 ---
+apt:
+  - jq
+  - python3-pip
