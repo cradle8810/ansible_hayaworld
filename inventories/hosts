@@ -24,3 +24,6 @@
 
 [macbook]
 HayabookAir2023.hayaworld.local ansible_user=hayato
+
+[zabbix]
+192.168.1.106 ansible_user=hayato
