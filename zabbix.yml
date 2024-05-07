@@ -1,0 +1,42 @@
+---
+- name: Play for zabbix.hayaworld.local
+  hosts: zabbix
+  remote_user: hayato
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - inventories/host_vars/zabbix.yml
+    - inventories/host_vars/networks.yml
+
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+
+  tasks:
+    - name: Set Hostname
+      ansible.builtin.hostname:
+        name: "{{ network.zabbix.hostname }}"
+      tags:
+        - network
+
+    - name: Put authorized Key
+      ansible.builtin.import_tasks:
+        file: tasks/authorized_keys.yml
+
+    - name: Put motd file
+      ansible.builtin.import_tasks:
+        file: tasks/motd.yml
+      vars:
+        shortname: "{{ network.zabbix.shortname }}"
+
+    - name: Disable SELinux
+      ansible.builtin.copy:
+        src: templates/etc/selinux/config
+        dest: /etc/selinux/config
+        owner: root
+        group: root
+        mode: '0644'
+      tags:
+        - system
