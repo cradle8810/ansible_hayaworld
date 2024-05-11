@@ -1,0 +1,73 @@
+---
+- name: Play for runner.hayaworld.local
+  hosts: runner
+  remote_user: hayato
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - inventories/host_vars/runner.yml
+    - inventories/host_vars/networks.yml
+
+  tasks:
+    - name: Set Hostname
+      ansible.builtin.hostname:
+        name: "{{ network.runner.hostname }}"
+      tags:
+        - network
+
+    - name: Put authorized Key
+      ansible.builtin.import_tasks:
+        file: tasks/authorized_keys.yml
+
+    - name: Put motd file
+      ansible.builtin.import_tasks:
+        file: tasks/motd.yml
+      vars:
+        shortname: "{{ network.runner.shortname }}"
+
+    - name: Disable SELinux
+      ansible.builtin.import_tasks:
+        file: tasks/stop-selinux.yml
+
+    - name: Set Timezones
+      ansible.builtin.import_tasks:
+        file: tasks/timezone.yml
+
+    - name: Stop Apt-daily
+      ansible.builtin.import_tasks:
+        file: tasks/stop-apt-daily.yml
+
+    - name: Stop cloud-init
+      ansible.builtin.import_tasks:
+        file: tasks/stop-cloud-init.yml
+
+    - name: Apt install
+      ansible.builtin.import_tasks:
+        file: tasks/console/apt.yml
+
+    - name: Add user for runner execution
+      ansible.builtin.user:
+        name: runner
+        shell: /bin/bash
+        groups: sudo
+        append: true
+        expires: -1
+
+    - name: Put authorized Key for runner
+      ansible.builtin.import_tasks:
+        file: tasks/runner/authorized_keys.yml
+
+    - name: Install Docker(ce)
+      ansible.builtin.import_role:
+        name: geerlingguy.docker
+      vars:
+        docker_edition: 'ce'
+        docker_packages_state: present
+        docker_service_manage: true
+        docker_service_state: started
+        docker_service_enabled: true
+        docker_restart_handler_state: restarted
+        docker_users:
+          - hayato
+          - runner
