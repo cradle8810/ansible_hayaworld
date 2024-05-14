@@ -5,7 +5,7 @@
     src: "UUID={{ drives.skylark.uuid }}"
     fstype: "{{ drives.skylark.filesystem }}"
     opts: "{{ drives.skylark.options }}"
-    state: present
+    state: mounted
 
 - name: Mount up device backup
   ansible.posix.mount:
@@ -13,4 +13,4 @@
     src: "UUID={{ drives.backup.uuid }}"
     fstype: "{{ drives.backup.filesystem }}"
     opts: "{{ drives.backup.options }}"
-    state: present
+    state: mounted
