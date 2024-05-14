@@ -49,10 +49,6 @@
       ansible.builtin.import_tasks:
         file: tasks/skylark/mount.yml
 
-    - name: Set XFS tuning
-      ansible.builtin.import_tasks:
-        file: tasks/skylark/xfs_tuning.yml
-
     - name: Set samba
       ansible.builtin.import_tasks:
         file: tasks/skylark/samba.yml
