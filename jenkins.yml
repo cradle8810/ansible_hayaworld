@@ -42,6 +42,10 @@
       ansible.builtin.import_tasks:
         file: tasks/stop-cloud-init.yml
 
+    - name: Apt install
+      ansible.builtin.import_tasks:
+        file: tasks/jenkins/apt.yml
+
     - name: Install Jenkins
       ansible.builtin.import_role:
         name: geerlingguy.jenkins
@@ -53,10 +57,6 @@
         jenkins_java_options: "-Djenkins.install.runSetupWizard=false"
       tags:
         - jenkins
-
-    - name: Apt install
-      ansible.builtin.import_tasks:
-        file: tasks/console/apt.yml
 
     - name: Install Pre-builded SNS downloaders
       ansible.builtin.import_tasks:
