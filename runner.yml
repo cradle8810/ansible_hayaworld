@@ -30,6 +30,10 @@
       ansible.builtin.import_tasks:
         file: tasks/stop-selinux.yml
 
+    - name: Set Firewalls
+      ansible.builtin.import_tasks:
+        file: tasks/console/firewall.yml
+
     - name: Set Timezones
       ansible.builtin.import_tasks:
         file: tasks/timezone.yml
