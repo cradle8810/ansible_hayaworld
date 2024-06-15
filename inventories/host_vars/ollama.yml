@@ -1,0 +1,12 @@
+---
+apt:
+  - curl
+  - emacs
+  - git
+  - htop
+  - open-vm-tools
+  - open-vm-tools-desktop
+  - openssh-server
+  - samba-common
+  - vim
+  - zsh
