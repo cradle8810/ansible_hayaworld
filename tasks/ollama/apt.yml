@@ -1,0 +1,6 @@
+- name: Install Console modules
+  ansible.builtin.apt:
+    update_cache: true
+    pkg:
+      "{{ item }}"
+  loop: "{{ apt }}"
