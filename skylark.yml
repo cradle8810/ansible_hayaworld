@@ -55,7 +55,7 @@
 
     - name: Install supplicant programs
       ansible.builtin.import_tasks:
-        file: tasks/skylark/install-supplicant-programs.yml
+        file: tasks/install-supplicant-programs.yml
 
     - name: Set Firewalls
       ansible.builtin.import_tasks:
