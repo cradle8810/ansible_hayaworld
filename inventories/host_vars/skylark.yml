@@ -11,7 +11,7 @@ drives:
     filesystem: "xfs"
     options: "defaults,users"
 
-apt:
+supplicant:
   - open-vm-tools
   - ffmpeg
   - renameutils
