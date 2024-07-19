@@ -5,12 +5,13 @@
     state: directory
     mode: '0755'
 
-- name: Download yt-dlp
+- name: Download yt-dlp (Linux)
   ansible.builtin.get_url:
     url: https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux
     dest: /opt/bin/yt-dlp
-    checksum: sha256:6a04fddc3609d22736c39a23ba61913332689ade8380892aac846f4ced753c7b
+    checksum: sha256:a6b840e536014ce7b2c7c40b758080498ed5054aa96979e64fcc369752cdc8d3
     mode: "0755"
+  when: ansible_distribution == "Ubuntu"
 
 - name: Download twitter-loader
   ansible.builtin.unarchive:
