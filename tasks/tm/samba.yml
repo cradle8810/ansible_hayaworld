@@ -9,7 +9,7 @@
 
 - name: Put smb.conf
   ansible.builtin.copy:
-    src: templates/skylark/etc/samba/smb.conf
+    src: templates/tm/etc/samba/smb.conf
     dest: /etc/samba/smb.conf
     owner: root
     group: root
