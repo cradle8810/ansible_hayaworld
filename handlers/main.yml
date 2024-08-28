@@ -46,3 +46,9 @@
     name: multipathd
     state: restarted
   listen: "Restart multipathd"
+
+- name: Remove Nautilus cache dir
+  ansible.builtin.file:
+    path: /home/hayato/.cache/thumbnails/
+    state: absent
+  listen: "Remove nautilus cache"

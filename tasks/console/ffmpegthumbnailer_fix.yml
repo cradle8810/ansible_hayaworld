@@ -1,0 +1,17 @@
+---
+- name: "Make directory for ffmpegthumbnailer cache"
+  ansible.builtin.file:
+    path: "/home/hayato/.local/share/thumbnailers/"
+    state: directory
+    recurse: true
+    mode: '0755'
+
+- name: Make symlinks for User
+  ansible.builtin.file:
+    dest: "/home/hayato/.local/share/thumbnailers/ffmpegthumbnailer.thumbnailer"
+    src: "/usr/share/thumbnailers/ffmpegthumbnailer.thumbnailer"
+    owner: "hayato"
+    group: "hayato"
+    state: link
+    follow: true
+  notify: "Remove nautilus cache"

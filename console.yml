@@ -97,6 +97,10 @@
       ansible.builtin.import_tasks:
         file: tasks/sns_dl_linux.yml
 
+    - name: Fix ffmpegthumbnailer bugs
+      ansible.builtin.import_tasks:
+        file: tasks/console/ffmpegthumbnailer_fix.yml
+
     - name: Stop Apt-daily
       ansible.builtin.import_tasks:
         file: tasks/stop-apt-daily.yml
