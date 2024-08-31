@@ -13,9 +13,16 @@
     mode: "0755"
   when: ansible_distribution == "Ubuntu"
 
-- name: Install yt-dlp-FixupMtime
+- name: Install yt-dlp-FixupMtime (Linux)
   ansible.builtin.pip:
     name: "https://github.com/bradenhilton/yt-dlp-FixupMtime/archive/master.zip"
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install yt-dlp-FixupMtime (macOS)
+  ansible.builtin.pip:
+    name: "https://github.com/bradenhilton/yt-dlp-FixupMtime/archive/master.zip"
+    extra_args: "--break-system-packages --user"
+  when: ansible_distribution == "MacOSX"
 
 - name: Download twitter-loader
   ansible.builtin.unarchive:
