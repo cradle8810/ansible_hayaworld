@@ -67,7 +67,7 @@
 
     - name: Install Pre-builded SNS downloaders
       ansible.builtin.import_tasks:
-        file: tasks/sns_dl_linux.yml
+        file: tasks/sns_dl.yml
 
     - name: Stop Apt-daily
       ansible.builtin.import_tasks:

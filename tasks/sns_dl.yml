@@ -5,6 +5,19 @@
     state: directory
     mode: '0755'
 
+- name: Install pip3 (Linux)
+  ansible.builtin.apt:
+    update_cache: true
+    pkg:
+      - python3-pip
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install pip3 (macOS)
+  community.general.homebrew:
+    name: pipx
+    state: present
+  when: ansible_distribution == "MacOSX"
+
 - name: Download yt-dlp (Linux)
   ansible.builtin.get_url:
     url: https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux
@@ -21,7 +34,7 @@
 - name: Install yt-dlp-FixupMtime (macOS)
   ansible.builtin.pip:
     name: "https://github.com/bradenhilton/yt-dlp-FixupMtime/archive/master.zip"
-    extra_args: "--break-system-packages --user"
+    extra_args: "--break-system-packages"
   when: ansible_distribution == "MacOSX"
 
 - name: Download twitter-loader
@@ -40,5 +53,5 @@
 - name: Download instaloader (macOS)
   ansible.builtin.pip:
     name: instaloader
-    extra_args: "--break-system-packages --user"
+    extra_args: "--break-system-packages"
   when: ansible_distribution == 'MacOSX'
