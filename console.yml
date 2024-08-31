@@ -97,6 +97,14 @@
       ansible.builtin.import_tasks:
         file: tasks/sns_dl_linux.yml
 
+    - name: Put Pocket remove scrtipt
+      ansible.builtin.template:
+        src: templates/console/home/hayato/Scripts/remove.sh.j2
+        dest: /home/hayato/Scripts/remove.sh
+        owner: hayato
+        group: hayato
+        mode: '0755'
+
     - name: Fix ffmpegthumbnailer bugs
       ansible.builtin.import_tasks:
         file: tasks/console/ffmpegthumbnailer_fix.yml

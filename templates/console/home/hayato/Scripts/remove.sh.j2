@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo $1
+
+CKEY="{{ all.vars.pocket.consumer_key }}"
+TOKEN="{{ all.vars.pocket.access_token }}"
+
+curl \
+	-d consumer_key="${CKEY}" \
+	-d access_token="${TOKEN}" \
+	-d actions=[{\"action\":\"delete\"\,\"item_id\":"$1"}] \
+	"{{ all.vars.pocket.url.send }}"
