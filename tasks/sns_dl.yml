@@ -22,7 +22,7 @@
   ansible.builtin.get_url:
     url: https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux
     dest: /opt/bin/yt-dlp
-    checksum: sha256:49812f0c4943416457cacb9d59c69aec5b41ee9cc3a1d61b8653e285d5bff355
+    checksum: "{{ all.vars.ytdlp.linux.checksum }}"
     mode: "0755"
   when: ansible_distribution == "Ubuntu"
 
