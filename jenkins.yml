@@ -57,7 +57,3 @@
         jenkins_java_options: "-Djenkins.install.runSetupWizard=false"
       tags:
         - jenkins
-
-    - name: Install Pre-builded SNS downloaders
-      ansible.builtin.import_tasks:
-        file: tasks/sns_dl_linux.yml
