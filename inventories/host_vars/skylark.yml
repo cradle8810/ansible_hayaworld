@@ -11,6 +11,13 @@ drives:
     filesystem: "xfs"
     options: "defaults,users"
 
+services:
+  - nmbd
+  - open-vm-tools
+  - smbd
+  - ssh
+  - zabbix-agent2
+
 supplicant:
   - open-vm-tools
   - ffmpeg

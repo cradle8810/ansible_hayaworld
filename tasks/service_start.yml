@@ -1,0 +1,8 @@
+---
+- name: Make Started Services
+  ansible.builtin.service:
+    name: "{{ item }}"
+    enabled: true
+    state: started
+  loop:
+    "{{ services }}"

@@ -30,3 +30,9 @@ apt:
   - wireshark
   - xrdp
   - zsh
+
+services:
+  - docker
+  - open-vm-tools
+  - ssh
+  - xrdp

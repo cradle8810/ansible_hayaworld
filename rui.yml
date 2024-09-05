@@ -68,3 +68,7 @@
       tags:
         - rsyslog
         - dnsmasq
+
+    - name: Make Started Services
+      ansible.builtin.import_tasks:
+        file: tasks/service_start.yml
