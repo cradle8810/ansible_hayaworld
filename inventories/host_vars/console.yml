@@ -33,5 +33,6 @@ apt:
 
 services:
   - docker
+  - open-vm-tools
   - ssh
   - xrdp

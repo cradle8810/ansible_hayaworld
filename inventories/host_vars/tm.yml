@@ -12,5 +12,7 @@ drives:
 
 services:
   - nmbd
+  - open-vm-tools
   - smbd
+  - ssh
   - zabbix-agent2

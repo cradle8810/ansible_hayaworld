@@ -6,4 +6,6 @@ apt:
 
 services:
   - jenkins
+  - open-vm-tools
+  - ssh
   - zabbix-agent2

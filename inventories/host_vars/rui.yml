@@ -47,4 +47,6 @@ dnsmasq:
 
 services:
   - dnsmasq
+  - open-vm-tools
+  - ssh
   - systemd-journald
