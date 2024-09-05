@@ -30,3 +30,7 @@ apt:
   - wireshark
   - xrdp
   - zsh
+
+services:
+  - ssh
+  - xrdp

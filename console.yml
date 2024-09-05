@@ -125,3 +125,11 @@
         docker_restart_handler_state: restarted
         docker_users:
           - hayato
+
+    - name: Make Started Services
+      ansible.builtin.service:
+        name: "{{ item }}"
+        enabled: true
+        state: started
+      loop:
+        "{{ services }}"
