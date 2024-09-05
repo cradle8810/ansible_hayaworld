@@ -3,3 +3,7 @@ apt:
   - jq
   - openjdk-21-jdk
   - python3-pip
+
+services:
+  - jenkins
+  - zabbix-agent2
