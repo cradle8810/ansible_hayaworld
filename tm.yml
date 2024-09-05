@@ -62,3 +62,7 @@
     - name: Stop multipathd logging when running on VM
       ansible.builtin.import_tasks:
         file: tasks/stop-multipathd-syslog.yml
+
+    - name: Make Started Services
+      ansible.builtin.import_tasks:
+        file: tasks/service_start.yml

@@ -9,3 +9,8 @@ drives:
     mountpoint: /tm
     filesystem: "xfs"
     options: "defaults,noatime"
+
+services:
+  - nmbd
+  - smbd
+  - zabbix-agent2
