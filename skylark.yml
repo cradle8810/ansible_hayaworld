@@ -84,3 +84,7 @@
     - name: Put backup scripts
       ansible.builtin.import_tasks:
         file: tasks/skylark/backupscripts.yml
+
+    - name: Make Started Services
+      ansible.builtin.import_tasks:
+        file: tasks/service_start.yml
