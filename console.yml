@@ -127,9 +127,5 @@
           - hayato
 
     - name: Make Started Services
-      ansible.builtin.service:
-        name: "{{ item }}"
-        enabled: true
-        state: started
-      loop:
-        "{{ services }}"
+      ansible.builtin.import_tasks:
+        file: tasks/service_start.yml

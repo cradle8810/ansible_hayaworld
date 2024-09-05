@@ -32,5 +32,6 @@ apt:
   - zsh
 
 services:
+  - docker
   - ssh
   - xrdp
