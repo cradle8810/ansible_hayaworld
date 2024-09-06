@@ -87,7 +87,7 @@
 
     - name: Apt install
       ansible.builtin.import_tasks:
-        file: tasks/console/apt.yml
+        file: tasks/apt.yml
 
     - name: Install Pre-builded Rename-util
       ansible.builtin.import_tasks:
