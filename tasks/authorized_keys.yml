@@ -3,6 +3,8 @@
   ansible.builtin.file:
     path: /home/hayato/.ssh/
     state: directory
+    owner: hayato
+    group: hayato
     mode: '0700'
   tags:
     - authorized_keys
