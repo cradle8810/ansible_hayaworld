@@ -133,3 +133,9 @@
     - name: Mount skylark
       ansible.builtin.import_tasks:
         file: tasks/console/mount_skylark.yml
+
+    - name: Hayaworld Root CA install
+      ansible.builtin.import_tasks:
+        file: tasks/hayaworld_rootCA.yml
+      tags:
+        - ca
