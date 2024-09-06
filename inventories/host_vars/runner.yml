@@ -1,4 +1,6 @@
 ---
 apt:
+  - dstat
+  - htop
   - python3-pip
   - zsh

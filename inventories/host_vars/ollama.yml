@@ -1,6 +1,7 @@
 ---
 apt:
   - curl
+  - dstat
   - emacs
   - git
   - htop

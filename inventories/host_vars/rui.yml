@@ -5,9 +5,11 @@ apt:
   - coreutils
   - curl
   - dnsmasq
+  - dstat
   - e2fsprogs
   - expat
   - git
+  - htop
   - iptables
   - open-vm-tools
   - perl

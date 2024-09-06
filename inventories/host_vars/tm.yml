@@ -1,6 +1,8 @@
 ---
 apt:
   - avahi-daemon
+  - dstat
+  - htop
   - open-vm-tools
 
 drives:
