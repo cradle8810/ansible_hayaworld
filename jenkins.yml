@@ -67,3 +67,9 @@
     - name: Make Started Services
       ansible.builtin.import_tasks:
         file: tasks/service_start.yml
+
+    - name: Hayaworld Root CA install
+      ansible.builtin.import_tasks:
+        file: tasks/hayaworld_rootCA.yml
+      tags:
+        - ca

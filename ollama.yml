@@ -91,3 +91,9 @@
         docker_restart_handler_state: restarted
         docker_users:
           - hayato
+
+    - name: Hayaworld Root CA install
+      ansible.builtin.import_tasks:
+        file: tasks/hayaworld_rootCA.yml
+      tags:
+        - ca
