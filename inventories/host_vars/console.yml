@@ -1,6 +1,7 @@
 ---
 apt:
   - ansible
+  - cifs-utils
   - curl
   - emacs
   - ffmpegthumbnailer
