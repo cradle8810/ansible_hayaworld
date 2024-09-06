@@ -73,7 +73,7 @@
 
     - name: Apt install
       ansible.builtin.import_tasks:
-        file: tasks/ollama/apt.yml
+        file: tasks/apt.yml
 
     - name: Stop Apt-daily
       ansible.builtin.import_tasks:
