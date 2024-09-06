@@ -19,7 +19,9 @@ services:
   - zabbix-agent2
 
 supplicant:
-  - open-vm-tools
+  - dstat
   - ffmpeg
+  - htop
+  - open-vm-tools
   - renameutils
   - wget

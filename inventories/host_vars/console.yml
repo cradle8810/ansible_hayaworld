@@ -3,6 +3,7 @@ apt:
   - ansible
   - cifs-utils
   - curl
+  - dstat
   - emacs
   - ffmpegthumbnailer
   - gimp
