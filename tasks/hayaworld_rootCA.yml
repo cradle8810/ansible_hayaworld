@@ -15,3 +15,8 @@
     group: root
     mode: '0644'
   register: "put_hayaworld_ca"
+
+- name: "Update Root CAs"
+  ansible.builtin.command:
+    cmd: "update-ca-certificates"
+  when: "put_hayaworld_ca.changed"
