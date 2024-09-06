@@ -60,6 +60,7 @@
         jenkins_plugins_install_dependencies: true
         jenkins_plugins_state: present
         jenkins_plugins: "{{ jenkins.plugins }}"
+        jenkins_version: "{{ jenkins.version }}"
       tags:
         - jenkins
 
