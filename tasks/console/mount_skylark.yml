@@ -1,0 +1,28 @@
+---
+- name: Mount skylark/Home
+  ansible.posix.mount:
+    src: "//{{ network.skylark.ipv4 }}/Home"
+    path: "{{ homedir }}/Home"
+    opts: "username={{ username }},password={{ password }},uid={{ uid }},gid={{ gid }}"
+    fstype: cifs
+    state: mounted
+  vars:
+    gid: "{{ all.vars.user[0].gid }}"
+    uid: "{{ all.vars.user[0].uid }}"
+    homedir: "{{ all.vars.user[0].homedir }}"
+    username: "{{ all.vars.user[0].username }}"
+    password: "{{ all.vars.user[0].samba_password }}"
+
+- name: Mount skylark/Nullpo
+  ansible.posix.mount:
+    src: "//{{ network.skylark.ipv4 }}/Nullpo"
+    path: "{{ homedir }}/Nullpo"
+    opts: "username={{ username }},password={{ password }},uid={{ uid }},gid={{ gid }}"
+    fstype: cifs
+    state: mounted
+  vars:
+    gid: "{{ all.vars.user[0].gid }}"
+    uid: "{{ all.vars.user[0].uid }}"
+    homedir: "{{ all.vars.user[0].homedir }}"
+    username: "{{ all.vars.user[0].username }}"
+    password: "{{ all.vars.user[0].samba_password }}"
