@@ -52,6 +52,8 @@
     - name: Set samba
       ansible.builtin.import_tasks:
         file: tasks/skylark/samba.yml
+      tags:
+        - samba
 
     - name: Install supplicant programs
       ansible.builtin.import_tasks:

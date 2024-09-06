@@ -15,3 +15,26 @@
     group: root
     mode: '0644'
   notify: "Restart smbd"
+
+- name: Check if hayato exists
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail &&
+      pdbedit -L | grep -E '^hayato:' | wc -l
+    executable: /bin/bash
+  register: pdbedit_hayato_exist
+  changed_when: "( pdbedit_hayato_exist.stdout | int) != 1"
+
+- name: Make user hayato
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail &&
+      "echo \"{{ passwd }}\n{{ passwd }}\" | pdbedit -a {{ user }} -t"
+    executable: /bin/bash
+  register: pdbedit_hayato_created
+  vars:
+    passwd: "{{ all.vars.user[0].password }}"
+    user: "{{ all.vars.user[0].username }}"
+  changed_when: true
+  failed_when: false
+  when: pdbedit_hayato_exist.changed
