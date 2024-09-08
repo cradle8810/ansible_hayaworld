@@ -48,7 +48,7 @@
 
     - name: Apt install
       ansible.builtin.import_tasks:
-        file: tasks/console/apt.yml
+        file: tasks/apt.yml
 
     - name: Add user for runner execution
       ansible.builtin.user:
