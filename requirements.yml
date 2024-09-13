@@ -7,6 +7,5 @@ roles:
   - name: mrlesmithjr.netplan
 
 collections:
-  - name: alvistack.gitlab
   - name: ansible.posix
   - name: community.general
