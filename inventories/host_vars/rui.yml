@@ -41,10 +41,6 @@ dnsmasq:
     netmask: "255.255.255.0"
   dns:
     cache_size: 4000
-    addn_hosts:
-      - /etc/Adhosts/hosts.adbanner
-      - /etc/Adhosts/hosts.adweb
-      - /etc/Adhosts/hosts.iOS
     NXDOMAIN_hosts: /etc/dnsmasq.d/NXDOMAIN.conf
     dhcp_static: /etc/dnsmasq.d/dhcp_static.conf
   logs:

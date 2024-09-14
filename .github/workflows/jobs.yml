@@ -37,7 +37,7 @@ jobs:
       - name: NXDOMAIN_Duplicate_Check
         run: >
           "./dupcheck.sh"
-          "inventories/host_vars/rui/ads_hosts/NXDOMAIN.yml"
+          "inventories/host_vars/rui/NXDOMAIN.yml"
 
   Detect_File_Changed:
     runs-on: ubuntu-latest
