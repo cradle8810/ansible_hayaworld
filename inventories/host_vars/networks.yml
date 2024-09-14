@@ -1,84 +1,70 @@
 ---
 network:
-  vcsa:
-    hostname: vcsa.hayaworld.local
+  - hostname: vcsa.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.50
     shortname: vcsa
     sshuser: root
-  nuc01:
-    hostname: nuc01.hayaworld.local
+  - hostname: nuc01.hayaworld.local
     interface: vmk0
     ipv4: 192.168.1.11
     shortname: nuc01
     sshuser: root
-  nuc02:
-    hostname: nuc02.hayaworld.local
+  - hostname: nuc02.hayaworld.local
     interface: vmk0
     ipv4: 192.168.1.12
     shortname: nuc02
     sshuser: root
-  rui:
-    hostname: rui.hayaworld.local
+  - hostname: rui.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.100
     shortname: rui
     sshuser: hayato
-  win10:
-    hostname: step.hayaworld.local
+  - hostname: step.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.101
     shortname: win10
     sshuser: none
-  console:
-    hostname: console.hayaworld.local
+  - hostname: console.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.105
     shortname: console
     sshuser: hayato
-  runner:
-    hostname: runner.hayaworld.local
+  - hostname: runner.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.104
     shortname: runner
     sshuser: runner
-  zabbix:
-    hostname: zabbix.hayaworld.local
+  - hostname: zabbix.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.106
     shortname: zabbix
     sshuser: hayato
-  ollama:
-    hostname: ollama.hayaworld.local
+  - hostname: ollama.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.107
     shortname: ollama
     sshuser: hayato
-  step:
-    hostname: step.hayaworld.local
+  - hostname: step.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.111
     shortname: step
     sshuser: admin
-  tm:
-    hostname: tm.hayaworld.local
+  - hostname: tm.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.112
     shortname: tm
     sshuser: hayato
-  jenkins:
-    hostname: jenkins.hayaworld.local
+  - hostname: jenkins.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.131
     shortname: jenkins
     sshuser: hayato
-  skylark:
-    hostname: skylark.hayaworld.local
+  - hostname: skylark.hayaworld.local
     interface: ens160
     ipv4: 192.168.1.200
     shortname: skylark
     sshuser: hayato
-
 
 network_dhcp:
   macbook:

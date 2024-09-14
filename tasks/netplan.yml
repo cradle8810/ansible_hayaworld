@@ -1,0 +1,25 @@
+---
+- name: Apply netplan config
+  ansible.builtin.import_role:
+    name: mrlesmithjr.netplan
+  any_errors_fatal: true
+  vars:
+    hostinfo: "{{ network | selectattr('shortname', 'eq', ansible_hostname) }}"
+    ipv4_addr: "{{ hostinfo[0].ipv4 }}"
+    netplan_enabled: true
+    netplan_renderer: networkd
+    netplan_configuration:
+      network:
+        version: 2
+        ethernets:
+          ens160:
+            addresses:
+              - "{{ ipv4_addr }}/{{ subnet.mask }}"
+            nameservers:
+              addresses:
+                "{{ subnet.dns4 }}"
+              search:
+                "{{ subnet.search }}"
+            routes:
+              - to: default
+                via: "{{ subnet.gw4 }}"

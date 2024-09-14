@@ -16,8 +16,14 @@
 
   tasks:
     - name: Set Hostname
-      ansible.builtin.hostname:
-        name: "{{ network.tm.hostname }}"
+      ansible.builtin.import_tasks:
+        file: tasks/hostname.yml
+      tags:
+        - network
+
+    - name: Setting Network
+      ansible.builtin.import_tasks:
+        file: tasks/netplan.yml
       tags:
         - network
 
@@ -28,8 +34,6 @@
     - name: Put motd file
       ansible.builtin.import_tasks:
         file: tasks/motd.yml
-      vars:
-        shortname: "{{ network.tm.shortname }}"
 
     - name: Disable SELinux
       ansible.builtin.import_tasks:

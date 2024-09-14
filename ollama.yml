@@ -14,32 +14,16 @@
       ansible.builtin.import_tasks:
         file: handlers/main.yml
 
-  roles:
-    - role: mrlesmithjr.netplan
-      any_errors_fatal: true
-      become: true
-      netplan_enabled: true
-      netplan_renderer: networkd
-      netplan_configuration:
-        network:
-          version: 2
-          ethernets:
-            ens160:
-              addresses:
-                - "{{ network.ollama.ipv4 }}/{{ subnet.mask }}"
-              nameservers:
-                addresses:
-                  "{{ subnet.dns4 }}"
-                search:
-                  "{{ subnet.search }}"
-              gateway4: "{{ subnet.gw4 }}"
+  tasks:
+    - name: Set Hostname
+      ansible.builtin.import_tasks:
+        file: tasks/hostname.yml
       tags:
         - network
 
-  tasks:
-    - name: Set Hostname
-      ansible.builtin.hostname:
-        name: "{{ network.ollama.hostname }}"
+    - name: Setting Network
+      ansible.builtin.import_tasks:
+        file: tasks/netplan.yml
       tags:
         - network
 
@@ -50,8 +34,6 @@
     - name: Put motd file
       ansible.builtin.import_tasks:
         file: tasks/motd.yml
-      vars:
-        shortname: "{{ network.ollama.shortname }}"
 
     - name: Disable SELinux
       ansible.builtin.copy:

@@ -1,7 +1,13 @@
 ---
+- name: Get Skylark facts
+  ansible.builtin.set_fact:
+    skylark_ipv4: "{{ skylark_info[0].ipv4 }}"
+  vars:
+    skylark_info: "{{ network | selectattr('shortname', 'eq', 'skylark') }}"
+
 - name: Mount skylark/Home
   ansible.posix.mount:
-    src: "//{{ network.skylark.ipv4 }}/Home"
+    src: "//{{ skylark_ipv4 }}/Home"
     path: "{{ homedir }}/Home"
     opts: "username={{ username }},password={{ password }},uid={{ uid }},gid={{ gid }}"
     fstype: cifs
@@ -15,7 +21,7 @@
 
 - name: Mount skylark/Nullpo
   ansible.posix.mount:
-    src: "//{{ network.skylark.ipv4 }}/Nullpo"
+    src: "//{{ skylark_ipv4 }}/Nullpo"
     path: "{{ homedir }}/Nullpo"
     opts: "username={{ username }},password={{ password }},uid={{ uid }},gid={{ gid }}"
     fstype: cifs
