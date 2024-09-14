@@ -7,6 +7,13 @@
   vars:
     homedir: "{{ all.vars.user[0].homedir }}"
 
+- name: "Check if exists MEGAsync drive"
+  ansible.builtin.stat:
+    path: "/dev/disk/by-uuid/{{ mega.UUID }}"
+    follow: true
+  register: mega_drive
+  failed_when: mega_drive.stat.isblk == false
+
 - name: "Mount MEGAsync Drive"
   ansible.posix.mount:
     src: "UUID={{ mega.UUID }}"
