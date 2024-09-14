@@ -17,4 +17,3 @@ services:
   - open-vm-tools
   - smbd
   - ssh
-  - zabbix-agent2
