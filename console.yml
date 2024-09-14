@@ -136,6 +136,13 @@
       ansible.builtin.import_tasks:
         file: tasks/console/mount_skylark.yml
 
+    - name: Mount MEGA drive
+      ansible.builtin.import_tasks:
+        file: tasks/console/mount_mega.yml
+      tags:
+        - mega
+        - mount
+
     - name: Hayaworld Root CA install
       ansible.builtin.import_tasks:
         file: tasks/hayaworld_rootCA.yml

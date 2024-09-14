@@ -38,3 +38,6 @@ services:
   - open-vm-tools
   - ssh
   - xrdp
+
+mega:
+  UUID: "ed36eb83-c9eb-4e4b-90c5-9b1e36c64164"
