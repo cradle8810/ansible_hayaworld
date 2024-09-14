@@ -35,12 +35,6 @@
     state: restarted
   listen: "Restart smbd"
 
-- name: Restart zabbix-agent2
-  ansible.builtin.service:
-    name: zabbix-agent2
-    state: restarted
-  listen: "Restart zabbix-agent2"
-
 - name: Restart multipathd
   ansible.builtin.service:
     name: multipathd

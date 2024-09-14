@@ -47,10 +47,6 @@
       ansible.builtin.import_tasks:
         file: tasks/tm/samba.yml
 
-    - name: Set zabbix agent
-      ansible.builtin.import_tasks:
-        file: tasks/zabbix-agent2.yml
-
     - name: Stop Apt-daily
       ansible.builtin.import_tasks:
         file: tasks/stop-apt-daily.yml

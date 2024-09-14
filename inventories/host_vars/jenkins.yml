@@ -10,7 +10,6 @@ services:
   - jenkins
   - open-vm-tools
   - ssh
-  - zabbix-agent2
 
 jenkins:
   admin_username: !vault |

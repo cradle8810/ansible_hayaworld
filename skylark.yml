@@ -63,10 +63,6 @@
       ansible.builtin.import_tasks:
         file: tasks/console/firewall.yml
 
-    - name: Set zabbix agent
-      ansible.builtin.import_tasks:
-        file: tasks/zabbix-agent2.yml
-
     - name: Install Pre-builded SNS downloaders
       ansible.builtin.import_tasks:
         file: tasks/sns_dl.yml
