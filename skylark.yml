@@ -24,8 +24,6 @@
     - name: Setting Network
       ansible.builtin.import_tasks:
         file: tasks/netplan.yml
-      vars:
-        ipv4_addr: "{{ network.skylark.ipv4 }}"
       tags:
         - network
 
@@ -36,8 +34,6 @@
     - name: Put motd file
       ansible.builtin.import_tasks:
         file: tasks/motd.yml
-      vars:
-        shortname: "{{ network.skylark.shortname }}"
 
     - name: Disable SELinux
       ansible.builtin.copy:

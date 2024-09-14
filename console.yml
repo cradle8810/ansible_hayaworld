@@ -37,8 +37,6 @@
     - name: Put motd file
       ansible.builtin.import_tasks:
         file: tasks/motd.yml
-      vars:
-        shortname: "{{ network.console.shortname }}"
 
     - name: Put GUI session rc
       ansible.builtin.copy:
