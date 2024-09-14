@@ -2,7 +2,7 @@
 - name: Play for rui.hayaworld.local
   hosts: rui
   remote_user: hayato
-  gather_facts: false
+  gather_facts: true
   become: true
 
   vars_files:
@@ -27,8 +27,6 @@
     - name: Setting Network
       ansible.builtin.import_tasks:
         file: tasks/netplan.yml
-      vars:
-        ipv4_addr: "{{ network.rui.ipv4 }}"
       tags:
         - network
 
@@ -39,8 +37,6 @@
     - name: Put motd file
       ansible.builtin.import_tasks:
         file: tasks/motd.yml
-      vars:
-        shortname: "{{ network.rui.shortname }}"
 
     - name: Disable SELinux
       ansible.builtin.copy:
