@@ -16,8 +16,16 @@
 
   tasks:
     - name: Set Hostname
-      ansible.builtin.hostname:
-        name: "{{ network.tm.hostname }}"
+      ansible.builtin.import_tasks:
+        file: tasks/hostname.yml
+      tags:
+        - network
+  
+    - name: Setting Network
+      ansible.builtin.import_tasks:
+        file: tasks/netplan.yml
+      vars:
+        ipv4_addr: "{{ network.tm.ipv4 }}"
       tags:
         - network
 
