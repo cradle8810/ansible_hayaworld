@@ -19,4 +19,4 @@
 - name: "Update Root CAs"
   ansible.builtin.command:
     cmd: "update-ca-certificates"
-  when: "put_hayaworld_ca.changed"
+  changed_when: put_hayaworld_ca.changed == True
