@@ -20,7 +20,7 @@
         file: tasks/hostname.yml
       tags:
         - network
-  
+
     - name: Setting Network
       ansible.builtin.import_tasks:
         file: tasks/netplan.yml
