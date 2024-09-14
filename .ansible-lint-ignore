@@ -3,3 +3,4 @@ tasks/skylark/samba.yml no-handler
 tasks/tm/samba.yml no-handler
 tasks/hayaworld_rootCA.yml no-handler
 tasks/hayaworld_rootCA.yml  no-changed-when
+tasks/console/chrome_repo.yml var-naming[no-role-prefix]
