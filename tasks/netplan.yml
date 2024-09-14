@@ -18,4 +18,6 @@
                 "{{ subnet.dns4 }}"
               search:
                 "{{ subnet.search }}"
-            gateway4: "{{ subnet.gw4 }}"
+            routes:
+              - to: default
+                via: "{{ subnet.gw4 }}"
