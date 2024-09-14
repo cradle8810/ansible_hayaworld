@@ -37,7 +37,7 @@ jobs:
       - name: NXDOMAIN_Duplicate_Check
         run: >
           "./dupcheck.sh"
-          "inventories/host_vars/rui/ads_hosts/NXDOMAIN.yml"
+          "inventories/host_vars/rui/NXDOMAIN.yml"
 
   Detect_File_Changed:
     runs-on: ubuntu-latest
@@ -80,7 +80,6 @@ jobs:
             -C \
             --tags dnsmasq \
             --ssh-extra-args='-o StrictHostKeyChecking=no' \
-            --vault-password-file /home/runner/vault_passwd \
             --extra-vars "ansible_sudo_pass=${{ secrets.SUDO }}" \
             rui.yml
 
@@ -103,6 +102,5 @@ jobs:
           ansible-playbook \
             -i inventories \
             --tags dnsmasq \
-            --vault-password-file /home/runner/vault_passwd \
             --extra-vars "ansible_sudo_pass=${{ secrets.SUDO }}" \
             rui.yml
