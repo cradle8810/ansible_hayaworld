@@ -1,5 +1,5 @@
 ---
-- name: Put motd
+- name: "Common / Put motd"
   ansible.builtin.copy:
     src: "templates/{{ hostname }}/etc/motd"
     dest: /etc/motd

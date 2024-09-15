@@ -15,51 +15,13 @@
         file: handlers/main.yml
 
   tasks:
-    - name: Set Hostname
+    - name: Common Settings
       ansible.builtin.import_tasks:
-        file: tasks/hostname.yml
-      tags:
-        - network
-
-    - name: Setting Network
-      ansible.builtin.import_tasks:
-        file: tasks/netplan.yml
-      tags:
-        - network
-
-    - name: Put authorized Key
-      ansible.builtin.import_tasks:
-        file: tasks/authorized_keys.yml
-
-    - name: Put motd file
-      ansible.builtin.import_tasks:
-        file: tasks/motd.yml
-
-    - name: Disable SELinux
-      ansible.builtin.copy:
-        src: templates/etc/selinux/config
-        dest: /etc/selinux/config
-        owner: root
-        group: root
-        mode: '0644'
-      tags:
-        - system
-
-    - name: Set Timezones
-      ansible.builtin.import_tasks:
-        file: tasks/timezone.yml
+        file: tasks/all/main.yml
 
     - name: Set Firewalls
       ansible.builtin.import_tasks:
         file: tasks/ollama/firewall.yml
-
-    - name: Apt install
-      ansible.builtin.import_tasks:
-        file: tasks/apt.yml
-
-    - name: Stop Apt-daily
-      ansible.builtin.import_tasks:
-        file: tasks/stop-apt-daily.yml
 
     - name: Install Docker(ce)
       ansible.builtin.import_role:
@@ -73,9 +35,3 @@
         docker_restart_handler_state: restarted
         docker_users:
           - hayato
-
-    - name: Hayaworld Root CA install
-      ansible.builtin.import_tasks:
-        file: tasks/hayaworld_rootCA.yml
-      tags:
-        - ca

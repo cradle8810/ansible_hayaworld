@@ -1,4 +1,4 @@
-- name: Install Console modules
+- name: "Common / Install Packages from apt"
   ansible.builtin.apt:
     update_cache: true
     pkg:

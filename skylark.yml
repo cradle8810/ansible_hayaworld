@@ -15,39 +15,9 @@
         file: handlers/main.yml
 
   tasks:
-    - name: Set Hostname
+    - name: Common Settings
       ansible.builtin.import_tasks:
-        file: tasks/hostname.yml
-      tags:
-        - network
-
-    - name: Setting Network
-      ansible.builtin.import_tasks:
-        file: tasks/netplan.yml
-      tags:
-        - network
-
-    - name: Put authorized Key
-      ansible.builtin.import_tasks:
-        file: tasks/authorized_keys.yml
-
-    - name: Put motd file
-      ansible.builtin.import_tasks:
-        file: tasks/motd.yml
-
-    - name: Disable SELinux
-      ansible.builtin.copy:
-        src: templates/etc/selinux/config
-        dest: /etc/selinux/config
-        owner: root
-        group: root
-        mode: '0644'
-      tags:
-        - system
-
-    - name: Set Timezones
-      ansible.builtin.import_tasks:
-        file: tasks/timezone.yml
+        file: tasks/all/main.yml
 
     - name: Set mount(5)
       ansible.builtin.import_tasks:
@@ -59,10 +29,6 @@
       tags:
         - samba
 
-    - name: Install supplicant programs
-      ansible.builtin.import_tasks:
-        file: tasks/install-supplicant-programs.yml
-
     - name: Set Firewalls
       ansible.builtin.import_tasks:
         file: tasks/console/firewall.yml
@@ -71,18 +37,6 @@
       ansible.builtin.import_tasks:
         file: tasks/sns_dl.yml
 
-    - name: Stop Apt-daily
-      ansible.builtin.import_tasks:
-        file: tasks/stop-apt-daily.yml
-
-    - name: Stop cloud-init
-      ansible.builtin.import_tasks:
-        file: tasks/stop-cloud-init.yml
-
-    - name: Stop multipathd logging when running on VM
-      ansible.builtin.import_tasks:
-        file: tasks/stop-multipathd-syslog.yml
-
     - name: Put backup scripts
       ansible.builtin.import_tasks:
         file: tasks/skylark/backupscripts.yml
@@ -90,9 +44,3 @@
     - name: Make Started Services
       ansible.builtin.import_tasks:
         file: tasks/service_start.yml
-
-    - name: Hayaworld Root CA install
-      ansible.builtin.import_tasks:
-        file: tasks/hayaworld_rootCA.yml
-      tags:
-        - ca

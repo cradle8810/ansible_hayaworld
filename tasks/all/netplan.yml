@@ -1,5 +1,5 @@
 ---
-- name: Apply netplan config
+- name: "Common / Apply netplan config"
   ansible.builtin.import_role:
     name: mrlesmithjr.netplan
   any_errors_fatal: true

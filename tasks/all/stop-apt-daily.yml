@@ -1,31 +1,31 @@
 ---
-- name: Stop and remove apt-daily.timer
+- name: "Common / Stop and remove apt-daily.timer"
   ansible.builtin.systemd_service:
     name: apt-daily.timer
     state: stopped
     enabled: false
 
-- name: Stop and remove apt-daily.service
+- name: "Common / Stop and remove apt-daily.service"
   ansible.builtin.systemd_service:
     name: apt-daily.service
     state: stopped
     enabled: false
     masked: true
 
-- name: Stop and remove apt-daily-upgrade.timer
+- name: "Common /Stop and remove apt-daily-upgrade.time"
   ansible.builtin.systemd_service:
     name: apt-daily-upgrade.timer
     state: stopped
     enabled: false
 
-- name: Stop and remove apt-daily-upgrade.service
+- name: "Common / Stop and remove apt-daily-upgrade.service"
   ansible.builtin.systemd_service:
     name: apt-daily-upgrade.service
     state: stopped
     enabled: false
     masked: true
 
-- name: Put 10periodic(5)
+- name: "Common / Put 10periodic(5)"
   ansible.builtin.copy:
     src: templates/etc/apt/apt.conf.d/10periodic
     dest: /etc/apt/apt.conf.d/10periodic

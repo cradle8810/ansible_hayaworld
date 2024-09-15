@@ -12,7 +12,7 @@ drives:
     filesystem: "xfs"
     options: "defaults,noatime"
 
-services:
+services_start:
   - nmbd
   - open-vm-tools
   - smbd

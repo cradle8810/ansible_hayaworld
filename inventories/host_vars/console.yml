@@ -33,7 +33,7 @@ apt:
   - xrdp
   - zsh
 
-services:
+services_start:
   - docker
   - open-vm-tools
   - ssh

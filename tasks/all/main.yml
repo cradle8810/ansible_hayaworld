@@ -1,0 +1,42 @@
+---
+- name: "Common / Set Hostname"
+  ansible.builtin.import_tasks:
+    file: tasks/all/hostname.yml
+  tags:
+    - network
+
+- name: "Common / Setting Network"
+  ansible.builtin.import_tasks:
+    file: tasks/all/netplan.yml
+  tags:
+    - network
+
+- name: "Common / Set Timezones"
+  ansible.builtin.import_tasks:
+    file: tasks/all/timezone.yml
+
+- name: "Common / Put authorized Key for hayato"
+  ansible.builtin.import_tasks:
+    file: tasks/all/authorized_keys.yml
+
+- name: "Common / Put motd file"
+  ansible.builtin.import_tasks:
+    file: tasks/all/motd.yml
+
+- name: "Common / Stop SELinux"
+  ansible.builtin.import_tasks:
+    file: tasks/all/stop-selinux.yml
+
+- name: "Common / Apt install"
+  ansible.builtin.import_tasks:
+    file: tasks/all/apt.yml
+
+- name: "Common / Stop Apt-daily"
+  ansible.builtin.import_tasks:
+    file: tasks/all/stop-apt-daily.yml
+
+- name: "Common / Hayaworld Root CA install"
+  ansible.builtin.import_tasks:
+    file: tasks/all/hayaworld_rootCA.yml
+  tags:
+    - ca

@@ -13,30 +13,13 @@
     - name: Restart handler tasks
       ansible.builtin.import_tasks:
         file: handlers/main.yml
-
       tags:
         - network
 
   tasks:
-    - name: Set Hostname
+    - name: Common Settings
       ansible.builtin.import_tasks:
-        file: tasks/hostname.yml
-      tags:
-        - network
-
-    - name: Setting Network
-      ansible.builtin.import_tasks:
-        file: tasks/netplan.yml
-      tags:
-        - network
-
-    - name: Put authorized Key
-      ansible.builtin.import_tasks:
-        file: tasks/authorized_keys.yml
-
-    - name: Put motd file
-      ansible.builtin.import_tasks:
-        file: tasks/motd.yml
+        file: tasks/all/main.yml
 
     - name: Put GUI session rc
       ansible.builtin.copy:
@@ -48,20 +31,6 @@
       tags:
         - system
 
-    - name: Disable SELinux
-      ansible.builtin.copy:
-        src: templates/etc/selinux/config
-        dest: /etc/selinux/config
-        owner: root
-        group: root
-        mode: '0644'
-      tags:
-        - system
-
-    - name: Set Timezones
-      ansible.builtin.import_tasks:
-        file: tasks/timezone.yml
-
     - name: Set Firewalls
       ansible.builtin.import_tasks:
         file: tasks/console/firewall.yml
@@ -71,10 +40,6 @@
         file: tasks/console/chrome_repo.yml
       tags:
         - chrome
-
-    - name: Apt install
-      ansible.builtin.import_tasks:
-        file: tasks/apt.yml
 
     - name: Install Pre-builded Rename-util
       ansible.builtin.import_tasks:
@@ -95,10 +60,6 @@
     - name: Fix ffmpegthumbnailer bugs
       ansible.builtin.import_tasks:
         file: tasks/console/ffmpegthumbnailer_fix.yml
-
-    - name: Stop Apt-daily
-      ansible.builtin.import_tasks:
-        file: tasks/stop-apt-daily.yml
 
     - name: Install Docker(ce)
       ansible.builtin.import_role:
@@ -127,9 +88,3 @@
       tags:
         - mega
         - mount
-
-    - name: Hayaworld Root CA install
-      ansible.builtin.import_tasks:
-        file: tasks/hayaworld_rootCA.yml
-      tags:
-        - ca

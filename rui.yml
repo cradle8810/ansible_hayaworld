@@ -17,35 +17,6 @@
         file: handlers/main.yml
 
   tasks:
-    - name: Set Hostname
-      ansible.builtin.import_tasks:
-        file: tasks/hostname.yml
-      tags:
-        - network
-
-    - name: Setting Network
-      ansible.builtin.import_tasks:
-        file: tasks/netplan.yml
-      tags:
-        - network
-
-    - name: Put authorized Key
-      ansible.builtin.import_tasks:
-        file: tasks/authorized_keys.yml
-
-    - name: Put motd file
-      ansible.builtin.import_tasks:
-        file: tasks/motd.yml
-
-    - name: Disable SELinux
-      ansible.builtin.copy:
-        src: templates/etc/selinux/config
-        dest: /etc/selinux/config
-        owner: root
-        group: root
-        mode: '0644'
-      tags:
-        - system
 
     - name: Show hosts(5)
       ansible.builtin.debug:
@@ -74,9 +45,3 @@
     - name: Make Started Services
       ansible.builtin.import_tasks:
         file: tasks/service_start.yml
-
-    - name: Hayaworld Root CA install
-      ansible.builtin.import_tasks:
-        file: tasks/hayaworld_rootCA.yml
-      tags:
-        - ca

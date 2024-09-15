@@ -6,7 +6,7 @@ apt:
   - openjdk-21-jdk
   - python3-pip
 
-services:
+services_start:
   - jenkins
   - open-vm-tools
   - ssh
