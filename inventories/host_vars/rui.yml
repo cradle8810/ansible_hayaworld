@@ -47,7 +47,7 @@ dnsmasq:
     log_facility: local5
     log_path: /mnt/Raspi2_logs/dnsmasq.log
 
-services:
+services_start:
   - dnsmasq
   - open-vm-tools
   - ssh

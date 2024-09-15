@@ -1,0 +1,42 @@
+---
+- name: Set Hostname
+  ansible.builtin.import_tasks:
+    file: tasks/all/hostname.yml
+  tags:
+    - network
+
+- name: Setting Network
+  ansible.builtin.import_tasks:
+    file: tasks/all/netplan.yml
+  tags:
+    - network
+
+- name: Set Timezones
+  ansible.builtin.import_tasks:
+    file: tasks/all/timezone.yml
+
+- name: Put authorized Key
+  ansible.builtin.import_tasks:
+    file: tasks/all/authorized_keys.yml
+
+- name: Put motd file
+  ansible.builtin.import_tasks:
+    file: tasks/all/motd.yml
+
+- name: Stop SELinux
+  ansible.builtin.import_tasks:
+    file: tasks/all/stop-selinux.yml
+
+- name: Apt install
+  ansible.builtin.import_tasks:
+    file: tasks/all/apt.yml
+
+- name: Stop Apt-daily
+  ansible.builtin.import_tasks:
+    file: tasks/all/stop-apt-daily.yml
+
+- name: Hayaworld Root CA install
+  ansible.builtin.import_tasks:
+    file: tasks/all/hayaworld_rootCA.yml
+  tags:
+    - ca

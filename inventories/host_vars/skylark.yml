@@ -11,13 +11,13 @@ drives:
     filesystem: "xfs"
     options: "defaults,users"
 
-services:
+services_start:
   - nmbd
   - open-vm-tools
   - smbd
   - ssh
 
-supplicant:
+apt:
   - dstat
   - ffmpeg
   - htop

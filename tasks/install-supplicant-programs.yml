@@ -1,8 +1,0 @@
----
-
-- name: Install Supplicant Files
-  ansible.builtin.apt:
-    update_cache: true
-    pkg:
-      "{{ item }}"
-  loop: "{{ supplicant }}"
