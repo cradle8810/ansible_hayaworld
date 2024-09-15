@@ -1,5 +1,5 @@
 ---
-- name: Stop and remove wpa_supplicant.service
+- name: "Common / Stop and remove wpa_supplicant.service"
   ansible.builtin.service:
     name: wpa_supplicant.service
     state: stopped

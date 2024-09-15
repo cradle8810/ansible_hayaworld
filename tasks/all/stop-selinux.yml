@@ -1,5 +1,5 @@
 ---
-- name: Disable SELinux
+- name: "Common / Disable SELinux"
   ansible.builtin.copy:
     src: templates/etc/selinux/config
     dest: /etc/selinux/config

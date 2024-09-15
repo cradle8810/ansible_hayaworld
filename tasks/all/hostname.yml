@@ -1,5 +1,5 @@
 ---
-- name: Set Hostname
+- name: "Common / Set Hostname"
   ansible.builtin.hostname:
     name: "{{ apply_hostname }}"
   vars:
