@@ -46,7 +46,6 @@ jobs:
       - Duplicate_Check
     runs-on: self-hosted
     strategy:
-      max-parallel: 6
       matrix:
         vm:
           - console
@@ -67,6 +66,8 @@ jobs:
           ansible-galaxy collection install -r requirements.yml
 
       - name: "ansible-playbook -C"
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
         run: |
           ansible-playbook \
             -i inventories \
