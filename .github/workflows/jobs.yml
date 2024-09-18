@@ -45,24 +45,36 @@ jobs:
       - AnsibleLint
       - Duplicate_Check
     runs-on: self-hosted
+    strategy:
+      max-parallel: 6
+      matrix:
+        vm:
+          - console
+          - jenkins
+          - rui
+          - skylark
+          - tm
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Prepare environments (ansible-galaxy)
+      - name: Prepare environments (ansible-galaxy install role)
         run: |
-          ansible-galaxy install -r requirements.yml
+          ansible-galaxy role install -r requirements.yml
 
-      - name: "ansible-playbook -C --tags dnsmasq rui.yml"
+      - name: Prepare environments (ansible-galaxy install collection)
+        run: |
+          ansible-galaxy collection install -r requirements.yml
+
+      - name: "ansible-playbook -C"
         run: |
           ansible-playbook \
             -i inventories \
             -C \
-            --tags dnsmasq \
             --ssh-extra-args='-o StrictHostKeyChecking=no' \
             --vault-password-file ${{ secrets.VAULT_PASSWORD_FILE }} \
             --extra-vars "ansible_sudo_pass=${{ secrets.SUDO }}" \
-            rui.yml
+            ${{ matrix.vm }}.yml
 
   Run_ansible:
     # if file for rui changed and master branch
