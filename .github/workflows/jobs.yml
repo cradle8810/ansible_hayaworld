@@ -78,11 +78,18 @@ jobs:
             ${{ matrix.vm }}.yml
 
   Run_ansible:
-    # if file for rui changed and master branch
-    if: "${{ needs.Detect_File_Changed.outputs.rui == 'true' && github.ref == 'refs/heads/master'}}"
+    if: "${{ github.ref == 'refs/heads/master'}}"
     needs:
       - Dry_Run_ansible
     runs-on: self-hosted
+    strategy:
+      matrix:
+        vm:
+          - console
+          - jenkins
+          - rui
+          - skylark
+          - tm
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -91,11 +98,13 @@ jobs:
         run: |
           ansible-galaxy install -r requirements.yml
 
-      - name: "ansible-playbook --tags dnsmasq rui.yml"
+      - name: "Run ansible-playbook"
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
         run: |
           ansible-playbook \
             -i inventories \
-            --tags dnsmasq \
+            --ssh-extra-args='-o StrictHostKeyChecking=no' \
             --vault-password-file ${{ secrets.VAULT_PASSWORD_FILE }} \
             --extra-vars "ansible_sudo_pass=${{ secrets.SUDO }}" \
-            rui.yml
+            ${{ matrix.vm }}.yml
