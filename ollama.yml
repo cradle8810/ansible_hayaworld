@@ -1,5 +1,5 @@
 ---
-- name: Play for ollama.hayaworld.local
+- name: Play for ollama.hayaworld.home
   hosts: ollama
   remote_user: hayato
   gather_facts: true
