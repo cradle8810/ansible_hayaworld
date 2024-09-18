@@ -80,6 +80,7 @@ jobs:
             -C \
             --tags dnsmasq \
             --ssh-extra-args='-o StrictHostKeyChecking=no' \
+            --vault-password-file ${{ secrets.VAULT_PASSWORD_FILE }} \
             --extra-vars "ansible_sudo_pass=${{ secrets.SUDO }}" \
             rui.yml
 
@@ -102,5 +103,6 @@ jobs:
           ansible-playbook \
             -i inventories \
             --tags dnsmasq \
+            --vault-password-file ${{ secrets.VAULT_PASSWORD_FILE }} \
             --extra-vars "ansible_sudo_pass=${{ secrets.SUDO }}" \
             rui.yml
