@@ -43,7 +43,7 @@
 
     - name: Install Pre-builded Rename-util
       ansible.builtin.import_tasks:
-        file: tasks/console/install_rename.yml
+        file: tasks/install_rename.yml
 
     - name: Install Pre-builded SNS downloaders
       ansible.builtin.import_tasks:
