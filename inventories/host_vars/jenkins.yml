@@ -27,7 +27,7 @@ jenkins:
           6564363865616238350a336132303362323233623437326537333666653838666137633239323933
           3631
   home: /var/lib/jenkins
-  hostname: jenkins.hayaworld.local
+  hostname: jenkins.hayaworld.home
   http_port: 8080
   java_options: "-Djenkins.install.runSetupWizard=false"
   plugins:
