@@ -1,5 +1,5 @@
 ---
-- name: Play for rui.hayaworld.local
+- name: Play for rui.hayaworld.home
   hosts: rui
   remote_user: hayato
   gather_facts: true

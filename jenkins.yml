@@ -1,5 +1,5 @@
 ---
-- name: Play for jenkins.hayaworld.local
+- name: Play for jenkins.hayaworld.home
   hosts: jenkins
   remote_user: hayato
   gather_facts: true

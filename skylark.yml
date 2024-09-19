@@ -1,5 +1,5 @@
 ---
-- name: Play for skylark.hayaworld.local
+- name: Play for skylark.hayaworld.home
   hosts: skylark
   remote_user: hayato
   gather_facts: true

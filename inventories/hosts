@@ -20,4 +20,4 @@
 192.168.1.200 ansible_user=hayato
 
 [macbook]
-HayabookAir2023.hayaworld.local ansible_user=hayato
+HayabookAir2023.hayaworld.home ansible_user=hayato

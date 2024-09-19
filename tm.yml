@@ -1,5 +1,5 @@
 ---
-- name: Play for tm.hayaworld.local
+- name: Play for tm.hayaworld.home
   hosts: tm
   remote_user: hayato
   gather_facts: true

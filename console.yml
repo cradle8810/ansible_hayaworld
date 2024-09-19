@@ -1,5 +1,5 @@
 ---
-- name: Play for console.hayaworld.local
+- name: Play for console.hayaworld.home
   hosts: console
   remote_user: hayato
   gather_facts: true
