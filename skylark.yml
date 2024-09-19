@@ -37,6 +37,10 @@
       ansible.builtin.import_tasks:
         file: tasks/sns_dl.yml
 
+    - name: Install Pre-builded Rename-util
+      ansible.builtin.import_tasks:
+        file: tasks/install_rename.yml
+
     - name: Put backup scripts
       ansible.builtin.import_tasks:
         file: tasks/skylark/backupscripts.yml
