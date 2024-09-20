@@ -41,3 +41,6 @@ services_start:
 
 mega:
   UUID: "ed36eb83-c9eb-4e4b-90c5-9b1e36c64164"
+
+homedir:
+  UUID: "662c71dc-e20e-4ea5-8b1b-16386beac781"
