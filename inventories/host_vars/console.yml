@@ -33,6 +33,14 @@ apt:
   - xrdp
   - zsh
 
+remove:
+  - firefox
+  - gnome-power-manager
+  - rhythmbox
+  - thunderbird
+  - totem
+  - yelp
+
 services_start:
   - docker
   - open-vm-tools
