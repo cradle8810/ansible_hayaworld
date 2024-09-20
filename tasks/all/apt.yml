@@ -4,3 +4,15 @@
     pkg:
       "{{ item }}"
   loop: "{{ apt }}"
+
+- name: "Common / Remove Packages"
+  ansible.builtin.apt:
+    pkg:
+      "{{ item }}"
+    state: absent
+    autoremove: true
+    purge: true
+  loop: "{{ remove }}"
+  when: remove is defined
+  tags:
+    - apt
