@@ -17,6 +17,9 @@
         file: handlers/main.yml
 
   tasks:
+    - name: Common Settings
+      ansible.builtin.import_tasks:
+        file: tasks/all/main.yml
 
     - name: Show hosts(5)
       ansible.builtin.debug:
