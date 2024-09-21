@@ -2,5 +2,6 @@
 apt:
   - dstat
   - htop
+  - packer
   - python3-pip
   - zsh

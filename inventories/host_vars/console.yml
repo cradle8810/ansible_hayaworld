@@ -24,6 +24,7 @@ apt:
   - openssh-server
   - openssl
   - p7zip-full
+  - packer
   - python3-pip
   - samba-common
   - sshpass
