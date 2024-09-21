@@ -29,6 +29,7 @@ apt:
   - sshpass
   - vim
   - vlc
+  - whois
   - wireshark
   - xrdp
   - zsh
