@@ -17,6 +17,13 @@
         - network
 
   tasks:
+    - name: Mount Home drive
+      ansible.builtin.import_tasks:
+        file: tasks/console/mount_home.yml
+      tags:
+        - home
+        - mount
+
     - name: Common Settings
       ansible.builtin.import_tasks:
         file: tasks/all/main.yml
@@ -81,17 +88,3 @@
     - name: Mount skylark
       ansible.builtin.import_tasks:
         file: tasks/console/mount_skylark.yml
-
-    - name: Mount MEGA drive
-      ansible.builtin.import_tasks:
-        file: tasks/console/mount_mega.yml
-      tags:
-        - mega
-        - mount
-
-    - name: Mount Home drive
-      ansible.builtin.import_tasks:
-        file: tasks/console/mount_home.yml
-      tags:
-        - home
-        - mount
