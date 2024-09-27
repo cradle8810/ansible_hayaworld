@@ -17,3 +17,23 @@ services_start:
   - open-vm-tools
   - smbd
   - ssh
+
+firewall:
+  policy: deny
+  allow_rules:
+    - name: "SSH from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: '22'
+    - name: "Zabbix from Zabbix-server"
+      proto: "tcp"
+      src: "192.168.1.106/24"
+      port: "10050"
+    - name: "SMB from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: "445"
+    - name: "mDNS service line"
+      proto: "udp"
+      src: "192.168.1.0/24"
+      port: "5353"

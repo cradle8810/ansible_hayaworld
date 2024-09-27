@@ -29,10 +29,6 @@
       tags:
         - samba
 
-    - name: Set Firewalls
-      ansible.builtin.import_tasks:
-        file: tasks/console/firewall.yml
-
     - name: Install Pre-builded SNS downloaders
       ansible.builtin.import_tasks:
         file: tasks/sns_dl.yml
