@@ -1,5 +1,4 @@
 ---
-
 - name: "Common / Set UFW Default Policy"
   community.general.ufw:
     state: enabled
@@ -11,5 +10,5 @@
     proto: "{{ item.proto }}"
     src: "{{ item.src }}"
     port: "{{ item.port }}"
-    logging: "off"
+    state: enabled
   loop: "{{ firewall.allow_rules }}"
