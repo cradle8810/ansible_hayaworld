@@ -6,7 +6,6 @@
   become: true
 
   vars_files:
-    - inventories/host_vars/rui/dhcphosts.yml
     - inventories/host_vars/rui/NXDOMAIN.yml
     - inventories/host_vars/rui.yml
     - inventories/host_vars/networks.yml

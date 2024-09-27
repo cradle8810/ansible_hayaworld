@@ -42,7 +42,6 @@ dnsmasq:
   dns:
     cache_size: 4000
     NXDOMAIN_hosts: /etc/dnsmasq.d/NXDOMAIN.conf
-    dhcp_static: /etc/dnsmasq.d/dhcp_static.conf
   logs:
     log_facility: local5
     log_path: /mnt/Raspi2_logs/dnsmasq.log
