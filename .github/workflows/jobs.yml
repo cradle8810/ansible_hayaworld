@@ -78,6 +78,7 @@ jobs:
           - rui
           - skylark
           - tm
+    environment: staging
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -115,6 +116,7 @@ jobs:
           - rui
           - skylark
           - tm
+    environment: production
     steps:
       - name: Checkout
         uses: actions/checkout@v4
