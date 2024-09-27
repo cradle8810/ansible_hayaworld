@@ -11,4 +11,5 @@
     proto: "{{ item.proto }}"
     src: "{{ item.src }}"
     port: "{{ item.port }}"
+    logging: "off"
   loop: "{{ firewall.allow_rules }}"
