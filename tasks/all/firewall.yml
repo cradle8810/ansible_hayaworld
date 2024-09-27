@@ -4,6 +4,10 @@
     state: enabled
     policy: "{{ firewall.policy }}"
 
+- name: Set logging
+  community.general.ufw:
+    logging: 'off'
+
 - name: "Common / Set Firewall Allow Rules"
   community.general.ufw:
     rule: allow
