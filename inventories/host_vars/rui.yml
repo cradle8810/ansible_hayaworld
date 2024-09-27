@@ -52,3 +52,27 @@ services_start:
   - open-vm-tools
   - ssh
   - systemd-journald
+
+firewall:
+  policy: deny
+  allow_rules:
+    - name: "SSH from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: '22'
+    - name: "Zabbix from Zabbix-server"
+      proto: "tcp"
+      src: "192.168.1.106/24"
+      port: "10050"
+    - name: "DNS from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: "53"
+    - name: "DNS(UDP) from service line"
+      proto: "udp"
+      src: "192.168.1.0/24"
+      port: "53"
+    - name: "DHCP from service line"
+      proto: "udp"
+      src: "192.168.1.0/24"
+      port: "67"

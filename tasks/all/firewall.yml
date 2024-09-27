@@ -1,0 +1,14 @@
+---
+
+- name: "Common / Set UFW Default Policy"
+  community.general.ufw:
+    state: enabled
+    policy: "{{ firewall.policy }}"
+
+- name: "Common / Set Firewall Allow Rules"
+  community.general.ufw:
+    rule: allow
+    proto: "{{ item.proto }}"
+    src: "{{ item.src }}"
+    port: "{{ item.port }}"
+  loop: "{{ firewall.allow_rules }}"

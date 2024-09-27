@@ -27,6 +27,10 @@
   ansible.builtin.import_tasks:
     file: tasks/all/stop-selinux.yml
 
+- name: "Common / Set Firewall"
+  ansible.builtin.import_tasks:
+    file: tasks/all/firewall.yml
+
 - name: "Common / Apt install"
   ansible.builtin.import_tasks:
     file: tasks/all/apt.yml

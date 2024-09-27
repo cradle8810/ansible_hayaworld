@@ -51,3 +51,19 @@ services_start:
 
 homedir:
   UUID: "27d8944d-a99e-4505-9540-8c99460a1b99"
+
+firewall:
+  policy: deny
+  allow_rules:
+    - name: "SSH from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: '22'
+    - name: "Zabbix from Zabbix-server"
+      proto: "tcp"
+      src: "192.168.1.106/24"
+      port: "10050"
+    - name: "Packer HTTP server"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: "8000"

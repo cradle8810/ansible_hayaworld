@@ -19,10 +19,6 @@
       ansible.builtin.import_tasks:
         file: tasks/all/main.yml
 
-    - name: Set Firewalls
-      ansible.builtin.import_tasks:
-        file: tasks/ollama/firewall.yml
-
     - name: Install Docker(ce)
       ansible.builtin.import_role:
         name: geerlingguy.docker
