@@ -32,6 +32,10 @@
       tags:
         - jenkins
 
+    - name: Install Ansible from PPA
+      ansible.builtin.import_tasks:
+        file: tasks/ansible_install.yml
+
     - name: Make Started Services
       ansible.builtin.import_tasks:
         file: tasks/service_start.yml

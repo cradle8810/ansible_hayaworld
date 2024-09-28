@@ -1,6 +1,5 @@
 ---
 apt:
-  - ansible
   - cifs-utils
   - curl
   - dstat

@@ -1,0 +1,22 @@
+---
+- name: "Install software-properties-common"
+  ansible.builtin.apt:
+    name: "software-properties-common"
+    state: present
+    update_cache: true
+  tags:
+    - ansible
+
+- name: "Add ppa ansible repository"
+  ansible.builtin.apt_repository:
+    repo: ppa:ansible/ansible
+  tags:
+    - ansible
+
+- name: "Install ansible from ppa"
+  ansible.builtin.apt:
+    name: "ansible"
+    state: present
+    update_cache: true
+  tags:
+    - ansible
