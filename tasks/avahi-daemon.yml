@@ -1,7 +1,7 @@
 ---
 - name: Add ssh service
   ansible.builtin.template:
-    src: templates/etc/avahi/services/ssh.service
+    src: templates/all/etc/avahi/services/ssh.service
     dest: /etc/avahi/services/ssh.service
     owner: root
     group: root
@@ -12,7 +12,7 @@
 
 - name: Put Avahi configuration file
   ansible.builtin.copy:
-    src: templates/etc/avahi/avahi-daemon.conf
+    src: templates/all/etc/avahi/avahi-daemon.conf
     dest: /etc/avahi/avahi-daemon.conf
     owner: root
     group: root

@@ -27,7 +27,7 @@
 
 - name: "Common / Put 10periodic(5)"
   ansible.builtin.copy:
-    src: templates/etc/apt/apt.conf.d/10periodic
+    src: templates/all/etc/apt/apt.conf.d/10periodic
     dest: /etc/apt/apt.conf.d/10periodic
     owner: root
     group: root

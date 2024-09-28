@@ -13,7 +13,7 @@
 
 - name: Put zabbix-agent2.conf
   ansible.builtin.copy:
-    src: templates/etc/zabbix/zabbix_agent2.conf
+    src: templates/all/etc/zabbix/zabbix_agent2.conf
     dest: /etc/zabbix/zabbix_agent2.conf
     owner: root
     group: root
