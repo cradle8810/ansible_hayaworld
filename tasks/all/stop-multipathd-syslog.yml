@@ -2,7 +2,7 @@
 
 - name: "Common / Put rsyslog.conf(5)"
   ansible.builtin.template:
-    src: templates/etc/multipath.conf
+    src: templates/all/etc/multipath.conf
     dest: /etc/multipath.conf
     owner: root
     group: root
