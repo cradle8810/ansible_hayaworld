@@ -30,7 +30,6 @@ dnsmasq:
     NXDOMAIN_hosts: /etc/dnsmasq.d/NXDOMAIN.conf
   logs:
     log_facility: local5
-    log_path: /mnt/Raspi2_logs/dnsmasq.log
 
 services_start:
   - dnsmasq

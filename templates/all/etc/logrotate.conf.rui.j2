@@ -43,13 +43,3 @@ include /etc/logrotate.d
 }
 
 # system-specific logs may be also be configured here.
-
-{{ dnsmasq.logs.log_path }} {
-    missing ok
-    size 10M
-    compress
-    notifempty
-    postrotate
-    systemctl restart rsyslog
-    endscript
-}
