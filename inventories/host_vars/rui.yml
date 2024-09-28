@@ -1,24 +1,10 @@
 ---
 apt:
-  - avahi-daemon
-  - binutils
-  - coreutils
   - curl
   - dnsmasq
   - dstat
-  - e2fsprogs
-  - expat
-  - git
   - htop
-  - iptables
   - open-vm-tools
-  - perl
-  - python3
-  - rsync
-  - sudo
-  - systemd
-  - util-linux
-  - zsh
 
 rui_info: "{{ network | selectattr('shortname', 'eq', 'rui') }}"
 rui_ipv4: "{{ rui_info[0].ipv4 }}"
@@ -44,7 +30,6 @@ dnsmasq:
     NXDOMAIN_hosts: /etc/dnsmasq.d/NXDOMAIN.conf
   logs:
     log_facility: local5
-    log_path: /mnt/Raspi2_logs/dnsmasq.log
 
 services_start:
   - dnsmasq

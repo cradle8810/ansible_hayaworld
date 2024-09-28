@@ -51,10 +51,6 @@ $umask 0027
 #### RULES ####
 #:fromhost-ip, isequal, "192.168.1.200" /var/log/skylark.log
 
-# dnsmasq.conf
-{{ dnsmasq.logs.log_facility }}.* {{ dnsmasq.logs.log_path }}
-&~ 
-
 # Log all kernel messages to the console.
 # Logging much else clutters up the screen.
 #kern.*                                                 /dev/console

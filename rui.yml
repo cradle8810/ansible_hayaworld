@@ -20,18 +20,25 @@
       ansible.builtin.import_tasks:
         file: tasks/all/main.yml
 
-    - name: Show hosts(5)
-      ansible.builtin.debug:
-        msg: "{{ lookup('template', './templates/rui/etc/hosts.j2') }}"
+    - name: Stop systemd-resolved
+      ansible.builtin.import_tasks:
+        file: tasks/rui/stop-systemd-resolved.yml
       tags:
-        - debug
-        - dryrun
+        - dnsmasq
 
     - name: Setup dnsmask
       ansible.builtin.import_tasks:
         file: tasks/rui/dnsmasq.yml
       tags:
         - dnsmasq
+
+    - name: Show hosts(5)
+      ansible.builtin.debug:
+        msg: "{{ lookup('template', './templates/rui/etc/hosts.j2') }}"
+      tags:
+        - debug
+        - dnsmasq
+        - dryrun
 
     - name: Setup journalctl
       ansible.builtin.import_tasks:
