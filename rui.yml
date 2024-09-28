@@ -27,6 +27,12 @@
         - debug
         - dryrun
 
+    - name: Stop systemd-resolved
+      ansible.builtin.import_tasks:
+        file: tasks/rui/stop-systemd-resolved.yml
+      tags:
+        - dnsmasq
+
     - name: Setup dnsmask
       ansible.builtin.import_tasks:
         file: tasks/rui/dnsmasq.yml
