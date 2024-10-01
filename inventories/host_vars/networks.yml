@@ -1,10 +1,10 @@
 ---
 network:
-  - hostname: vcsa.hayaworld.home
-    interface: ens160
-    ipv4: 192.168.1.50
-    shortname: vcsa
-    sshuser: root
+  - hostname: pskylark.hayaworld.home
+    interface: eth0
+    ipv4: 192.168.1.10
+    shortname: pskylark
+    sshuser: hayato
   - hostname: nuc01.hayaworld.home
     interface: vmk0
     ipv4: 192.168.1.11
@@ -14,6 +14,11 @@ network:
     interface: vmk0
     ipv4: 192.168.1.12
     shortname: nuc02
+    sshuser: root
+  - hostname: vcsa.hayaworld.home
+    interface: ens160
+    ipv4: 192.168.1.50
+    shortname: vcsa
     sshuser: root
   - hostname: rui.hayaworld.home
     interface: ens160
@@ -30,16 +35,16 @@ network:
     ipv4: 192.168.1.102
     shortname: origin
     sshuser: hayato
-  - hostname: console.hayaworld.home
-    interface: ens160
-    ipv4: 192.168.1.105
-    shortname: console
-    sshuser: hayato
   - hostname: runner.hayaworld.home
     interface: ens160
     ipv4: 192.168.1.104
     shortname: runner
     sshuser: runner
+  - hostname: console.hayaworld.home
+    interface: ens160
+    ipv4: 192.168.1.105
+    shortname: console
+    sshuser: hayato
   - hostname: zabbix.hayaworld.home
     interface: ens160
     ipv4: 192.168.1.106
@@ -84,3 +89,6 @@ subnet:
     - 202.232.2.3
   search:
     - hayaworld.home
+  routes:
+    - to: default
+      via: 192.168.1.1
