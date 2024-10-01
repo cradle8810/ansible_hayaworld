@@ -1,5 +1,10 @@
 ---
 network:
+  - hostname: pskylark.hayaworld.home
+    interface: eth0
+    ipv4: 192.168.1.10
+    shortname: pskylark
+    sshuser: hayato
   - hostname: nuc01.hayaworld.home
     interface: vmk0
     ipv4: 192.168.1.11
