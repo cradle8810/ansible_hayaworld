@@ -1,1 +1,5 @@
 ansible-lint
+git+https://github.com/vmware/vsphere-automation-sdk-python.git
+pyvmomi
+vmware-vapi-common-client
+vmware-vcenter
