@@ -15,6 +15,11 @@ network:
     ipv4: 192.168.1.12
     shortname: nuc02
     sshuser: root
+  - hostname: nuc03.hayaworld.home
+    interface: vmk0
+    ipv4: 192.168.1.13
+    shortname: nuc03
+    sshuser: root
   - hostname: vcsa.hayaworld.home
     interface: ens160
     ipv4: 192.168.1.50
