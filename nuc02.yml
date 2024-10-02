@@ -3,7 +3,6 @@
   hosts: nuc02
   remote_user: root
   gather_facts: true
-  become: true
 
   vars_files:
     - inventories/host_vars/nuc02.yml
@@ -29,3 +28,16 @@
         mode: '0600'
       tags:
         - authorized_keys
+
+    - name: "Get ESXi facts"
+      community.vmware.vmware_host_facts:
+        hostname: "nuc02.hayaworld.home"
+        username: "{{ auth.username }}"
+        password: "{{ auth.password }}"
+        validate_certs: false
+      register: result
+      delegate_to: localhost
+
+    - name: "Debug"
+      ansible.builtin.debug:
+        msg: "{{ result }}"
