@@ -10,7 +10,22 @@
     - inventories/host_vars/networks.yml
 
   tasks:
+    - name: "Common / Make directory ~/.ssh/"
+      ansible.builtin.file:
+        path: /.ssh/
+        state: directory
+        owner: root
+        group: root
+        mode: '0700'
+      tags:
+        - authorized_keys
 
-  - name: "Hello World!"
-    debug:
-      msg: "Hello world"
+    - name: "Common / Put authorized_keys"
+      ansible.builtin.copy:
+        src: templates/all/home/hayato/.ssh/authorized_keys
+        dest: /.ssh/authorized_keys
+        owner: root
+        group: root
+        mode: '0600'
+      tags:
+        - authorized_keys
