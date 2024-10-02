@@ -1,0 +1,16 @@
+---
+- name: Play for nuc02.hayaworld.home
+  hosts: nuc02
+  remote_user: root
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - inventories/host_vars/nuc02.yml
+    - inventories/host_vars/networks.yml
+
+  tasks:
+
+  - name: "Hello World!"
+    debug:
+      msg: "Hello world"
