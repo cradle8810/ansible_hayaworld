@@ -55,11 +55,6 @@ network:
     ipv4: 192.168.1.106
     shortname: zabbix
     sshuser: hayato
-  - hostname: ollama.hayaworld.home
-    interface: ens160
-    ipv4: 192.168.1.107
-    shortname: ollama
-    sshuser: hayato
   - hostname: step.hayaworld.home
     interface: ens160
     ipv4: 192.168.1.111
