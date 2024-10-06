@@ -52,6 +52,10 @@
       ansible.builtin.import_tasks:
         file: tasks/sns_dl.yml
 
+    - name: Install pipr
+      ansible.builtin.import_tasks:
+        file: tasks/pipr.yml
+
     - name: Put Pocket remove scrtipt
       ansible.builtin.template:
         src: templates/console/home/hayato/Scripts/remove.sh.j2
