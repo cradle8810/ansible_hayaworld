@@ -20,4 +20,4 @@ Some playbook uses ansible-vault. Run `ansible-playbook` with `-J` option. You n
 ansible-playbook -i inventories/ -K -J (playbook)
 ```
 
-If you update rui.local (DNS server) playbook, GitHub actions jobs are created. Run them manually.
+If you update rui.hayaworld.home (DNS server) playbook, GitHub actions jobs are created. Run them manually.

@@ -6,11 +6,10 @@ apt:
   - openjdk-21-jdk
   - python3-pip
 
-services:
+services_start:
   - jenkins
   - open-vm-tools
   - ssh
-  - zabbix-agent2
 
 jenkins:
   admin_username: !vault |
@@ -28,7 +27,7 @@ jenkins:
           6564363865616238350a336132303362323233623437326537333666653838666137633239323933
           3631
   home: /var/lib/jenkins
-  hostname: jenkins.hayaworld.local
+  hostname: jenkins.hayaworld.home
   http_port: 8080
   java_options: "-Djenkins.install.runSetupWizard=false"
   plugins:
@@ -45,4 +44,21 @@ jenkins:
     - timestamper
     - workflow-aggregator
     - ws-cleanup
+  UUID: "cd5488ca-dc52-42f7-9a4d-79a30499b74e"
   version: "2.475"
+
+firewall:
+  policy: deny
+  allow_rules:
+    - name: "SSH from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: '22'
+    - name: "Zabbix from Zabbix-server"
+      proto: "tcp"
+      src: "192.168.1.106/24"
+      port: "10050"
+    - name: "HTTP from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: "8080"

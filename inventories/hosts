@@ -4,14 +4,8 @@
 [console]
 192.168.1.105 ansible_user=hayato
 
-[gitlab]
-192.168.1.103 ansible_user=hayato
-
 [runner]
 192.168.1.104 ansible_user=hayato
-
-[ollama]
-192.168.1.107 ansible_user=hayato
 
 [tm]
 192.168.1.112 ansible_user=hayato
@@ -23,4 +17,4 @@
 192.168.1.200 ansible_user=hayato
 
 [macbook]
-HayabookAir2023.hayaworld.local ansible_user=hayato
+HayabookAir2023.hayaworld.home ansible_user=hayato

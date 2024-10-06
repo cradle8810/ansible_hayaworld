@@ -1,0 +1,6 @@
+---
+- name: "Common / Stop and remove wpa_supplicant.service"
+  ansible.builtin.systemd_service:
+    name: wpa_supplicant.service
+    state: stopped
+    enabled: false

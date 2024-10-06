@@ -1,0 +1,13 @@
+---
+- name: "Common / Put motd"
+  ansible.builtin.copy:
+    src: "templates/{{ hostname }}/etc/motd"
+    dest: /etc/motd
+    owner: root
+    group: root
+    mode: '0644'
+  tags:
+    - system
+  vars:
+    hostinfo: "{{ network | selectattr('shortname', 'eq', ansible_hostname) }}"
+    hostname: "{{ hostinfo[0].shortname }}"

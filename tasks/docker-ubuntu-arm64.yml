@@ -23,7 +23,7 @@
 
 - name: Put Docker arm repository
   ansible.builtin.copy:
-    src: templates/etc/apt/sources.list.d/docker.list
+    src: templates/all/etc/apt/sources.list.d/docker.list
     dest: /etc/apt/sources.list.d/docker.list
     mode: '0600'
     owner: root

@@ -1,5 +1,5 @@
 ---
-- name: Play for console.hayaworld.local
+- name: Play for console.hayaworld.home
   hosts: console
   remote_user: hayato
   gather_facts: true
@@ -13,45 +13,20 @@
     - name: Restart handler tasks
       ansible.builtin.import_tasks:
         file: handlers/main.yml
-
-  roles:
-    - role: mrlesmithjr.netplan
-      any_errors_fatal: true
-      become: true
-      netplan_enabled: true
-      netplan_renderer: networkd
-      netplan_configuration:
-        network:
-          version: 2
-          ethernets:
-            ens160:
-              addresses:
-                - "{{ network.console.ipv4 }}/{{ subnet.mask }}"
-              nameservers:
-                addresses:
-                  "{{ subnet.dns4 }}"
-                search:
-                  "{{ subnet.search }}"
-              gateway4: "{{ subnet.gw4 }}"
       tags:
         - network
 
   tasks:
-    - name: Set Hostname
-      ansible.builtin.hostname:
-        name: "{{ network.console.hostname }}"
+    - name: Mount Home drive
+      ansible.builtin.import_tasks:
+        file: tasks/console/mount_home.yml
       tags:
-        - network
+        - home
+        - mount
 
-    - name: Put authorized Key
+    - name: Common Settings
       ansible.builtin.import_tasks:
-        file: tasks/authorized_keys.yml
-
-    - name: Put motd file
-      ansible.builtin.import_tasks:
-        file: tasks/motd.yml
-      vars:
-        shortname: "{{ network.console.shortname }}"
+        file: tasks/all/main.yml
 
     - name: Put GUI session rc
       ansible.builtin.copy:
@@ -63,39 +38,23 @@
       tags:
         - system
 
-    - name: Disable SELinux
-      ansible.builtin.copy:
-        src: templates/etc/selinux/config
-        dest: /etc/selinux/config
-        owner: root
-        group: root
-        mode: '0644'
-      tags:
-        - system
-
-    - name: Set Timezones
-      ansible.builtin.import_tasks:
-        file: tasks/timezone.yml
-
-    - name: Set Firewalls
-      ansible.builtin.import_tasks:
-        file: tasks/console/firewall.yml
-
     - name: Apt add Google Chrome Repo
       ansible.builtin.import_tasks:
         file: tasks/console/chrome_repo.yml
-
-    - name: Apt install
-      ansible.builtin.import_tasks:
-        file: tasks/apt.yml
+      tags:
+        - chrome
 
     - name: Install Pre-builded Rename-util
       ansible.builtin.import_tasks:
-        file: tasks/console/install_rename.yml
+        file: tasks/install_rename.yml
 
     - name: Install Pre-builded SNS downloaders
       ansible.builtin.import_tasks:
         file: tasks/sns_dl.yml
+
+    - name: Install pipr
+      ansible.builtin.import_tasks:
+        file: tasks/pipr.yml
 
     - name: Put Pocket remove scrtipt
       ansible.builtin.template:
@@ -109,10 +68,6 @@
       ansible.builtin.import_tasks:
         file: tasks/console/ffmpegthumbnailer_fix.yml
 
-    - name: Stop Apt-daily
-      ansible.builtin.import_tasks:
-        file: tasks/stop-apt-daily.yml
-
     - name: Install Docker(ce)
       ansible.builtin.import_role:
         name: geerlingguy.docker
@@ -125,6 +80,10 @@
         docker_restart_handler_state: restarted
         docker_users:
           - hayato
+
+    - name: Install Ansible from PPA
+      ansible.builtin.import_tasks:
+        file: tasks/ansible_install.yml
 
     - name: Make Started Services
       ansible.builtin.import_tasks:

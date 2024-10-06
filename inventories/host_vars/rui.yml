@@ -1,30 +1,20 @@
 ---
 apt:
-  - avahi-daemon
-  - binutils
-  - coreutils
   - curl
   - dnsmasq
   - dstat
-  - e2fsprogs
-  - expat
-  - git
   - htop
-  - iptables
   - open-vm-tools
-  - perl
-  - python3
-  - rsync
-  - sudo
-  - systemd
-  - util-linux
-  - zsh
+
+rui_info: "{{ network | selectattr('shortname', 'eq', 'rui') }}"
+rui_ipv4: "{{ rui_info[0].ipv4 }}"
+rui_interface: "{{ rui_info[0].interface }}"
 
 dnsmasq:
-  domain: hayaworld.local
-  local: /hayaworld.local/
-  listen_address: "{{ network.rui.ipv4 }}"
-  interface: "{{ network.rui.interface }}"
+  domain: hayaworld.home
+  local: /hayaworld.home/
+  listen_address: "{{ rui_ipv4 }}"
+  interface: "{{ rui_interface }}"
   dhcp_range:
     start: 192.168.1.21
     end: 192.168.1.49
@@ -32,23 +22,45 @@ dnsmasq:
     ttl: "12h"
   dhcp_option:
     ntp_server: 210.130.188.10
-    dns_server: "{{ network.rui.ipv4 }}"
+    dns_server: "{{ rui_ipv4 }}"
     router: "{{ subnet.gw4 }}"
     netmask: "255.255.255.0"
   dns:
     cache_size: 4000
-    addn_hosts:
-      - /etc/Adhosts/hosts.adbanner
-      - /etc/Adhosts/hosts.adweb
-      - /etc/Adhosts/hosts.iOS
     NXDOMAIN_hosts: /etc/dnsmasq.d/NXDOMAIN.conf
-    dhcp_static: /etc/dnsmasq.d/dhcp_static.conf
   logs:
     log_facility: local5
-    log_path: /mnt/Raspi2_logs/dnsmasq.log
 
-services:
+services_start:
   - dnsmasq
   - open-vm-tools
   - ssh
   - systemd-journald
+
+firewall:
+  policy: deny
+  allow_rules:
+    - name: "SSH from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: '22'
+    - name: "Zabbix from Zabbix-server"
+      proto: "tcp"
+      src: "192.168.1.106/24"
+      port: "10050"
+    - name: "DNS from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: "53"
+    - name: "DNS(UDP) from service line"
+      proto: "udp"
+      src: "192.168.1.0/24"
+      port: "53"
+    - name: "DHCP from service line"
+      proto: "udp"
+      src: "any"
+      port: "67"
+    - name: "DHCP Client from service line"
+      proto: "udp"
+      src: "any"
+      port: "68"

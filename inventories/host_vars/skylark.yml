@@ -11,17 +11,32 @@ drives:
     filesystem: "xfs"
     options: "defaults,users"
 
-services:
+services_start:
   - nmbd
   - open-vm-tools
   - smbd
   - ssh
-  - zabbix-agent2
 
-supplicant:
+apt:
   - dstat
   - ffmpeg
   - htop
   - open-vm-tools
   - renameutils
   - wget
+
+firewall:
+  policy: deny
+  allow_rules:
+    - name: "SSH from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: '22'
+    - name: "Zabbix from Zabbix-server"
+      proto: "tcp"
+      src: "192.168.1.106/24"
+      port: "10050"
+    - name: "SMB from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: "445"

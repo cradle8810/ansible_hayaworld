@@ -1,5 +1,5 @@
 ---
-- name: Play for skylark.hayaworld.local
+- name: Play for skylark.hayaworld.home
   hosts: skylark
   remote_user: hayato
   gather_facts: true
@@ -15,35 +15,9 @@
         file: handlers/main.yml
 
   tasks:
-    - name: Set Hostname
-      ansible.builtin.hostname:
-        name: "{{ network.skylark.hostname }}"
-      tags:
-        - network
-
-    - name: Put authorized Key
+    - name: Common Settings
       ansible.builtin.import_tasks:
-        file: tasks/authorized_keys.yml
-
-    - name: Put motd file
-      ansible.builtin.import_tasks:
-        file: tasks/motd.yml
-      vars:
-        shortname: "{{ network.skylark.shortname }}"
-
-    - name: Disable SELinux
-      ansible.builtin.copy:
-        src: templates/etc/selinux/config
-        dest: /etc/selinux/config
-        owner: root
-        group: root
-        mode: '0644'
-      tags:
-        - system
-
-    - name: Set Timezones
-      ansible.builtin.import_tasks:
-        file: tasks/timezone.yml
+        file: tasks/all/main.yml
 
     - name: Set mount(5)
       ansible.builtin.import_tasks:
@@ -55,33 +29,13 @@
       tags:
         - samba
 
-    - name: Install supplicant programs
-      ansible.builtin.import_tasks:
-        file: tasks/install-supplicant-programs.yml
-
-    - name: Set Firewalls
-      ansible.builtin.import_tasks:
-        file: tasks/console/firewall.yml
-
-    - name: Set zabbix agent
-      ansible.builtin.import_tasks:
-        file: tasks/zabbix-agent2.yml
-
     - name: Install Pre-builded SNS downloaders
       ansible.builtin.import_tasks:
         file: tasks/sns_dl.yml
 
-    - name: Stop Apt-daily
+    - name: Install Pre-builded Rename-util
       ansible.builtin.import_tasks:
-        file: tasks/stop-apt-daily.yml
-
-    - name: Stop cloud-init
-      ansible.builtin.import_tasks:
-        file: tasks/stop-cloud-init.yml
-
-    - name: Stop multipathd logging when running on VM
-      ansible.builtin.import_tasks:
-        file: tasks/stop-multipathd-syslog.yml
+        file: tasks/install_rename.yml
 
     - name: Put backup scripts
       ansible.builtin.import_tasks:

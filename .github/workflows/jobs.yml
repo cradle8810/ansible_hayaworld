@@ -22,8 +22,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Restore Caches
+        uses: actions/cache@v4
+        with:
+          save-always: true
+          path: |
+            ~/.cache/pip
+            ~/.ansible/collections
+            ~/.ansible/roles
+          key: cache-ansible-roles
+          restore-keys: |
+            cache-ansible-roles
+
+      - name: Install ansible-lint via pip3
+        run: |
+          pip3 install --force ansible-lint
+
+      - name: Prepare environments (ansible-galaxy install role)
+        run: |
+          ansible-galaxy role install -r requirements.yml
+
+      - name: Prepare environments (ansible-galaxy install collection)
+        run: |
+          ansible-galaxy collection install -r requirements.yml
+
       - name: Run Ansible-lint
-        uses: ansible/ansible-lint@main
+        run: |
+          ansible-lint
 
   Duplicate_Check:
     runs-on: ubuntu-latest
@@ -37,71 +62,80 @@ jobs:
       - name: NXDOMAIN_Duplicate_Check
         run: >
           "./dupcheck.sh"
-          "inventories/host_vars/rui/ads_hosts/NXDOMAIN.yml"
-
-  Detect_File_Changed:
-    runs-on: ubuntu-latest
-    outputs:
-      rui: ${{ steps.changes.outputs.rui }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Check What file were changed
-        uses: dorny/paths-filter@v3
-        id: changes
-        with:
-          filters: |
-            rui:
-              - 'rui.yml'
-              - 'tasks/rui/dnsmasq.yml'
-              - 'inventories/host_vars/rui/**'
+          "inventories/host_vars/rui/NXDOMAIN.yml"
 
   Dry_Run_ansible:
-    if: ${{ needs.Detect_File_Changed.outputs.rui == 'true' }}
     needs:
       - Yamllint
       - AnsibleLint
       - Duplicate_Check
-      - Detect_File_Changed
     runs-on: self-hosted
+    strategy:
+      matrix:
+        vm:
+          - console
+          - jenkins
+          - rui
+          - skylark
+          - tm
+    environment: staging
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Prepare environments (ansible-galaxy)
+      - name: Prepare environments (ansible-galaxy install role)
         run: |
-          ansible-galaxy install -r requirements.yml
+          ansible-galaxy role install -r requirements.yml
 
-      - name: "ansible-playbook -C --tags dnsmasq rui.yml"
+      - name: Prepare environments (ansible-galaxy install collection)
+        run: |
+          ansible-galaxy collection install -r requirements.yml
+
+      - name: "ansible-playbook -C"
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
         run: |
           ansible-playbook \
             -i inventories \
             -C \
-            --tags dnsmasq \
             --ssh-extra-args='-o StrictHostKeyChecking=no' \
+            --vault-password-file ${{ secrets.VAULT_PASSWORD_FILE }} \
             --extra-vars "ansible_sudo_pass=${{ secrets.SUDO }}" \
-            rui.yml
+            ${{ matrix.vm }}.yml
 
   Run_ansible:
-    # if file for rui changed and master branch
-    if: "${{ needs.Detect_File_Changed.outputs.rui == 'true' && github.ref == 'refs/heads/master'}}"
+    if: "${{ github.ref == 'refs/heads/master'}}"
     needs:
       - Dry_Run_ansible
     runs-on: self-hosted
+    strategy:
+      matrix:
+        vm:
+          - console
+          - jenkins
+          - rui
+          - skylark
+          - tm
+    environment: production
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Prepare environments (ansible-galaxy)
+      - name: Prepare environments (ansible-galaxy install role)
         run: |
-          ansible-galaxy install -r requirements.yml
+          ansible-galaxy role install -r requirements.yml
 
-      - name: "ansible-playbook --tags dnsmasq rui.yml"
+      - name: Prepare environments (ansible-galaxy install collection)
+        run: |
+          ansible-galaxy collection install -r requirements.yml
+
+      - name: "Run ansible-playbook"
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
         run: |
           ansible-playbook \
             -i inventories \
-            --tags dnsmasq \
             --ssh-extra-args='-o StrictHostKeyChecking=no' \
+            --vault-password-file ${{ secrets.VAULT_PASSWORD_FILE }} \
             --extra-vars "ansible_sudo_pass=${{ secrets.SUDO }}" \
-            rui.yml
+            ${{ matrix.vm }}.yml

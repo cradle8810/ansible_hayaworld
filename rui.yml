@@ -1,15 +1,12 @@
 ---
-- name: Play for rui.hayaworld.local
+- name: Play for rui.hayaworld.home
   hosts: rui
   remote_user: hayato
-  gather_facts: false
+  gather_facts: true
   become: true
 
   vars_files:
-    - inventories/host_vars/rui/cnames.yml
-    - inventories/host_vars/rui/dhcphosts.yml
-    - inventories/host_vars/rui/ads_hosts/NXDOMAIN.yml
-    - inventories/host_vars/rui/ads_hosts/NXDOMAIN_book_scam.yml
+    - inventories/host_vars/rui/NXDOMAIN.yml
     - inventories/host_vars/rui.yml
     - inventories/host_vars/networks.yml
 
@@ -19,44 +16,29 @@
         file: handlers/main.yml
 
   tasks:
-    - name: Set Hostname
-      ansible.builtin.hostname:
-        name: "{{ network.rui.hostname }}"
-      tags:
-        - network
-
-    - name: Put authorized Key
+    - name: Common Settings
       ansible.builtin.import_tasks:
-        file: tasks/authorized_keys.yml
+        file: tasks/all/main.yml
 
-    - name: Put motd file
+    - name: Stop systemd-resolved
       ansible.builtin.import_tasks:
-        file: tasks/motd.yml
-      vars:
-        shortname: "{{ network.rui.shortname }}"
-
-    - name: Disable SELinux
-      ansible.builtin.copy:
-        src: templates/etc/selinux/config
-        dest: /etc/selinux/config
-        owner: root
-        group: root
-        mode: '0644'
+        file: tasks/rui/stop-systemd-resolved.yml
       tags:
-        - system
-
-    - name: Show hosts(5)
-      ansible.builtin.debug:
-        msg: "{{ lookup('template', './templates/rui/etc/hosts.j2') }}"
-      tags:
-        - debug
-        - dryrun
+        - dnsmasq
 
     - name: Setup dnsmask
       ansible.builtin.import_tasks:
         file: tasks/rui/dnsmasq.yml
       tags:
         - dnsmasq
+
+    - name: Show hosts(5)
+      ansible.builtin.debug:
+        msg: "{{ lookup('template', './templates/rui/etc/hosts.j2') }}"
+      tags:
+        - debug
+        - dnsmasq
+        - dryrun
 
     - name: Setup journalctl
       ansible.builtin.import_tasks:

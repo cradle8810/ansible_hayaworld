@@ -17,24 +17,6 @@
     mode: '0644'
   notify: "Restart dnsmasq"
 
-- name: Add static DHCP config
-  ansible.builtin.template:
-    src: templates/rui/etc/dnsmasq.d/dhcp_static.conf.j2
-    dest: /etc/dnsmasq.d/dhcp_static.conf
-    owner: root
-    group: root
-    mode: '0644'
-  notify: "Restart dnsmasq"
-
-- name: Add cname config
-  ansible.builtin.template:
-    src: templates/rui/etc/dnsmasq.d/cname.conf.j2
-    dest: /etc/dnsmasq.d/cname.conf
-    owner: root
-    group: root
-    mode: '0644'
-  notify: "Restart dnsmasq"
-
 - name: Add NXDOMAIN (Ads Block) config
   ansible.builtin.template:
     src: templates/rui/etc/dnsmasq.d/blocklist.conf.j2

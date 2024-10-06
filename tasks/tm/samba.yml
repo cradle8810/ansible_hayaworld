@@ -1,5 +1,4 @@
 ---
-
 - name: Install Samba and macOS modules
   ansible.builtin.apt:
     pkg:
@@ -15,7 +14,6 @@
     group: root
     mode: '0644'
   notify: "Restart smbd"
-
 
 - name: Check if hayato exists
   ansible.builtin.shell:
@@ -36,6 +34,5 @@
   vars:
     passwd: "{{ all.vars.user[0].password }}"
     user: "{{ all.vars.user[0].username }}"
-  changed_when: true
+  changed_when: pdbedit_hayato_exist.changed
   failed_when: false
-  when: pdbedit_hayato_exist.changed

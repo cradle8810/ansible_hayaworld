@@ -1,5 +1,5 @@
 ---
-- name: Play for jenkins.hayaworld.local
+- name: Play for jenkins.hayaworld.home
   hosts: jenkins
   remote_user: hayato
   gather_facts: true
@@ -10,59 +10,17 @@
     - inventories/host_vars/networks.yml
 
   tasks:
-    - name: Set Hostname
-      ansible.builtin.hostname:
-        name: "{{ network.jenkins.hostname }}"
-      tags:
-        - network
-
-    - name: Put authorized Key
+    - name: Common Settings
       ansible.builtin.import_tasks:
-        file: tasks/authorized_keys.yml
-
-    - name: Put motd file
-      ansible.builtin.import_tasks:
-        file: tasks/motd.yml
-      vars:
-        shortname: "{{ network.jenkins.shortname }}"
-
-    - name: Disable SELinux
-      ansible.builtin.import_tasks:
-        file: tasks/stop-selinux.yml
-
-    - name: Set Timezones
-      ansible.builtin.import_tasks:
-        file: tasks/timezone.yml
-
-    - name: Stop Apt-daily
-      ansible.builtin.import_tasks:
-        file: tasks/stop-apt-daily.yml
-
-    - name: Stop cloud-init
-      ansible.builtin.import_tasks:
-        file: tasks/stop-cloud-init.yml
-
-    - name: Apt install
-      ansible.builtin.import_tasks:
-        file: tasks/apt.yml
+        file: tasks/all/main.yml
 
     - name: Install Jenkins
-      ansible.builtin.import_role:
-        name: geerlingguy.jenkins
-      vars:
-        jenkins_admin_password: "{{ jenkins.admin_password }}"
-        jenkins_admin_username: "{{ jenkins.admin_username }}"
-        jenkins_home: "{{ jenkins.home }}"
-        jenkins_hostname: "{{ jenkins.hostname }}"
-        jenkins_http_port: "{{ jenkins.http_port }}"
-        jenkins_java_options: "{{ jenkins.java_options }}"
-        jenkins_package_state: present
-        jenkins_plugins_install_dependencies: true
-        jenkins_plugins_state: present
-        jenkins_plugins: "{{ jenkins.plugins }}"
-        jenkins_version: "{{ jenkins.version }}"
-      tags:
-        - jenkins
+      ansible.builtin.import_tasks:
+        file: tasks/jenkins/jenkins_install.yml
+
+    - name: Install Ansible from PPA
+      ansible.builtin.import_tasks:
+        file: tasks/ansible_install.yml
 
     - name: Make Started Services
       ansible.builtin.import_tasks:

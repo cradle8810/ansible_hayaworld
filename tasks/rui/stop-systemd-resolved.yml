@@ -1,0 +1,7 @@
+---
+- name: "Dnsmasq / Stop and remove systemd-resolved.service"
+  ansible.builtin.systemd_service:
+    name: systemd-resolved.service
+    state: stopped
+    enabled: false
+    masked: true

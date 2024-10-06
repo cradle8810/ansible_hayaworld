@@ -1,5 +1,5 @@
 ---
-- name: Play for tm.hayaworld.local
+- name: Play for tm.hayaworld.home
   hosts: tm
   remote_user: hayato
   gather_facts: true
@@ -15,29 +15,9 @@
         file: handlers/main.yml
 
   tasks:
-    - name: Set Hostname
-      ansible.builtin.hostname:
-        name: "{{ network.tm.hostname }}"
-      tags:
-        - network
-
-    - name: Put authorized Key
+    - name: Common Settings
       ansible.builtin.import_tasks:
-        file: tasks/authorized_keys.yml
-
-    - name: Put motd file
-      ansible.builtin.import_tasks:
-        file: tasks/motd.yml
-      vars:
-        shortname: "{{ network.tm.shortname }}"
-
-    - name: Disable SELinux
-      ansible.builtin.import_tasks:
-        file: tasks/stop-selinux.yml
-
-    - name: Set Timezones
-      ansible.builtin.import_tasks:
-        file: tasks/timezone.yml
+        file: tasks/all/main.yml
 
     - name: Set mount(5)
       ansible.builtin.import_tasks:
@@ -46,22 +26,6 @@
     - name: Set samba
       ansible.builtin.import_tasks:
         file: tasks/tm/samba.yml
-
-    - name: Set zabbix agent
-      ansible.builtin.import_tasks:
-        file: tasks/zabbix-agent2.yml
-
-    - name: Stop Apt-daily
-      ansible.builtin.import_tasks:
-        file: tasks/stop-apt-daily.yml
-
-    - name: Stop cloud-init
-      ansible.builtin.import_tasks:
-        file: tasks/stop-cloud-init.yml
-
-    - name: Stop multipathd logging when running on VM
-      ansible.builtin.import_tasks:
-        file: tasks/stop-multipathd-syslog.yml
 
     - name: Make Started Services
       ansible.builtin.import_tasks:

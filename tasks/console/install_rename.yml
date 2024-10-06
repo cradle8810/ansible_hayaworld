@@ -1,9 +1,0 @@
-- name: Put rename(1)
-  ansible.builtin.copy:
-    src: templates/console/usr/bin/rename
-    dest: /usr/bin/rename
-    owner: root
-    group: root
-    mode: '0755'
-  tags:
-    - system

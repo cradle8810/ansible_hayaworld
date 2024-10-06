@@ -1,3 +1,0 @@
-# ignore create user for hayato in samba
-tasks/skylark/samba.yml no-handler
-tasks/tm/samba.yml no-handler

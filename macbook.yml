@@ -1,5 +1,5 @@
 ---
-- name: Play for macbook.hayaworld.local
+- name: Play for macbook.hayaworld.home
   hosts: macbook
   connection: local
   remote_user: hayato
