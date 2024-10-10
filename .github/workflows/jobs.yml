@@ -71,6 +71,7 @@ jobs:
       - Duplicate_Check
     runs-on: self-hosted
     strategy:
+      fail-fast: false
       matrix:
         vm:
           - console
@@ -109,6 +110,7 @@ jobs:
       - Dry_Run_ansible
     runs-on: self-hosted
     strategy:
+      fail-fast: false
       matrix:
         vm:
           - console
