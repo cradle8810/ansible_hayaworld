@@ -92,3 +92,7 @@
     - name: Mount skylark
       ansible.builtin.import_tasks:
         file: tasks/console/mount_skylark.yml
+
+    - name: Install/Config Zramswap
+      ansible.builtin.import_tasks:
+        file: tasks/zram.yml
