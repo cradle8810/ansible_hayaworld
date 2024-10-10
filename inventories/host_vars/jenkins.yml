@@ -45,7 +45,7 @@ jenkins:
     - workflow-aggregator
     - ws-cleanup
   UUID: "cd5488ca-dc52-42f7-9a4d-79a30499b74e"
-  version: "2.475"
+  version: "2.480"
 
 firewall:
   policy: deny
