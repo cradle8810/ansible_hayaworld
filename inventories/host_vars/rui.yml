@@ -35,6 +35,7 @@ dnsmasq:
 services_start:
   - dnsmasq
   - open-vm-tools
+  - rsyslog
   - ssh
   - systemd-journald
 
