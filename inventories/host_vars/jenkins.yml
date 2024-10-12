@@ -1,10 +1,12 @@
 ---
 apt:
   - dstat
+  - gzip
   - htop
   - jq
   - openjdk-21-jdk
   - python3-pip
+  - unzip
 
 services_start:
   - jenkins
