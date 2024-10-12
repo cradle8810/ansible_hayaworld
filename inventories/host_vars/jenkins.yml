@@ -64,3 +64,7 @@ firewall:
       proto: "tcp"
       src: "192.168.1.0/24"
       port: "8080"
+
+zramswap:
+  algo: lz4
+  percent: 40
