@@ -1,6 +1,7 @@
 ---
 apt:
   - dstat
+  - git
   - gzip
   - htop
   - jq
