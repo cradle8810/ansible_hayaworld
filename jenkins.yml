@@ -23,6 +23,20 @@
       ansible.builtin.import_tasks:
         file: tasks/jenkins/jenkins_install.yml
 
+    - name: Install Docker(ce)
+      ansible.builtin.import_role:
+        name: geerlingguy.docker
+      vars:
+        docker_edition: 'ce'
+        docker_packages_state: present
+        docker_service_manage: true
+        docker_service_state: started
+        docker_service_enabled: true
+        docker_restart_handler_state: restarted
+        docker_users:
+          - hayato
+          - jenkins
+
     - name: Install Ansible from PPA
       ansible.builtin.import_tasks:
         file: tasks/ansible_install.yml
