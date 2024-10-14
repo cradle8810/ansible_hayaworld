@@ -36,7 +36,7 @@ jobs:
 
       - name: Install ansible-lint via pip3
         run: |
-          pip3 install --force ansible-lint
+          pip3 install --force --break-system-package ansible-lint
 
       - name: Prepare environments (ansible-galaxy install role)
         run: |
