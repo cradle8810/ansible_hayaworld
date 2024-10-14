@@ -1,5 +1,5 @@
 ---
-name: Hayaworld Ansible Jobs
+name: Hayaworld Ansible Jobs (Deploy)
 on:
   push:
     branches:
