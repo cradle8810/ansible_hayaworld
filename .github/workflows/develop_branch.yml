@@ -78,6 +78,7 @@ jobs:
           - console
           - jenkins
           - rui
+          - runner03
           - skylark
           - tm
     environment: Staging
