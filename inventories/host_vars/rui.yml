@@ -5,6 +5,7 @@ apt:
   - dstat
   - htop
   - open-vm-tools
+  - rsyslog
 
 rui_info: "{{ network | selectattr('shortname', 'eq', 'rui') }}"
 rui_ipv4: "{{ rui_info[0].ipv4 }}"
@@ -34,6 +35,7 @@ dnsmasq:
 services_start:
   - dnsmasq
   - open-vm-tools
+  - rsyslog
   - ssh
   - systemd-journald
 

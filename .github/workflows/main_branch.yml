@@ -1,9 +1,9 @@
 ---
-name: Hayaworld Ansible Jobs
+name: Hayaworld Ansible Jobs (Deploy)
 on:
   push:
     branches:
-      - '**'
+      - 'master'
   workflow_dispatch:
 
 jobs:
@@ -36,7 +36,7 @@ jobs:
 
       - name: Install ansible-lint via pip3
         run: |
-          pip3 install --force ansible-lint
+          pip3 install --force --break-system-package ansible-lint
 
       - name: Prepare environments (ansible-galaxy install role)
         run: |
@@ -71,6 +71,7 @@ jobs:
       - Duplicate_Check
     runs-on: self-hosted
     strategy:
+      fail-fast: false
       matrix:
         vm:
           - console
@@ -78,7 +79,7 @@ jobs:
           - rui
           - skylark
           - tm
-    environment: staging
+    environment: Production
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -109,6 +110,7 @@ jobs:
       - Dry_Run_ansible
     runs-on: self-hosted
     strategy:
+      fail-fast: false
       matrix:
         vm:
           - console
@@ -116,7 +118,7 @@ jobs:
           - rui
           - skylark
           - tm
-    environment: production
+    environment: Production
     steps:
       - name: Checkout
         uses: actions/checkout@v4

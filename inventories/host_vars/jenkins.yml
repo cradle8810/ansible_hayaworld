@@ -1,10 +1,13 @@
 ---
 apt:
   - dstat
+  - git
+  - gzip
   - htop
   - jq
   - openjdk-21-jdk
   - python3-pip
+  - unzip
 
 services_start:
   - jenkins
@@ -45,7 +48,7 @@ jenkins:
     - workflow-aggregator
     - ws-cleanup
   UUID: "cd5488ca-dc52-42f7-9a4d-79a30499b74e"
-  version: "2.475"
+  version: "2.480"
 
 firewall:
   policy: deny
@@ -62,3 +65,7 @@ firewall:
       proto: "tcp"
       src: "192.168.1.0/24"
       port: "8080"
+
+zramswap:
+  algo: lz4
+  percent: 40
