@@ -11,7 +11,7 @@
 
 - name: "Put authorized_keys"
   ansible.builtin.copy:
-    src: templates/home/hayato/.ssh/authorized_keys
+    src: templates/all/home/hayato/.ssh/authorized_keys
     dest: /home/runner/.ssh/authorized_keys
     owner: runner
     group: runner
