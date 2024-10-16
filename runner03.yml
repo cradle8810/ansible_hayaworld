@@ -57,3 +57,7 @@
     - name: Install Pre-builded SNS downloaders
       ansible.builtin.import_tasks:
         file: tasks/sns_dl.yml
+
+    - name: Install Ansible from PPA
+      ansible.builtin.import_tasks:
+        file: tasks/ansible_install.yml
