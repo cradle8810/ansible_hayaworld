@@ -41,11 +41,11 @@ jobs:
 
       - name: Prepare environments (ansible-galaxy install role)
         run: |
-          ansible-galaxy role install -r requirements.yml
+          ansible-galaxy role install -r requirements.yml --ignore-errors
 
       - name: Prepare environments (ansible-galaxy install collection)
         run: |
-          ansible-galaxy collection install -r requirements.yml
+          ansible-galaxy collection install -r requirements.yml --ignore-errors
 
       - name: Run Ansible-lint
         run: |
@@ -88,11 +88,11 @@ jobs:
 
       - name: Prepare environments (ansible-galaxy install role)
         run: |
-          ansible-galaxy role install -r requirements.yml
+          ansible-galaxy role install -r requirements.yml --ignore-errors
 
       - name: Prepare environments (ansible-galaxy install collection)
         run: |
-          ansible-galaxy collection install -r requirements.yml
+          ansible-galaxy collection install -r requirements.yml --ignore-errors
 
       - name: "ansible-playbook -C"
         env:
