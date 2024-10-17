@@ -3,7 +3,7 @@
   ansible.builtin.apt:
     install_recommends: false
     update_cache: true
-    pkg: 
+    pkg:
       "{{ item }}"
   loop:
     - adwaita-icon-theme
