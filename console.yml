@@ -96,3 +96,9 @@
     - name: Install/Config Zramswap
       ansible.builtin.import_tasks:
         file: tasks/zram.yml
+
+    - name: Install Desktop
+      ansible.builtin.import_tasks:
+        file: tasks/console/desktop.yml
+      tags:
+        - desktop
