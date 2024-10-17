@@ -1,0 +1,38 @@
+---
+- name: Installing Desktop
+  ansible.builtin.apt:
+    install_recommends: false
+    update_cache: true
+    pkg: 
+      "{{ item }}"
+  loop:
+    - adwaita-icon-theme
+    - eog
+    - evince
+    - file-roller
+    - fonts-ipaexfont
+    - fonts-ipafont
+    - fonts-liberation
+    - fonts-liberation2
+    - fonts-takao
+    - gedit
+    - gnome-shell-extension-desktop-icons-ng
+    - gnome-shell-extension-manager
+    - gnome-tweaks
+    - language-pack-ja
+    - network-manager
+    - remmina
+    - remmina-plugin-rdp
+    - seahorse
+    - task-gnome-desktop
+    - ttf-mscorefonts-installer
+    - ubuntu-desktop
+    - x11-common
+    - xinit
+    - xorg
+    - xorgxrdp
+    - xrdp
+    - xserver-xorg
+    - yaru-theme-gnome-shell
+    - yaru-theme-gtk
+    - yaru-theme-icon
