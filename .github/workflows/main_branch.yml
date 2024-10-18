@@ -17,26 +17,20 @@ jobs:
         run: yamllint --strict --format github .
 
   AnsibleLint:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+    container:
+      image: ghcr.io/ansible/community-ansible-dev-tools:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Restore Caches
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
-          save-always: true
           path: |
-            ~/.cache/pip
-            ~/.ansible/collections
-            ~/.ansible/roles
+            /github/home/.cache/
+            /github/home/.ansible/
           key: cache-ansible-roles
-          restore-keys: |
-            cache-ansible-roles
-
-      - name: Install ansible-lint via pip3
-        run: |
-          pip3 install --force --break-system-package ansible-lint
 
       - name: Prepare environments (ansible-galaxy install role)
         run: |
@@ -49,6 +43,14 @@ jobs:
       - name: Run Ansible-lint
         run: |
           ansible-lint
+
+      - name: Save Caches
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            /github/home/.cache/
+            /github/home/.ansible/
+          key: cache-ansible-roles
 
   Duplicate_Check:
     runs-on: ubuntu-latest
