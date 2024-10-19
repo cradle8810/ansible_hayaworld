@@ -66,3 +66,7 @@ firewall:
       proto: "udp"
       src: "any"
       port: "68"
+    - name: "Runner Docker ssh"
+      proto: "tcp"
+      src: "172.17.0.0/16"
+      port: "22"
