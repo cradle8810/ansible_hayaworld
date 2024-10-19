@@ -38,9 +38,9 @@
       tags:
         - system
 
-    - name: Apt add Google Chrome Repo
+    - name: Install Google Chrome Repo
       ansible.builtin.import_tasks:
-        file: tasks/console/chrome_repo.yml
+        file: tasks/console/install_chrome.yml
       tags:
         - chrome
 
