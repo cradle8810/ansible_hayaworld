@@ -2,7 +2,7 @@
 
 - name: Put rsyslog.conf(5)
   ansible.builtin.template:
-    src: templates/all/etc/rsyslog.conf.rui.j2
+    src: templates/rui/etc/rsyslog.conf.rui.j2
     dest: /etc/rsyslog.conf
     owner: root
     group: root
@@ -11,7 +11,7 @@
 
 - name: Put logrotate.conf(5)
   ansible.builtin.template:
-    src: templates/all/etc/logrotate.conf.rui.j2
+    src: templates/rui/etc/logrotate.conf.rui.j2
     dest: /etc/logrotate.conf
     owner: root
     group: root

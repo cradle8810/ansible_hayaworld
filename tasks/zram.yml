@@ -1,0 +1,15 @@
+---
+- name: "Install zram-tools"
+  ansible.builtin.apt:
+    name: "zram-tools"
+    state: present
+    update_cache: true
+
+- name: "Setting zram configurations"
+  ansible.builtin.template:
+    src: templates/all/etc/default/zramswap.j2
+    dest: /etc/default/zramswap
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "Restart zramswap"

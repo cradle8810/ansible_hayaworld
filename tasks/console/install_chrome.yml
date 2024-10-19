@@ -16,3 +16,10 @@
     repo: deb http://dl.google.com/linux/chrome/deb/ stable main
     state: present
     filename: google-chrome
+
+- name: Installing Google Chrome
+  ansible.builtin.apt:
+    install_recommends: false
+    update_cache: true
+    pkg:
+      - google-chrome-stable

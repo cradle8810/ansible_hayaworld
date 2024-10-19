@@ -38,9 +38,9 @@
       tags:
         - system
 
-    - name: Apt add Google Chrome Repo
+    - name: Install Google Chrome Repo
       ansible.builtin.import_tasks:
-        file: tasks/console/chrome_repo.yml
+        file: tasks/console/install_chrome.yml
       tags:
         - chrome
 
@@ -51,6 +51,10 @@
     - name: Install Pre-builded SNS downloaders
       ansible.builtin.import_tasks:
         file: tasks/sns_dl.yml
+
+    - name: Install pipr
+      ansible.builtin.import_tasks:
+        file: tasks/pipr.yml
 
     - name: Put Pocket remove scrtipt
       ansible.builtin.template:
@@ -88,3 +92,13 @@
     - name: Mount skylark
       ansible.builtin.import_tasks:
         file: tasks/console/mount_skylark.yml
+
+    - name: Install/Config Zramswap
+      ansible.builtin.import_tasks:
+        file: tasks/zram.yml
+
+    - name: Install Desktop
+      ansible.builtin.import_tasks:
+        file: tasks/console/desktop.yml
+      tags:
+        - desktop

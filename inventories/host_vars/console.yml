@@ -8,7 +8,6 @@ apt:
   - gimp
   - git
   - golang
-  - google-chrome-stable
   - gpgv2
   - gprename
   - heif-thumbnailer
@@ -58,6 +57,10 @@ firewall:
       proto: "tcp"
       src: "192.168.1.0/24"
       port: '22'
+    - name: "RDP from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: '3389'
     - name: "Zabbix from Zabbix-server"
       proto: "tcp"
       src: "192.168.1.106/24"
@@ -66,3 +69,11 @@ firewall:
       proto: "tcp"
       src: "192.168.1.0/24"
       port: "8000"
+    - name: "Runner Docker ssh"
+      proto: "tcp"
+      src: "172.17.0.0/16"
+      port: "22"
+
+zramswap:
+  algo: lz4
+  percent: 50

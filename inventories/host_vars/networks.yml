@@ -30,11 +30,6 @@ network:
     ipv4: 192.168.1.100
     shortname: rui
     sshuser: hayato
-  - hostname: step.hayaworld.home
-    interface: ens160
-    ipv4: 192.168.1.101
-    shortname: win10
-    sshuser: none
   - hostname: origin.hayaworld.home
     interface: ens160
     ipv4: 192.168.1.102
@@ -55,11 +50,16 @@ network:
     ipv4: 192.168.1.106
     shortname: zabbix
     sshuser: hayato
-  - hostname: step.hayaworld.home
+  - hostname: runner02.hayaworld.home
     interface: ens160
-    ipv4: 192.168.1.111
-    shortname: step
-    sshuser: admin
+    ipv4: 192.168.1.107
+    shortname: runner02
+    sshuser: runner
+  - hostname: runner03.hayaworld.home
+    interface: ens160
+    ipv4: 192.168.1.108
+    shortname: runner03
+    sshuser: runner
   - hostname: tm.hayaworld.home
     interface: ens160
     ipv4: 192.168.1.112
