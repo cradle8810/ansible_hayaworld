@@ -8,7 +8,6 @@ apt:
   - gimp
   - git
   - golang
-  - google-chrome-stable
   - gpgv2
   - gprename
   - heif-thumbnailer
