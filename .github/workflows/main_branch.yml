@@ -83,17 +83,22 @@ jobs:
           - skylark
           - tm
     environment: Production
+    container:
+      image: ghcr.io/ansible/community-ansible-dev-tools:latest
+      volumes:
+        - /home/runner/ansible-vault:/tmp:ro
+        - /home/runner/.ssh:/root/.ssh:ro
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Prepare environments (ansible-galaxy install role)
-        run: |
-          ansible-galaxy role install -r requirements.yml --ignore-errors
-
-      - name: Prepare environments (ansible-galaxy install collection)
-        run: |
-          ansible-galaxy collection install -r requirements.yml --ignore-errors
+      - name: Restore Caches
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            /github/home/.cache/
+            /github/home/.ansible/
+          key: cache-ansible-roles
 
       - name: "ansible-playbook -C"
         env:
@@ -122,17 +127,22 @@ jobs:
           - skylark
           - tm
     environment: Production
+    container:
+      image: ghcr.io/ansible/community-ansible-dev-tools:latest
+      volumes:
+        - /home/runner/ansible-vault:/tmp:ro
+        - /home/runner/.ssh:/root/.ssh:ro
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Prepare environments (ansible-galaxy install role)
-        run: |
-          ansible-galaxy role install -r requirements.yml --ignore-errors
-
-      - name: Prepare environments (ansible-galaxy install collection)
-        run: |
-          ansible-galaxy collection install -r requirements.yml --ignore-errors
+      - name: Restore Caches
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            /github/home/.cache/
+            /github/home/.ansible/
+          key: cache-ansible-roles
 
       - name: "Run ansible-playbook"
         env:
