@@ -108,7 +108,7 @@ jobs:
             -i inventories \
             -C \
             --ssh-extra-args='-o StrictHostKeyChecking=no' \
-            --vault-password-file ${{ secrets.VAULT_PASSWORD_FILE }} \
+            --vault-password-file /tmp/${{ secrets.VAULT_PASSWORD_FILE }} \
             --extra-vars "ansible_sudo_pass=${{ secrets.SUDO }}" \
             ${{ matrix.vm }}.yml
 
@@ -151,6 +151,6 @@ jobs:
           ansible-playbook \
             -i inventories \
             --ssh-extra-args='-o StrictHostKeyChecking=no' \
-            --vault-password-file ${{ secrets.VAULT_PASSWORD_FILE }} \
+            --vault-password-file /tmp/${{ secrets.VAULT_PASSWORD_FILE }} \
             --extra-vars "ansible_sudo_pass=${{ secrets.SUDO }}" \
             ${{ matrix.vm }}.yml
