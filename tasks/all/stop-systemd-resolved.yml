@@ -1,0 +1,11 @@
+---
+- name: "Common / Set to don't use DNSStubListener for systemd config"
+  community.general.ini_file:
+    path: /etc/systemd/resolved.conf
+    section: "Resolve"
+    option: "DNSStubListener"
+    value: "no"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  notify: "systemd-resolved"

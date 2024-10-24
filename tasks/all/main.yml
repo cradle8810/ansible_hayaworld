@@ -11,6 +11,12 @@
   tags:
     - network
 
+- name: "Common / Stop Apt-daily"
+  ansible.builtin.import_tasks:
+    file: tasks/all/stop-systemd-resolved.yml
+  tags:
+    - network
+
 - name: "Common / Set Timezones"
   ansible.builtin.import_tasks:
     file: tasks/all/timezone.yml
