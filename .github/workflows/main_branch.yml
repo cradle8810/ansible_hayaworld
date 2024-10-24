@@ -20,6 +20,9 @@ jobs:
     runs-on: self-hosted
     container:
       image: ghcr.io/ansible/community-ansible-dev-tools:latest
+      credentials:
+        username: "${{ secrets.GHCR_USERNAME }}"
+        password: "${{ secrets.GHCR_PASSWORD }}"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -85,6 +88,9 @@ jobs:
     environment: Production
     container:
       image: ghcr.io/ansible/community-ansible-dev-tools:latest
+      credentials:
+        username: "${{ secrets.GHCR_USERNAME }}"
+        password: "${{ secrets.GHCR_PASSWORD }}"
       volumes:
         - /home/runner/ansible-vault:/tmp:ro
         - /home/runner/.ssh:/root/.ssh:ro
