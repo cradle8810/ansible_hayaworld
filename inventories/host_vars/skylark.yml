@@ -23,6 +23,7 @@ apt:
   - htop
   - open-vm-tools
   - renameutils
+  - rsync
   - wget
 
 firewall:
