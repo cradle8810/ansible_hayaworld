@@ -33,5 +33,6 @@
   become: true
   ansible.builtin.pip:
     name: "ansible-lint"
+    break_system_packages: true
   tags:
     - ansible

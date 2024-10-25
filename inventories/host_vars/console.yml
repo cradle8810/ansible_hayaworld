@@ -8,7 +8,6 @@ apt:
   - gimp
   - git
   - golang
-  - gpgv2
   - gprename
   - heif-thumbnailer
   - htop
