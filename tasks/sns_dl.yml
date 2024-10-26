@@ -47,6 +47,6 @@
 
 - name: Install instaloader
   ansible.builtin.pip:
-    name: "git+https://github.com/instaloader/instaloader"
+    name: "git+https://github.com/instaloader/instaloader@v4.13.2"
     break_system_packages: true
     extra_args: "--upgrade"
