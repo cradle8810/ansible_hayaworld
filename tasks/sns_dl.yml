@@ -45,15 +45,8 @@
     remote_src: true
     mode: "0755"
 
- # https://github.com/instaloader/instaloader
-- name: Download instaloader (Linux)
+- name: Install instaloader
   ansible.builtin.pip:
-    name: instaloader
+    name: "git+https://github.com/instaloader/instaloader"
     break_system_packages: true
-  when: ansible_distribution != 'MacOSX'
-
-- name: Download instaloader (macOS)
-  ansible.builtin.pip:
-    name: instaloader
-    extra_args: "--break-system-packages"
-  when: ansible_distribution == 'MacOSX'
+    extra_args: "--upgrade"
