@@ -72,6 +72,7 @@
     jenkins_http_port: "{{ jenkins.http_port }}"
     jenkins_java_options: "{{ jenkins.java_options }}"
     jenkins_package_state: present
+    jenkins_pkg_url: "{{ jenkins.pkg_url }}"
     jenkins_plugins_install_dependencies: true
     jenkins_plugins_state: present
     jenkins_plugins: "{{ jenkins.plugins }}"
