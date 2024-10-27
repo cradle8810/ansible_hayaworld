@@ -25,6 +25,7 @@ apt:
   - python3-pip
   - samba-common
   - sshpass
+  - thunderbird
   - vim
   - vlc
   - whois
@@ -36,7 +37,6 @@ remove:
   - firefox
   - gnome-power-manager
   - rhythmbox
-  - thunderbird
   - totem
   - yelp
 
