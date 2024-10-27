@@ -42,7 +42,7 @@
   register: yt_dlp_fixuptime_path
   changed_when: false
 
-- name: "Make a yt-dlp plugin dir in homedir"
+- name: "Make a yt-dlp plugin dir in homedir (Linux)"
   ansible.builtin.file:
     path: "{{ item.homedir }}/.yt-dlp/plugins/yt-dlp-FixupMtime"
     state: directory
@@ -51,9 +51,10 @@
     owner: "{{ item.username }}"
     group: "{{ item.username }}"
   loop: "{{ all.vars.user }}"
+  when: ansible_distribution == "Ubuntu"
   no_log: true
 
-- name: "Make a yt-dlp-FixupMtime's symbolic link to correct location"
+- name: "Make a yt-dlp-FixupMtime's symbolic link to correct location (Linux)"
   ansible.builtin.file:
     src: "{{ yt_dlp_fixuptime_path.stdout }}/yt_dlp_plugins"
     dest: "{{ item.homedir }}/.yt-dlp/plugins/yt-dlp-FixupMtime/yt_dlp_plugins"
@@ -61,6 +62,30 @@
     group: "{{ item.username }}"
     state: link
   loop: "{{ all.vars.user }}"
+  when: ansible_distribution == "Ubuntu"
+  no_log: true
+
+- name: "Make a yt-dlp plugin dir in homedir (macOS)"
+  ansible.builtin.file:
+    path: "{{ item.homedir_mac }}/.yt-dlp/plugins/yt-dlp-FixupMtime"
+    state: directory
+    recurse: true
+    mode: '0755'
+    owner: "{{ item.username }}"
+    group: "staff"
+  loop: "{{ all.vars.user }}"
+  when: ansible_distribution == "MacOSX"
+  no_log: true
+
+- name: "Make a yt-dlp-FixupMtime's symbolic link to correct location (macOS)"
+  ansible.builtin.file:
+    src: "{{ yt_dlp_fixuptime_path.stdout }}/yt_dlp_plugins"
+    dest: "{{ item.homedir_mac }}/.yt-dlp/plugins/yt-dlp-FixupMtime/yt_dlp_plugins"
+    owner: "{{ item.username }}"
+    group: "staff"
+    state: link
+  loop: "{{ all.vars.user }}"
+  when: ansible_distribution == "MacOSX"
   no_log: true
 
 - name: Download twitter-loader
