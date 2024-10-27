@@ -41,6 +41,8 @@
         grep Location | awk -F ': ' '{print $2}' | tr -d '\n'
   register: yt_dlp_fixuptime_path
   changed_when: false
+  failed_when: yt_dlp_fixuptime_path.stdout == ''
+  check_mode: false
 
 - name: "Make a yt-dlp plugin dir in homedir (Linux)"
   ansible.builtin.file:
