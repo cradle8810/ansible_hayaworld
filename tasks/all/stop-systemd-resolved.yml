@@ -1,4 +1,10 @@
 ---
+- name: "Common / Install systemd-resolved"
+  ansible.builtin.apt:
+    name: "resolvconf-admin"
+    state: present
+    update_cache: true
+
 - name: "Common / Set to don't use DNSStubListener for systemd config"
   community.general.ini_file:
     path: /etc/systemd/resolved.conf
