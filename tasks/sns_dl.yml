@@ -32,6 +32,64 @@
     break_system_packages: true
     extra_args: "--upgrade"
 
+- name: "Get yt-dlp-FixupMtime Installed Path"
+  ansible.builtin.shell:
+    executable: /bin/bash
+    cmd: >
+      set -o pipefail &&
+      pip show yt-dlp-FixupMtime |
+        grep Location | awk -F ': ' '{print $2}' | tr -d '\n'
+  register: yt_dlp_fixuptime_path
+  changed_when: false
+  failed_when: yt_dlp_fixuptime_path.stdout == ''
+  check_mode: false
+
+- name: "Make a yt-dlp plugin dir in homedir (Linux)"
+  ansible.builtin.file:
+    path: "{{ item.homedir }}/.yt-dlp/plugins/yt-dlp-FixupMtime"
+    state: directory
+    recurse: true
+    mode: '0755'
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+  loop: "{{ all.vars.user }}"
+  when: ansible_distribution == "Ubuntu"
+  no_log: true
+
+- name: "Make a yt-dlp-FixupMtime's symbolic link to correct location (Linux)"
+  ansible.builtin.file:
+    src: "{{ yt_dlp_fixuptime_path.stdout }}/yt_dlp_plugins"
+    dest: "{{ item.homedir }}/.yt-dlp/plugins/yt-dlp-FixupMtime/yt_dlp_plugins"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    state: link
+  loop: "{{ all.vars.user }}"
+  when: ansible_distribution == "Ubuntu"
+  no_log: true
+
+- name: "Make a yt-dlp plugin dir in homedir (macOS)"
+  ansible.builtin.file:
+    path: "{{ item.homedir_mac }}/.yt-dlp/plugins/yt-dlp-FixupMtime"
+    state: directory
+    recurse: true
+    mode: '0755'
+    owner: "{{ item.username }}"
+    group: "staff"
+  loop: "{{ all.vars.user }}"
+  when: ansible_distribution == "MacOSX"
+  no_log: true
+
+- name: "Make a yt-dlp-FixupMtime's symbolic link to correct location (macOS)"
+  ansible.builtin.file:
+    src: "{{ yt_dlp_fixuptime_path.stdout }}/yt_dlp_plugins"
+    dest: "{{ item.homedir_mac }}/.yt-dlp/plugins/yt-dlp-FixupMtime/yt_dlp_plugins"
+    owner: "{{ item.username }}"
+    group: "staff"
+    state: link
+  loop: "{{ all.vars.user }}"
+  when: ansible_distribution == "MacOSX"
+  no_log: true
+
 - name: Download twitter-loader
   ansible.builtin.unarchive:
     src: "https://github.com/mmpx12/twitter-media-downloader/releases/download/v1.13.3/twitter-media-downloader-v1.13.3-linux-amd64.tar.gz"
