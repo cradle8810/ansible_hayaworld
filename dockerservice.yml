@@ -1,0 +1,43 @@
+---
+- name: Play for docker_service.hayaworld.home
+  hosts: dockerservice
+  remote_user: hayato
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - inventories/host_vars/docker_service.yml
+    - inventories/host_vars/networks.yml
+
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+      tags:
+        - network
+
+  tasks:
+    - name: Common Settings
+      ansible.builtin.import_tasks:
+        file: tasks/all/main.yml
+
+    - name: Install Docker(ce)
+      ansible.builtin.import_role:
+        name: geerlingguy.docker
+      vars:
+        docker_edition: 'ce'
+        docker_packages_state: present
+        docker_service_manage: true
+        docker_service_state: started
+        docker_service_enabled: true
+        docker_restart_handler_state: restarted
+        docker_users:
+          - hayato
+
+    - name: Mount skylark
+      ansible.builtin.import_tasks:
+        file: tasks/dockerservice/mount_docker.yml
+
+    - name: Install/Config Zramswap
+      ansible.builtin.import_tasks:
+        file: tasks/zram.yml

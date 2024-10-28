@@ -1,0 +1,47 @@
+---
+apt:
+  - curl
+  - dstat
+  - git
+  - htop
+  - jq
+  - open-vm-tools
+  - openssh-server
+  - openssl
+  - p7zip-full
+  - python3-pip
+  - sshpass
+  - vim
+  - zsh
+
+services_start:
+  - docker
+  - open-vm-tools
+  - ssh
+
+dockerdir:
+  UUID: "6db90b73-6dbd-4c00-9b13-724f0cb4e636"
+
+firewall:
+  policy: deny
+  allow_rules:
+    - name: "SSH from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: '22'
+    - name: "Zabbix from Zabbix-server"
+      proto: "tcp"
+      src: "192.168.1.106/24"
+      port: "10050"
+    - name: "HTTP Allow"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: "80"
+    - name: "HTTPS Allow"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: "443"
+
+zramswap:
+  algo: lz4
+  percent: 50

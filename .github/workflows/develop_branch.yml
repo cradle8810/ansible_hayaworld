@@ -81,6 +81,7 @@ jobs:
       matrix:
         vm:
           - console
+          - dockerservice
           - jenkins
           - rui
           - runner03
