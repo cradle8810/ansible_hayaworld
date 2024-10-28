@@ -1,0 +1,16 @@
+services:
+  console:
+    container_name: console
+    image: ubuntu:22.04
+    ports:
+      - 33389:3389
+    restart: always
+    privileged: true
+    stdin_open: true
+    tty: true
+    entrypoint: >
+      sh -c 
+        "apt update &&
+        DEBIAN_FRONTEND=noninteractive apt install -y python3&&
+        useradd -m hayato
+        /bin/bash"
