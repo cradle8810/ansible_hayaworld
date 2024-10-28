@@ -14,4 +14,4 @@
     state: present
     no_extra_spaces: true
     mode: "644"
-  notify: "systemd-resolved"
+  notify: "Restart systemd-resolved"
