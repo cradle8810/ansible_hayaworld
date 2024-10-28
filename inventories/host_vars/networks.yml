@@ -30,6 +30,11 @@ network:
     ipv4: 192.168.1.100
     shortname: rui
     sshuser: hayato
+  - hostname: dockerservice.hayaworld.home
+    interface: ens160
+    ipv4: 192.168.1.101
+    shortname: dockerservice
+    sshuser: hayato
   - hostname: origin.hayaworld.home
     interface: ens160
     ipv4: 192.168.1.102

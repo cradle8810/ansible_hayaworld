@@ -80,6 +80,7 @@ jobs:
       matrix:
         vm:
           - console
+          - dockerservice
           - jenkins
           - rui
           - runner03
@@ -128,6 +129,7 @@ jobs:
       matrix:
         vm:
           - console
+          - dockerservice
           - jenkins
           - rui
           - skylark

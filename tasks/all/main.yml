@@ -11,7 +11,7 @@
   tags:
     - network
 
-- name: "Common / Stop Apt-daily"
+- name: "Common / Stop Systemd-resolved"
   ansible.builtin.import_tasks:
     file: tasks/all/stop-systemd-resolved.yml
   tags:
