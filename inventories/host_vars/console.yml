@@ -4,6 +4,7 @@ apt:
   - curl
   - dstat
   - emacs
+  - ffmpeg
   - ffmpegthumbnailer
   - gimp
   - git
