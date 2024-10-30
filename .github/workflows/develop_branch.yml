@@ -28,14 +28,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Restore Caches
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            /github/home/.cache/
-            /github/home/.ansible/
-          key: cache-ansible-roles
-
       - name: Prepare environments (ansible-galaxy install role)
         run: |
           ansible-galaxy role install -r requirements.yml --ignore-errors
@@ -47,14 +39,6 @@ jobs:
       - name: Run Ansible-lint
         run: |
           ansible-lint
-
-      - name: Save Caches
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            /github/home/.cache/
-            /github/home/.ansible/
-          key: cache-ansible-roles
 
   Duplicate_Check:
     runs-on: ubuntu-latest
@@ -97,13 +81,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Restore Caches
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            /github/home/.cache/
-            /github/home/.ansible/
-          key: cache-ansible-roles
+      - name: Prepare environments (ansible-galaxy install role)
+        run: |
+          ansible-galaxy role install -r requirements.yml --ignore-errors
+
+      - name: Prepare environments (ansible-galaxy install collection)
+        run: |
+          ansible-galaxy collection install -r requirements.yml --ignore-errors
 
       - name: "ansible-playbook -C"
         env:
