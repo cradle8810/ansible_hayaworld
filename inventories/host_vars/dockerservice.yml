@@ -22,6 +22,10 @@ services_start:
 dockerdir:
   UUID: "6db90b73-6dbd-4c00-9b13-724f0cb4e636"
 
+docker_network:
+  base: "172.18.0.0/12"
+  size: "24"
+
 firewall:
   policy: deny
   allow_rules:
