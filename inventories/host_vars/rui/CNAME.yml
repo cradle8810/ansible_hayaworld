@@ -1,0 +1,4 @@
+---
+cname:
+  - name: jenkins-deb.hayaworld.home
+    real: dockerservice.hayaworld.home

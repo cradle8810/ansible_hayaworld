@@ -6,7 +6,7 @@
   become: true
 
   vars_files:
-    - inventories/host_vars/docker_service.yml
+    - inventories/host_vars/dockerservice.yml
     - inventories/host_vars/networks.yml
 
   handlers:
@@ -21,6 +21,10 @@
       ansible.builtin.import_tasks:
         file: tasks/all/main.yml
 
+    - name: Mount docker
+      ansible.builtin.import_tasks:
+        file: tasks/dockerservice/mount_docker.yml
+
     - name: Install Docker(ce)
       ansible.builtin.import_role:
         name: geerlingguy.docker
@@ -34,9 +38,20 @@
         docker_users:
           - hayato
 
-    - name: Mount skylark
+    - name: Put Docker config
+      ansible.builtin.template:
+        src: templates/dockerservice/etc/docker/daemon.json.j2
+        dest: /etc/docker/daemon.json
+        owner: root
+        group: root
+        mode: '0644'
+      notify: "Restart docker"
+
+    - name: "Predefined docker-compose up"
       ansible.builtin.import_tasks:
-        file: tasks/dockerservice/mount_docker.yml
+        file: tasks/dockerservice/docker_compose_exec.yml
+      tags:
+        - docker
 
     - name: Install/Config Zramswap
       ansible.builtin.import_tasks:

@@ -1,0 +1,18 @@
+services:
+  jenkins-deb-container:
+    container_name: jenkins-deb-container
+    image: nginx:latest
+    restart: always
+    stdin_open: true
+    tty: true
+    networks:
+      - reverse-proxy
+    volumes:
+      - jenkins_deb:/usr/share/nginx/html
+
+volumes:
+  jenkins_deb:
+
+networks:
+  reverse-proxy:
+    external: true

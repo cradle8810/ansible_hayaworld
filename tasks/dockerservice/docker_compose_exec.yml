@@ -1,0 +1,27 @@
+---
+- name: "Install docker python module"
+  ansible.builtin.pip:
+    name: "docker"
+    break_system_packages: true
+    extra_args: "--upgrade"
+
+- name: "Copy docker-compose.yml to homedir"
+  ansible.builtin.copy:
+    src: templates/dockerservice/home/hayato/compose
+    dest: /home/hayato/
+    owner: hayato
+    group: hayato
+    directory_mode: '0755'
+    mode: '0644'
+
+- name: "Create a reverse-proxy network"
+  community.docker.docker_network:
+    name: reverse-proxy
+
+- name: "Up Jenkins deb repository containers"
+  community.docker.docker_compose_v2:
+    project_src: "/home/hayato/compose/jenkins-deb/"
+
+- name: "Up Reverse Proxy containers"
+  community.docker.docker_compose_v2:
+    project_src: "/home/hayato/compose/reverseproxy/"

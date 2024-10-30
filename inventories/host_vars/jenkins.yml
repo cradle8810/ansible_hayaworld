@@ -33,7 +33,7 @@ jenkins:
   hostname: jenkins.hayaworld.home
   http_port: 8080
   java_options: "-Djenkins.install.runSetupWizard=false"
-  pkg_url: "https://ftp.yz.yamagata-u.ac.jp/pub/misc/jenkins/debian"
+  pkg_url: "http://jenkins-deb.hayaworld.home/"
   plugins:
     - build-timeout
     - discord-notifier
