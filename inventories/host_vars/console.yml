@@ -38,8 +38,6 @@ remove:
   - firefox
   - gnome-power-manager
   - rhythmbox
-  - totem
-  - yelp
 
 services_start:
   - docker
