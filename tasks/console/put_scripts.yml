@@ -1,0 +1,14 @@
+---
+- name: Mkdir Scripts
+  ansible.builtin.file:
+    path: /opt/bin
+    state: directory
+    mode: '0755'
+
+- name: Put Pocket remove scrtipt
+  ansible.builtin.template:
+    src: templates/console/home/hayato/Scripts/remove.sh.j2
+    dest: /home/hayato/Scripts/remove.sh
+    owner: hayato
+    group: hayato
+    mode: '0755'

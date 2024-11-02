@@ -56,13 +56,11 @@
       ansible.builtin.import_tasks:
         file: tasks/pipr.yml
 
-    - name: Put Pocket remove scrtipt
-      ansible.builtin.template:
-        src: templates/console/home/hayato/Scripts/remove.sh.j2
-        dest: /home/hayato/Scripts/remove.sh
-        owner: hayato
-        group: hayato
-        mode: '0755'
+    - name: Put Predeploy scripts
+      ansible.builtin.import_tasks:
+        file: tasks/console/put_scripts.yml
+      tags:
+        - put_script
 
     - name: Fix ffmpegthumbnailer bugs
       ansible.builtin.import_tasks:
