@@ -21,6 +21,10 @@
   ansible.builtin.import_tasks:
     file: tasks/all/timezone.yml
 
+- name: "Common / Set Locale"
+  ansible.builtin.import_tasks:
+    file: tasks/all/set-locale.yml
+
 - name: "Common / Put authorized Key for hayato"
   ansible.builtin.import_tasks:
     file: tasks/all/authorized_keys.yml

@@ -1,0 +1,14 @@
+---
+- name: "Install software-properties-common"
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+  loop:
+    - locales-all
+    - language-pack-en
+
+- name: "Set locale as en_US.UTF-8"
+  community.general.locale_gen:
+    name: "en_US.UTF-8"
+    state: present
