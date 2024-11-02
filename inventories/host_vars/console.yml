@@ -12,6 +12,7 @@ apt:
   - gprename
   - heif-thumbnailer
   - htop
+  - imagemagick
   - jq
   - libaacs0
   - libbluray-bdj
