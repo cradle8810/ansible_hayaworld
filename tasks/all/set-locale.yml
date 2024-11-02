@@ -1,5 +1,5 @@
 ---
-- name: "Install software-properties-common"
+- name: "Install locale en_US"
   ansible.builtin.apt:
     name: "{{ item }}"
     state: present
