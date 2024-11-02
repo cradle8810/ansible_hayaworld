@@ -1,0 +1,10 @@
+---
+- name: "Common / NTP Setting"
+  ansible.builtin.import_role:
+    name: geerlingguy.ntp
+  vars:
+    ntp_enabled: true
+    ntp_timezone: "Asia/Tokyo"
+    ntp_servers: "{{ all.vars.ntp_servers }}"
+    ntp_tinker_panic: true
+    ntp_manage_config: true

@@ -4,6 +4,7 @@ roles:
   - name: compscidr.gpg
   - name: geerlingguy.docker
   - name: geerlingguy.jenkins
+  - name: geerlingguy.ntp
   - name: mrlesmithjr.netplan
     src: https://github.com/mrlesmithjr/ansible-netplan
     version: 'f0167f5'

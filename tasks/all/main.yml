@@ -25,6 +25,12 @@
   ansible.builtin.import_tasks:
     file: tasks/all/set-locale.yml
 
+- name: "Common / Set NTP"
+  ansible.builtin.import_tasks:
+    file: tasks/all/ntp.yml
+  tags:
+    - ntp
+
 - name: "Common / Put authorized Key for hayato"
   ansible.builtin.import_tasks:
     file: tasks/all/authorized_keys.yml
