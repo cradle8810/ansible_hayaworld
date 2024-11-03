@@ -15,3 +15,10 @@
     mysql_bind_address: '0.0.0.0'
     mysql_datadir: "{{ dbdir.dest }}"
     mysql_hide_passwords: true
+    mysql_users:
+      - name: zabbix
+        host: "%"
+        password: "{{ mysql.zabbix_user_password }}"
+        encrypted: false
+        priv: "zabbix.*:ALL"
+        state: "present"
