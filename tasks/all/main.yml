@@ -60,3 +60,9 @@
     file: tasks/all/hayaworld_rootCA.yml
   tags:
     - ca
+
+- name: "Common / Usermod"
+  ansible.builtin.import_tasks:
+    file: tasks/all/usermod.yml
+  tags:
+    - users
