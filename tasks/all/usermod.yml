@@ -1,72 +1,96 @@
 ---
-- name: "Common Install zsh (Ubuntu)"
+- name: "Common / Install zsh (Ubuntu)"
   ansible.builtin.apt:
     name: "zsh"
     state: present
   when: ansible_distribution == "Ubuntu"
 
-- name: "Common / Usermod (Ubuntu)"
-  ansible.builtin.user:
-    name: "{{ item.username }}"
-    shell: "{{ item.shell }}"
-    state: "present"
-    system: true
-    uid: "{{ item.uid }}"
-  loop: "{{ all.vars.user }}"
+- name: "Common / Setting Users (Ubuntu)"
   no_log: true
   when: ansible_distribution == "Ubuntu"
+  block:
+    - name: "Common / Usermod (Ubuntu)"
+      ansible.builtin.user:
+        name: "{{ item.username }}"
+        shell: "{{ item.shell }}"
+        state: "present"
+        system: true
+        uid: "{{ item.uid }}"
+      loop:
+        "{{ all.vars.user }}"
 
-- name: "Common / Usermod (macOS)"
-  ansible.builtin.user:
-    name: "{{ item.username }}"
-    shell: "{{ item.shell_mac }}"
-    state: "present"
-    system: true
-    uid: "{{ item.uid }}"
-  loop: "{{ all.vars.user }}"
+    - name: "Common / Makedir source dir (Ubuntu)"
+      ansible.builtin.file:
+        path: "{{ item.homedir }}/Source/zshrc"
+        state: directory
+        recurse: true
+        owner: "{{ item.username }}"
+        group: "{{ item.username }}"
+        mode: '0755'
+      loop:
+        "{{ all.vars.user }}"
+
+    - name: "Common / copy zshrc source directory (Ubuntu)"
+      ansible.builtin.copy:
+        src: "templates/all/home/hayato/Source/zshrc/zshrc"
+        dest: "{{ item.homedir }}/Source/zshrc/zshrc"
+        mode: '0644'
+        owner: "{{ item.username }}"
+        group: "{{ item.username }}"
+      loop:
+        "{{ all.vars.user }}"
+
+    - name: "Common / Make zshrc symlink to homedir (Ubuntu)"
+      ansible.builtin.file:
+        src: "{{ item.homedir }}/Source/zshrc/zshrc"
+        dest: "{{ item.homedir }}/.zshrc"
+        owner: "{{ item.username }}"
+        group: "{{ item.username }}"
+        state: link
+      loop:
+        "{{ all.vars.user }}"
+
+- name: "Common / Setting Users (macOS)"
   no_log: true
-  when: ansible_distribution == "MacOSX"
-
-- name: "Common / mkdir zshrc source directory"
-  ansible.builtin.copy:
-    src: "templates/all/home/hayato/Source/zshrc/"
-    dest: "{{ item.homedir }}/Source/zshrc/"
-    mode: '0644'
-    owner: "{{ item.username }}"
-    group: "{{ item.username }}"
-  loop: "{{ all.vars.user }}"
-  no_log: true
-  when: ansible_distribution == "Ubuntu"
-
-- name: "Common / mkdir zshrc source directory"
-  ansible.builtin.copy:
-    src: "templates/all/home/hayato/Source/zshrc/"
-    dest: "{{ item.homedir_mac }}/Source/zshrc/"
-    mode: '0644'
-    owner: "{{ item.username }}"
-    group: "{{ item.username }}"
-  loop: "{{ all.vars.user }}"
-  when: ansible_distribution == "MacOSX"
-  no_log: true
-
-- name: "Common / Make zshrc symlink to homedir (Ubuntu)"
-  ansible.builtin.file:
-    src: "{{ item.homedir }}/Source/zshrc/zshrc"
-    dest: "{{ item.homedir }}/.zshrc"
-    owner: "{{ item.username }}"
-    group: "{{ item.username }}"
-    state: link
-  loop: "{{ all.vars.user }}"
-  when: ansible_distribution == "Ubuntu"
-  no_log: true
-
-- name: "Common / Make zshrc symlink to homedir (macOS)"
-  ansible.builtin.file:
-    src: "{{ item.homedir_mac }}/Source/zshrc/zshrc"
-    dest: "{{ item.homedir_mac }}/.zshrc"
-    owner: "{{ item.username }}"
-    group: "{{ item.username }}"
-    state: link
-  loop: "{{ all.vars.user }}"
   when: ansible_distribution == "MacOS"
-  no_log: true
+  block:
+    - name: "Common / Usermod (macOS)"
+      ansible.builtin.user:
+        name: "{{ item.username }}"
+        shell: "{{ item.shell_mac }}"
+        state: "present"
+        system: true
+        uid: "{{ item.uid }}"
+      loop:
+        "{{ all.vars.user }}"
+
+    - name: "Common / Makedir source dir (Ubuntu)"
+      ansible.builtin.file:
+        path: "{{ item.homedir_mac }}/Source/zshrc/"
+        recurse: true
+        owner: "{{ item.username }}"
+        group: "{{ item.username }}"
+        state: directory
+        mode: '0755'
+      loop:
+        "{{ all.vars.user }}"
+
+    - name: "Common / mkdir zshrc source directory (macOS)"
+      ansible.builtin.copy:
+        src: "templates/all/home/hayato/Source/zshrc/zshrc"
+        dest: "{{ item.homedir_mac }}/Source/zshrc/zshrc"
+        mode: '0644'
+        owner: "{{ item.username }}"
+        group: "{{ item.username }}"
+      loop:
+        "{{ all.vars.user }}"
+
+    - name: "Common / Make zshrc symlink to homedir (macOS)"
+      ansible.builtin.file:
+        src: "{{ item.homedir_mac }}/Source/zshrc/zshrc"
+        dest: "{{ item.homedir_mac }}/.zshrc"
+        owner: "{{ item.username }}"
+        group: "{{ item.username }}"
+        state: link
+      loop:
+        "{{ all.vars.user }}"
