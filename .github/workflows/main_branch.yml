@@ -82,6 +82,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          submodules: "recursive"
 
       - name: Prepare environments (ansible-galaxy install role)
         run: |
@@ -127,6 +129,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          submodules: "recursive"
 
       - name: Prepare environments (ansible-galaxy install role)
         run: |
