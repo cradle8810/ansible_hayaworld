@@ -19,11 +19,20 @@
       loop:
         "{{ all.vars.user }}"
 
+    - name: "Common / Makedir source dir parent (Ubuntu)"
+      ansible.builtin.file:
+        path: "{{ item.homedir }}/Source"
+        state: directory
+        owner: "{{ item.username }}"
+        group: "{{ item.username }}"
+        mode: '0755'
+      loop:
+        "{{ all.vars.user }}"
+
     - name: "Common / Makedir source dir (Ubuntu)"
       ansible.builtin.file:
         path: "{{ item.homedir }}/Source/zshrc"
         state: directory
-        recurse: true
         owner: "{{ item.username }}"
         group: "{{ item.username }}"
         mode: '0755'
@@ -64,13 +73,22 @@
       loop:
         "{{ all.vars.user }}"
 
-    - name: "Common / Makedir source dir (Ubuntu)"
+    - name: "Common / Makedir source dir parent (macOS)"
       ansible.builtin.file:
-        path: "{{ item.homedir_mac }}/Source/zshrc/"
-        recurse: true
+        path: "{{ item.homedir_mac }}/Source"
+        state: directory
         owner: "{{ item.username }}"
         group: "{{ item.username }}"
+        mode: '0755'
+      loop:
+        "{{ all.vars.user }}"
+
+    - name: "Common / Makedir source dir (macOS)"
+      ansible.builtin.file:
+        path: "{{ item.homedir_mac }}/Source/zshrc"
         state: directory
+        owner: "{{ item.username }}"
+        group: "{{ item.username }}"
         mode: '0755'
       loop:
         "{{ all.vars.user }}"
