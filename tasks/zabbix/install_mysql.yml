@@ -1,0 +1,21 @@
+---
+- name: Install MySQL server
+  ansible.builtin.import_role:
+    name: geerlingguy.mysql
+  vars:
+    ysql_user_home: /root
+    mysql_user_name: root
+    mysql_user_password: root
+    mysql_root_home: /root
+    mysql_root_username: "{{ mysql.root_username }}"
+    mysql_root_password: "{{ mysql.root_password }}"
+    mysql_root_password_update: false
+    mysql_enabled_on_startup: true
+    mysql_port: "3306"
+    mysql_bind_address: '0.0.0.0'
+    mysql_datadir: "{{ dbdir.dest }}/mysql"
+    mysql_hide_passwords: true
+    mysql_packages:
+      - mariadb-client
+      - mariadb-server
+      - python3-mysqldb

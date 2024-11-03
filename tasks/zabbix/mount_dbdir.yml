@@ -1,0 +1,21 @@
+---
+- name: Install Dir mkdir(/opt/bin/)
+  ansible.builtin.file:
+    path: "{{ dbdir.dest }}"
+    state: directory
+    mode: '0755'
+
+- name: "Check if exists dbdir drive"
+  ansible.builtin.stat:
+    path: "/dev/disk/by-uuid/{{ dbdir.UUID }}"
+    follow: true
+  register: db_drive
+  failed_when: db_drive.stat.isblk == false
+
+- name: "Mount dbdir Drive"
+  ansible.posix.mount:
+    src: "UUID={{ dbdir.UUID }}"
+    path: "{{ dbdir.dest }}"
+    opts: "defaults"
+    fstype: ext4
+    state: mounted

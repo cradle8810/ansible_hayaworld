@@ -19,6 +19,19 @@
       ansible.builtin.import_tasks:
         file: tasks/all/main.yml
 
+    - name: Mount Zabbix DB drive
+      ansible.builtin.import_tasks:
+        file: tasks/zabbix/mount_dbdir.yml
+      tags:
+        - zabbix
+
+    - name: Install and Configure MySQL
+      ansible.builtin.import_tasks:
+        file: tasks/zabbix/install_mysql.yml
+      tags:
+        - mysql
+        - zabbix
+
     - name: Make Started Services
       ansible.builtin.import_tasks:
         file: tasks/service_start.yml

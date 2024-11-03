@@ -4,6 +4,7 @@ roles:
   - name: compscidr.gpg
   - name: geerlingguy.docker
   - name: geerlingguy.jenkins
+  - name: geerlingguy.mysql
   - name: geerlingguy.ntp
   - name: mrlesmithjr.netplan
     src: https://github.com/mrlesmithjr/ansible-netplan
@@ -13,3 +14,4 @@ collections:
   - name: ansible.posix
   - name: community.docker
   - name: community.general
+  - name: community.mysql
