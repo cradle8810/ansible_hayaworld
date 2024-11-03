@@ -1,5 +1,5 @@
 ---
-- name: Install Dir mkdir(/opt/bin/)
+- name: Make directory for Database store
   ansible.builtin.file:
     path: "{{ dbdir.dest }}"
     state: directory
@@ -17,5 +17,5 @@
     src: "UUID={{ dbdir.UUID }}"
     path: "{{ dbdir.dest }}"
     opts: "defaults"
-    fstype: ext4
+    fstype: xfs
     state: mounted
