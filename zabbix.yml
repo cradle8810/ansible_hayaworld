@@ -32,6 +32,13 @@
         - mysql
         - zabbix
 
+    - name: Install and Configure Zabbix
+      ansible.builtin.import_tasks:
+        file: tasks/zabbix/install_zabbix.yml
+      tags:
+        - zabbix_server
+        - zabbix
+
     - name: Make Started Services
       ansible.builtin.import_tasks:
         file: tasks/service_start.yml

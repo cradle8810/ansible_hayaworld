@@ -1,0 +1,47 @@
+---
+- name: Install Zabbix server
+  ansible.builtin.import_role:
+    name: community.zabbix.zabbix_server
+  vars:
+    zabbix_server_version: "6.4"
+    zabbix_server_database_long: mysql
+    zabbix_server_database: mysql
+    zabbix_server_dbhost: localhost
+    zabbix_server_dbname: zabbix
+    zabbix_server_dbuser: zabbix
+    zabbix_server_dbpassword: "{{ mysql.zabbix_user_password }}"
+    zabbix_server_dbport: 3306
+    # zabbix_server_install_database_client: true
+    # zabbix_server_dbhost_run_install: true
+    # zabbix_server_mysql_login_host: localhost
+    # zabbix_server_mysql_login_user: root
+    # zabbix_server_mysql_login_password: "{{ mysql.root_password }}"
+    # zabbix_server_mysql_login_port: 3306
+  become: true
+
+- name: Install Apache server
+  ansible.builtin.import_role:
+    name: geerlingguy.apache
+  vars:
+    apache_state: started
+    servername: "zabbix.hayaworld.home"
+
+- name: Install PHP
+  ansible.builtin.import_role:
+    name: geerlingguy.php
+  vars:
+    php_enable_php_fpm: false
+    php_fpm_enabled_on_boot: true
+    php_fpm_state: started
+    php_install_recommends: true
+    php_packages_state: "present"
+    php_webserver_daemon: "httpd"
+
+- name: Install Zabbix server
+  ansible.builtin.import_role:
+    name: community.zabbix.zabbix_web
+  vars:
+    zabbix_api_server_url: zabbix.hayaworld.home
+    zabbix_server_database: mysql
+    zabbix_db_type_long: mysql
+    zabbix_server_dbport: 3306

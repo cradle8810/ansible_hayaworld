@@ -2,16 +2,20 @@
 roles:
   - name: brianhartsock.avahi
   - name: compscidr.gpg
+  - name: geerlingguy.apache
   - name: geerlingguy.docker
   - name: geerlingguy.jenkins
   - name: geerlingguy.mysql
   - name: geerlingguy.ntp
+  - name: geerlingguy.php
   - name: mrlesmithjr.netplan
     src: https://github.com/mrlesmithjr/ansible-netplan
     version: 'f0167f5'
 
 collections:
+  - name: ansible.netcommon
   - name: ansible.posix
   - name: community.docker
   - name: community.general
   - name: community.mysql
+  - name: community.zabbix

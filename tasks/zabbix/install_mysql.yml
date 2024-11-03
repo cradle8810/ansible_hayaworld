@@ -11,6 +11,7 @@
     mysql_root_password: "{{ mysql.root_password }}"
     mysql_root_password_update: true
     mysql_enabled_on_startup: true
+    mysql_socket: "/var/run/mysqld/mysqld.sock"
     mysql_port: "3306"
     mysql_bind_address: '0.0.0.0'
     mysql_datadir: "{{ dbdir.dest }}"
@@ -21,4 +22,10 @@
         password: "{{ mysql.zabbix_user_password }}"
         encrypted: false
         priv: "zabbix.*:ALL"
+        state: "present"
+      - name: "{{ mysql.root_username }}"
+        host: "%"
+        password: "{{ mysql.root_password }}"
+        encrypted: false
+        priv: "*.*:ALL"
         state: "present"
