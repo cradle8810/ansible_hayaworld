@@ -23,17 +23,19 @@ jobs:
       credentials:
         username: "${{ secrets.GHCR_USERNAME }}"
         password: "${{ secrets.GHCR_PASSWORD }}"
+      volumes:
+        - ansible-galaxy:/github/home/.ansible
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Prepare environments (ansible-galaxy install role)
         run: |
-          ansible-galaxy role install -r requirements.yml --ignore-errors --force
+          ansible-galaxy role install -r requirements.yml --ignore-errors
 
       - name: Prepare environments (ansible-galaxy install collection)
         run: |
-          ansible-galaxy collection install -r requirements.yml --ignore-errors --force
+          ansible-galaxy collection install -r requirements.yml --ignore-errors
 
       - name: Run Ansible-lint
         run: |
@@ -79,6 +81,7 @@ jobs:
       volumes:
         - /home/runner/ansible-vault:/tmp:ro
         - /home/runner/.ssh:/root/.ssh:ro
+        - ansible-galaxy:/github/home/.ansible
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -126,6 +129,7 @@ jobs:
       volumes:
         - /home/runner/ansible-vault:/tmp:ro
         - /home/runner/.ssh:/root/.ssh:ro
+        - ansible-galaxy:/github/home/.ansible
     steps:
       - name: Checkout
         uses: actions/checkout@v4
