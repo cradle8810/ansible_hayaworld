@@ -6,8 +6,7 @@ roles:
   - name: geerlingguy.jenkins
   - name: geerlingguy.ntp
   - name: mrlesmithjr.netplan
-    src: https://github.com/mrlesmithjr/ansible-netplan
-    version: 'f0167f5'
+    version: 'v0.4.2'
 
 collections:
   - name: ansible.posix
