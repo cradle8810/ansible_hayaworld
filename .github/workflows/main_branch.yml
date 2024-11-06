@@ -29,11 +29,11 @@ jobs:
 
       - name: Prepare environments (ansible-galaxy install role)
         run: |
-          ansible-galaxy role install -r requirements.yml --ignore-errors
+          ansible-galaxy role install -r requirements.yml --ignore-errors --force
 
       - name: Prepare environments (ansible-galaxy install collection)
         run: |
-          ansible-galaxy collection install -r requirements.yml --ignore-errors
+          ansible-galaxy collection install -r requirements.yml --ignore-errors --force
 
       - name: Run Ansible-lint
         run: |
