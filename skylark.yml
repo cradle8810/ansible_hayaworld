@@ -32,6 +32,8 @@
     - name: Install Pre-builded SNS downloaders
       ansible.builtin.import_tasks:
         file: tasks/sns_dl.yml
+      tags:
+        - sns
 
     - name: Install Pre-builded Rename-util
       ansible.builtin.import_tasks:
