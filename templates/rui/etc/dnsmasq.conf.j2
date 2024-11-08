@@ -12,6 +12,7 @@ dhcp-option=option:dns-server,{{ dnsmasq.dhcp_option.dns_server }}
 dhcp-option=option:netmask,{{ dnsmasq.dhcp_option.netmask }}
 dhcp-option=option:ntp-server,{{ dnsmasq.dhcp_option.ntp_server }}
 dhcp-option=option:router,{{ dnsmasq.dhcp_option.router }}
+dhcp-option=option:domain-search,{{ dnsmasq.domain }}
 
 cache-size={{ dnsmasq.dns.cache_size }}
 dhcp-sequential-ip
