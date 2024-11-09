@@ -18,14 +18,14 @@
     mysql_hide_passwords: true
     mysql_users:
       - name: zabbix
-        host: "%"
+        host: "localhost"
         password: "{{ mysql.zabbix_user_password }}"
         encrypted: false
-        priv: "zabbix.*:ALL"
+        priv: "*.*:ALL,GRANT"
         state: "present"
-      - name: "{{ mysql.root_username }}"
-        host: "%"
-        password: "{{ mysql.root_password }}"
-        encrypted: false
-        priv: "*.*:ALL"
-        state: "present"
+      # - name: "{{ mysql.root_username }}"
+      #   host: "localhost"
+      #   password: "{{ mysql.root_password }}"
+      #   encrypted: false
+      #   priv: "*.*:ALL,GRANT"
+      #   state: "present"
