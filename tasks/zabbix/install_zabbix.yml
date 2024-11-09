@@ -11,12 +11,14 @@
     zabbix_server_dbuser: zabbix
     zabbix_server_dbpassword: "{{ mysql.zabbix_user_password }}"
     zabbix_server_dbport: 3306
-    # zabbix_server_install_database_client: true
-    # zabbix_server_dbhost_run_install: true
+    zabbix_server_install_database_client: false
+    zabbix_server_dbhost_run_install: true
+    zabbix_server_database_creation: false
     zabbix_server_mysql_login_host: localhost
-    zabbix_server_mysql_login_user: root
-    zabbix_server_mysql_login_password: "{{ mysql.root_password }}"
+    # zabbix_server_mysql_login_user: root
+    # zabbix_server_mysql_login_password: "{{ mysql.root_password }}"
     zabbix_server_mysql_login_port: 3306
+  become: true
 
 - name: Install Apache server
   ansible.builtin.import_role:
