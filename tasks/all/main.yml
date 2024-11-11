@@ -11,6 +11,10 @@
   tags:
     - network
 
+- name: "Common / Change apt mirror"
+  ansible.builtin.import_tasks:
+    file: tasks/all/apt_mirror.yml
+
 - name: "Common / Stop Systemd-resolved"
   ansible.builtin.import_tasks:
     file: tasks/all/stop-systemd-resolved.yml
@@ -60,3 +64,9 @@
     file: tasks/all/hayaworld_rootCA.yml
   tags:
     - ca
+
+- name: "Common / Usermod"
+  ansible.builtin.import_tasks:
+    file: tasks/all/usermod.yml
+  tags:
+    - users

@@ -37,6 +37,8 @@ all:
         uid: 1000
         homedir: "/home/hayato"
         homedir_mac: "/Users/hayato"
+        shell: "/usr/bin/zsh"
+        shell_mac: "/bin/zsh"
         samba_password: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           64373962323533633737623665646132383830653438376263373531623439386666623363363236
