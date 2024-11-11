@@ -1,12 +1,12 @@
 ---
-- name: Play for zabbix.hayaworld.home
-  hosts: zabbix
+- name: Play for mariadb.hayaworld.home
+  hosts: mariadb
   remote_user: hayato
   gather_facts: true
   become: true
 
   vars_files:
-    - inventories/host_vars/zabbix.yml
+    - inventories/host_vars/mariadb.yml
     - inventories/host_vars/networks.yml
 
   handlers:
@@ -19,25 +19,17 @@
       ansible.builtin.import_tasks:
         file: tasks/all/main.yml
 
-    - name: Mount Zabbix DB drive
+    - name: Mount MariaDB DB drive
       ansible.builtin.import_tasks:
-        file: tasks/zabbix/mount_dbdir.yml
+        file: tasks/mariadb/mount_dbdir.yml
       tags:
-        - zabbix
+        - mysql
 
     - name: Install and Configure MySQL
       ansible.builtin.import_tasks:
-        file: tasks/zabbix/install_mysql.yml
+        file: tasks/mariadb/install_mariadb.yml
       tags:
         - mysql
-        - zabbix
-
-    - name: Install and Configure Zabbix
-      ansible.builtin.import_tasks:
-        file: tasks/zabbix/install_zabbix.yml
-      tags:
-        - zabbix_server
-        - zabbix
 
     - name: Make Started Services
       ansible.builtin.import_tasks:

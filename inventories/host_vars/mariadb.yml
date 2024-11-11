@@ -13,7 +13,7 @@ services_start:
   - ssh
 
 dbdir:
-  UUID: "af3cb2ae-4a40-415d-8545-98a1a6495f0e"
+  UUID: "4374bdcc-30d4-43d5-aafa-b4714a438e0c"
   dest: "/var/lib/mysql"
 
 mysql:
@@ -58,3 +58,7 @@ firewall:
       proto: "tcp"
       src: "172.17.0.0/16"
       port: "22"
+    - name: "MariaDB allow from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: "3306"

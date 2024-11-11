@@ -67,6 +67,7 @@ jobs:
           - console
           - dockerservice
           - jenkins
+          - mariadb
           - rui
           - runner03
           - skylark
