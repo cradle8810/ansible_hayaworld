@@ -7,7 +7,7 @@
 
 - name: "Copy docker-compose.yml to homedir"
   ansible.builtin.copy:
-    src: templates/dockerservice/home/hayato/compose
+    src: templates/dockerservice/home/hayato/ds_hayaworld
     dest: /home/hayato/
     owner: hayato
     group: hayato
@@ -20,8 +20,8 @@
 
 - name: "Up Jenkins deb repository containers"
   community.docker.docker_compose_v2:
-    project_src: "/home/hayato/compose/jenkins-deb/"
+    project_src: "/home/hayato/ds_hayaworld/jenkins-deb/"
 
 - name: "Up Reverse Proxy containers"
   community.docker.docker_compose_v2:
-    project_src: "/home/hayato/compose/reverseproxy/"
+    project_src: "/home/hayato/ds_hayaworld/reverseproxy/"
