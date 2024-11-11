@@ -50,10 +50,10 @@ network:
     ipv4: 192.168.1.105
     shortname: console
     sshuser: hayato
-  - hostname: zabbix.hayaworld.home
+  - hostname: mariadb.hayaworld.home
     interface: ens160
     ipv4: 192.168.1.106
-    shortname: zabbix
+    shortname: mariadb
     sshuser: hayato
   - hostname: runner02.hayaworld.home
     interface: ens160

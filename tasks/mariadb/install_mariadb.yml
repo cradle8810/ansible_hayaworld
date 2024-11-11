@@ -1,0 +1,37 @@
+---
+- name: Install MySQL server
+  ansible.builtin.import_role:
+    name: geerlingguy.mysql
+  vars:
+    mysql_user_home: /root
+    mysql_user_name: "{{ mysql.root_username }}"
+    mysql_user_password: "{{ mysql.root_password }}"
+    mysql_root_home: /root
+    mysql_root_username: "{{ mysql.root_username }}"
+    mysql_root_password: "{{ mysql.root_password }}"
+    mysql_root_password_update: true
+    mysql_enabled_on_startup: true
+    mysql_socket: "/var/run/mysqld/mysqld.sock"
+    mysql_port: "3306"
+    mysql_daemon: "mariadb"
+    mysql_bind_address: '0.0.0.0'
+    mysql_datadir: "{{ dbdir.dest }}"
+    mysql_hide_passwords: true
+    mysql_users:
+      - name: zabbix
+        host: "localhost"
+        password: "{{ mysql.zabbix_user_password }}"
+        encrypted: false
+        priv: "*.*:ALL,GRANT"
+        state: "present"
+    mysql_packages:
+      - mariadb-client
+      - mariadb-server
+      - python3-mysqldb
+
+- name: Re-Restart MariaDB
+  ansible.builtin.systemd_service:
+    name: mariadb
+    state: started
+    masked: false
+    enabled: true

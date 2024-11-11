@@ -1,0 +1,36 @@
+---
+- name: Play for mariadb.hayaworld.home
+  hosts: mariadb
+  remote_user: hayato
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - inventories/host_vars/mariadb.yml
+    - inventories/host_vars/networks.yml
+
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+
+  tasks:
+    - name: Common Settings
+      ansible.builtin.import_tasks:
+        file: tasks/all/main.yml
+
+    - name: Mount MariaDB DB drive
+      ansible.builtin.import_tasks:
+        file: tasks/mariadb/mount_dbdir.yml
+      tags:
+        - mysql
+
+    - name: Install and Configure MySQL
+      ansible.builtin.import_tasks:
+        file: tasks/mariadb/install_mariadb.yml
+      tags:
+        - mysql
+
+    - name: Make Started Services
+      ansible.builtin.import_tasks:
+        file: tasks/service_start.yml

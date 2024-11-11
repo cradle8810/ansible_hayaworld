@@ -8,15 +8,18 @@ roles:
     version: '7.4.1'
   - name: geerlingguy.jenkins
     version: '5.3.0'
+  - name: geerlingguy.mysql
   - name: geerlingguy.ntp
     version: '2.5.0'
   - name: mrlesmithjr.netplan
     version: 'v0.4.2'
 
 collections:
+  - name: ansible.netcommon
   - name: ansible.posix
     version: '1.6.2'
   - name: community.docker
     version: '4.0.0'
   - name: community.general
     version: '10.0.0'
+  - name: community.mysql
