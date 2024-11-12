@@ -38,3 +38,10 @@
     - yaru-theme-gnome-shell
     - yaru-theme-gtk
     - yaru-theme-icon
+
+- name: "Mount tmpdir as ~/Downloads"
+  ansible.posix.mount:
+    src: "tmpfs"
+    path: "/home/hayato/Downloads"
+    fstype: tmpfs
+    state: mounted
