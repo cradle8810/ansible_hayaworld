@@ -23,3 +23,10 @@
     update_cache: true
     pkg:
       - google-chrome-stable
+
+- name: "Mount tmpdir as Google-Chrome Cache"
+  ansible.posix.mount:
+    src: "tmpfs"
+    path: "/home/hayato/.cache/google-chrome/Default"
+    fstype: tmpfs
+    state: mounted
