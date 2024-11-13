@@ -101,4 +101,4 @@
   ansible.builtin.pip:
     name: "git+https://github.com/instaloader/instaloader@v4.14"
     break_system_packages: true
-    extra_args: "--upgrade"
+    extra_args: "--upgrade --use-pep517"
