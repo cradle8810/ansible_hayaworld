@@ -84,6 +84,9 @@
     - name: Install Ansible from PPA
       ansible.builtin.import_tasks:
         file: tasks/ansible_install.yml
+      when: ansible_distribution_release != 'oracular'
+      tags:
+        - ansible
 
     - name: Make Started Services
       ansible.builtin.import_tasks:
