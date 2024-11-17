@@ -6,6 +6,10 @@ apt:
   - htop
   - rsyslog
 
+rui_info: "{{ network | selectattr('shortname', 'eq', 'rui') }}"
+rui_ipv4: "{{ rui_info[0].ipv4 }}"
+rui_interface: "{{ rui_info[0].interface }}"
+
 mai_info: "{{ network | selectattr('shortname', 'eq', 'mai') }}"
 mai_ipv4: "{{ mai_info[0].ipv4 }}"
 mai_interface: "{{ mai_info[0].interface }}"
@@ -17,12 +21,12 @@ dnsmasq:
   interface: "{{ mai_interface }}"
   dhcp_range:
     start: 192.168.1.151
-    end: 192.168.1.191
+    end: 192.168.1.199
     netmask: 255.255.255.0
     ttl: "12h"
   dhcp_option:
     ntp_server: 210.130.188.10
-    dns_server: "{{ mai_ipv4 }}"
+    dns_server: "{{ mai_ipv4 }},{{ rui_ipv4 }}"
     router: "{{ subnet.gw4 }}"
     netmask: "255.255.255.0"
   dns:

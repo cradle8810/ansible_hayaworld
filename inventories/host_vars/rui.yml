@@ -11,6 +11,10 @@ rui_info: "{{ network | selectattr('shortname', 'eq', 'rui') }}"
 rui_ipv4: "{{ rui_info[0].ipv4 }}"
 rui_interface: "{{ rui_info[0].interface }}"
 
+mai_info: "{{ network | selectattr('shortname', 'eq', 'mai') }}"
+mai_ipv4: "{{ mai_info[0].ipv4 }}"
+mai_interface: "{{ mai_info[0].interface }}"
+
 dnsmasq:
   domain: hayaworld.home
   local: /hayaworld.home/
@@ -23,7 +27,7 @@ dnsmasq:
     ttl: "12h"
   dhcp_option:
     ntp_server: 210.130.188.10
-    dns_server: "{{ rui_ipv4 }}"
+    dns_server: "{{ rui_ipv4 }},{{ mai_ipv4 }}"
     router: "{{ subnet.gw4 }}"
     netmask: "255.255.255.0"
   dns:

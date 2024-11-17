@@ -6,8 +6,8 @@
   become: true
 
   vars_files:
-    - inventories/host_vars/rui/NXDOMAIN.yml
-    - inventories/host_vars/rui/CNAME.yml
+    - inventories/host_vars/dns/NXDOMAIN.yml
+    - inventories/host_vars/dns/CNAME.yml
     - inventories/host_vars/mai.yml
     - inventories/host_vars/networks.yml
 
