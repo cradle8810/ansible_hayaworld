@@ -12,7 +12,7 @@
       network:
         version: 2
         ethernets:
-          "{{ hostinfo[0].interface }}":
+          ens160:
             addresses:
               - "{{ ipv4_addr }}/{{ subnet.mask }}"
             nameservers:
