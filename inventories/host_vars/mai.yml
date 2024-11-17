@@ -1,0 +1,70 @@
+---
+apt:
+  - curl
+  - dnsmasq
+  - dstat
+  - htop
+  - rsyslog
+
+mai_info: "{{ network | selectattr('shortname', 'eq', 'mai') }}"
+mai_ipv4: "{{ mai_info[0].ipv4 }}"
+mai_interface: "{{ mai_info[0].interface }}"
+
+dnsmasq:
+  domain: hayaworld.home
+  local: /hayaworld.home/
+  listen_address: "{{ mai_ipv4 }}"
+  interface: "{{ mai_interface }}"
+  dhcp_range:
+    start: 192.168.1.151
+    end: 192.168.1.191
+    netmask: 255.255.255.0
+    ttl: "12h"
+  dhcp_option:
+    ntp_server: 210.130.188.10
+    dns_server: "{{ mai_ipv4 }}"
+    router: "{{ subnet.gw4 }}"
+    netmask: "255.255.255.0"
+  dns:
+    cache_size: 4000
+    NXDOMAIN_hosts: /etc/dnsmasq.d/NXDOMAIN.conf
+  logs:
+    log_facility: local5
+
+services_start:
+  - dnsmasq
+  - rsyslog
+  - ssh
+  - systemd-journald
+
+firewall:
+  policy: deny
+  allow_rules:
+    - name: "SSH from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: '22'
+    - name: "Zabbix from Zabbix-server"
+      proto: "tcp"
+      src: "192.168.1.106/24"
+      port: "10050"
+    - name: "DNS from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: "53"
+    - name: "DNS(UDP) from service line"
+      proto: "udp"
+      src: "192.168.1.0/24"
+      port: "53"
+    - name: "DHCP from service line"
+      proto: "udp"
+      src: "any"
+      port: "67"
+    - name: "DHCP Client from service line"
+      proto: "udp"
+      src: "any"
+      port: "68"
+    - name: "Runner Docker ssh"
+      proto: "tcp"
+      src: "172.17.0.0/16"
+      port: "22"

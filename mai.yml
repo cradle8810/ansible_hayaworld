@@ -1,0 +1,57 @@
+---
+- name: Play for mai.hayaworld.home
+  hosts: mai
+  remote_user: hayato
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - inventories/host_vars/rui/NXDOMAIN.yml
+    - inventories/host_vars/rui/CNAME.yml
+    - inventories/host_vars/mai.yml
+    - inventories/host_vars/networks.yml
+
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+
+  tasks:
+    - name: Common Settings
+      ansible.builtin.import_tasks:
+        file: tasks/all/main.yml
+
+    - name: Stop systemd-resolved
+      ansible.builtin.import_tasks:
+        file: tasks/rui/stop-systemd-resolved.yml
+      tags:
+        - dnsmasq
+
+    - name: Setup dnsmask
+      ansible.builtin.import_tasks:
+        file: tasks/rui/dnsmasq.yml
+      tags:
+        - dnsmasq
+
+    - name: Show hosts(5)
+      ansible.builtin.debug:
+        msg: "{{ lookup('template', './templates/rui/etc/hosts.j2') }}"
+      tags:
+        - debug
+        - dnsmasq
+        - dryrun
+
+    - name: Setup journalctl
+      ansible.builtin.import_tasks:
+        file: tasks/rui/journalctl.yml
+
+    - name: Setup rsyslog
+      ansible.builtin.import_tasks:
+        file: tasks/rui/rsyslog-rui.yml
+      tags:
+        - rsyslog
+        - dnsmasq
+
+    - name: Make Started Services
+      ansible.builtin.import_tasks:
+        file: tasks/service_start.yml
