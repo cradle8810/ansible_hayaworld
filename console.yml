@@ -105,3 +105,9 @@
         file: tasks/console/desktop.yml
       tags:
         - desktop
+
+    - name: Configure Desktop using dconf
+      ansible.builtin.import_tasks:
+        file: tasks/console/dconf.yml
+      tags:
+        - desktop
