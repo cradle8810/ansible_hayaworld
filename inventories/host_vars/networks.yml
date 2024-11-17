@@ -75,6 +75,11 @@ network:
     ipv4: 192.168.1.131
     shortname: jenkins
     sshuser: hayato
+  - hostname: mai.hayaworld.home
+    interface: eth0
+    ipv4: 192.168.1.150
+    shortname: mai
+    sshuser: hayato
   - hostname: skylark.hayaworld.home
     interface: ens160
     ipv4: 192.168.1.200

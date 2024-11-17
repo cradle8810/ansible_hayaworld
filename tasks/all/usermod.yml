@@ -15,7 +15,6 @@
         shell: "{{ item.shell }}"
         state: "present"
         system: true
-        uid: "{{ item.uid }}"
       loop:
         "{{ all.vars.user }}"
 
