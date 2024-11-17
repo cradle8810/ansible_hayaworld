@@ -23,6 +23,7 @@
     - gnome-tweaks
     - language-pack-ja
     - nautilus-extension-gnome-terminal
+    - python3-psutil
     - remmina
     - remmina-plugin-rdp
     - seahorse

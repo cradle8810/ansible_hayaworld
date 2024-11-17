@@ -1,0 +1,12 @@
+---
+- name: Display Applications on the bottom
+  community.general.dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock"
+    value: "false"
+    state: present
+
+- name: Allow Nautilus treeview
+  community.general.dconf:
+    key: "/org/gnome/nautilus/list-view/use-tree-view"
+    value: "true"
+    state: present
