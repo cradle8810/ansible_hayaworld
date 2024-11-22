@@ -85,6 +85,11 @@ network:
     ipv4: 192.168.1.200
     shortname: skylark
     sshuser: hayato
+  - hostname: haccho.hayaworld.home
+    interface: ens160
+    ipv4: 192.168.1.254
+    shortname: haccho
+    sshuser: hayato
 
 network_dhcp:
   macbook:
