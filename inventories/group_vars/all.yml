@@ -22,7 +22,11 @@ all:
         34643632303961343731363536616337393938656438353766643263393335376134
     ytdlp:
       linux:
-        checksum: "sha256:3f6ab524d899f39ef46004a9db1f09ac8983aa5bd96243c417edf7c0c00627d7"
+        url: "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux"
+        checksum: "sha256:2b1b032be1957dd04561103ee59b1c836fd50a3c7f462ec226658b6be5c75a2c"
+      macos:
+        url: "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_macos"
+        checksum: ""
     user:
       - name: hayato
         username: hayato

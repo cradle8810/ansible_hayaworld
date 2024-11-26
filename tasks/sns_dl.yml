@@ -20,7 +20,7 @@
 
 - name: Download yt-dlp (Linux)
   ansible.builtin.get_url:
-    url: https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux
+    url: "{{ all.vars.ytdlp.linux.url }}"
     dest: /opt/bin/yt-dlp
     checksum: "{{ all.vars.ytdlp.linux.checksum }}"
     mode: "0755"
