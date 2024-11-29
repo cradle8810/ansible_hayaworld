@@ -1,4 +1,11 @@
 ---
+- name: "Install btrfs modules"
+  ansible.builtin.apt:
+    pkg:
+      - btrfs-progs
+      - btrfs-compsize
+    update_cache: true
+
 - name: Mount up device skylark
   ansible.posix.mount:
     path: "{{ drives.skylark.mountpoint }}"
