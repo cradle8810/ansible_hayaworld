@@ -1,9 +1,9 @@
 ---
 drives:
   skylark:
-    uuid: e456364a-f704-4602-9962-334898e05359
+    uuid: 1085e1e0-8f93-44f2-b546-2e7448864338
     mountpoint: /skylark
-    filesystem: "xfs"
+    filesystem: "btrfs"
     options: "defaults,noatime"
   backup:
     uuid: 77af48a6-5a47-4e06-a106-c5c74b6d1449
