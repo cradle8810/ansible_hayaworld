@@ -1,7 +1,7 @@
 ---
 drives:
   skylark:
-    uuid: 1085e1e0-8f93-44f2-b546-2e7448864338
+    uuid: 9d7a85bd-7a80-4b03-be2b-e14aa713c27d
     mountpoint: /skylark
     filesystem: "btrfs"
     options: "defaults,noatime"
@@ -13,15 +13,16 @@ drives:
 
 services_start:
   - nmbd
-  - open-vm-tools
+  - qemu-guest-agent
   - smbd
   - ssh
 
 apt:
   - dstat
   - ffmpeg
+  - git
   - htop
-  - open-vm-tools
+  - qemu-guest-agent
   - renameutils
   - rsync
   - wget

@@ -18,13 +18,12 @@ apt:
   - libbluray-bdj
   - libbluray2
   - libheif1
-  - open-vm-tools
-  - open-vm-tools-desktop
   - openssh-server
   - openssl
   - p7zip-full
   - packer
   - python3-pip
+  - qemu-guest-agent
   - samba-common
   - sshpass
   - thunderbird
@@ -42,12 +41,12 @@ remove:
 
 services_start:
   - docker
-  - open-vm-tools
+  - qemu-guest-agent
   - ssh
   - xrdp
 
 homedir:
-  UUID: "27d8944d-a99e-4505-9540-8c99460a1b99"
+  UUID: "03038d24-672a-4707-ba6f-f5beb16d830e"
 
 firewall:
   policy: deny
