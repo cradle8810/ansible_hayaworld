@@ -41,6 +41,7 @@ remove:
 
 services_start:
   - docker
+  - gpm
   - qemu-guest-agent
   - ssh
   - xrdp
