@@ -8,8 +8,8 @@ drives:
   backup:
     uuid: 77af48a6-5a47-4e06-a106-c5c74b6d1449
     mountpoint: /backup
-    filesystem: "xfs"
-    options: "defaults,users"
+    filesystem: "btrfs"
+    options: "defaults,users,noatime"
 
 services_start:
   - nmbd
