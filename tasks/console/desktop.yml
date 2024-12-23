@@ -21,6 +21,7 @@
     - gnome-shell-extension-manager
     - gnome-sushi
     - gnome-tweaks
+    - gpm
     - language-pack-ja
     - nautilus-extension-gnome-terminal
     - python3-psutil

@@ -22,6 +22,8 @@
     - name: Install Jenkins
       ansible.builtin.import_tasks:
         file: tasks/jenkins/jenkins_install.yml
+      tags:
+        - jenkins
 
     - name: Install Docker(ce)
       ansible.builtin.import_role:

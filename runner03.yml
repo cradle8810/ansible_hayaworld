@@ -9,6 +9,11 @@
     - inventories/host_vars/runner.yml
     - inventories/host_vars/networks.yml
 
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+
   tasks:
     - name: Common Settings
       ansible.builtin.import_tasks:
@@ -57,7 +62,11 @@
     - name: Install Pre-builded SNS downloaders
       ansible.builtin.import_tasks:
         file: tasks/sns_dl.yml
+      tags:
+        - sns
 
     - name: Install Ansible from PPA
       ansible.builtin.import_tasks:
         file: tasks/ansible_install.yml
+      tags:
+        - ansible

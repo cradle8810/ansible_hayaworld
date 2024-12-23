@@ -4,7 +4,7 @@ apt:
   - dnsmasq
   - dstat
   - htop
-  - open-vm-tools
+  - qemu-guest-agent
   - rsyslog
 
 rui_info: "{{ network | selectattr('shortname', 'eq', 'rui') }}"
@@ -38,7 +38,7 @@ dnsmasq:
 
 services_start:
   - dnsmasq
-  - open-vm-tools
+  - qemu-guest-agent
   - rsyslog
   - ssh
   - systemd-journald
