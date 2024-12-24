@@ -6,10 +6,21 @@ drives:
     filesystem: "btrfs"
     options: "defaults,noatime"
   backup:
-    uuid: 77af48a6-5a47-4e06-a106-c5c74b6d1449
-    mountpoint: /backup
-    filesystem: "btrfs"
-    options: "defaults,users,noatime"
+    - uuid: 77af48a6-5a47-4e06-a106-c5c74b6d1449
+      mountpoint: /backup/hayato
+      subvol: "/hayato"
+      filesystem: "btrfs"
+      options: "defaults,users,noatime,compress=zstd"
+    - uuid: 77af48a6-5a47-4e06-a106-c5c74b6d1449
+      mountpoint: /backup/Nullpo
+      subvol: "/Nullpo"
+      filesystem: "btrfs"
+      options: "defaults,users,noatime,compress=zstd"
+    - uuid: 77af48a6-5a47-4e06-a106-c5c74b6d1449
+      mountpoint: /backup/snapshots
+      subvol: "/snapshots"
+      filesystem: "btrfs"
+      options: "defaults,users,noatime,compress=zstd"
 
 services_start:
   - nmbd

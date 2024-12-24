@@ -22,6 +22,8 @@
     - name: Set mount(5)
       ansible.builtin.import_tasks:
         file: tasks/skylark/mount.yml
+      tags:
+        - mount
 
     - name: Set samba
       ansible.builtin.import_tasks:
