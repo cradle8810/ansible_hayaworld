@@ -2,7 +2,7 @@
 
 NULLPODIR='/skylark/hayato/'
 DESTDIR='/backup/hayato'
-DESTDEVICE='/dev/sdc1'
+SNAPSHOTSDIR='/backup/snapshots/hayato'
 
 # マウントされていれば1
 ISMOUNT=$(mount | grep "${DESTDEVICE}" | wc -l)
@@ -13,8 +13,7 @@ if [ ! ${ISMOUNT} ]; then
     exit 1
 fi
 
-LINKDEST=`ls -1l ${DESTDIR} | awk '{print $9}' | tr -d '/' | sort -n | tail -1`
-TODAY=`date +%Y%m%d_%H%M%S`
+TODAY=$(date +%Y%m%d_%H%M%S)
 
 if [ -e ${DESTDIR}/sentinel ]; then
     echo "[ERROR] Previous operation is abnormaly finished." >&2
@@ -23,10 +22,10 @@ if [ -e ${DESTDIR}/sentinel ]; then
     exit 2
 fi
 
+# rsync
 touch ${DESTDIR}/sentinel
-
-echo "rsync -av8  --link-dest=../${LINKDEST}/ ${NULLPODIR} ${DESTDIR}/${TODAY}"
-rsync -av8 --link-dest=../${LINKDEST}/ ${NULLPODIR} ${DESTDIR}/${TODAY}
+echo "rsync -av8 ${NULLPODIR} ${DESTDIR}"
+rsync -av8 ${NULLPODIR} ${DESTDIR}
 RETVAL=$?
 
 if [ ! $RETVAL ]; then
@@ -36,3 +35,6 @@ if [ ! $RETVAL ]; then
 fi
 
 rm ${DESTDIR}/sentinel
+
+# Snapshot 作成
+sudo btrfs subvolume snapshot -r "${DESTDIR}" "${SNAPSHOTSDIR}/${TODAY}"

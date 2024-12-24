@@ -16,8 +16,9 @@
 
 - name: Mount up device backup
   ansible.posix.mount:
-    path: "{{ drives.backup.mountpoint }}"
-    src: "UUID={{ drives.backup.uuid }}"
-    fstype: "{{ drives.backup.filesystem }}"
-    opts: "{{ drives.backup.options }}"
+    path: "{{ item.mountpoint }}"
+    src: "UUID={{ item.uuid }}"
+    fstype: "{{ item.filesystem }}"
+    opts: "subvol={{ item.subvol }},{{ item.options }}"
     state: mounted
+  loop: "{{ drives.backup }}"
