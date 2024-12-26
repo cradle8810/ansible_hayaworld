@@ -24,8 +24,8 @@ fi
 
 # rsync
 touch ${DESTDIR}/sentinel
-echo "rsync -av8 ${NULLPODIR} ${DESTDIR}"
-rsync -av8 ${NULLPODIR} ${DESTDIR}
+echo "rsync -av8 --delete ${NULLPODIR} ${DESTDIR}"
+rsync -av8 --delete ${NULLPODIR} ${DESTDIR}
 RETVAL=$?
 
 if [ ! $RETVAL ]; then
