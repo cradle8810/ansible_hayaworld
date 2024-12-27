@@ -69,12 +69,10 @@ jobs:
           - console
           - dockerservice
           - jenkins
-          - mariadb
           - rui
           - runner03
           - skylark
           - tm
-    environment: Staging
     container:
       image: ghcr.io/ansible/community-ansible-dev-tools:latest
       volumes:
