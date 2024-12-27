@@ -70,3 +70,9 @@
         file: tasks/ansible_install.yml
       tags:
         - ansible
+
+    - name: Sudo nopassword Settings
+      ansible.builtin.import_tasks:
+        file: tasks/runner/sudo_nopass.yml
+      tags:
+        - sudo
