@@ -3,6 +3,7 @@
 NULLPODIR='/skylark/hayato/'
 DESTDIR='/backup/hayato'
 SNAPSHOTSDIR='/backup/snapshots/hayato'
+EXCLUDEFILE='/home/hayato/backupscripts/Home_exclude.txt'
 
 # マウントされていれば1
 ISMOUNT=$(mount | grep "${DESTDEVICE}" | wc -l)
@@ -24,8 +25,8 @@ fi
 
 # rsync
 touch ${DESTDIR}/sentinel
-echo "rsync -av8 --delete ${NULLPODIR} ${DESTDIR}"
-rsync -av8 --delete ${NULLPODIR} ${DESTDIR}
+echo "rsync -av8 --delete --exclude-from=${EXCLUDEFILE} ${NULLPODIR} ${DESTDIR}"
+rsync -av8 --delete --exclude-from="${EXCLUDEFILE}" ${NULLPODIR} ${DESTDIR}
 RETVAL=$?
 
 if [ ! $RETVAL ]; then

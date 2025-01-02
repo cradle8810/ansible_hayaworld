@@ -5,21 +5,27 @@
     state: directory
     mode: '0755'
 
-- name: Put Nullpo Backup Script
+- name: Put Backup Script
   ansible.builtin.copy:
-    src: templates/skylark/home/hayato/backupscripts/incrementalNullpoBackup.sh
-    dest: /home/hayato/backupscripts/incrementalNullpoBackup.sh
+    src: "templates/skylark/{{ item }}"
+    dest: "{{ item }}"
     owner: hayato
     group: hayato
     mode: '0755'
+  loop:
+    - /home/hayato/backupscripts/incrementalHomeBackup.sh
+    - /home/hayato/backupscripts/incrementalNullpoBackup.sh
 
-- name: Put HomeDir Backup Script
-  ansible.builtin.copy:
-    src: templates/skylark/home/hayato/backupscripts/incrementalHomeBackup.sh
-    dest: /home/hayato/backupscripts/incrementalHomeBackup.sh
+- name: Put Exclude file
+  ansible.builtin.template:
+    src: "templates/skylark/{{ item }}.j2"
+    dest: "{{ item }}"
     owner: hayato
     group: hayato
-    mode: '0755'
+    mode: '0644'
+  loop:
+    - /home/hayato/backupscripts/Nullpo_exclude.txt
+    - /home/hayato/backupscripts/Home_exclude.txt
 
 - name: "Sudo password passthrough"
   ansible.builtin.blockinfile:

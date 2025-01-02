@@ -22,6 +22,10 @@ drives:
       filesystem: "btrfs"
       options: "defaults,users,noatime,compress=zstd"
 
+backup_exclude:
+  home:
+    - "SparceImages/icloud_photo.sparsebundle/*"
+
 services_start:
   - nmbd
   - qemu-guest-agent
