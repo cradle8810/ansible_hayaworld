@@ -5,53 +5,38 @@ network:
     ipv4: 192.168.1.10
     shortname: pskylark
     sshuser: hayato
-  - hostname: nuc01.hayaworld.home
-    interface: vmk0
-    ipv4: 192.168.1.11
-    shortname: nuc01
-    sshuser: root
-  - hostname: nuc02.hayaworld.home
-    interface: vmk0
-    ipv4: 192.168.1.12
-    shortname: nuc02
-    sshuser: root
   - hostname: nuc03.hayaworld.home
-    interface: vmk0
+    interface: enp86s0
     ipv4: 192.168.1.13
     shortname: nuc03
     sshuser: root
   - hostname: nuc04.hayaworld.home
-    interface: vmk0
+    interface: enp86s0
     ipv4: 192.168.1.14
     shortname: nuc04
     sshuser: root
-  - hostname: vcsa.hayaworld.home
-    interface: ens160
-    ipv4: 192.168.1.50
-    shortname: vcsa
-    sshuser: root
   - hostname: rui.hayaworld.home
-    interface: ens160
+    interface: ens18
     ipv4: 192.168.1.100
     shortname: rui
     sshuser: hayato
   - hostname: dockerservice.hayaworld.home
-    interface: ens160
+    interface: ens18
     ipv4: 192.168.1.101
     shortname: dockerservice
     sshuser: hayato
   - hostname: origin.hayaworld.home
-    interface: ens160
+    interface: ens18
     ipv4: 192.168.1.102
     shortname: origin
     sshuser: hayato
   - hostname: runner.hayaworld.home
-    interface: ens160
+    interface: ens18
     ipv4: 192.168.1.104
     shortname: runner
     sshuser: runner
   - hostname: console.hayaworld.home
-    interface: ens160
+    interface: ens18
     ipv4: 192.168.1.105
     shortname: console
     sshuser: hayato
@@ -61,22 +46,22 @@ network:
     shortname: mariadb
     sshuser: hayato
   - hostname: runner02.hayaworld.home
-    interface: ens160
+    interface: ens18
     ipv4: 192.168.1.107
     shortname: runner02
     sshuser: runner
   - hostname: runner03.hayaworld.home
-    interface: ens160
+    interface: ens18
     ipv4: 192.168.1.108
     shortname: runner03
     sshuser: runner
   - hostname: tm.hayaworld.home
-    interface: ens160
+    interface: ens18
     ipv4: 192.168.1.112
     shortname: tm
     sshuser: hayato
   - hostname: jenkins.hayaworld.home
-    interface: ens160
+    interface: ens18
     ipv4: 192.168.1.131
     shortname: jenkins
     sshuser: hayato
@@ -86,17 +71,17 @@ network:
     shortname: mai
     sshuser: hayato
   - hostname: skylark.hayaworld.home
-    interface: ens160
+    interface: ens18
     ipv4: 192.168.1.200
     shortname: skylark
     sshuser: hayato
   - hostname: haccho02.hayaworld.home
-    interface: ens160
+    interface: none
     ipv4: 192.168.1.253
     shortname: haccho
     sshuser: hayato
   - hostname: haccho01.hayaworld.home
-    interface: ens160
+    interface: none
     ipv4: 192.168.1.254
     shortname: haccho
     sshuser: hayato
