@@ -5,6 +5,7 @@ apt:
   - jq
   - packer
   - python3-pip
+  - qemu-guest-agent
   - zsh
 
 firewall:

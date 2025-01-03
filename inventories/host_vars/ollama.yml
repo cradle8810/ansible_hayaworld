@@ -5,8 +5,8 @@ apt:
   - emacs
   - git
   - htop
-  - open-vm-tools
-  - open-vm-tools-desktop
+  - qemu-guest-agent
+  - qemu-guest-agent-desktop
   - openssh-server
   - samba-common
   - vim

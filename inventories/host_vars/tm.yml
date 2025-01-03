@@ -3,7 +3,7 @@ apt:
   - avahi-daemon
   - dstat
   - htop
-  - open-vm-tools
+  - qemu-guest-agent
 
 drives:
   tm:
@@ -15,7 +15,7 @@ drives:
 
 services_start:
   - nmbd
-  - open-vm-tools
+  - qemu-guest-agent
   - smbd
   - ssh
 

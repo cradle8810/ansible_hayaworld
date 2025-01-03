@@ -5,18 +5,18 @@ apt:
   - git
   - htop
   - jq
-  - open-vm-tools
   - openssh-server
   - openssl
   - p7zip-full
   - python3-pip
+  - qemu-guest-agent
   - sshpass
   - vim
   - zsh
 
 services_start:
   - docker
-  - open-vm-tools
+  - qemu-guest-agent
   - ssh
 
 dockerdir:

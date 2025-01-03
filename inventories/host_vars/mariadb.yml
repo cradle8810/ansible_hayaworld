@@ -6,10 +6,11 @@ apt:
   - htop
   - jq
   - python3-pip
+  - qemu-guest-agentent
   - unzip
 
 services_start:
-  - open-vm-tools
+  - qemu-guest-agentent
   - ssh
 
 dbdir:
