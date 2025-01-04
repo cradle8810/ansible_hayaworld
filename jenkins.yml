@@ -3,7 +3,7 @@
   hosts: jenkins
   remote_user: hayato
   gather_facts: true
-  become: true
+#  become: true
 
   vars_files:
     - inventories/host_vars/jenkins.yml
