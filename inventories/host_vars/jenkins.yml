@@ -6,13 +6,12 @@ apt:
   - htop
   - jq
   - openjdk-21-jdk
+  - p7zip
   - python3-pip
-  - qemu-guest-agent
   - unzip
 
 services_start:
   - jenkins
-  - qemu-guest-agent
   - ssh
 
 jenkins:

@@ -1,25 +1,25 @@
 ---
-- name: "Common / Set Hostname"
-  ansible.builtin.import_tasks:
-    file: tasks/all/hostname.yml
+- name: "Common / Networking"
+  when:
+    ansible_facts.virtualization_type != 'lxc'
   tags:
     - network
+  block:
+    - name: "Common / Set Hostname"
+      ansible.builtin.import_tasks:
+        file: tasks/all/hostname.yml
 
-- name: "Common / Setting Network"
-  ansible.builtin.import_tasks:
-    file: tasks/all/netplan.yml
-  tags:
-    - network
+    - name: "Common / Setting Network"
+      ansible.builtin.import_tasks:
+        file: tasks/all/netplan.yml
+
+    - name: "Common / Stop Systemd-resolved"
+      ansible.builtin.import_tasks:
+        file: tasks/all/stop-systemd-resolved.yml
 
 - name: "Common / Change apt mirror"
   ansible.builtin.import_tasks:
     file: tasks/all/apt_mirror.yml
-
-- name: "Common / Stop Systemd-resolved"
-  ansible.builtin.import_tasks:
-    file: tasks/all/stop-systemd-resolved.yml
-  tags:
-    - network
 
 - name: "Common / Set Timezones"
   ansible.builtin.import_tasks:
@@ -34,6 +34,12 @@
     file: tasks/all/ntp.yml
   tags:
     - ntp
+
+- name: "Common / Usermod"
+  ansible.builtin.import_tasks:
+    file: tasks/all/usermod.yml
+  tags:
+    - users
 
 - name: "Common / Put authorized Key for hayato"
   ansible.builtin.import_tasks:
@@ -64,9 +70,3 @@
     file: tasks/all/hayaworld_rootCA.yml
   tags:
     - ca
-
-- name: "Common / Usermod"
-  ansible.builtin.import_tasks:
-    file: tasks/all/usermod.yml
-  tags:
-    - users
