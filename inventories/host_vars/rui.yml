@@ -7,19 +7,14 @@ apt:
   - qemu-guest-agent
   - rsyslog
 
-rui_info: "{{ network | selectattr('shortname', 'eq', 'rui') }}"
-rui_ipv4: "{{ rui_info[0].ipv4 }}"
-rui_interface: "{{ rui_info[0].interface }}"
-
-mai_info: "{{ network | selectattr('shortname', 'eq', 'mai') }}"
-mai_ipv4: "{{ mai_info[0].ipv4 }}"
-mai_interface: "{{ mai_info[0].interface }}"
+rui_info: "{{ network | selectattr('shortname', 'eq', 'rui') | first }}"
+mai_info: "{{ network | selectattr('shortname', 'eq', 'mai') | first }}"
 
 dnsmasq:
   domain: hayaworld.home
   local: /hayaworld.home/
-  listen_address: "{{ rui_ipv4 }}"
-  interface: "{{ rui_interface }}"
+  listen_address: "{{ rui_info.ipv4 }}"
+  interface: "{{ rui_info.interface }}"
   dhcp_range:
     start: 192.168.1.21
     end: 192.168.1.49
@@ -27,7 +22,7 @@ dnsmasq:
     ttl: "12h"
   dhcp_option:
     ntp_server: 210.130.188.10
-    dns_server: "{{ rui_ipv4 }},{{ mai_ipv4 }}"
+    dns_server: "{{ rui_info.ipv4 }},{{ mai_info.ipv4 }}"
     router: "{{ subnet.gw4 }}"
     netmask: "255.255.255.0"
   dns:

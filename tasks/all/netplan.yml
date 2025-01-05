@@ -4,8 +4,8 @@
     name: mrlesmithjr.netplan
   any_errors_fatal: true
   vars:
-    hostinfo: "{{ network | selectattr('shortname', 'eq', ansible_hostname) }}"
-    ipv4_addr: "{{ hostinfo[0].ipv4 }}"
+    hostinfo: "{{ network | selectattr('shortname', 'eq', ansible_hostname) | first }}"
+    ipv4_addr: "{{ hostinfo.ipv4 }}"
     netplan_enabled: true
     netplan_renderer: networkd
     netplan_configuration:

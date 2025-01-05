@@ -3,6 +3,6 @@
   ansible.builtin.hostname:
     name: "{{ apply_hostname }}"
   vars:
-    mgmt_ipv4: "{{ ansible_all_ipv4_addresses | select('match', '192.168.1.') }}"
-    hostinfo: "{{ network | selectattr('ipv4', 'eq', mgmt_ipv4[0]) }}"
-    apply_hostname: "{{ hostinfo[0].hostname }}"
+    mgmt_ipv4: "{{ ansible_all_ipv4_addresses | select('match', '192.168.1.') | first }}"
+    hostinfo: "{{ network | selectattr('ipv4', 'eq', mgmt_ipv4) | first }}"
+    apply_hostname: "{{ hostinfo.hostname }}"
