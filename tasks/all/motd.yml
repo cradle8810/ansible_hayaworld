@@ -9,5 +9,5 @@
   tags:
     - system
   vars:
-    hostinfo: "{{ network | selectattr('shortname', 'eq', ansible_hostname) }}"
-    hostname: "{{ hostinfo[0].shortname }}"
+    hostinfo: "{{ network | selectattr('shortname', 'eq', ansible_hostname) | first }}"
+    hostname: "{{ hostinfo.shortname }}"

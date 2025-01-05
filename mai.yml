@@ -17,10 +17,10 @@
         file: handlers/main.yml
 
   tasks:
-    - name: Fixed interface name as ens160
+    - name: Fixed interface name
       ansible.builtin.copy:
-        src: templates/mai/etc/udev/rules.d/99-nic-ens160.rules
-        dest: /etc/udev/rules.d/99-nic-ens160.rules
+        src: templates/mai/etc/udev/rules.d/99-nic-ens.rules
+        dest: /etc/udev/rules.d/99-nic-ens.rules
         owner: root
         group: root
         mode: '0644'
