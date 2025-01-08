@@ -9,6 +9,13 @@
   no_log: true
   when: ansible_distribution == "Ubuntu"
   block:
+    - name: "Common / Add Username Group (Ubuntu)"
+      ansible.builtin.group:
+        name: "{{ item.username }}"
+        state: present
+      loop:
+        "{{ all.vars.user }}"
+
     - name: "Common / Usermod (Ubuntu)"
       ansible.builtin.user:
         append: true

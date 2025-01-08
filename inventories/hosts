@@ -1,5 +1,5 @@
 [rui]
-192.168.1.100 ansible_user=hayato
+192.168.1.100 ansible_user=root
 
 [console]
 192.168.1.105 ansible_user=hayato
