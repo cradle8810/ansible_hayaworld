@@ -13,6 +13,9 @@
 [runner03]
 192.168.1.108 ansible_user=hayato
 
+[log]
+192.168.1.109 ansible_user=hayato
+
 [tm]
 192.168.1.112 ansible_user=hayato
 

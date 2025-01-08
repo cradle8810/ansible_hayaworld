@@ -2,8 +2,8 @@
 
 - name: Put rsyslog.conf(5)
   ansible.builtin.template:
-    src: templates/rui/etc/rsyslog.conf.rui.j2
-    dest: /etc/rsyslog.conf
+    src: templates/rui/etc/rsyslog.d/99-dnsmasq.conf
+    dest: /etc/rsyslog.d/99-dnsmasq.conf
     owner: root
     group: root
     mode: '0644'
