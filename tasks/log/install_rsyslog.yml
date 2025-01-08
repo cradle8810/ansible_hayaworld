@@ -22,12 +22,17 @@
 
 - name: "Put rsyslog conf"
   ansible.builtin.template:
-    src: templates/log/etc/rsyslog.d/99-hayaworld.conf
-    dest: /etc/rsyslog.d/99-hayaworld.conf
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: root
     mode: '0644'
   notify: "Restart rsyslog"
+  loop:
+    - src: templates/log/etc/rsyslog.d/10-hayaworld.conf
+      dest: /etc/rsyslog.d/10-hayaworld.conf
+    - src: templates/log/etc/rsyslog.conf
+      dest: /etc/rsyslog.conf
 
 - name: "Enable rsyslog"
   ansible.builtin.systemd_service:
