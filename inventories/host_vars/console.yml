@@ -1,5 +1,6 @@
 ---
 apt:
+  - bind9-dnsutils
   - cifs-utils
   - curl
   - dstat
