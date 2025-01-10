@@ -62,6 +62,13 @@
         - rsyslog
         - dnsmasq
 
+    - name: Install QDevice for NUC(Proxmox)
+      ansible.builtin.import_tasks:
+        file: tasks/mai/nuc_quorum_install.yml
+      tags:
+        - quorum
+        - proxmox
+
     - name: Make Started Services
       ansible.builtin.import_tasks:
         file: tasks/service_start.yml
