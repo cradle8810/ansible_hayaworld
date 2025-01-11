@@ -1,14 +1,21 @@
 ---
+- name: "Check svc.sh exists for {{ item.runner_name }}"
+  ansible.builtin.stat:
+    path: "{{ runner.runners.basepath }}/{{ item.runner_name }}/svc.sh"
+  register: "is_configured"
+  tags:
+    - always
+
 # https://github.com/MonolithProjects/ansible-github_actions_runner
 - name: Install Runners
-  ansible.builtin.include_role:
+  ansible.builtin.import_role:
     name: monolithprojects.github_actions_runner
   vars:
     runner_user: "{{ runner.user.username }}"
-    runner_dir: "/opt/runner/{{ item.runner_name }}"
+    runner_dir: "{{ runner.runners.basepath }}/{{ item.runner_name }}"
     runner_version: "2.321.0"
     runner_state: "started"
-    reinstall_runner: true
+    reinstall_runner: "{{ not (is_configured.stat.exists) }}"
     hide_sensitive_logs: true
     github_url: "https://github.com"
     github_api_url: "https://api.github.com"
@@ -20,4 +27,5 @@
     all_runners_in_same_repo: false
     github_account: "cradle8810"
     github_repo: "{{ item.github_repo }}"
-  loop: "{{ runners_define }}"
+  tags:
+    - always

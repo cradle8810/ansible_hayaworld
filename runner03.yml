@@ -69,9 +69,8 @@
         - sudo
 
     - name: Install Runners
-      ansible.builtin.import_tasks:
+      ansible.builtin.include_tasks:
         file: tasks/runner/install_runners.yml
-      vars:
-        runners_define: "{{ runner.runners.nuc03 }}"
+      loop: "{{ runner.runners.nuc03 }}"
       tags:
         - runners
