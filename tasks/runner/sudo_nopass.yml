@@ -6,7 +6,7 @@
     insertafter: "EOF"
     validate: "visudo -cf %s"
     block: |
-      runner  ALL=(ALL:ALL) NOPASSWD: /bin/mount
-      runner  ALL=(ALL:ALL) NOPASSWD: /usr/bin/mount
-      runner  ALL=(ALL:ALL) NOPASSWD: /bin/umount
-      runner  ALL=(ALL:ALL) NOPASSWD: /usr/bin/umount
+      {{ runner.user.username }}  ALL=(ALL:ALL) NOPASSWD: /bin/mount
+      {{ runner.user.username }}  ALL=(ALL:ALL) NOPASSWD: /usr/bin/mount
+      {{ runner.user.username }}  ALL=(ALL:ALL) NOPASSWD: /bin/umount
+      {{ runner.user.username }}  ALL=(ALL:ALL) NOPASSWD: /usr/bin/umount

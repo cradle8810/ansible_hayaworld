@@ -1,0 +1,23 @@
+---
+# https://github.com/MonolithProjects/ansible-github_actions_runner
+- name: Install Runners
+  ansible.builtin.include_role:
+    name: monolithprojects.github_actions_runner
+  vars:
+    runner_user: "{{ runner.user.username }}"
+    runner_dir: "/opt/runner/{{ item.runner_name }}"
+    runner_version: "2.321.0"
+    runner_state: "started"
+    reinstall_runner: false
+    hide_sensitive_logs: true
+    github_url: "https://github.com"
+    github_api_url: "https://api.github.com"
+    github_api_runners_per_page: 100
+    access_token: "{{ runner.PAT }}"
+    runner_org: false
+    runner_download_repository: "actions/runner"
+    runner_name: "{{ item.runner_name }}"
+    all_runners_in_same_repo: false
+    github_account: "cradle8810"
+    github_repo: "{{ item.github_repo }}"
+  loop: "{{ runners_define }}"

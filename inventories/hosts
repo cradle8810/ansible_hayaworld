@@ -11,7 +11,7 @@
 192.168.1.106 ansible_user=hayato
 
 [runner03]
-192.168.1.108 ansible_user=hayato
+192.168.1.108 ansible_user=root
 
 [log]
 192.168.1.109 ansible_user=hayato
