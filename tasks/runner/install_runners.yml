@@ -8,7 +8,7 @@
     runner_dir: "/opt/runner/{{ item.runner_name }}"
     runner_version: "2.321.0"
     runner_state: "started"
-    reinstall_runner: false
+    reinstall_runner: true
     hide_sensitive_logs: true
     github_url: "https://github.com"
     github_api_url: "https://api.github.com"
