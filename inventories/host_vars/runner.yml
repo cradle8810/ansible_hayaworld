@@ -3,6 +3,7 @@ apt:
   - dstat
   - htop
   - jq
+  - p7zip
   - packer
   - python3-pip
   - qemu-guest-agent
