@@ -57,6 +57,7 @@ runner:
           39643236383637633663373138663961393937633764316161313337306265363662333935616436
           3561323139373365326132353130626633363234666334303963
   runners:
+    basepath: "/opt/runner"
     nuc03:
       - runner_name: ansible_hayaworld_03-01
         github_repo: ansible_hayaworld
