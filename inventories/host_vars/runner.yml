@@ -1,5 +1,7 @@
 ---
 apt:
+  - cifs-utils
+  - curl
   - dstat
   - htop
   - jq
