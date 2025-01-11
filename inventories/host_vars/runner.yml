@@ -32,7 +32,7 @@ firewall:
       port: "22"
     - name: "Runner Docker ssh"
       proto: "tcp"
-      src: "172.18.0.0/16"
+      src: "172.16.0.0/12"
       port: "22"
 
 runner:
