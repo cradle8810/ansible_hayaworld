@@ -5,6 +5,7 @@ apt:
   - gzip
   - htop
   - jq
+  - nfs-common
   - python3-pip
   - qemu-guest-agentent
   - unzip

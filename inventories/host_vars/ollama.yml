@@ -5,9 +5,10 @@ apt:
   - emacs
   - git
   - htop
+  - nfs-common
+  - openssh-server
   - qemu-guest-agent
   - qemu-guest-agent-desktop
-  - openssh-server
   - samba-common
   - vim
   - zsh

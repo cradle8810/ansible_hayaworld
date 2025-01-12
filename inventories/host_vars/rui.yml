@@ -4,6 +4,7 @@ apt:
   - dnsmasq
   - dstat
   - htop
+  - nfs-common
   - rsyslog
 
 rui_info: "{{ network | selectattr('shortname', 'eq', 'rui') | first }}"

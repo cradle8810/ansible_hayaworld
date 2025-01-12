@@ -5,6 +5,7 @@ apt:
   - gzip
   - htop
   - jq
+  - nfs-common
   - openjdk-21-jdk
   - p7zip
   - python3-pip

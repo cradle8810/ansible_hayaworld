@@ -3,6 +3,7 @@ apt:
   - avahi-daemon
   - dstat
   - htop
+  - nfs-common
   - qemu-guest-agent
 
 drives:

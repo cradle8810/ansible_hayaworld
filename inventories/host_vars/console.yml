@@ -19,6 +19,7 @@ apt:
   - libbluray-bdj
   - libbluray2
   - libheif1
+  - nfs-common
   - openssh-server
   - openssl
   - p7zip-full

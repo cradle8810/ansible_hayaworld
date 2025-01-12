@@ -3,6 +3,7 @@ apt:
   - curl
   - dstat
   - htop
+  - nfs-common
   - qemu-guest-agent
   - rsyslog
 

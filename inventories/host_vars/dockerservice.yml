@@ -5,6 +5,7 @@ apt:
   - git
   - htop
   - jq
+  - nfs-common
   - openssh-server
   - openssl
   - p7zip-full

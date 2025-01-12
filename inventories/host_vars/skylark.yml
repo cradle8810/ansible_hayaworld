@@ -37,6 +37,7 @@ apt:
   - ffmpeg
   - git
   - htop
+  - nfs-common
   - qemu-guest-agent
   - renameutils
   - rsync
