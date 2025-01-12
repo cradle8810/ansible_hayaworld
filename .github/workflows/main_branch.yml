@@ -68,6 +68,7 @@ jobs:
           - console
           - dockerservice
           - jenkins
+          - nfs
           - rui
           - runner03
           - skylark
@@ -120,6 +121,7 @@ jobs:
           - console
           - dockerservice
           - jenkins
+          - nfs
           - rui
           - runner03
           - skylark

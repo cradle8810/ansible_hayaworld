@@ -59,3 +59,10 @@
     state: restarted
     enabled: true
   listen: "Restart systemd-resolved"
+
+- name: "Restart nfs-server.service"
+  ansible.builtin.systemd_service:
+    name: nfs-server.service
+    state: restarted
+    enabled: true
+  listen: "Restart nfs-server"

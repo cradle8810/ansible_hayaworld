@@ -1,0 +1,30 @@
+---
+- name: "Install btrfs modules"
+  ansible.builtin.apt:
+    pkg:
+      - btrfs-progs
+      - btrfs-compsize
+    update_cache: true
+
+- name: Mkdir for nfs
+  ansible.builtin.file:
+    path: "{{ drives.nfs_drive.mountpoint }}"
+    state: directory
+    mode: '0755'
+
+- name: Mount up device for nfs
+  ansible.posix.mount:
+    path: "{{ drives.nfs_drive.mountpoint }}"
+    src: "UUID={{ drives.nfs_drive.uuid }}"
+    fstype: "{{ drives.nfs_drive.filesystem }}"
+    opts: "{{ drives.nfs_drive.options }}"
+    state: mounted
+
+- name: Mkdir for users
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    mode: '0755'
+    owner: "{{ item.uid }}"
+    group: "{{ item.gid }}"
+  loop: "{{ nfs_folders }}"

@@ -1,6 +1,9 @@
 [rui]
 192.168.1.100 ansible_user=root
 
+[nfs]
+192.168.1.103 ansible_user=hayato
+
 [console]
 192.168.1.105 ansible_user=hayato
 

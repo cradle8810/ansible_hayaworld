@@ -1,0 +1,27 @@
+---
+- name: "Install NFS modules"
+  ansible.builtin.apt:
+    pkg:
+      - nfs-kernel-server
+
+- name: Add idmapd.conf
+  ansible.builtin.template:
+    src: templates/nfs/etc/idmapd.conf.j2
+    dest: /etc/idmapd.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "Restart nfs-server"
+  tags:
+    - nfs_config
+
+- name: Add exports
+  ansible.builtin.template:
+    src: templates/nfs/etc/exports.j2
+    dest: /etc/exports
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "Restart nfs-server"
+  tags:
+    - nfs_config

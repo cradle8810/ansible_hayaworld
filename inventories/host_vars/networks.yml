@@ -30,6 +30,11 @@ network:
     ipv4: 192.168.1.102
     shortname: origin
     sshuser: hayato
+  - hostname: nfs.hayaworld.home
+    interface: ens18
+    ipv4: 192.168.1.103
+    shortname: nfs
+    sshuser: hayato
   - hostname: console.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.105
