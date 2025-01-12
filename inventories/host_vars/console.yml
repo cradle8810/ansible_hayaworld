@@ -23,7 +23,6 @@ apt:
   - openssh-server
   - openssl
   - p7zip-full
-  - packer
   - python3-pip
   - qemu-guest-agent
   - samba-common
