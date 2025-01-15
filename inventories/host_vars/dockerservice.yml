@@ -20,9 +20,6 @@ services_start:
   - qemu-guest-agent
   - ssh
 
-dockerdir:
-  UUID: "83eb3244-7590-4634-9ed4-34d268b242e6"
-
 docker_network:
   base: "172.18.0.0/12"
   size: "24"
