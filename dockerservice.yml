@@ -21,10 +21,6 @@
       ansible.builtin.import_tasks:
         file: tasks/all/main.yml
 
-    - name: Mount docker
-      ansible.builtin.import_tasks:
-        file: tasks/dockerservice/mount_docker.yml
-
     - name: Install Docker(ce)
       ansible.builtin.import_role:
         name: geerlingguy.docker
