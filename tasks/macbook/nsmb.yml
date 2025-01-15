@@ -1,0 +1,45 @@
+---
+# https://www.reddit.com/r/MacOS/comments/17jgiyw/comment/lc6z6lg/
+
+- name: "Set nsmb.conf to speed up Finder"
+  community.general.ini_file:
+    path: /etc/nsmb.conf
+    section: "default"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  loop:
+    - option: "signing_required"
+      value: "no"
+    - option: validate_neg_off
+      value: "yes"
+    - option: streams
+      value: "yes"
+    - option: notify_off
+      value: "yes"
+    - option: soft
+      value: "yes"
+    - option: dir_cache_max_cnt
+      value: 0
+    - option: dir_cache_max
+      value: 0
+    - option: dir_cache_off
+      value: "yes"
+    - option: port445
+      value: "no_netbios"
+    - option: protocol_vers_map
+      value: 4
+    - option: mc_on
+      value: "yes"
+    - option: mc_prefer_wired
+      value: "yes"
+
+- name: "Set do not write DS_Store"
+  community.general.osx_defaults:
+    domain: com.apple.desktopservices
+    key: DSDontWriteNetworkStores
+    type: bool
+    value: true
+    state: present

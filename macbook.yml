@@ -41,3 +41,10 @@
         file: tasks/macbook/home_ssh_config.yml
       tags:
         - ssh
+
+    - name: "Fixup smbd connection speed"
+      ansible.builtin.import_tasks:
+        file: tasks/macbook/nsmb.yml
+      tags:
+        - smbd
+        - smb
