@@ -5,16 +5,18 @@ brew_taps:
   - figlet
   - gnu-tar
   - gnupg
+  - golang
   - htop
   - imagemagick
   - libaacs
   - libde265
   - libheif
   - mas
+  - minica
   - nkf
   - p7zip
-  - pipx
   - pdftoipe
+  - pipx
   - toilet
   - unzip
   - util-linux
