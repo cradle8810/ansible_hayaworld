@@ -88,6 +88,12 @@
       tags:
         - ansible
 
+    - name: Install Packer from Binary Download
+      ansible.builtin.import_tasks:
+        file: tasks/install_packer.yml
+      tags:
+        - packer
+
     - name: Make Started Services
       ansible.builtin.import_tasks:
         file: tasks/service_start.yml

@@ -55,6 +55,12 @@
       tags:
         - ansible
 
+    - name: Install Packer from Binary Download
+      ansible.builtin.import_tasks:
+        file: tasks/install_packer.yml
+      tags:
+        - packer
+
     - name: Sudo nopassword Settings
       ansible.builtin.import_tasks:
         file: tasks/runner/sudo_nopass.yml
