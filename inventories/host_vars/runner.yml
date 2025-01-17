@@ -31,10 +31,10 @@ firewall:
       proto: "tcp"
       src: "172.17.0.0/16"
       port: "22"
-    - name: "Runner Docker ssh"
-      proto: "tcp"
-      src: "172.16.0.0/12"
-      port: "22"
+
+docker_network:
+  base: "172.17.0.0/12"
+  size: "24"
 
 runner:
   user:
@@ -67,6 +67,14 @@ runner:
       - runner_name: ansible_hayaworld_03-03
         github_repo: ansible_hayaworld
       - runner_name: ansible_hayaworld_03-04
+        github_repo: ansible_hayaworld
+      - runner_name: ansible_hayaworld_03-05
+        github_repo: ansible_hayaworld
+      - runner_name: ansible_hayaworld_03-06
+        github_repo: ansible_hayaworld
+      - runner_name: ansible_hayaworld_03-07
+        github_repo: ansible_hayaworld
+      - runner_name: ansible_hayaworld_03-08
         github_repo: ansible_hayaworld
       - runner_name: hayaworld_net_03
         github_repo: hayaworld_net
