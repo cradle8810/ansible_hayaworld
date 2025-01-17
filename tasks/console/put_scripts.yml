@@ -5,7 +5,13 @@
     state: directory
     mode: '0755'
 
-- name: Put Pocket remove scrtipt
+- name: Mkdir Homedir Scripts
+  ansible.builtin.file:
+    path: /home/hayato/Scripts/
+    state: directory
+    mode: '0755'
+
+- name: Put Pocket remove scrtipt on Home Scripts dir
   ansible.builtin.template:
     src: templates/console/home/hayato/Scripts/remove.sh.j2
     dest: /home/hayato/Scripts/remove.sh
