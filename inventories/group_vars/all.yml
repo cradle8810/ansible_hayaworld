@@ -27,6 +27,9 @@ all:
       macos:
         url: "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_macos"
         checksum: ""
+    packer:
+      linux:
+        url: https://releases.hashicorp.com/packer/1.11.2/packer_1.11.2_linux_amd64.zip
     user:
       - name: hayato
         username: hayato
