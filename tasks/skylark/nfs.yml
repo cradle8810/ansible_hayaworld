@@ -1,0 +1,45 @@
+---
+- name: "Install NFS modules"
+  ansible.builtin.apt:
+    pkg:
+      - nfs-kernel-server
+
+- name: "Add idmapd.conf"
+  ansible.builtin.template:
+    src: templates/skylark/etc/idmapd.conf.j2
+    dest: /etc/idmapd.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "Restart nfs-server"
+  tags:
+    - nfs_config
+
+- name: "Add exports"
+  ansible.builtin.template:
+    src: templates/skylark/etc/exports.j2
+    dest: /etc/exports
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "Restart nfs-server"
+  tags:
+    - nfs_config
+
+- name: "Mkdir for users root"
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    mode: '0755'
+    owner: "root"
+    group: "root"
+  loop: "{{ nfs.exports }}"
+
+- name: "Mkdir for users"
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    mode: '0755'
+    owner: "{{ item.uid }}"
+    group: "{{ item.gid }}"
+  loop: "{{ nfs.nfs_folders }}"
