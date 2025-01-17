@@ -68,6 +68,14 @@ runner:
         github_repo: ansible_hayaworld
       - runner_name: ansible_hayaworld_03-04
         github_repo: ansible_hayaworld
+      - runner_name: ansible_hayaworld_03-05
+        github_repo: ansible_hayaworld
+      - runner_name: ansible_hayaworld_03-06
+        github_repo: ansible_hayaworld
+      - runner_name: ansible_hayaworld_03-07
+        github_repo: ansible_hayaworld
+      - runner_name: ansible_hayaworld_03-08
+        github_repo: ansible_hayaworld
       - runner_name: hayaworld_net_03
         github_repo: hayaworld_net
       - runner_name: periodic_twitter_dl_03-01
