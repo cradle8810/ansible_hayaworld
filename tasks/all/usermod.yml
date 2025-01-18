@@ -12,6 +12,7 @@
     - name: "Common / Add Username Group (Ubuntu)"
       ansible.builtin.group:
         name: "{{ item.username }}"
+        gid: "{{ item.gid }}"
         state: present
       loop:
         "{{ all.vars.user }}"
@@ -28,6 +29,7 @@
         shell: "{{ item.shell }}"
         state: "present"
         system: true
+        uid: "{{ item.uid }}"
       loop:
         "{{ all.vars.user }}"
 
