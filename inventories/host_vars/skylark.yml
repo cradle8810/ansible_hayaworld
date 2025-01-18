@@ -42,6 +42,24 @@ backup_exclude:
   home:
     - "SparceImages/icloud_photo.sparsebundle/*"
 
+backup_scripts:
+  dirs:
+    - name: "Nullpo"
+      src: "/skylark/Nullpo/"
+      dest: "/backup/Nullpo"
+      snapshotdir: "/backup/snapshots/Nullpo"
+      excludefilepath: "/home/hayato/backupscripts/Nullpo_exclude.txt"
+    - name: "NFS"
+      src: "/skylark/nfs/"
+      dest: "/backup/nfs"
+      snapshotdir: "/backup/snapshots/nfs"
+      excludefilepath: "/home/hayato/backupscripts/NFS_exclude.txt"
+    - name: "Home"
+      src: "/skylark/hayato/"
+      dest: "/backup/hayato"
+      snapshotdir: "/backup/snapshots/hayato"
+      excludefilepath: "/home/hayato/backupscripts/Home_exclude.txt"
+
 services_start:
   - nfs-server
   - nmbd
