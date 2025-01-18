@@ -31,6 +31,12 @@
       tags:
         - samba
 
+    - name: Set nfs
+      ansible.builtin.import_tasks:
+        file: tasks/skylark/nfs.yml
+      tags:
+        - nfs
+
     - name: Install Pre-builded SNS downloaders
       ansible.builtin.import_tasks:
         file: tasks/sns_dl.yml

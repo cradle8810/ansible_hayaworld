@@ -1,0 +1,16 @@
+#!/bin/sh
+
+SRC='{{ pathinfo.src }}'
+DEST='{{ pathinfo.dest }}'
+SNAPSHOTSDIR='{{ pathinfo.snapshotdir }}'
+EXCLUDEFILE='{{ pathinfo.excludefilepath }}'
+
+TODAY=$(date +%Y%m%d_%H%M%S)
+
+# rsync
+echo "rsync -av8 --delete --exclude-from=${EXCLUDEFILE} ${SRC} ${DEST}"
+rsync -av8 --delete --exclude-from="${EXCLUDEFILE}" ${SRC} ${DEST}
+RETVAL=$?
+
+# Snapshot 作成
+sudo btrfs subvolume snapshot -r "${DEST}" "${SNAPSHOTSDIR}/${TODAY}"
