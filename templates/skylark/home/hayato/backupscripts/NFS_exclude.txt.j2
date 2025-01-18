@@ -1,0 +1,5 @@
+{% if backup_exclude.nfs is defined %}
+{% for path in backup_exclude.nfs %}
+{{ path }}
+{% endfor %}
+{% endif %}
