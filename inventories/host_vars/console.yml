@@ -24,6 +24,7 @@ apt:
   - openssh-server
   - openssl
   - p7zip-full
+  - poppler-utils
   - python3-pip
   - qemu-guest-agent
   - rsync
