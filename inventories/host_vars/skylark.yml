@@ -31,7 +31,7 @@ nfs:
   exports:
     - path: "/skylark/nfs"
       allowip: "192.168.1.0/24"
-      options: "rw"
+      options: "rw,no_root_squash"
   nfs_folders:
     - name: "hayato"
       uid: 1000
