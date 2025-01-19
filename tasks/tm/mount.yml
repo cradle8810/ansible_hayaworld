@@ -14,3 +14,11 @@
     fstype: "{{ drives.tm.filesystem }}"
     opts: "{{ drives.tm.options }}"
     state: present
+
+- name: "Reset Mountpoint owner as {{ drives.tm.owner }}"
+  ansible.builtin.file:
+    path: "{{ drives.tm.mountpoint }}"
+    state: directory
+    mode: '0755'
+    owner: "{{ drives.tm.owner }}"
+    group: "{{ drives.tm.owner }}"
