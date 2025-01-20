@@ -2,34 +2,34 @@
 192.168.1.100 ansible_user=root
 
 [nfs]
-192.168.1.103 ansible_user=hayato
+192.168.1.103 ansible_user=ansible
 
 [console]
-192.168.1.105 ansible_user=hayato
+192.168.1.105 ansible_user=ansible
 
 [runner]
-192.168.1.104 ansible_user=hayato
+192.168.1.104 ansible_user=ansible
 
 [mariadb]
-192.168.1.106 ansible_user=hayato
+192.168.1.106 ansible_user=ansible
 
 [runner03]
 192.168.1.108 ansible_user=root
 
 [log]
-192.168.1.109 ansible_user=hayato
+192.168.1.109 ansible_user=ansible
 
 [tm]
-192.168.1.112 ansible_user=hayato
+192.168.1.112 ansible_user=ansible
 
 [jenkins]
 192.168.1.131 ansible_user=root
 
 [mai]
-192.168.1.150 ansible_user=hayato
+192.168.1.150 ansible_user=ansible
 
 [skylark]
-192.168.1.200 ansible_user=hayato
+192.168.1.200 ansible_user=ansible
 
 [macbook]
 HayabookAir2023.hayaworld.home ansible_user=hayato
