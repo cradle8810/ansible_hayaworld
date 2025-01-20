@@ -69,6 +69,12 @@
         - quorum
         - proxmox
 
+    - name: Overclock Settings
+      ansible.builtin.import_tasks:
+        file: tasks/mai/overclock.yml
+      tags:
+        - overclock
+
     - name: Make Started Services
       ansible.builtin.import_tasks:
         file: tasks/service_start.yml
