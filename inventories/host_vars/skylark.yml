@@ -34,8 +34,8 @@ nfs:
       options: "rw,no_root_squash"
   nfs_folders:
     - name: "hayato"
-      uid: 1000
-      gid: 1000
+      uid: 10000
+      gid: 10000
       path: "/skylark/nfs/hayato"
 
 backup_exclude:
