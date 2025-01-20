@@ -1,0 +1,28 @@
+---
+# https://forums.raspberrypi.com/viewtopic.php?f=66&t=138123
+
+- name: "Overclocking config"
+  community.general.ini_file:
+    path: /boot/config.txt
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  loop:
+    - option: arm_freq
+      value: 1300
+    - option: over_voltage
+      value: 5
+    - option: gpu_freq
+      value: 500
+    - option: sdram_freq
+      value: 500
+    - option: sdram_schmoo
+      value: 0x02000020
+    - option: over_voltage_sdram_p
+      value: 6
+    - option: over_voltage_sdram_i
+      value: 4
+    - option: over_voltage_sdram_c
+      value: 4
