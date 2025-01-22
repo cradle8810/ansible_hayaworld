@@ -7,3 +7,4 @@
     validate: "visudo -cf %s"
     block: |
       hayato  ALL=(ALL:ALL) NOPASSWD: /usr/bin/rsync
+      hayato  ALL=(ALL:ALL) NOPASSWD: /usr/bin/btrfs
