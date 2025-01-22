@@ -53,6 +53,12 @@
       tags:
         - backupscripts
 
+    - name: Sudo nopassword Settings
+      ansible.builtin.import_tasks:
+        file: tasks/skylark/sudo_nopass.yml
+      tags:
+        - sudo
+
     - name: Make Started Services
       ansible.builtin.import_tasks:
         file: tasks/service_start.yml
