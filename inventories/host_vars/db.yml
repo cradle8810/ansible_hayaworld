@@ -7,16 +7,20 @@ apt:
   - jq
   - nfs-common
   - python3-pip
-  - qemu-guest-agentent
+  - qemu-guest-agent
   - unzip
 
 services_start:
-  - qemu-guest-agentent
+  - qemu-guest-agent
   - ssh
 
-dbdir:
-  UUID: "4374bdcc-30d4-43d5-aafa-b4714a438e0c"
-  dest: "/var/lib/mysql"
+drives:
+  dbdir:
+    uuid: "4374bdcc-30d4-43d5-aafa-b4714a438e0c"
+    mountpoint: "/var/lib/mysql"
+    filesystem: "btrfs"
+    options: "defaults,noatime,compress=zstd:1"
+    owner: "mysql"
 
 mysql:
   root_username: !vault |
