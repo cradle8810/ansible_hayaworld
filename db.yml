@@ -1,12 +1,12 @@
 ---
-- name: Play for mariadb.hayaworld.home
-  hosts: mariadb
+- name: Play for db.hayaworld.home
+  hosts: db
   remote_user: hayato
   gather_facts: true
   become: true
 
   vars_files:
-    - inventories/host_vars/mariadb.yml
+    - inventories/host_vars/db.yml
     - inventories/host_vars/networks.yml
 
   handlers:
@@ -21,13 +21,13 @@
 
     - name: Mount MariaDB DB drive
       ansible.builtin.import_tasks:
-        file: tasks/mariadb/mount_dbdir.yml
+        file: tasks/db/mount_dbdir.yml
       tags:
         - mysql
 
     - name: Install and Configure MySQL
       ansible.builtin.import_tasks:
-        file: tasks/mariadb/install_mariadb.yml
+        file: tasks/db/install_mariadb.yml
       tags:
         - mysql
 

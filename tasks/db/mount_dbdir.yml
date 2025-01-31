@@ -1,0 +1,16 @@
+---
+- name: Create Mountpoint
+  ansible.builtin.file:
+    path: "{{ drives.dbdir.mountpoint }}"
+    state: directory
+    mode: '0755'
+    owner: "{{ drives.dbdir.owner }}"
+    group: "{{ drives.dbdir.owner }}"
+
+- name: Mount up device dbdir
+  ansible.posix.mount:
+    path: "{{ drives.dbdir.mountpoint }}"
+    src: "UUID={{ drives.dbdir.uuid }}"
+    fstype: "{{ drives.dbdir.filesystem }}"
+    opts: "{{ drives.dbdir.options }}"
+    state: present

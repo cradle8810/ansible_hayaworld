@@ -15,7 +15,7 @@
     mysql_port: "3306"
     mysql_daemon: "mariadb"
     mysql_bind_address: '0.0.0.0'
-    mysql_datadir: "{{ dbdir.dest }}"
+    mysql_datadir: "{{ drives.dbdir.mountpoint }}"
     mysql_hide_passwords: true
     mysql_users:
       - name: zabbix
