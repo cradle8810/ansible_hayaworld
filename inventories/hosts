@@ -7,14 +7,18 @@
 [console]
 192.168.1.105 ansible_user=ansible
 
-[runner]
-192.168.1.104 ansible_user=ansible
-
 [db]
 192.168.1.106 ansible_user=ansible
 
+[runner]
+192.168.1.108 ansible_user=root
+192.168.1.110 ansible_user=root
+
 [runner03]
 192.168.1.108 ansible_user=root
+
+[runner04]
+192.168.1.110 ansible_user=root
 
 [log]
 192.168.1.109 ansible_user=ansible

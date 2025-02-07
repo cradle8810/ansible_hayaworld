@@ -50,6 +50,11 @@ network:
     ipv4: 192.168.1.109
     shortname: log
     sshuser: hayato
+  - hostname: runner04.hayaworld.home
+    interface: ens18
+    ipv4: 192.168.1.110
+    shortname: runner04
+    sshuser: runner
   - hostname: tm.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.112
