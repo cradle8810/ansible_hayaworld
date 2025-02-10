@@ -70,6 +70,7 @@ jobs:
           - jenkins
           - rui
           - runner03
+          - runner04
           - skylark
           - tm
     environment: Production
@@ -122,6 +123,7 @@ jobs:
           - jenkins
           - rui
           - runner03
+          - runner04
           - skylark
           - tm
     environment: Production
