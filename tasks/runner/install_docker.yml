@@ -1,4 +1,21 @@
 ---
+- name: Configuration Dir mkdir
+  ansible.builtin.file:
+    path: /etc/docker/
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: "Define Docker configs"
+  ansible.builtin.template:
+    src: "templates/{{ hostname }}/etc/docker/daemon.json.j2"
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "Restart docker"
+
 - name: Install Docker(ce)
   ansible.builtin.import_role:
     name: geerlingguy.docker
@@ -12,12 +29,3 @@
     docker_users:
       - hayato
       - runner
-
-- name: "Define Docker configs"
-  ansible.builtin.template:
-    src: templates/runner03/etc/docker/daemon.json.j2
-    dest: /etc/docker/daemon.json.j2
-    owner: root
-    group: root
-    mode: '0644'
-  notify: "Restart docker"
