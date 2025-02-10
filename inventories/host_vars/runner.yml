@@ -33,8 +33,12 @@ firewall:
       port: "22"
 
 docker_network:
-  base: "172.17.0.0/12"
-  size: "24"
+  runner03:
+    base: "172.17.3.0"
+    size: "24"
+  runner04:
+    base: "172.17.4.0"
+    size: "24"
 
 runner:
   user:
