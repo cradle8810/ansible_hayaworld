@@ -34,11 +34,11 @@ firewall:
 
 docker_network:
   runner03:
-    base: "172.17.3.0"
-    size: "24"
+    base: "172.17.3.0/24"
+    size: "28"
   runner04:
-    base: "172.17.4.0"
-    size: "24"
+    base: "172.17.4.0/24"
+    size: "28"
 
 runner:
   user:
