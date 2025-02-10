@@ -1,0 +1,75 @@
+---
+- name: Play for runner.hayaworld.local
+  hosts: runner04
+  remote_user: hayato
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - inventories/host_vars/runner.yml
+    - inventories/host_vars/networks.yml
+
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+
+  tasks:
+    - name: Common Settings
+      ansible.builtin.import_tasks:
+        file: tasks/all/main.yml
+
+    - name: Add user for runner execution
+      ansible.builtin.user:
+        name: "{{ runner.user.username }}"
+        shell: /bin/bash
+        groups: sudo
+        append: true
+        expires: -1
+        password: "{{ runner.user.password_hashed }}"
+
+    - name: Put authorized Key for runner
+      ansible.builtin.import_tasks:
+        file: tasks/runner/authorized_keys.yml
+
+    - name: Install Docker
+      ansible.builtin.import_tasks:
+        file: tasks/runner/install_docker.yml
+      tags:
+        - runners
+        - docker
+
+    - name: Install Pre-builded Rename-util
+      ansible.builtin.import_tasks:
+        file: tasks/install_rename.yml
+
+    - name: Install Pre-builded SNS downloaders
+      ansible.builtin.import_tasks:
+        file: tasks/sns_dl.yml
+      tags:
+        - sns
+
+    - name: Install Ansible from PPA
+      ansible.builtin.import_tasks:
+        file: tasks/ansible_install.yml
+      tags:
+        - ansible
+
+    - name: Install Packer from Binary Download
+      ansible.builtin.import_tasks:
+        file: tasks/install_packer.yml
+      tags:
+        - packer
+
+    - name: Sudo nopassword Settings
+      ansible.builtin.import_tasks:
+        file: tasks/runner/sudo_nopass.yml
+      tags:
+        - sudo
+
+    - name: Install Runners
+      ansible.builtin.include_tasks:
+        file: tasks/runner/install_runners.yml
+      loop: "{{ runner.runners.nuc04 }}"
+      tags:
+        - runners
