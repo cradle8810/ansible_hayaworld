@@ -70,8 +70,6 @@ jobs:
           - dockerservice
           - jenkins
           - rui
-          - runner03
-          - runner04
           - skylark
           - tm
     container:
