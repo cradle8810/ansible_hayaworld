@@ -1,9 +1,8 @@
 ---
 - name: Play for log.hayaworld.home
   hosts: log
-  remote_user: hayato
+  remote_user: ansible
   gather_facts: true
-  become: true
 
   vars_files:
     - inventories/host_vars/log.yml
