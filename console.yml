@@ -1,7 +1,7 @@
 ---
 - name: Play for console.hayaworld.home
   hosts: console
-  remote_user: hayato
+  remote_user: ansible
   gather_facts: true
   become: true
 
