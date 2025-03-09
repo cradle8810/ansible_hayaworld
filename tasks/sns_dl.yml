@@ -92,7 +92,7 @@
 
 - name: Download twitter-loader
   ansible.builtin.unarchive:
-    src: "https://github.com/mmpx12/twitter-media-downloader/releases/download/v1.13.7/twitter-media-downloader-v1.13.7-linux-amd64.tar.gz"
+    src: "https://github.com/mmpx12/twitter-media-downloader/releases/download/v1.14.0/twitter-media-downloader-v1.14.0-linux-amd64.tar.gz"
     dest: /opt/bin/
     remote_src: true
     mode: "0755"
