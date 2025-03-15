@@ -13,7 +13,7 @@
   vars:
     runner_user: "{{ runner.user.username }}"
     runner_dir: "{{ runner.runners.basepath }}/{{ item.runner_name }}"
-    runner_version: "2.321.0"
+    runner_version: "latest"
     runner_state: "started"
     reinstall_runner: "{{ not (is_configured.stat.exists) }}"
     hide_sensitive_logs: true
