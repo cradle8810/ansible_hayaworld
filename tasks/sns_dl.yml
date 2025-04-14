@@ -76,7 +76,9 @@
     owner: "{{ item.username }}"
     group: "staff"
   loop: "{{ all.vars.user }}"
-  when: ansible_distribution == "MacOSX"
+  when:
+    - ansible_distribution == "MacOSX"
+    - item.username != 'ansible'
   no_log: true
 
 - name: "Make a yt-dlp-FixupMtime's symbolic link to correct location (macOS)"
@@ -87,7 +89,9 @@
     group: "staff"
     state: link
   loop: "{{ all.vars.user }}"
-  when: ansible_distribution == "MacOSX"
+  when:
+    - ansible_distribution == "MacOSX"
+    - item.username != 'ansible'
   no_log: true
 
 - name: Download twitter-loader
