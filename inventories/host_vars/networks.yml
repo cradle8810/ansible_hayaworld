@@ -60,6 +60,11 @@ network:
     ipv4: 192.168.1.112
     shortname: tm
     sshuser: hayato
+  - hostname: terminal.hayaworld.home
+    interface: enx6c1ff7023273
+    ipv4: 192.168.1.130
+    shortname: terminal
+    sshuser: ansible
   - hostname: jenkins.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.131
