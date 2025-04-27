@@ -44,7 +44,7 @@ services_start:
   - ssh
 
 homedir:
-  UUID: "b207b0c3-2efe-4910-b1bd-57103fa0f3e1"
+  UUID: "cdc0f42c-3ed2-4474-a328-03308dde6101"
 
 firewall:
   policy: deny

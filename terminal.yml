@@ -19,7 +19,7 @@
   tasks:
     - name: Mount Home drive
       ansible.builtin.import_tasks:
-        file: tasks/console/mount_home.yml
+        file: tasks/terminal/mount_home.yml
       tags:
         - home
         - mount
