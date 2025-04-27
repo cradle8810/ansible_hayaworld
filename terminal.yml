@@ -120,6 +120,12 @@
       tags:
         - desktop
 
+    - name: Remove ansible user from login screen
+      ansible.builtin.import_tasks:
+        file: tasks/terminal/disappear_ansible_user.yml
+      tags:
+        - desktop
+
     - name: Configure Desktop using dconf
       ansible.builtin.import_tasks:
         file: tasks/console/dconf.yml

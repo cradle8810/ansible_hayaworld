@@ -1,0 +1,8 @@
+- name: "Desktop / Put omit ansible user from login screen config file"
+  ansible.builtin.copy:
+    src: templates/terminal/var/lib/AccountsService/users/ansible
+    dest: /var/lib/AccountsService/users/ansible
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "Restart accounts-daemon"
