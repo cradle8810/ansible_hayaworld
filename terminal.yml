@@ -38,6 +38,12 @@
       tags:
         - system
 
+    - name: Put ~/.ssh/config
+      ansible.builtin.import_tasks:
+        file: tasks/terminal/home_ssh_config.yml
+      tags:
+        - ssh
+
     - name: Install Google Chrome Repo
       ansible.builtin.import_tasks:
         file: tasks/console/install_chrome.yml
