@@ -1,0 +1,33 @@
+- name: "Mozc / Installing Mozc"
+  ansible.builtin.apt:
+    install_recommends: false
+    update_cache: true
+    pkg:
+      - fcitx5-mozc
+      - mozc-data
+      - mozc-server
+      - mozc-utils-gui
+
+- name: "Mozc / Put Mozc configuration"
+  ansible.builtin.copy:
+    src: templates/terminal/home/hayato/.xprofile
+    dest: /home/hayato/.xprofile
+    owner: hayato
+    group: hayato
+    mode: '0644'
+
+- name: "Mozc / Make autostart directory"
+  ansible.builtin.file:
+    path: /home/hayato/.config/autostart
+    state: directory
+    mode: '0755'
+    owner: hayato
+    group: hayato
+
+- name: "Mozc / Put Mozc startup config"
+  ansible.builtin.copy:
+    src: templates/terminal/home/hayato/.config/autostart/org.fcitx.Fcitx5.desktop
+    dest: /home/hayato/.config/autostart/org.fcitx.Fcitx5.desktop
+    owner: hayato
+    group: hayato
+    mode: '0644'

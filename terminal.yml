@@ -1,0 +1,146 @@
+---
+- name: Play for terminal.hayaworld.home
+  hosts: terminal
+  remote_user: hayato
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - inventories/host_vars/terminal.yml
+    - inventories/host_vars/networks.yml
+
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+      tags:
+        - network
+
+  tasks:
+    - name: Mount Home drive
+      ansible.builtin.import_tasks:
+        file: tasks/terminal/mount_home.yml
+      tags:
+        - home
+        - mount
+
+    - name: Common Settings
+      ansible.builtin.import_tasks:
+        file: tasks/all/main.yml
+
+    - name: Put GUI session rc
+      ansible.builtin.copy:
+        src: templates/console/home/hayato/.xsessionrc
+        dest: /home/hayato/.xsessionrc
+        owner: hayato
+        group: hayato
+        mode: '0644'
+      tags:
+        - system
+
+    - name: Put ~/.ssh/config
+      ansible.builtin.import_tasks:
+        file: tasks/terminal/home_ssh_config.yml
+      tags:
+        - ssh
+
+    - name: Install Google Chrome Repo
+      ansible.builtin.import_tasks:
+        file: tasks/console/install_chrome.yml
+      tags:
+        - chrome
+
+    - name: Install Pre-builded Rename-util
+      ansible.builtin.import_tasks:
+        file: tasks/install_rename.yml
+      tags:
+        - software
+
+    - name: Install Pre-builded SNS downloaders
+      ansible.builtin.import_tasks:
+        file: tasks/sns_dl.yml
+      tags:
+        - sns
+
+    - name: Install pipr
+      ansible.builtin.import_tasks:
+        file: tasks/pipr.yml
+      tags:
+        - software
+
+    - name: Put Predeploy scripts
+      ansible.builtin.import_tasks:
+        file: tasks/console/put_scripts.yml
+      tags:
+        - put_script
+
+    - name: Fix ffmpegthumbnailer bugs
+      ansible.builtin.import_tasks:
+        file: tasks/console/ffmpegthumbnailer_fix.yml
+      tags:
+        - software
+
+    - name: Install Docker(ce)
+      ansible.builtin.import_role:
+        name: geerlingguy.docker
+      vars:
+        docker_edition: 'ce'
+        docker_packages_state: present
+        docker_service_manage: true
+        docker_service_state: started
+        docker_service_enabled: true
+        docker_restart_handler_state: restarted
+        docker_users:
+          - hayato
+
+    - name: Install Ansible from PPA
+      ansible.builtin.import_tasks:
+        file: tasks/ansible_install.yml
+      when:
+        - ansible_distribution_release != 'oracular'
+        - ansible_distribution_release != 'plucky'
+      tags:
+        - ansible
+
+    - name: Make Started Services
+      ansible.builtin.import_tasks:
+        file: tasks/service_start.yml
+      tags:
+        - services
+
+    - name: Mount skylark
+      ansible.builtin.import_tasks:
+        file: tasks/console/mount_skylark.yml
+      tags:
+        - skylark
+
+    - name: Install/Config Zramswap
+      ansible.builtin.import_tasks:
+        file: tasks/zram.yml
+      tags:
+        - services
+
+    - name: Install Desktop
+      ansible.builtin.import_tasks:
+        file: tasks/console/desktop.yml
+      tags:
+        - desktop
+
+    - name: Remove ansible user from login screen
+      ansible.builtin.import_tasks:
+        file: tasks/terminal/disappear_ansible_user.yml
+      tags:
+        - desktop
+
+    - name: Configure Desktop using dconf
+      ansible.builtin.import_tasks:
+        file: tasks/console/dconf.yml
+      tags:
+        - desktop
+
+    - name: Install IME
+      ansible.builtin.import_tasks:
+        file: tasks/terminal/install_IME.yml
+      tags:
+        - desktop
+        - ime
