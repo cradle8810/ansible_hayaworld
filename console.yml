@@ -119,3 +119,4 @@
         file: tasks/console/dconf.yml
       tags:
         - desktop
+        - dconf

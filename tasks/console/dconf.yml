@@ -10,3 +10,15 @@
     key: "/org/gnome/nautilus/list-view/use-tree-view"
     value: "true"
     state: present
+
+- name: Use CapsLock as Ctrl
+  community.general.dconf:
+    key: "/org/gnome/desktop/input-sources/xkb-options"
+    value: "['ctrl:nocaps']"
+    state: present
+
+- name: Nautilus Thumbnail Cache size (MB)
+  community.general.dconf:
+    key: "/org/gnome/desktop/thumbnail-cache/maximum-size"
+    value: "2048"
+    state: present
