@@ -47,9 +47,12 @@
     - desktop
     - language-support
 
-- name: Fix ffmpegthumbnailer bugs
+- name: Install GNOME sushi and thumbnailer
   ansible.builtin.import_tasks:
-    file: tasks/guis/common/ffmpegthumbnailer_fix.yml
+    file: tasks/guis/common/install_nautilus_thumbnail.yml
+  tags:
+    - desktop
+    - thumbnailer
 
 - name: Install Google Chrome Repo
   ansible.builtin.import_tasks:
