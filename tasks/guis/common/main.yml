@@ -65,3 +65,9 @@
     file: tasks/guis/common/install_chrome.yml
   tags:
     - chrome
+
+- name: Install/Configure iGPU
+  ansible.builtin.import_tasks:
+    file: tasks/guis/common/iGPU_config.yml
+  tags:
+    - igpu
