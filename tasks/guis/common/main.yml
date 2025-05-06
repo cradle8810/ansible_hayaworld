@@ -15,6 +15,12 @@
   tags:
     - ssh
 
+- name: "Set CapsLock as Ctrl"
+  ansible.builtin.import_tasks:
+    file: tasks/guis/common/caps2ctrl.yml
+  tags:
+    - capslock
+
 - name: Mount skylark
   ansible.builtin.import_tasks:
     file: tasks/guis/common/mount_skylark.yml

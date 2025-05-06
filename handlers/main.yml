@@ -73,3 +73,10 @@
     state: restarted
     enabled: true
   listen: "Restart accounts-daemon"
+
+- name: "Restart console-setup"
+  ansible.builtin.systemd_service:
+    name: console-setup.service
+    state: restarted
+    enabled: true
+  listen: "Restart console-setup"
