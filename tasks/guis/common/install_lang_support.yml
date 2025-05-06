@@ -1,0 +1,23 @@
+---
+- name: Installing Language Supports
+  ansible.builtin.apt:
+    install_recommends: false
+    update_cache: true
+    pkg:
+      "{{ item }}"
+  loop:
+    - fonts-noto-cjk
+    - fonts-noto-cjk-extra
+    - fonts-noto-core
+    - gimp-help-en
+    - gimp-help-ja
+    - gnome-user-docs-ja
+    - hunspell-en-au
+    - hunspell-en-ca
+    - hunspell-en-gb
+    - hunspell-en-za
+    - ibus-mozc
+    - language-pack-gnome-en
+    - language-pack-gnome-ja
+    - wamerican
+    - wbritish

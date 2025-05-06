@@ -40,6 +40,13 @@
   tags:
     - desktop
 
+- name: Install Language Supports
+  ansible.builtin.import_tasks:
+    file: tasks/guis/common/install_lang_support.yml
+  tags:
+    - desktop
+    - language-support
+
 - name: Fix ffmpegthumbnailer bugs
   ansible.builtin.import_tasks:
     file: tasks/guis/common/ffmpegthumbnailer_fix.yml
