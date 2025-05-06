@@ -1,0 +1,32 @@
+---
+- name: Installing Intel iGPU Driver (Not Ubuntu 25.04)
+  ansible.builtin.apt:
+    install_recommends: false
+    update_cache: true
+    pkg:
+      - intel-media-va-driver-non-free
+      - libmfx-dev
+      - libva-dev
+      - vainfo
+  when:
+    - ansible_distribution_release != 'plucky'
+
+- name: Installing Intel iGPU Driver (For Ubuntu 25.04)
+  ansible.builtin.apt:
+    install_recommends: false
+    update_cache: true
+    pkg:
+      - intel-media-va-driver-non-free
+      - libmfx-gen-dev
+      - libva-dev
+      - vainfo
+  when:
+    - ansible_distribution_release == 'plucky'
+
+- name: Integrated GPU Permission Fix
+  ansible.builtin.copy:
+    src: templates/guis/etc/udev/rules.d/99-render.rules
+    dest: /etc/udev/rules.d/99-render.rules
+    owner: root
+    group: root
+    mode: '0644'

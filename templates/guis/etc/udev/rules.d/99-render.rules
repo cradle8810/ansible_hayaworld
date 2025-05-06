@@ -1,0 +1,1 @@
+KERNEL=="render*" GROUP="render", MODE="0666"

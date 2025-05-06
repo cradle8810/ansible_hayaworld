@@ -1,0 +1,10 @@
+---
+- name: "CapsLock as Ctrl config"
+  community.general.ini_file:
+    path: /etc/default/keyboard
+    option: "XKBOPTIONS"
+    value: '"ctrl:nocaps"'
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  notify: "Restart console-setup"

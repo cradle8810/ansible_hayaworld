@@ -1,0 +1,73 @@
+---
+- name: Put GUI session rc
+  ansible.builtin.copy:
+    src: templates/guis/home/hayato/.xsessionrc
+    dest: /home/hayato/.xsessionrc
+    owner: hayato
+    group: hayato
+    mode: '0644'
+  tags:
+    - system
+
+- name: Put ~/.ssh/config
+  ansible.builtin.import_tasks:
+    file: tasks/home_ssh_config.yml
+  tags:
+    - ssh
+
+- name: "Set CapsLock as Ctrl"
+  ansible.builtin.import_tasks:
+    file: tasks/guis/common/caps2ctrl.yml
+  tags:
+    - capslock
+
+- name: Mount skylark
+  ansible.builtin.import_tasks:
+    file: tasks/guis/common/mount_skylark.yml
+  tags:
+    - skylark
+
+- name: Install Desktop
+  ansible.builtin.import_tasks:
+    file: tasks/guis/common/desktop.yml
+  tags:
+    - desktop
+
+- name: Configure Desktop using dconf
+  ansible.builtin.import_tasks:
+    file: tasks/guis/common/dconf.yml
+  tags:
+    - desktop
+    - dconf
+
+- name: Remove ansible user from login screen
+  ansible.builtin.import_tasks:
+    file: tasks/guis/common/disappear_ansible_user.yml
+  tags:
+    - desktop
+
+- name: Install Language Supports
+  ansible.builtin.import_tasks:
+    file: tasks/guis/common/install_lang_support.yml
+  tags:
+    - desktop
+    - language-support
+
+- name: Install GNOME sushi and thumbnailer
+  ansible.builtin.import_tasks:
+    file: tasks/guis/common/install_nautilus_thumbnail.yml
+  tags:
+    - desktop
+    - thumbnailer
+
+- name: Install Google Chrome Repo
+  ansible.builtin.import_tasks:
+    file: tasks/guis/common/install_chrome.yml
+  tags:
+    - chrome
+
+- name: Install/Configure iGPU
+  ansible.builtin.import_tasks:
+    file: tasks/guis/common/iGPU_config.yml
+  tags:
+    - igpu
