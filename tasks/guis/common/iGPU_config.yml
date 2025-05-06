@@ -8,7 +8,7 @@
       - libmfx-dev
       - libva-dev
       - vainfo
-  when: 
+  when:
     - ansible_distribution_release != 'plucky'
 
 - name: Installing Intel iGPU Driver (For Ubuntu 25.04)
@@ -20,10 +20,10 @@
       - libmfx-gen-dev
       - libva-dev
       - vainfo
-  when: 
+  when:
     - ansible_distribution_release == 'plucky'
 
-- name: iGPU Permission Fix
+- name: Integrated GPU Permission Fix
   ansible.builtin.copy:
     src: templates/guis/etc/udev/rules.d/99-render.rules
     dest: /etc/udev/rules.d/99-render.rules
