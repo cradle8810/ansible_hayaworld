@@ -93,7 +93,7 @@
 
     - name: Install IME
       ansible.builtin.import_tasks:
-        file: tasks/terminal/install_IME.yml
+        file: tasks/guis/install_IME.yml
       tags:
         - desktop
         - ime
