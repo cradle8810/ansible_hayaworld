@@ -19,7 +19,7 @@
   tasks:
     - name: Mount Home drive
       ansible.builtin.import_tasks:
-        file: tasks/terminal/mount_home.yml
+        file: tasks/mount_home.yml
       tags:
         - home
         - mount
@@ -27,28 +27,6 @@
     - name: Common Settings
       ansible.builtin.import_tasks:
         file: tasks/all/main.yml
-
-    - name: Put GUI session rc
-      ansible.builtin.copy:
-        src: templates/console/home/hayato/.xsessionrc
-        dest: /home/hayato/.xsessionrc
-        owner: hayato
-        group: hayato
-        mode: '0644'
-      tags:
-        - system
-
-    - name: Put ~/.ssh/config
-      ansible.builtin.import_tasks:
-        file: tasks/terminal/home_ssh_config.yml
-      tags:
-        - ssh
-
-    - name: Install Google Chrome Repo
-      ansible.builtin.import_tasks:
-        file: tasks/console/install_chrome.yml
-      tags:
-        - chrome
 
     - name: Install Pre-builded Rename-util
       ansible.builtin.import_tasks:
@@ -70,15 +48,9 @@
 
     - name: Put Predeploy scripts
       ansible.builtin.import_tasks:
-        file: tasks/console/put_scripts.yml
+        file: tasks/put_scripts.yml
       tags:
         - put_script
-
-    - name: Fix ffmpegthumbnailer bugs
-      ansible.builtin.import_tasks:
-        file: tasks/console/ffmpegthumbnailer_fix.yml
-      tags:
-        - software
 
     - name: Install Docker(ce)
       ansible.builtin.import_role:
@@ -97,10 +69,15 @@
       ansible.builtin.import_tasks:
         file: tasks/ansible_install.yml
       when:
-        - ansible_distribution_release != 'oracular'
         - ansible_distribution_release != 'plucky'
       tags:
         - ansible
+
+    - name: Setup GUI
+      ansible.builtin.import_tasks:
+        file: tasks/guis/common/main.yml
+      tags:
+        - gui
 
     - name: Make Started Services
       ansible.builtin.import_tasks:
@@ -108,36 +85,11 @@
       tags:
         - services
 
-    - name: Mount skylark
-      ansible.builtin.import_tasks:
-        file: tasks/console/mount_skylark.yml
-      tags:
-        - skylark
-
     - name: Install/Config Zramswap
       ansible.builtin.import_tasks:
         file: tasks/zram.yml
       tags:
         - services
-
-    - name: Install Desktop
-      ansible.builtin.import_tasks:
-        file: tasks/console/desktop.yml
-      tags:
-        - desktop
-
-    - name: Remove ansible user from login screen
-      ansible.builtin.import_tasks:
-        file: tasks/terminal/disappear_ansible_user.yml
-      tags:
-        - desktop
-
-    - name: Configure Desktop using dconf
-      ansible.builtin.import_tasks:
-        file: tasks/console/dconf.yml
-      tags:
-        - desktop
-        - dconf
 
     - name: Install IME
       ansible.builtin.import_tasks:
