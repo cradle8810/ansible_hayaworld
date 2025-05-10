@@ -18,3 +18,13 @@
     mode: '0600'
   tags:
     - authorized_keys
+
+- name: "Put ssh private key"
+  ansible.builtin.copy:
+    src: templates/all/home/hayato/.ssh/id_ed25519_nopasswd
+    dest: "/home/{{ runner.user.username }}/.ssh/id_ed25519"
+    owner: "{{ runner.user.username }}"
+    group: "{{ runner.user.username }}"
+    mode: '0600'
+  tags:
+    - authorized_keys
