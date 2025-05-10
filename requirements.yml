@@ -10,7 +10,7 @@ roles:
     version: '5.3.0'
   - name: geerlingguy.mysql
   - name: geerlingguy.ntp
-    version: '2.5.0'
+    version: '2.7.0'
   - name: mrlesmithjr.netplan
     version: 'v0.4.2'
   - name: monolithprojects.github_actions_runner
