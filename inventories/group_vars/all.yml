@@ -29,7 +29,7 @@ all:
         checksum: ""
     packer:
       linux:
-        url: https://releases.hashicorp.com/packer/1.11.2/packer_1.11.2_linux_amd64.zip
+        url: https://releases.hashicorp.com/packer/1.12.0/packer_1.12.0_linux_amd64.zip
     user:
       - name: hayato
         username: hayato
