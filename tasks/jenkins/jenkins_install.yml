@@ -71,3 +71,13 @@
     jenkins_version: "{{ jenkins.version }}"
   tags:
     - jenkins
+
+- name: "Put ssh private key"
+  ansible.builtin.copy:
+    src: templates/all/home/hayato/.ssh/id_ed25519_nopasswd
+    dest: "{{ jenkins.home }}/.ssh/id_ed25519"
+    owner: "jenkins"
+    group: "jenkins"
+    mode: '0600'
+  tags:
+    - jenkins
