@@ -75,7 +75,6 @@ jobs:
     container:
       image: ghcr.io/ansible/community-ansible-dev-tools:latest
       volumes:
-        - /home/runner/ansible-vault:/tmp:ro
         - /home/runner/.ssh:/root/.ssh:ro
         - ansible-galaxy:/github/home/.ansible
     steps:
@@ -92,6 +91,10 @@ jobs:
         run: |
           ansible-galaxy collection install -r requirements.yml --ignore-errors
 
+      - name: "Prepare Vault Password file"
+        run: |
+          echo '${{ secrets.VAULT_PASSWORD }}' > ./vault_passwd.txt
+
       - name: "ansible-playbook -C"
         env:
           ANSIBLE_FORCE_COLOR: '1'
@@ -100,6 +103,6 @@ jobs:
             -i inventories \
             -C \
             --ssh-extra-args='-o StrictHostKeyChecking=no' \
-            --vault-password-file /tmp/${{ secrets.VAULT_PASSWORD_FILE }} \
+            --vault-password-file ./vault_passwd.txt \
             --extra-vars "ansible_sudo_pass=${{ secrets.SUDO }}" \
             ${{ matrix.vm }}.yml
