@@ -10,7 +10,6 @@
         pkg:
           - btrfs-progs
           - btrfs-compsize
-        update_cache: true
 
     - name: "Jenkins / Make Jenkins group"
       ansible.builtin.group:

@@ -2,7 +2,6 @@
 - name: Installing Intel iGPU Driver (Not Ubuntu 25.04)
   ansible.builtin.apt:
     install_recommends: false
-    update_cache: true
     pkg:
       - intel-media-va-driver-non-free
       - libmfx-dev
@@ -14,7 +13,6 @@
 - name: Installing Intel iGPU Driver (For Ubuntu 25.04)
   ansible.builtin.apt:
     install_recommends: false
-    update_cache: true
     pkg:
       - intel-media-va-driver-non-free
       - libmfx-gen-dev

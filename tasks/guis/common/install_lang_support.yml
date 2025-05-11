@@ -2,7 +2,6 @@
 - name: Installing Language Supports
   ansible.builtin.apt:
     install_recommends: false
-    update_cache: true
     pkg:
       "{{ item }}"
   loop:
