@@ -30,9 +30,7 @@
     - ansible
 
 - name: Install ansible-lint
-  become: true
-  ansible.builtin.pip:
-    name: "ansible-lint"
-    break_system_packages: true
+  ansible.builtin.apt:
+    pkg: "ansible-lint"
   tags:
     - ansible

@@ -7,7 +7,6 @@ apt:
   - jq
   - nfs-common
   - p7zip
-  - packer
   - python3-pip
   - qemu-guest-agent
   - zsh
