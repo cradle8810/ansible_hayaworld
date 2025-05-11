@@ -1,7 +1,6 @@
 - name: "Mozc / Installing Mozc"
   ansible.builtin.apt:
     install_recommends: false
-    update_cache: true
     pkg:
       - fcitx5-mozc
       - mozc-data

@@ -3,7 +3,6 @@
   ansible.builtin.apt:
     name: "{{ item }}"
     state: present
-    update_cache: true
   loop:
     - locales-all
     - language-pack-en
