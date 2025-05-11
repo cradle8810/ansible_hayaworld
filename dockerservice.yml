@@ -41,6 +41,8 @@
         group: root
         mode: '0644'
       notify: "Restart docker"
+      tags:
+        - docker
 
     - name: "Predefined docker-compose up"
       ansible.builtin.import_tasks:
