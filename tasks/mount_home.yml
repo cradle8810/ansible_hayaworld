@@ -4,6 +4,7 @@
     pkg:
       - btrfs-progs
       - btrfs-compsize
+    update_cache: true
 
 - name: "Check if exists /home"
   ansible.builtin.stat:

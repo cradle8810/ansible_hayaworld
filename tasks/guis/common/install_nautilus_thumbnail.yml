@@ -1,6 +1,7 @@
 - name: "Installing Nautilus Thumbnails and Preview tools"
   ansible.builtin.apt:
     install_recommends: false
+    update_cache: true
     pkg:
       "{{ item }}"
   loop:

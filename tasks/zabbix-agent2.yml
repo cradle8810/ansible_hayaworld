@@ -9,6 +9,7 @@
     pkg:
       - zabbix-agent2
       - zabbix-agent2-plugin-*
+    update_cache: true
 
 - name: Put zabbix-agent2.conf
   ansible.builtin.copy:

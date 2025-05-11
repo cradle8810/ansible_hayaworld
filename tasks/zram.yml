@@ -9,6 +9,7 @@
       ansible.builtin.apt:
         name: "zram-tools"
         state: present
+        update_cache: true
 
     - name: "Setting zram configurations"
       ansible.builtin.template:
