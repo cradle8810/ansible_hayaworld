@@ -17,6 +17,13 @@
       tags:
         - network
 
+    - name: Make symlinks
+      ansible.builtin.import_tasks:
+        file: tasks/macbook/symlinks.yml
+      tags:
+        - symlink
+        - symlinks
+
     - name: Brew install
       ansible.builtin.import_tasks:
         file: tasks/macbook/brew.yml
@@ -29,13 +36,6 @@
       tags:
         - sns
         - install
-
-    - name: Make symlinks
-      ansible.builtin.import_tasks:
-        file: tasks/macbook/symlinks.yml
-      tags:
-        - symlink
-        - symlinks
 
     - name: Put ~/.ssh/config
       ansible.builtin.import_tasks:

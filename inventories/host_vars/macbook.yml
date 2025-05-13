@@ -5,7 +5,6 @@ brew_taps:
   - figlet
   - gnu-tar
   - gnupg
-  - golang
   - htop
   - imagemagick
   - libaacs
@@ -17,6 +16,7 @@ brew_taps:
   - p7zip
   - pdftoipe
   - pipx
+  - python-packaging
   - toilet
   - unzip
   - util-linux

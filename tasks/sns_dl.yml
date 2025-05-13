@@ -37,7 +37,7 @@
     executable: /bin/bash
     cmd: >
       set -o pipefail &&
-      pip show yt-dlp-FixupMtime |
+      pip3 show yt-dlp-FixupMtime |
         grep Location | awk -F ': ' '{print $2}' | tr -d '\n'
   register: yt_dlp_fixuptime_path
   changed_when: false
