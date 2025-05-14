@@ -20,6 +20,7 @@ apt:
   - libbluray2
   - libheif1
   - nfs-common
+  - nvme-cli
   - openssh-server
   - openssl
   - p7zip-full
