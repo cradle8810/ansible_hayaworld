@@ -67,8 +67,6 @@ jobs:
       matrix:
         vm:
           - console
-          - dockerservice
-          - jenkins
           - rui
           - skylark
           - tm

@@ -20,11 +20,6 @@ network:
     ipv4: 192.168.1.100
     shortname: rui
     sshuser: hayato
-  - hostname: dockerservice.hayaworld.home
-    interface: ens18
-    ipv4: 192.168.1.101
-    shortname: dockerservice
-    sshuser: hayato
   - hostname: origin.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.102
@@ -65,11 +60,6 @@ network:
     ipv4: 192.168.1.130
     shortname: terminal
     sshuser: ansible
-  - hostname: jenkins.hayaworld.home
-    interface: ens18
-    ipv4: 192.168.1.131
-    shortname: jenkins
-    sshuser: hayato
   - hostname: mai.hayaworld.home
     interface: eth0
     ipv4: 192.168.1.150

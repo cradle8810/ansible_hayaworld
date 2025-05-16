@@ -1,6 +1,3 @@
 [submodule "templates/all/home/hayato/Source/zshrc"]
 	path = templates/all/home/hayato/Source/zshrc
 	url = https://github.com/cradle8810/zshrc
-[submodule "templates/dockerservice/home/hayato/ds_hayaworld"]
-	path = templates/dockerservice/home/hayato/ds_hayaworld
-	url = git@github.com:cradle8810/ds_hayaworld.git
