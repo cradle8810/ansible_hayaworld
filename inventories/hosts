@@ -29,9 +29,6 @@
 [terminal]
 192.168.1.130 ansible_user=ansible
 
-[jenkins]
-192.168.1.131 ansible_user=root
-
 [mai]
 192.168.1.150 ansible_user=ansible
 
@@ -40,6 +37,3 @@
 
 [macbook]
 HayabookAir2023.hayaworld.home ansible_user=hayato
-
-[dockerservice]
-192.168.1.101 ansible_user=root
