@@ -5,6 +5,7 @@ all:
       url:
         get: "https://getpocket.com/v3/get"
         send: "https://getpocket.com/v3/send"
+        add: "https://getpocket.com/v3/add"
       consumer_key:
         !vault |
         $ANSIBLE_VAULT;1.1;AES256

@@ -6,7 +6,13 @@ CKEY="{{ all.vars.pocket.consumer_key }}"
 TOKEN="{{ all.vars.pocket.access_token }}"
 
 curl \
+  -s \
 	-d consumer_key="${CKEY}" \
 	-d access_token="${TOKEN}" \
-	-d actions=[{\"action\":\"delete\"\,\"item_id\":"$1"}] \
-	"{{ all.vars.pocket.url.send }}"
+	-d url="$1" \
+	"{{ all.vars.pocket.url.add }}" > /dev/null
+
+if [ $? -ne 0 ]; then
+  echo "Some error occured."
+  exit 1
+fi
