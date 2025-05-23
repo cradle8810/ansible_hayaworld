@@ -59,7 +59,7 @@ network:
     interface: ens18
     ipv4: 192.168.1.113
     shortname: scanner
-    sshuser: ansible
+    sshuser: hayato
   - hostname: terminal.hayaworld.home
     interface: enx6c1ff7023273
     ipv4: 192.168.1.130
