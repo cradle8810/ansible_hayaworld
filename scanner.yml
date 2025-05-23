@@ -1,0 +1,40 @@
+---
+- name: Play for scanner.hayaworld.home
+  hosts: scanner
+  remote_user: ansible
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - inventories/host_vars/scanner.yml
+    - inventories/host_vars/networks.yml
+
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+      tags:
+        - network
+
+  tasks:
+    - name: Common Settings
+      ansible.builtin.import_tasks:
+        file: tasks/all/main.yml
+
+    - name: Install Pre-builded Rename-util
+      ansible.builtin.import_tasks:
+        file: tasks/install_rename.yml
+
+    - name: Setup GUI
+      ansible.builtin.import_tasks:
+        file: tasks/guis/common/main.yml
+      tags:
+        - gui
+
+    - name: Make Started Services
+      ansible.builtin.import_tasks:
+        file: tasks/service_start.yml
+
+    - name: Install/Config Zramswap
+      ansible.builtin.import_tasks:
+        file: tasks/zram.yml
