@@ -26,6 +26,9 @@
 [tm]
 192.168.1.112 ansible_user=ansible
 
+[scanner]
+192.168.1.113 ansible_user=ansible
+
 [terminal]
 192.168.1.130 ansible_user=ansible
 
