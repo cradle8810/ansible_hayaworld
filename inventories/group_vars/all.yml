@@ -102,3 +102,16 @@ all:
       - "ntp1.jst.mfeed.ad.jp"
       - "ntp2.jst.mfeed.ad.jp"
       - "ntp3.jst.mfeed.ad.jp"
+    world_clocks: "[\
+              {'location': <(uint32 2, <('Hanoi', 'VVNB', true,\
+                [(0.36681003694523912, 1.8465583486100006)],\
+                [(0.36710091351837648, 1.8474310132359977)])>)>\
+              },\
+              {'location': <(uint32 2, <('Los Angeles', 'KCQT', true,\
+                [(0.59370283970450188, -2.0644336110828618)],\
+                [(0.59432360095955872, -2.063741622941031)])>)>\
+              },\
+              {'location': <(uint32 2, <('Coordinated Universal Time (UTC)', '@UTC', false,\
+                @a(dd) [], @a(dd) [])>)>\
+              }\
+            ]"
