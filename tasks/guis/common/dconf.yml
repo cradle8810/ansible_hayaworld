@@ -22,3 +22,15 @@
     key: "/org/gnome/desktop/thumbnail-cache/maximum-size"
     value: "2048"
     state: present
+
+- name: GNOME world clock setting (GNOME Shell)
+  community.general.dconf:
+    key: "/org/gnome/shell/world-clocks/locations"
+    value: "{{ all.vars.world_clocks }}"
+    state: present
+
+- name: GNOME world clock setting
+  community.general.dconf:
+    key: "/org/gnome/clocks/world-clocks"
+    value: "{{ all.vars.world_clocks }}"
+    state: present
