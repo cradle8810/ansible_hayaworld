@@ -10,6 +10,7 @@
         name: "zram-tools"
         state: present
         update_cache: true
+        cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
 
     - name: "Setting zram configurations"
       ansible.builtin.template:

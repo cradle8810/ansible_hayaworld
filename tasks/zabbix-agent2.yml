@@ -10,6 +10,7 @@
       - zabbix-agent2
       - zabbix-agent2-plugin-*
     update_cache: true
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
 
 - name: Put zabbix-agent2.conf
   ansible.builtin.copy:

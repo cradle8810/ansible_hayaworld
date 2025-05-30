@@ -4,6 +4,7 @@
     name: "resolvconf-admin"
     state: present
     update_cache: true
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
 
 - name: "Common / Set to don't use DNSStubListener for systemd config"
   community.general.ini_file:

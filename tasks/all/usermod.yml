@@ -3,6 +3,7 @@
   ansible.builtin.apt:
     name: "zsh"
     state: present
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
   when: ansible_distribution == "Ubuntu"
 
 - name: "Common / Setting Users (Ubuntu)"

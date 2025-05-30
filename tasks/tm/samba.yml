@@ -1,6 +1,8 @@
 ---
 - name: Install Samba and macOS modules
   ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
     pkg:
       - samba
       - samba-vfs-modules

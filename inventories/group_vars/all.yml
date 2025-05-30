@@ -115,3 +115,5 @@ all:
                 @a(dd) [], @a(dd) [])>)>\
               }\
             ]"
+    apt:
+      cache_valid_time: 3600
