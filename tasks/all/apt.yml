@@ -3,6 +3,7 @@
     update_cache: true
     pkg:
       "{{ item }}"
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
   loop: "{{ apt }}"
 
 - name: "Common / Remove Packages"

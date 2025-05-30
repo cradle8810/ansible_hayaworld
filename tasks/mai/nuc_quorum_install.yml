@@ -1,6 +1,7 @@
 ---
 - name: "Corosync(Proxmox) QDevice Install"
   ansible.builtin.apt:
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
     pkg:
       - corosync-qnetd
 

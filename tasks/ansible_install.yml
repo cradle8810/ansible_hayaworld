@@ -18,6 +18,7 @@
     name: "ansible"
     state: present
     update_cache: true
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
   tags:
     - ansible
 
@@ -26,11 +27,13 @@
     name: "python3-pip"
     state: present
     update_cache: true
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
   tags:
     - ansible
 
 - name: Install ansible-lint
   ansible.builtin.apt:
     pkg: "ansible-lint"
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
   tags:
     - ansible

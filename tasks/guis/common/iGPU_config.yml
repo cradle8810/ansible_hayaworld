@@ -3,6 +3,7 @@
   ansible.builtin.apt:
     install_recommends: false
     update_cache: true
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
     pkg:
       - intel-media-va-driver-non-free
       - libmfx-dev
@@ -15,6 +16,7 @@
   ansible.builtin.apt:
     install_recommends: false
     update_cache: true
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
     pkg:
       - intel-media-va-driver-non-free
       - libmfx-gen-dev

@@ -10,6 +10,7 @@
     update_cache: true
     pkg:
       - python3-pip
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
   when: ansible_distribution == "Ubuntu"
 
 - name: Install pip3 (macOS)
