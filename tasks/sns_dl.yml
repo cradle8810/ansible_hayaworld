@@ -65,6 +65,7 @@
     owner: "{{ item.username }}"
     group: "{{ item.username }}"
     state: link
+    follow: false
   loop: "{{ all.vars.user }}"
   when: 
     - ansible_distribution == "Ubuntu"
