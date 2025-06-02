@@ -49,12 +49,13 @@
   ansible.builtin.file:
     path: "{{ item.homedir }}/.yt-dlp/plugins/yt-dlp-FixupMtime"
     state: directory
-    recurse: true
     mode: '0755'
     owner: "{{ item.username }}"
     group: "{{ item.username }}"
   loop: "{{ all.vars.user }}"
-  when: ansible_distribution == "Ubuntu"
+  when: 
+    - ansible_distribution == "Ubuntu"
+    - item.username != 'ansible'
   no_log: true
 
 - name: "Make a yt-dlp-FixupMtime's symbolic link to correct location (Linux)"
@@ -65,14 +66,15 @@
     group: "{{ item.username }}"
     state: link
   loop: "{{ all.vars.user }}"
-  when: ansible_distribution == "Ubuntu"
+  when: 
+    - ansible_distribution == "Ubuntu"
+    - item.username != 'ansible'
   no_log: true
 
 - name: "Make a yt-dlp plugin dir in homedir (macOS)"
   ansible.builtin.file:
     path: "{{ item.homedir_mac }}/.yt-dlp/plugins/yt-dlp-FixupMtime"
     state: directory
-    recurse: true
     mode: '0755'
     owner: "{{ item.username }}"
     group: "staff"
