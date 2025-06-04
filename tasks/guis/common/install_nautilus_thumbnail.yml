@@ -4,19 +4,16 @@
     update_cache: true
     cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
     pkg:
-      "{{ item }}"
-  loop:
-    - gnome-sushi
-    - gstreamer1.0-gtk3
-    - gstreamer1.0-pulseaudio
-    - gstreamer1.0-libav
+      - gnome-sushi
+      - gstreamer1.0-gtk3
+      - gstreamer1.0-pulseaudio
+      - gstreamer1.0-libav
   notify: "Remove nautilus cache"
 
 - name: "Make directory for ffmpegthumbnailer cache"
   ansible.builtin.file:
-    path: "/home/hayato/.local/share/thumbnailers/"
+    path: "/home/hayato/.local/share/thumbnailers"
     state: directory
-    recurse: true
     mode: '0755'
 
 - name: "Make symlinks for User (ffmpegthumbnailer bugfix)"
@@ -26,5 +23,5 @@
     owner: "hayato"
     group: "hayato"
     state: link
-    follow: true
+    follow: false
   notify: "Remove nautilus cache"
