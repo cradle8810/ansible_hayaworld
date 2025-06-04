@@ -104,9 +104,3 @@
     dest: /opt/bin/
     remote_src: true
     mode: "0755"
-
-- name: Install instaloader
-  ansible.builtin.pip:
-    name: "git+https://github.com/instaloader/instaloader@v4.14"
-    break_system_packages: true
-    extra_args: "--upgrade --use-pep517"
