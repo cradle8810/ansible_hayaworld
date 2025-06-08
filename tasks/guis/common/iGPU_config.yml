@@ -1,5 +1,5 @@
 ---
-- name: Installing Intel iGPU Driver (Not Ubuntu 25.04)
+- name: Installing Intel iGPU Driver (Not Ubuntu 25.04 or terminal)
   ansible.builtin.apt:
     install_recommends: false
     update_cache: true
@@ -11,10 +11,12 @@
       - vainfo
   when:
     - ansible_distribution_release != 'plucky'
+    - ansible_hostname == 'terminal'
 
-- name: Installing Intel iGPU Driver (For Ubuntu 25.04)
+- name: Installing Intel iGPU Driver (For Ubuntu 25.04 and Proxmox VMs)
   when:
     - ansible_distribution_release == 'plucky'
+    - ansible_hostname != 'terminal'
   block:
     - name: "Install Requirements"
       ansible.builtin.apt:
