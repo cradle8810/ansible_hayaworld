@@ -117,3 +117,6 @@ all:
             ]"
     apt:
       cache_valid_time: 3600
+    i915:
+      driver_url: https://github.com/strongtz/i915-sriov-dkms/releases/download/2025.05.18/i915-sriov-dkms_2025.05.18_amd64.deb
+      dest: "/root/i915-sriov-dkms_2025.05.18_amd64.deb"

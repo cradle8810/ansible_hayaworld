@@ -8,6 +8,7 @@
   vars_files:
     - inventories/host_vars/terminal.yml
     - inventories/host_vars/networks.yml
+    - inventories/group_vars/all.yml
 
   handlers:
     - name: Restart handler tasks
