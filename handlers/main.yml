@@ -84,11 +84,15 @@
 - name: "Run update-grub"
   ansible.builtin.command:
     cmd: update-grub
+  register: retval
+  changed_when: retval.rc == 0
   listen: "Run update-grub"
 
 - name: "Run update-initramfs"
   ansible.builtin.command:
     cmd: update-initramfs -u
+  register: retval
+  changed_when: retval.rc == 0
   listen: "Run update-initramfs"
 
 - name: "Echo reboot notice"
