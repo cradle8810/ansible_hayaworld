@@ -1,0 +1,44 @@
+---
+- name: "Download and Install i915 Driver"
+  ansible.builtin.get_url:
+    url: "{{ all.vars.i915.driver_url }}"
+    dest: "{{ all.vars.i915.dest }}"
+    mode: '0600'
+
+- name: "Install i915 Driver"
+  ansible.builtin.apt:
+    deb: "{{ all.vars.i915.dest }}"
+    state: present
+  notify:
+    - "Run update-grub"
+    - "Run update-initramfs"
+    - "Echo reboot notice"
+
+- name: "Configure GRUB CMDLINE"
+  community.general.ini_file:
+    path: /etc/default/grub
+    option: "GRUB_CMDLINE_LINUX_DEFAULT"
+    value: '"quiet intel_iommu=on i915.enable_guc=3 i915.max_vfs={{ vfs.count }} module_blacklist=xe"'
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  notify:
+    - "Run update-grub"
+    - "Run update-initramfs"
+    - "Echo reboot notice"
+
+- name: "Install sysfsutils for allow VFs"
+  ansible.builtin.apt:
+    pkg: sysfsutils
+    state: present
+    update_cache: true
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+
+- name: "Configure VFs"
+  community.general.ini_file:
+    path: /etc/sysfs.conf
+    option: "devices/{{ vfs.bus }}/sriov_numvfs"
+    value: "{{ vfs.count }}"
+    state: present
+    no_extra_spaces: false
+    mode: "644"

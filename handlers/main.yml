@@ -80,3 +80,18 @@
     state: restarted
     enabled: true
   listen: "Restart console-setup"
+
+- name: "Run update-grub"
+  ansible.builtin.command:
+    cmd: update-grub
+  listen: "Run update-grub"
+
+- name: "Run update-initramfs"
+  ansible.builtin.command:
+    cmd: update-initramfs -u
+  listen: "Run update-initramfs"
+
+- name: "Echo reboot notice"
+  ansible.builtin.debug:
+    msg: "Please Reboot Here."
+  listen: "Echo reboot notice"
