@@ -107,6 +107,6 @@
 
 - name: Install instaloader
   ansible.builtin.pip:
-    name: "git+https://github.com/instaloader/instaloader@v4.14"
+    name: "git+https://github.com/instaloader/instaloader@v4.14.1"
     break_system_packages: true
     extra_args: "--upgrade --use-pep517"
