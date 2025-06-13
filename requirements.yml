@@ -3,7 +3,7 @@ roles:
   - name: brianhartsock.avahi
     version: 'v1.2.0'
   - name: compscidr.gpg
-    version: '0.0.4'
+    version: '0.0.11'
   - name: geerlingguy.docker
     version: '7.4.1'
   - name: geerlingguy.mysql

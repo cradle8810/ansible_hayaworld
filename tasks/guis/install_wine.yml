@@ -1,0 +1,55 @@
+---
+- name: "Wine / dpkg allows i386 instllation"
+  block:
+    - name: "Wine / Check allowing i386 arch install"
+      ansible.builtin.shell:
+        cmd: |
+          set -o pipefail
+          dpkg --print-foreign-architectures | grep i386
+      register: i386_available
+      changed_when: i386_available.rc != 0
+  rescue:
+    - name: "Wine / Add allowing i386 arch install"
+      ansible.builtin.shell:
+        cmd: |
+          set -o pipefail &&
+          sudo dpkg --add-architecture i386
+      register: add_i386
+      changed_when: add_i386.rc != 0
+
+- name: "Wine / Make keyring directory"
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: "Wine / GPG Key download"
+  ansible.builtin.get_url:
+    url: https://dl.winehq.org/wine-builds/winehq.key
+    dest: /etc/apt/trusted.gpg.d/winehq.asc
+    mode: "0644"
+
+- name: "Wine / Install Chrome Wine HQ Key"
+  ansible.builtin.import_role:
+    name: compscidr.gpg
+  vars:
+    key_file: /etc/apt/trusted.gpg.d/winehq.asc
+
+- name: "Wine / Add Wine repo"
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64,i386] {{ url }} {{ os }} main"
+    state: present
+    filename: wine
+  vars:
+    url: "https://dl.winehq.org/wine-builds/ubuntu/"
+    key: "/etc/apt/keyrings/winehq.key"
+    os: "{{ ansible_distribution_release }}"
+
+- name: "Wine / Install Wine"
+  ansible.builtin.apt:
+    update_cache: true
+    pkg: "{{ item }}"
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+  loop:
+    - winehq-stable
+    - winetricks

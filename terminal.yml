@@ -105,3 +105,10 @@
       tags:
         - desktop
         - dvd
+
+    - name: "Install Wine"
+      ansible.builtin.import_tasks:
+        file: tasks/guis/install_wine.yml
+      tags:
+        - desktop
+        - wine
