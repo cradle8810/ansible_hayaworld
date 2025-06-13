@@ -24,7 +24,7 @@ all:
     ytdlp:
       linux:
         url: "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux"
-        checksum: "sha256:da18d12e96f56f942706eeae19898edb86fe1880785286d49e66d69e7b55c005"
+        checksum: "sha256:79f572051557f529eaeba0d1c0b7093cb7a8e24686d51af7cb8ffb067dd7f457"
       macos:
         url: "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_macos"
         checksum: ""
