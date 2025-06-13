@@ -1,5 +1,5 @@
 ---
-- name: "Install locale en_US"
+- name: "Common / Install locale en_US"
   ansible.builtin.apt:
     name: "{{ item }}"
     state: present
@@ -9,7 +9,7 @@
     - locales-all
     - language-pack-en
 
-- name: "Set locale as en_US.UTF-8"
+- name: "Common / Set locale as en_US.UTF-8"
   community.general.locale_gen:
     name: "en_US.UTF-8"
     state: present

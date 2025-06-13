@@ -1,5 +1,5 @@
 ---
-- name: Create Mountpoint
+- name: "Mount MariaDB DB drive / Create Mountpoint"
   ansible.builtin.file:
     path: "{{ drives.dbdir.mountpoint }}"
     state: directory
@@ -7,7 +7,7 @@
     owner: "{{ drives.dbdir.owner }}"
     group: "{{ drives.dbdir.owner }}"
 
-- name: Mount up device dbdir
+- name: "Mount MariaDB DB drive / Mount up device dbdir"
   ansible.posix.mount:
     path: "{{ drives.dbdir.mountpoint }}"
     src: "UUID={{ drives.dbdir.uuid }}"

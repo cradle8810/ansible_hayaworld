@@ -1,5 +1,5 @@
 ---
-- name: "CapsLock as Ctrl config"
+- name: "GUI settings / CapsLock as Ctrl config"
   community.general.ini_file:
     path: /etc/default/keyboard
     option: "XKBOPTIONS"

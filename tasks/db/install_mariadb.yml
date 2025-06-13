@@ -1,5 +1,5 @@
 ---
-- name: Install MySQL server
+- name: "Install DB / Install MySQL server"
   ansible.builtin.import_role:
     name: geerlingguy.mysql
   vars:
@@ -29,7 +29,7 @@
       - mariadb-server
       - python3-mysqldb
 
-- name: Re-Restart MariaDB
+- name: "Install DB / Re-Restart MariaDB"
   ansible.builtin.systemd_service:
     name: mariadb
     state: started

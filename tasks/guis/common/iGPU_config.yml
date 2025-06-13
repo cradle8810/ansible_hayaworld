@@ -1,5 +1,5 @@
 ---
-- name: Installing Intel iGPU Driver (Not Ubuntu 25.04 or terminal)
+- name: "Desktop / Installing Intel iGPU Driver (Not Ubuntu 25.04 or terminal)"
   ansible.builtin.apt:
     install_recommends: false
     update_cache: true
@@ -12,12 +12,12 @@
   when:
     ansible_distribution_release != 'plucky' or ansible_hostname == 'terminal'
 
-- name: Installing Intel iGPU Driver (For Ubuntu 25.04 and Proxmox VMs)
+- name: "Installing Intel iGPU Driver (For Ubuntu 25.04 and Proxmox VMs)"
   when:
     - ansible_distribution_release == 'plucky'
     - ansible_hostname != 'terminal'
   block:
-    - name: "Install Requirements"
+    - name: "IGPU Driver(i915) / Install Requirements"
       ansible.builtin.apt:
         pkg:
           - build-essential
@@ -27,13 +27,13 @@
         update_cache: true
         cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
 
-    - name: "Download and Install i915 Driver"
+    - name: "IGPU Driver(i915) / Download and Install i915 Driver"
       ansible.builtin.get_url:
         url: "{{ all.vars.i915.driver_url }}"
         dest: "{{ all.vars.i915.dest }}"
         mode: '0600'
 
-    - name: "Install i915 Driver"
+    - name: "IGPU Driver(i915) / Install i915 Driver"
       ansible.builtin.apt:
         deb: "{{ all.vars.i915.dest }}"
         state: present
@@ -42,7 +42,7 @@
         - "Run update-initramfs"
         - "Echo reboot notice"
 
-    - name: "Configure GRUB CMDLINE"
+    - name: "IGPU Driver(i915) / Configure GRUB CMDLINE"
       community.general.ini_file:
         path: /etc/default/grub
         option: "GRUB_CMDLINE_LINUX_DEFAULT"
@@ -55,7 +55,7 @@
         - "Run update-initramfs"
         - "Echo reboot notice"
 
-    - name: "Install GPU Utilities"
+    - name: "IGPU Driver(i915) / Install GPU Utilities"
       ansible.builtin.apt:
         pkg:
           - libmfx-gen-dev
@@ -65,7 +65,7 @@
         update_cache: true
         cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
 
-- name: Integrated GPU Permission Fix
+- name: "Desktop / Integrated GPU Permission Fix"
   ansible.builtin.copy:
     src: templates/guis/etc/udev/rules.d/99-render.rules
     dest: /etc/udev/rules.d/99-render.rules

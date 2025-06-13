@@ -1,5 +1,5 @@
 ---
-- name: Installing Desktop
+- name: "Desktop / Installing Desktop Applications"
   ansible.builtin.apt:
     install_recommends: false
     update_cache: true
@@ -41,7 +41,7 @@
     - yaru-theme-gtk
     - yaru-theme-icon
 
-- name: "Mount tmpdir as ~/Downloads"
+- name: "Desktop / Mount tmpdir as ~/Downloads"
   ansible.posix.mount:
     src: "tmpfs"
     path: "/home/hayato/Downloads"
