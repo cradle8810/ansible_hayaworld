@@ -6,12 +6,11 @@
     cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
     pkg:
       - intel-media-va-driver-non-free
-      - libmfx-dev
+      - libmfx-gen-dev
       - libva-dev
       - vainfo
   when:
-    - ansible_distribution_release != 'plucky'
-    - ansible_hostname == 'terminal'
+    ansible_distribution_release != 'plucky' or ansible_hostname == 'terminal'
 
 - name: Installing Intel iGPU Driver (For Ubuntu 25.04 and Proxmox VMs)
   when:
