@@ -99,3 +99,10 @@
   ansible.builtin.debug:
     msg: "Please Reboot Here."
   listen: "Echo reboot notice"
+
+- name: "Reconfigure libdvd"
+  ansible.builtin.command:
+    cmd: "dpkg-reconfigure --frontend noninteractive libdvd-pkg"
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "Reconfigure libdvd"

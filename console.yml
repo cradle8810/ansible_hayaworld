@@ -89,3 +89,10 @@
     - name: Install/Config Zramswap
       ansible.builtin.import_tasks:
         file: tasks/zram.yml
+
+    - name: Configure DVD Playback
+      ansible.builtin.import_tasks:
+        file: tasks/guis/install_dvd_playback.yml
+      tags:
+        - desktop
+        - dvd
