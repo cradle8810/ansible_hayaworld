@@ -11,7 +11,7 @@
     state: directory
     mode: '0755'
 
-- name: Put Pocket remove scrtipt on Home Scripts dir
+- name: Put Raindrop scripts on Home Scripts dir
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -19,7 +19,5 @@
     group: hayato
     mode: '0755'
   loop:
-    - src: templates/console/home/hayato/Scripts/remove.sh.j2
-      dest: /home/hayato/Scripts/remove.sh
     - src: templates/console/home/hayato/Scripts/add.sh.j2
       dest: /home/hayato/Scripts/add.sh
