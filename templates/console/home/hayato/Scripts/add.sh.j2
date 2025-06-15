@@ -2,15 +2,14 @@
 
 echo $1
 
-CKEY="{{ all.vars.pocket.consumer_key }}"
-TOKEN="{{ all.vars.pocket.access_token }}"
+token="{{ all.vars.raindrop.key }}"
+url="{{ all.vars.raindrop.add_url }}"
 
 curl \
-  -s \
-	-d consumer_key="${CKEY}" \
-	-d access_token="${TOKEN}" \
-	-d url="$1" \
-	"{{ all.vars.pocket.url.add }}" > /dev/null
+  --location "${url}" \
+  --header 'Content-Type: application/json' \
+  --header "Authorization: Bearer ${token}" \
+  --data "{\"link\" : \"$1\"}" > /dev/null
 
 if [ $? -ne 0 ]; then
   echo "Some error occured."
