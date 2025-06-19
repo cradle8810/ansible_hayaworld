@@ -34,3 +34,15 @@
     key: "/org/gnome/clocks/world-clocks"
     value: "{{ all.vars.world_clocks }}"
     state: present
+
+- name: "Be quiet Update Notifications"
+  community.general.dconf:
+    key: "/com/ubuntu/update-notifier/no-show-notifications"
+    value: true
+    state: present
+
+- name: "Be quiet Update Notifications"
+  community.general.dconf:
+    key: "/com/ubuntu/update-notifier/hide-reboot-notification"
+    value: true
+    state: present
