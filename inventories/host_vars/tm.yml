@@ -13,6 +13,7 @@ drives:
     filesystem: "btrfs"
     options: "defaults,users,noatime,compress=zstd"
     owner: "hayato"
+    maxsize: "760G"
 
 services_start:
   - nmbd
