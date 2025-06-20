@@ -10,8 +10,8 @@ drives:
   tm:
     uuid: 8f22fd40-c438-4981-aced-a84aa0c3db6a
     mountpoint: /tm
-    filesystem: "xfs"
-    options: "defaults,noatime"
+    filesystem: "btrfs"
+    options: "defaults,users,noatime,compress=zstd"
     owner: "hayato"
 
 services_start:
