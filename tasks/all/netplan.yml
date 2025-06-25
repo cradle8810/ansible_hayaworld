@@ -1,8 +1,10 @@
 ---
-- name: "Common / Apply netplan config"
+- name: "Common / Apply netplan config (VMs)"
   ansible.builtin.import_role:
     name: mrlesmithjr.netplan
   any_errors_fatal: true
+  when: hostinfo.shortname != "terminal"
+  notify: "Reconfigure netplan"
   vars:
     hostinfo: "{{ network | selectattr('shortname', 'eq', ansible_hostname) | first }}"
     ipv4_addr: "{{ hostinfo.ipv4 }}"
@@ -22,3 +24,33 @@
                 "{{ subnet.search }}"
             routes:
               "{{ subnet.routes }}"
+            mtu:
+              "{{ subnet.mtu }}"
+
+- name: "Common / Apply netplan config (Terminal/Physical)"
+  ansible.builtin.import_role:
+    name: mrlesmithjr.netplan
+  any_errors_fatal: true
+  when: hostinfo.shortname == "terminal"
+  notify: "Reconfigure netplan"
+  vars:
+    hostinfo: "{{ network | selectattr('shortname', 'eq', ansible_hostname) | first }}"
+    ipv4_addr: "{{ hostinfo.ipv4 }}"
+    netplan_enabled: true
+    netplan_renderer: networkd
+    netplan_configuration:
+      network:
+        version: 2
+        ethernets:
+          enx6c1ff7023273:
+            addresses:
+              - "{{ ipv4_addr }}/{{ subnet.mask }}"
+            nameservers:
+              addresses:
+                "{{ subnet.dns4 }}"
+              search:
+                "{{ subnet.search }}"
+            routes:
+              "{{ subnet.routes }}"
+            mtu:
+              "{{ subnet.mtu }}"
