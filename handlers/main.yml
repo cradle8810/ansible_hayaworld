@@ -106,3 +106,10 @@
   register: retval
   changed_when: retval.rc == 0
   listen: "Reconfigure libdvd"
+
+- name: "Reconfigure netplan"
+  ansible.builtin.command:
+    cmd: "netplan apply -f"
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "Reconfigure netplan"
