@@ -27,6 +27,17 @@ drives:
       filesystem: "btrfs"
       options: "defaults,users,noatime,compress=zstd"
 
+smb:
+  share:
+    - name: Home
+      path: "/skylark/hayato"
+      owner: hayato
+      group: hayato
+    - name: Nullpo
+      path: "/skylark/Nullpo"
+      owner: hayato
+      group: hayato
+
 nfs:
   exports:
     - path: "/skylark/nfs"
