@@ -4,7 +4,6 @@ roles:
     version: 'v1.2.0'
   - name: geerlingguy.docker
     version: '7.4.1'
-  - name: geerlingguy.mysql
   - name: geerlingguy.ntp
     version: '2.7.0'
   - name: mrlesmithjr.netplan
@@ -21,4 +20,3 @@ collections:
     version: '4.6.1'
   - name: community.general
     version: '11.0.0'
-  - name: community.mysql
