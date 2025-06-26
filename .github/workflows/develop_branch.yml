@@ -24,11 +24,15 @@ jobs:
       credentials:
         username: "${{ secrets.GHCR_USERNAME }}"
         password: "${{ secrets.GHCR_PASSWORD }}"
-      volumes:
-        - ansible-galaxy:/github/home/.ansible
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Restore Galaxy files
+        uses: actions/cache/restore@v3
+        with:
+          key: ansible_galaxy_cache
+          path: "/github/home/.ansible"
 
       - name: Prepare environments (ansible-galaxy install role)
         run: |
@@ -37,6 +41,13 @@ jobs:
       - name: Prepare environments (ansible-galaxy install collection)
         run: |
           ansible-galaxy collection install -r requirements.yml --ignore-errors
+
+      - name: Save Galaxy files
+        uses: actions/cache/save@v3
+        with:
+          key: ansible_galaxy_cache
+          path: "/github/home/.ansible"
+        if: ${{ always() || cancelled() }}
 
       - name: Run Ansible-lint
         run: |
@@ -74,12 +85,17 @@ jobs:
       image: ghcr.io/ansible/community-ansible-dev-tools:latest
       volumes:
         - /home/runner/.ssh:/root/.ssh:ro
-        - ansible-galaxy:/github/home/.ansible
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: "recursive"
+
+      - name: Restore Galaxy files
+        uses: actions/cache/restore@v3
+        with:
+          key: ansible_galaxy_cache
+          path: "/github/home/.ansible"
 
       - name: Prepare environments (ansible-galaxy install role)
         run: |
