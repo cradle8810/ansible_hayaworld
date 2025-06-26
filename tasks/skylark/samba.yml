@@ -20,8 +20,8 @@
     "{{ smb.share }}"
 
 - name: Put smb.conf
-  ansible.builtin.copy:
-    src: templates/skylark/etc/samba/smb.conf
+  ansible.builtin.template:
+    src: templates/skylark/etc/samba/smb.conf.j2
     dest: /etc/samba/smb.conf
     owner: root
     group: root

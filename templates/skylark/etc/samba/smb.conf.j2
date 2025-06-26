@@ -147,34 +147,19 @@ idmap config * : backend = tdb
 fruit:model = RackMac
 #======================= Share Definitions =======================
 
-[Home]
-  comment = hayato homedir
+{% for s in smb.share %}
+[{{ s.name }}]
   guest ok = No
-  path = /skylark/hayato
+  path = {{ s.path }}
   read only = No
-  valid users = "hayato","root"
-  write list = "hayato","root"
+  valid users = "{{ s.owner }}","root"
+  write list = "{{ s.owner }}","root"
   inherit acls = yes
   vfs objects = catia fruit streams_xattr
   streams_xattr:prefix = user.
   streams_xattr:store_stream_type = no
-	fruit:resource = file
-	fruit:metadata = netatalk
-	fruit:locking = none
-	fruit:encoding = native
-
-[Nullpo]
-  comment = hayato homedir
-  guest ok = No
-  path = /skylark/Nullpo
-  read only = No
-  valid users = "hayato","root"
-  write list = "hayato","root"
-  inherit acls = yes
-  vfs objects = catia fruit streams_xattr
-  streams_xattr:prefix = user.
-  streams_xattr:store_stream_type = no
-	fruit:resource = file
-	fruit:metadata = netatalk
-	fruit:locking = none
-	fruit:encoding = native
+  fruit:resource = file
+  fruit:metadata = netatalk
+  fruit:locking = none
+  fruit:encoding = native
+{% endfor %}
