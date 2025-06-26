@@ -5,12 +5,6 @@
     dest: /etc/apt/trusted.gpg.d/google.asc
     mode: "0644"
 
-- name: Install Chrome GPG Key
-  ansible.builtin.import_role:
-    name: compscidr.gpg
-  vars:
-    key_file: /etc/apt/trusted.gpg.d/google.asc
-
 - name: Add Chrome Repos
   ansible.builtin.apt_repository:
     repo: deb http://dl.google.com/linux/chrome/deb/ stable main

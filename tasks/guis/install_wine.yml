@@ -29,12 +29,6 @@
     dest: /etc/apt/trusted.gpg.d/winehq.asc
     mode: "0644"
 
-- name: "Wine / Install Chrome Wine HQ Key"
-  ansible.builtin.import_role:
-    name: compscidr.gpg
-  vars:
-    key_file: /etc/apt/trusted.gpg.d/winehq.asc
-
 - name: "Wine / Add Wine repo"
   ansible.builtin.apt_repository:
     repo: "deb [arch=amd64,i386] {{ url }} {{ os }} main"
