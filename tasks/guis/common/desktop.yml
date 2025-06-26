@@ -8,6 +8,7 @@
       "{{ item }}"
   loop:
     - adwaita-icon-theme
+    - bleachbit
     - eog
     - evince
     - file-roller
