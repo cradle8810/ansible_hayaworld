@@ -30,11 +30,6 @@ network:
     ipv4: 192.168.1.105
     shortname: console
     sshuser: hayato
-  - hostname: db.hayaworld.home
-    interface: ens160
-    ipv4: 192.168.1.106
-    shortname: db
-    sshuser: hayato
   - hostname: runner03.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.108
