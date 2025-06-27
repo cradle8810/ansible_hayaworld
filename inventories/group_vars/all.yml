@@ -36,7 +36,7 @@ all:
     packer:
       linux:
         url: "https://releases.hashicorp.com/packer/1.13.1/packer_1.13.1_linux_amd64.zip"
-        checksum: "c3401da41a47d51e2ef3e78a76f625c753b6f19e81681e4cdc3bc6e6f8c699c0"
+        checksum: "sha256:c3401da41a47d51e2ef3e78a76f625c753b6f19e81681e4cdc3bc6e6f8c699c0"
     user:
       - name: hayato
         username: hayato
