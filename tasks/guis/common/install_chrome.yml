@@ -3,6 +3,7 @@
   ansible.builtin.get_url:
     url: https://dl.google.com/linux/linux_signing_key.pub
     dest: /etc/apt/trusted.gpg.d/google.asc
+    checksum: "sha256:0acccf28849439e3b2f7c60f899da45186a3a9b2fd02cc88cd44b25200016c56"
     mode: "0644"
 
 - name: Add Chrome Repos

@@ -31,6 +31,7 @@
       ansible.builtin.get_url:
         url: "{{ all.vars.i915.driver_url }}"
         dest: "{{ all.vars.i915.dest }}"
+        checksum: "{{ all.vars.i915.checksum }}"
         mode: '0600'
 
     - name: "Install i915 Driver"
