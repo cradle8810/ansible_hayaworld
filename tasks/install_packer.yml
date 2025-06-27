@@ -8,6 +8,8 @@
 - name: Download Packer (Linux)
   ansible.builtin.get_url:
     url: "{{ all.vars.packer.linux.url }}"
+    checksum: "{{ all.vars.packer.linux.checksum }}"
     dest: /opt/bin/packer
     mode: "0755"
+    decompress: true
   when: ansible_distribution == "Ubuntu"

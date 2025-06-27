@@ -35,7 +35,8 @@ all:
         checksum: ""
     packer:
       linux:
-        url: https://releases.hashicorp.com/packer/1.12.0/packer_1.12.0_linux_amd64.zip
+        url: "https://releases.hashicorp.com/packer/1.13.1/packer_1.13.1_linux_amd64.zip"
+        checksum: "c3401da41a47d51e2ef3e78a76f625c753b6f19e81681e4cdc3bc6e6f8c699c0"
     user:
       - name: hayato
         username: hayato
@@ -125,3 +126,7 @@ all:
     i915:
       driver_url: https://github.com/strongtz/i915-sriov-dkms/releases/download/2025.05.18/i915-sriov-dkms_2025.05.18_amd64.deb
       dest: "/root/i915-sriov-dkms_2025.05.18_amd64.deb"
+      checksum: "sha256:90e41bb3814713de901b5839ceda36f8b2dea95879dee56c211bc8bd1a058cdc"
+    pipr:
+      url: "https://github.com/elkowar/pipr/releases/download/v0.0.16/pipr"
+      checksum: "sha256:11366ae3bb4b14172223da0fa3b568ae9824c829472a01740b0869f54750cad0"

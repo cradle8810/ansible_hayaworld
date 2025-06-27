@@ -27,6 +27,7 @@
   ansible.builtin.get_url:
     url: https://dl.winehq.org/wine-builds/winehq.key
     dest: /etc/apt/trusted.gpg.d/winehq.asc
+    checksum: "sha256:d965d646defe94b3dfba6d5b4406900ac6c81065428bf9d9303ad7a72ee8d1b8"
     mode: "0644"
 
 - name: "Wine / Add Wine repo"
