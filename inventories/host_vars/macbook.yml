@@ -1,6 +1,7 @@
 ---
 brew_taps:
   - ansible
+  - ansible-lint
   - cmigemo
   - figlet
   - gh
