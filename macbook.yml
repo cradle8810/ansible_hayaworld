@@ -55,3 +55,11 @@
       tags:
         - smbd
         - smb
+
+    - name: "Create keycf.db directory"
+      ansible.builtin.file:
+        path: "{{ all.vars.user[0].homedir_mac }}/Library/Preferences/aacs"
+        state: directory
+        owner: "{{ all.vars.user[0].uid_mac }}"
+        group: "{{ all.vars.user[0].gid_mac }}"
+        mode: '0755'

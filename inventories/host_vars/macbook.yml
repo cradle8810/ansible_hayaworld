@@ -9,7 +9,10 @@ brew_taps:
   - gnupg
   - htop
   - imagemagick
+  - java
   - libaacs
+  - libbdplus
+  - libbluray
   - libde265
   - libheif
   - mas
