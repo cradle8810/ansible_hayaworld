@@ -60,6 +60,8 @@ all:
           30353465636131383032323530633336643238306134356232346332363961343665
         gid: 10000
         uid: 10000
+        gid_mac: 20
+        uid_mac: 501
         homedir: "/home/hayato"
         homedir_mac: "/Users/hayato"
         shell: "/usr/bin/zsh"
