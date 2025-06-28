@@ -37,6 +37,12 @@
         - sns
         - install
 
+    - name: Put Predeploy scripts
+      ansible.builtin.import_tasks:
+        file: tasks/put_scripts.yml
+      tags:
+        - put_script
+
     - name: Put ~/.ssh/config
       ansible.builtin.import_tasks:
         file: tasks/macbook/home_ssh_config.yml
