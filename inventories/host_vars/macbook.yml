@@ -3,6 +3,7 @@ brew_taps:
   - ansible
   - cmigemo
   - figlet
+  - gh
   - gnu-tar
   - gnupg
   - htop
