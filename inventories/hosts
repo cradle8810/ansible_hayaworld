@@ -2,39 +2,36 @@
 192.168.1.10 ansible_user=hayato
 
 [proxmox]
-192.168.1.13 ansible_user=root
-192.168.1.14 ansible_user=root
+nuc03.hayaworld.home ansible_user=root
+nuc04.hayaworld.home ansible_user=root
 
 [rui]
 192.168.1.100 ansible_user=root
 
 [console]
-192.168.1.105 ansible_user=ansible
-
-[db]
-192.168.1.106 ansible_user=ansible
+console.hayaworld.home ansible_user=ansible
 
 [runners]
-192.168.1.108 ansible_user=root
-192.168.1.110 ansible_user=root
+runner03.hayaworld.home ansible_user=root
+runner04.hayaworld.home ansible_user=root
 
 [log]
-192.168.1.109 ansible_user=ansible
+log.hayaworld.home ansible_user=ansible
 
 [tm]
-192.168.1.112 ansible_user=ansible
+tm.hayaworld.home ansible_user=ansible
 
 [scanner]
-192.168.1.113 ansible_user=ansible
+scanner.hayaworld.home ansible_user=ansible
 
 [terminal]
-192.168.1.130 ansible_user=ansible
+terminal.hayaworld.home ansible_user=ansible
 
 [mai]
 192.168.1.150 ansible_user=ansible
 
 [skylark]
-192.168.1.200 ansible_user=ansible
+skylark.hayaworld.home ansible_user=ansible
 
 [macbook]
 HayabookAir2023.hayaworld.home ansible_user=hayato
