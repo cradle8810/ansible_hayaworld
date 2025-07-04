@@ -28,6 +28,19 @@
   tags:
     - nfs_config
 
+- name: "Set NFS configurations"
+  community.general.ini_file:
+    path: /etc/nsmb.conf
+    section: "nfsd"
+    option: "threads"
+    value: "{{ nfs.threads }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  notify: "Restart nfs-server"
+  tags:
+    - nfs_config
+
 - name: "Mkdir for users root"
   ansible.builtin.file:
     path: "{{ item.path }}"

@@ -39,6 +39,7 @@ smb:
       group: hayato
 
 nfs:
+  threads: 20
   exports:
     - path: "/skylark/nfs"
       allowip: "192.168.1.0/24"

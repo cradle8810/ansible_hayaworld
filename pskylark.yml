@@ -1,0 +1,21 @@
+---
+- name: Play for pskylark.hayaworld.home
+  hosts: pskylark
+  remote_user: hayato
+  gather_facts: true
+
+  vars_files:
+    - inventories/host_vars/pskylark.yml
+    - inventories/host_vars/networks.yml
+
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+
+  tasks:
+    - name: Set nfs
+      ansible.builtin.import_tasks:
+        file: tasks/pskylark/nfs.yml
+      tags:
+        - nfs
