@@ -1,4 +1,8 @@
 ---
+- name: "Common / Set user facts"
+  ansible.builtin.import_tasks:
+    file: tasks/all/set-users-facts.yml
+
 - name: "Common / Networking"
   when:
     ansible_facts.virtualization_type != 'lxc'
@@ -44,6 +48,8 @@
 - name: "Common / Put authorized Key for hayato"
   ansible.builtin.import_tasks:
     file: tasks/all/authorized_keys.yml
+  tags:
+    - users
 
 - name: "Common / Put motd file"
   ansible.builtin.import_tasks:

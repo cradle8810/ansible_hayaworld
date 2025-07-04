@@ -14,6 +14,24 @@
         file: handlers/main.yml
 
   tasks:
+    - name: "Common / Set user facts"
+      ansible.builtin.import_tasks:
+        file: tasks/all/set-users-facts.yml
+
+    - name: "Common / Put authorized Key for hayato"
+      ansible.builtin.import_tasks:
+        file: tasks/all/authorized_keys.yml
+      tags:
+        - users
+
+    - name: "Fix homedir permission"
+      ansible.builtin.file:
+        path: "/home/hayato"
+        state: directory
+        owner: "hayato"
+        group: "hayato"
+        mode: '0750'
+
     - name: Set nfs
       ansible.builtin.import_tasks:
         file: tasks/pskylark/nfs.yml

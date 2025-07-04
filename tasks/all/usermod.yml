@@ -10,7 +10,9 @@
   no_log: true
   tags:
     - usermod
-  when: ansible_distribution == "Ubuntu"
+  when:
+    - ansible_distribution == "Ubuntu"
+    - hostinfo.self_org is true
   block:
     - name: "Common / Add Username Group (Ubuntu)"
       ansible.builtin.group:
