@@ -1,0 +1,10 @@
+---
+- name: "Set NFS configurations"
+  community.general.ini_file:
+    path: /usr/share/nfs-kernel-server/conffiles/nfs-kernel-server.default
+    option: "RPCNFSDCOUNT"
+    value: "{{ nfs.threads }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  notify: "Restart nfs-server"

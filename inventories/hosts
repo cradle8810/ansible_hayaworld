@@ -1,3 +1,6 @@
+[pskylark]
+192.168.1.10 ansible_user=hayato
+
 [proxmox]
 192.168.1.13 ansible_user=root
 192.168.1.14 ansible_user=root
