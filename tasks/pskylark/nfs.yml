@@ -5,6 +5,6 @@
     option: "RPCNFSDCOUNT"
     value: "{{ nfs.threads }}"
     state: present
-    no_extra_spaces: true
     mode: "644"
+    ignore_spaces: true
   notify: "Restart nfs-server"
