@@ -6,7 +6,6 @@
   when: hostinfo.shortname != "terminal"
   notify: "Reconfigure netplan"
   vars:
-    hostinfo: "{{ network | selectattr('shortname', 'eq', ansible_hostname) | first }}"
     ipv4_addr: "{{ hostinfo.ipv4 }}"
     netplan_enabled: true
     netplan_renderer: networkd
@@ -34,7 +33,6 @@
   when: hostinfo.shortname == "terminal"
   notify: "Reconfigure netplan"
   vars:
-    hostinfo: "{{ network | selectattr('shortname', 'eq', ansible_hostname) | first }}"
     ipv4_addr: "{{ hostinfo.ipv4 }}"
     netplan_enabled: true
     netplan_renderer: networkd
