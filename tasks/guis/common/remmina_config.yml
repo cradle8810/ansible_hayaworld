@@ -1,0 +1,19 @@
+---
+- name: "Desktop / Remmina Configure"
+  community.general.ini_file:
+    path: "/home/hayato/.config/remmina/remmina.pref"
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+    owner: "hayato"
+    group: "hayato"
+  loop:
+    - section: "remmina_pref"
+      option: "rdp_kbd_remap"
+      value: "0x3a=0x1d"
+    - section: "remmina"
+      option: "ignore-tls-errors"
+      value: "1"

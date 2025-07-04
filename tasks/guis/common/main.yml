@@ -43,6 +43,12 @@
     - desktop
     - dconf
 
+- name: Configure Remmina
+  ansible.builtin.import_tasks:
+    file: tasks/guis/common/remmina_config.yml
+  tags:
+    - desktop
+
 - name: Remove ansible user from login screen
   ansible.builtin.import_tasks:
     file: tasks/guis/common/disappear_ansible_user.yml
