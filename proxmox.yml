@@ -1,6 +1,6 @@
 ---
-- name: Play for nuc03.hayaworld.local
-  hosts: nuc03
+- name: Play for Proxmox Nodes
+  hosts: proxmox
   remote_user: root
   gather_facts: true
 

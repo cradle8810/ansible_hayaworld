@@ -1,6 +1,6 @@
 ---
-- name: Play for runner.hayaworld.local
-  hosts: runner04
+- name: Play for Github Self-Hosted runners
+  hosts: runners
   remote_user: root
   gather_facts: true
 
@@ -35,7 +35,7 @@
       ansible.builtin.import_tasks:
         file: tasks/runner/install_docker.yml
       vars:
-        hostname: runner04
+        hostname: runner03
       tags:
         - runners
         - docker
@@ -71,6 +71,6 @@
     - name: Install Runners
       ansible.builtin.include_tasks:
         file: tasks/runner/install_runners.yml
-      loop: "{{ runner.runners.nuc04 }}"
+      loop: "{{ runner.runners.nuc03 }}"
       tags:
         - runners
