@@ -9,4 +9,6 @@
     ignore_spaces: true
     no_extra_spaces: true
   loop: "{{ ksm }}"
-  notify: "Restart ksmtuned"
+  notify:
+    - "KSM cache extend"
+    - "Restart ksmtuned"
