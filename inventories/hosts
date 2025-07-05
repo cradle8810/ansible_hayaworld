@@ -1,37 +1,21 @@
-[pskylark]
-192.168.1.10 ansible_user=hayato
+[all]
+console ansible_user=ansible
+HayabookAir2023 ansible_user=hayato
+log ansible_user=ansible
+pskylark ansible_user=hayato ansible_host=192.168.1.10
+scanner ansible_user=ansible
+skylark ansible_user=ansible
+terminal ansible_user=ansible
+tm ansible_user=ansible
 
 [proxmox]
 nuc03 ansible_user=root
 nuc04 ansible_user=root
 
-[rui]
-192.168.1.100 ansible_user=root
+[dns]
+rui ansible_user=root ansible_host=192.168.1.100
+mai ansible_user=ansible ansible_host=192.168.1.150
 
-[console]
-console ansible_user=ansible
-
-[runners]
+[runner]
 runner03 ansible_user=root
 runner04 ansible_user=root
-
-[log]
-log ansible_user=ansible
-
-[tm]
-tm ansible_user=ansible
-
-[scanner]
-scanner ansible_user=ansible
-
-[terminal]
-terminal ansible_user=ansible
-
-[mai]
-192.168.1.150 ansible_user=ansible
-
-[skylark]
-skylark ansible_user=ansible
-
-[macbook]
-HayabookAir2023 ansible_user=hayato
