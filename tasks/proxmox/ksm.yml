@@ -1,0 +1,12 @@
+---
+- name: "Set NFS configurations"
+  community.general.ini_file:
+    path: /etc/ksmtuned.conf
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    state: present
+    mode: "644"
+    ignore_spaces: true
+    no_extra_spaces: true
+  loop: "{{ ksm }}"
+  notify: "Restart ksmtuned"

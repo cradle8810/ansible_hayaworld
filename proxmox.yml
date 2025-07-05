@@ -25,6 +25,12 @@
 
     - name: I915 Driver Install
       ansible.builtin.import_tasks:
-        file: tasks/nuc/igpu_driver_install.yml
+        file: tasks/proxmox/igpu_driver_install.yml
       tags:
         - igpu
+
+    - name: KSM Service Settings
+      ansible.builtin.import_tasks:
+        file: tasks/proxmox/ksm.yml
+      tags:
+        - ksm
