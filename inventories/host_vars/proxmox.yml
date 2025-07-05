@@ -2,3 +2,11 @@
 vfs:
   bus: "pci0000:00/0000:00:02.0"
   count: 4
+
+ksm:
+  - option: "KSM_SLEEP_MSEC"
+    value: 30
+  - option: "KSM_NPAGES_MAX"
+    value: 1280
+  - option: "KSM_THRES_COEF"
+    value: 50

@@ -113,3 +113,10 @@
   register: retval
   changed_when: retval.rc == 0
   listen: "Reconfigure netplan"
+
+- name: "Restart ksmtuned"
+  ansible.builtin.systemd_service:
+    name: ksmtuned.service
+    state: restarted
+    enabled: true
+  listen: "Restart ksmtuned"
