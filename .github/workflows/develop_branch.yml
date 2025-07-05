@@ -65,7 +65,7 @@ jobs:
       - name: NXDOMAIN_Duplicate_Check
         run: >
           "./dupcheck.sh"
-          "inventories/host_vars/dns/NXDOMAIN.yml"
+          "host_vars/dns/NXDOMAIN.yml"
 
   Dry_Run_ansible:
     needs:
@@ -78,7 +78,7 @@ jobs:
       matrix:
         vm:
           - console
-          - rui
+          - dns
           - skylark
           - tm
     container:

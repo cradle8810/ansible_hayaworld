@@ -5,8 +5,8 @@
   gather_facts: true
 
   vars_files:
-    - inventories/host_vars/runner.yml
-    - inventories/host_vars/networks.yml
+    - host_vars/runners.yml
+    - host_vars/networks.yml
 
   handlers:
     - name: Restart handler tasks

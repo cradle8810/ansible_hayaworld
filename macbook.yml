@@ -6,8 +6,7 @@
   gather_facts: true
 
   vars_files:
-    - inventories/host_vars/macbook.yml
-    - inventories/host_vars/networks.yml
+    - host_vars/networks.yml
 
   tasks:
     - name: Set Hostname
