@@ -52,3 +52,31 @@
               "{{ subnet.routes }}"
             mtu:
               "{{ subnet.mtu }}"
+
+
+- name: "Common / Apply netplan config (Mai/Physical)"
+  ansible.builtin.import_role:
+    name: mrlesmithjr.netplan
+  any_errors_fatal: true
+  when: hostinfo.shortname == "mai"
+  notify: "Reconfigure netplan"
+  vars:
+    ipv4_addr: "{{ hostinfo.ipv4 }}"
+    netplan_enabled: true
+    netplan_renderer: networkd
+    netplan_configuration:
+      network:
+        version: 2
+        ethernets:
+          enp1s0:
+            addresses:
+              - "{{ ipv4_addr }}/{{ subnet.mask }}"
+            nameservers:
+              addresses:
+                "{{ subnet.dns4 }}"
+              search:
+                "{{ subnet.search }}"
+            routes:
+              "{{ subnet.routes }}"
+            mtu:
+              "{{ subnet.mtu }}"
