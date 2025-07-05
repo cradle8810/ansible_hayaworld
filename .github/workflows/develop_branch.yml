@@ -78,7 +78,7 @@ jobs:
       matrix:
         vm:
           - console
-          - rui
+          - dns
           - skylark
           - tm
     container:

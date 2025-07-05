@@ -79,7 +79,7 @@ jobs:
       matrix:
         vm:
           - console
-          - rui
+          - dns
           - skylark
           - tm
     environment: Production
@@ -136,7 +136,7 @@ jobs:
       matrix:
         vm:
           - console
-          - rui
+          - dns
           - skylark
           - tm
     environment: Production
