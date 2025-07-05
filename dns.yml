@@ -1,0 +1,73 @@
+- name: Play for DNS servers
+  hosts: dns
+  remote_user: root
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - host_vars/dns/CNAME.yml
+    - host_vars/dns/NXDOMAIN.yml
+    - host_vars/networks.yml
+
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+
+  tasks:
+    - name: Common Settings
+      ansible.builtin.import_tasks:
+        file: tasks/all/main.yml
+
+    - name: Stop systemd-resolved
+      ansible.builtin.import_tasks:
+        file: tasks/dns/stop-systemd-resolved.yml
+      tags:
+        - dnsmasq
+
+    - name: Setup dnsmask
+      ansible.builtin.import_tasks:
+        file: tasks/dns/dnsmasq.yml
+      tags:
+        - dnsmasq
+
+    - name: Setup journalctl
+      ansible.builtin.import_tasks:
+        file: tasks/dns/journalctl.yml
+
+    - name: Setup rsyslog
+      ansible.builtin.import_tasks:
+        file: tasks/dns/rsyslog-rui.yml
+      tags:
+        - rsyslog
+        - dnsmasq
+
+    - name: Setup for mai.hayaworld.home
+      when: hostinfo.shortname == 'mai'
+      block:
+        - name: Fixed interface name
+          ansible.builtin.copy:
+            src: templates/mai/etc/udev/rules.d/99-nic-ens.rules
+            dest: /etc/udev/rules.d/99-nic-ens.rules
+            owner: root
+            group: root
+            mode: '0644'
+          tags:
+            - system
+
+        - name: Install QDevice for NUC(Proxmox)
+          ansible.builtin.import_tasks:
+            file: tasks/mai/nuc_quorum_install.yml
+          tags:
+            - quorum
+            - proxmox
+
+        - name: Overclock Settings
+          ansible.builtin.import_tasks:
+            file: tasks/mai/overclock.yml
+          tags:
+            - overclock
+
+    - name: Make Started Services
+      ansible.builtin.import_tasks:
+        file: tasks/service_start.yml
