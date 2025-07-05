@@ -1,0 +1,46 @@
+---
+apt:
+  - avahi-daemon
+  - dstat
+  - htop
+  - nfs-common
+  - qemu-guest-agent
+
+drives:
+  tm:
+    uuid: 8f22fd40-c438-4981-aced-a84aa0c3db6a
+    mountpoint: /tm
+    filesystem: "btrfs"
+    options: "defaults,users,noatime,compress=zstd"
+    owner: "hayato"
+    maxsize: "760G"
+
+services_start:
+  - nmbd
+  - qemu-guest-agent
+  - smbd
+  - ssh
+
+firewall:
+  policy: deny
+  allow_rules:
+    - name: "SSH from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: '22'
+    - name: "Zabbix from Zabbix-server"
+      proto: "tcp"
+      src: "192.168.1.106/24"
+      port: "10050"
+    - name: "SMB from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: "445"
+    - name: "mDNS service line"
+      proto: "udp"
+      src: "192.168.1.0/24"
+      port: "5353"
+    - name: "Runner Docker ssh"
+      proto: "tcp"
+      src: "172.17.0.0/16"
+      port: "22"

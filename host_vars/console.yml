@@ -1,0 +1,83 @@
+---
+apt:
+  - bind9-dnsutils
+  - brasero
+  - cifs-utils
+  - curl
+  - dstat
+  - emacs
+  - ffmpeg
+  - ffmpegthumbnailer
+  - gimp
+  - git
+  - golang
+  - gpm
+  - gprename
+  - heif-thumbnailer
+  - htop
+  - imagemagick
+  - jq
+  - libaacs0
+  - libbluray-bdj
+  - libbluray2
+  - libheif1
+  - nfs-common
+  - openssh-server
+  - openssl
+  - p7zip-full
+  - poppler-utils
+  - python3-pip
+  - qemu-guest-agent
+  - rsync
+  - samba-common
+  - sshpass
+  - thunderbird
+  - vim
+  - vlc
+  - whois
+  - wireshark
+  - xrdp
+  - zsh
+
+remove:
+  - firefox
+  - gnome-power-manager
+  - rhythmbox
+
+services_start:
+  - docker
+  - gpm
+  - qemu-guest-agent
+  - ssh
+  - xrdp
+
+homedir:
+  UUID: "03038d24-672a-4707-ba6f-f5beb16d830e"
+
+firewall:
+  policy: deny
+  allow_rules:
+    - name: "SSH from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: '22'
+    - name: "RDP from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: '3389'
+    - name: "Zabbix from Zabbix-server"
+      proto: "tcp"
+      src: "192.168.1.106/24"
+      port: "10050"
+    - name: "Packer HTTP server"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: "8000"
+    - name: "Runner Docker ssh"
+      proto: "tcp"
+      src: "172.17.0.0/16"
+      port: "22"
+
+zramswap:
+  algo: lz4
+  percent: 50

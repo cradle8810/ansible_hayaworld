@@ -6,8 +6,7 @@
   become: true
 
   vars_files:
-    - inventories/host_vars/scanner.yml
-    - inventories/host_vars/networks.yml
+    - host_vars/networks.yml
 
   handlers:
     - name: Restart handler tasks

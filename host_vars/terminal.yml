@@ -1,0 +1,65 @@
+---
+apt:
+  - bind9-dnsutils
+  - brasero
+  - cifs-utils
+  - curl
+  - dstat
+  - emacs
+  - ffmpeg
+  - ffmpegthumbnailer
+  - gimp
+  - git
+  - golang
+  - gprename
+  - heif-thumbnailer
+  - htop
+  - imagemagick
+  - jq
+  - libaacs0
+  - libbluray-bdj
+  - libbluray2
+  - libheif1
+  - nfs-common
+  - nvme-cli
+  - openssh-server
+  - openssl
+  - p7zip-full
+  - poppler-utils
+  - python3-pip
+  - rsync
+  - samba-common
+  - sshpass
+  - thunderbird
+  - vim
+  - vlc
+  - whois
+  - wireshark
+  - zsh
+
+remove:
+  - firefox
+  - rhythmbox
+
+services_start:
+  - docker
+  - ssh
+
+homedir:
+  UUID: "cdc0f42c-3ed2-4474-a328-03308dde6101"
+
+firewall:
+  policy: deny
+  allow_rules:
+    - name: "SSH from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: '22'
+    - name: "Packer HTTP server"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: "8000"
+
+zramswap:
+  algo: lz4
+  percent: 50
