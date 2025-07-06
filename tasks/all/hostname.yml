@@ -1,4 +1,0 @@
----
-- name: "Common / Set Hostname"
-  ansible.builtin.hostname:
-    name: "{{ hostinfo.hostname }}"

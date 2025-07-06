@@ -1,3 +1,7 @@
 [submodule "templates/all/home/hayato/Source/zshrc"]
 	path = templates/all/home/hayato/Source/zshrc
 	url = https://github.com/cradle8810/zshrc
+
+[submodule "roles/common/templates/Source/zshrc"]
+	path = roles/common/templates/Source/zshrc
+	url = https://github.com/cradle8810/zshrc

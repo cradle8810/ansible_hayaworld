@@ -1,12 +1,4 @@
 ---
-apt:
-  - curl
-  - dnsmasq
-  - dstat
-  - htop
-  - nfs-common
-  - rsyslog
-
 rui_info: "{{ network | selectattr('shortname', 'eq', 'rui') | first }}"
 mai_info: "{{ network | selectattr('shortname', 'eq', 'mai') | first }}"
 

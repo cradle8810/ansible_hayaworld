@@ -3,7 +3,7 @@
   ansible.builtin.apt:
     name: "zsh"
     state: present
-    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+    cache_valid_time: "{{ common_apt.cache_valid_time }}"
   when: ansible_distribution == "Ubuntu"
 
 - name: "Common / Setting Users (Ubuntu)"
@@ -60,7 +60,7 @@
 
     - name: "Common / copy zshrc source directory (Ubuntu)"
       ansible.builtin.copy:
-        src: "templates/all/home/hayato/Source/zshrc/zshrc"
+        src: "templates/home/hayato/Source/zshrc/zshrc"
         dest: "{{ item.homedir }}/Source/zshrc/zshrc"
         mode: '0644'
         owner: "{{ item.username }}"
@@ -114,7 +114,7 @@
 
     - name: "Common / mkdir zshrc source directory (macOS)"
       ansible.builtin.copy:
-        src: "templates/all/home/hayato/Source/zshrc/zshrc"
+        src: "templates/home/hayato/Source/zshrc/zshrc"
         dest: "{{ item.homedir_mac }}/Source/zshrc/zshrc"
         mode: '0644'
         owner: "{{ item.username }}"

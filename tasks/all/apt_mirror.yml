@@ -1,7 +1,0 @@
----
-- name: "Common / Change apt mirror"
-  ansible.builtin.replace:
-    path: /etc/apt/sources.list
-    regexp: 'http://jp.archive.ubuntu.com/ubuntu'
-    replace: 'http://ftp.iij.ad.jp/pub/linux/ubuntu/archive'
-    backup: true

@@ -1,4 +1,9 @@
 ---
+- name: "Install rsyslog"
+  ansible.builtin.apt:
+    update_cache: true
+    pkg: "rsyslog"
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
 
 - name: Put rsyslog.conf(5)
   ansible.builtin.template:

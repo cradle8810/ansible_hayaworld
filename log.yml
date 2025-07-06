@@ -15,8 +15,11 @@
 
   tasks:
     - name: Common Settings
-      ansible.builtin.import_tasks:
-        file: tasks/all/main.yml
+      ansible.builtin.import_role:
+        name: common
+      vars:
+        common_firewall: "{{ firewall }}"
+        common_pkg: "{{ apt }}"
 
     - name: "Install Rsyslog"
       ansible.builtin.import_tasks:

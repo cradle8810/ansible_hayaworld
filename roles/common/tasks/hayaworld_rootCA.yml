@@ -9,7 +9,7 @@
 
 - name: "Common / Put hayaworld root CA certs"
   ansible.builtin.copy:
-    src: "templates/all/usr/local/share/ca-certificates/hayaworld/ca.crt"
+    src: "templates/usr/local/share/ca-certificates/hayaworld/ca.crt"
     dest: "/usr/local/share/ca-certificates/hayaworld/ca.crt"
     owner: root
     group: root
