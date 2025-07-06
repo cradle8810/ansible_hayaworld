@@ -19,15 +19,12 @@
       ansible.builtin.import_tasks:
         file: tasks/all/main.yml
 
-    - name: Stop systemd-resolved
-      ansible.builtin.import_tasks:
-        file: tasks/dns/stop-systemd-resolved.yml
-      tags:
-        - dnsmasq
-
-    - name: Setup dnsmask
-      ansible.builtin.import_tasks:
-        file: tasks/dns/dnsmasq.yml
+    - name: "Setup dnsmasq"
+      ansible.builtin.import_role:
+        name: dns
+      vars:
+        dns_nxdomain: "{{ nxdomain }}"
+        dns_cname: "{{ cname }}"
       tags:
         - dnsmasq
 
