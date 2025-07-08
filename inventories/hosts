@@ -1,6 +1,6 @@
 [all]
 console ansible_user=ansible
-HayabookAir2023 ansible_user=hayato
+macbook ansible_user=hayato
 log ansible_user=ansible
 pskylark ansible_user=hayato ansible_host=192.168.1.10
 scanner ansible_user=ansible
