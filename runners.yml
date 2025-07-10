@@ -38,7 +38,7 @@
       ansible.builtin.import_tasks:
         file: tasks/runner/install_docker.yml
       vars:
-        hostname: runner03
+        hostname: "{{ hostinfo.shortname }}"
       tags:
         - runners
         - docker
