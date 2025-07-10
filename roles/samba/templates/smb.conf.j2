@@ -1,0 +1,40 @@
+[global]
+workgroup = {{ samba_workgroup }}
+server string = {{ samba_server_string }}
+
+server role = standalone server
+obey pam restrictions = yes
+unix password sync = yes
+passwd program = /usr/bin/passwd %u
+passwd chat = *Enter\snew\s*\spassword:* %n\n *Retype\snew\s*\spassword:* %n\n *password\supdated\ssuccessfully* .
+pam password change = yes
+map to guest = bad user
+
+# For MacOS
+idmap config * : backend = tdb
+fruit:model = RackMac
+fruit:encoding = native
+fruit:metadata = netatalk
+idmap config * : backend = tdb
+vfs objects = catia fruit streams_xattr
+
+#======================= Share Definitions =======================
+
+{% for s in samba_shares %}
+[{{ s.name }}]
+  path = {{ s.path }}
+  guest ok = No
+  read only = No
+  valid users = "{{ s.owner }}","root"
+  write list = "{{ s.owner }}","root"
+  inherit acls = yes
+  streams_xattr:prefix = user.
+  streams_xattr:store_stream_type = no
+  fruit:resource = file
+  fruit:locking = none
+{% if s.time_machine is defined and s.time_machine == 'Yes' %}
+  fruit:time machine = yes
+  fruit:time machine max size = {{ s.time_machine_max_size }}
+{% endif %}
+
+{% endfor %}

@@ -27,9 +27,13 @@
       tags:
         - mount
 
-    - name: Set samba
-      ansible.builtin.import_tasks:
-        file: tasks/skylark/samba.yml
+    - name: Samba settings
+      ansible.builtin.import_role:
+        name: samba
+      vars:
+        samba_workgroup: "{{ smb.samba_workgroup }}"
+        samba_server_string: "{{ smb.samba_server_string }}"
+        samba_shares: "{{ smb.samba_shares }}"
       tags:
         - samba
 
