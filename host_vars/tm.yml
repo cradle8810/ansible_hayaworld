@@ -15,10 +15,19 @@ drives:
     owner: "hayato"
     maxsize: "760G"
 
+smb:
+  samba_workgroup: "WORKGROUP"
+  samba_server_string: "tm"
+  samba_shares:
+    - name: TimeMachine
+      path: "/tm"
+      owner: hayato
+      group: hayato
+      time_machine: 'Yes'
+      time_machine_max_size: '700G'
+
 services_start:
-  - nmbd
   - qemu-guest-agent
-  - smbd
   - ssh
 
 firewall:

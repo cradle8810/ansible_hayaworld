@@ -1,0 +1,11 @@
+---
+samba_workgroup: "WORKGROUP"
+samba_server_string: "server"
+
+samba_shares:
+  - name: 'sample'
+    path: '/sample'
+    owner: 'root'
+    group: 'root'
+    time_machine: 'No'
+    time_machine_max_size: '500g'

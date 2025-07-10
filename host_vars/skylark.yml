@@ -28,7 +28,9 @@ drives:
       options: "defaults,users,noatime,compress=zstd"
 
 smb:
-  share:
+  samba_workgroup: "WORKGROUP"
+  samba_server_string: "skylark"
+  samba_shares:
     - name: Home
       path: "/skylark/hayato"
       owner: hayato
@@ -74,9 +76,7 @@ backup_scripts:
 
 services_start:
   - nfs-server
-  - nmbd
   - qemu-guest-agent
-  - smbd
   - ssh
 
 apt:
