@@ -1,8 +1,9 @@
 ---
 - name: Play for Github Self-Hosted runners
   hosts: runners
-  remote_user: root
+  remote_user: ansible
   gather_facts: true
+  become: true
 
   vars_files:
     - host_vars/runners.yml
