@@ -27,7 +27,7 @@
       - gw
 
 - name: "Tailscale Firewall accept"
-  ansible.builtin.command:
-    cmd: "sudo ufw allow in on tailscale0"
-  register: retval
-  changed_when: retval.rc == 0
+  community.general.ufw:
+    rule: allow
+    interface_in: tailscale0
+    proto: any
