@@ -59,12 +59,19 @@
   notify:
     - "Restart dnsmasq"
 
-- name: "Get Systemd-Resolved status"
-  ansible.builtin.stat:
-    path: "/etc/systemd/system/systemd-resolved.service"
-  register: sr
-
 - name: "Set Systemd-Resolved status"
-  ansible.builtin.set_fact:
-    sr_masked: true
-  when: sr.stat.lnk_source == "/dev/null"
+  block:
+    - name: "Get Systemd-Resolved status"
+      ansible.builtin.stat:
+        path: "/etc/systemd/system/systemd-resolved.service"
+      register: sr
+
+    - name: "Set Systemd-Resolved status"
+      ansible.builtin.set_fact:
+        sr_masked: true
+      when: sr.stat.lnk_source == "/dev/null"
+
+  rescue:
+    - name: "Set Systemd-Resolved status (Systemd-Resolved does not exist)"
+      ansible.builtin.set_fact:
+        sr_masked: false
