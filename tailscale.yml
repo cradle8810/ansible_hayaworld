@@ -1,0 +1,26 @@
+- name: Play for Tailscale servers
+  hosts: tailscale
+  remote_user: ansible
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - host_vars/networks.yml
+
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+
+  tasks:
+    - name: Common Settings
+      ansible.builtin.import_role:
+        name: common
+      vars:
+        common_firewall: "{{ firewall }}"
+
+    - name: Install Tailscale
+      ansible.builtin.import_tasks:
+        file: tasks/tailscale.yml
+      tags:
+        - tailscale
