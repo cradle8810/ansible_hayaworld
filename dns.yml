@@ -53,4 +53,10 @@
 
     - name: Make Started Services
       ansible.builtin.import_tasks:
+        file: tasks/tailscale.yml
+      tags:
+        - tailscale
+
+    - name: Make Started Services
+      ansible.builtin.import_tasks:
         file: tasks/service_start.yml

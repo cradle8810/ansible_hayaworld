@@ -1,0 +1,33 @@
+---
+- name: "Common / Set to don't use DNSStubListener for systemd config"
+  community.general.ini_file:
+    path: "/etc/sysctl.d/99-tailscale.conf"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    state: present
+    no_extra_spaces: false
+    mode: "644"
+  notify: "tailscale sysctl"
+  loop:
+    - option: "net.ipv4.ip_forward"
+      value: "1"
+    - option: "net.ipv6.conf.all.forwarding"
+      value: "1"
+
+- name: "Setup Tailscale Endpoint"
+  ansible.builtin.import_role:
+    name: artis3n.tailscale
+  tags:
+    - tailscale
+  vars:
+    tailscale_authkey: "{{ all.vars.tailscale.client_secret }}"
+    tailscale_args: "--advertise-routes=192.168.1.0/24 --advertise-exit-node"
+    tailscale_oauth_ephemeral: false
+    tailscale_tags:
+      - gw
+
+- name: "Tailscale Firewall accept"
+  ansible.builtin.command:
+    cmd: "sudo ufw allow in on tailscale0"
+  register: retval
+  changed_when: retval.rc == 0
