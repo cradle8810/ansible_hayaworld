@@ -1,0 +1,10 @@
+---
+- name: "Set NFS configurations"
+  community.general.ini_file:
+    path: "/etc/sysctl.d/99-swappiness.conf"
+    option: "vm.swappiness"
+    value: "{{ swap.swappiness }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  notify: "swappiness sysctl"

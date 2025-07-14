@@ -33,3 +33,9 @@
         file: tasks/proxmox/ksm.yml
       tags:
         - ksm
+
+    - name: Set Swappiness
+      ansible.builtin.import_tasks:
+        file: tasks/proxmox/swappiness.yml
+      tags:
+        - swap
