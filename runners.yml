@@ -75,6 +75,6 @@
     - name: Install Runners
       ansible.builtin.include_tasks:
         file: tasks/runner/install_runners.yml
-      loop: "{{ runner.runners.nuc03 }}"
+      loop: "{{ runners.runners }}"
       tags:
         - runners
