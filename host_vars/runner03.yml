@@ -13,3 +13,7 @@ runners:
       github_repo: periodic_twitter_dl
     - runner_name: periodic_backup_03-01
       github_repo: periodic_backup
+
+docker_network:
+  base: "172.17.3.0/24"
+  size: "28"

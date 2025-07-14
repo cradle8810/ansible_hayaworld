@@ -31,14 +31,6 @@ firewall:
       src: "172.17.0.0/16"
       port: "22"
 
-docker_network:
-  runner03:
-    base: "172.17.3.0/24"
-    size: "28"
-  runner04:
-    base: "172.17.4.0/24"
-    size: "28"
-
 runner:
   user:
     username: runner

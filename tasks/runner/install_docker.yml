@@ -9,7 +9,7 @@
 
 - name: "Define Docker configs"
   ansible.builtin.template:
-    src: "templates/{{ hostname }}/etc/docker/daemon.json.j2"
+    src: "templates/runners/etc/docker/daemon.json.j2"
     dest: /etc/docker/daemon.json
     owner: root
     group: root
