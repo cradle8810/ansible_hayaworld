@@ -122,3 +122,10 @@
   register: retval
   changed_when: retval.rc == 0
   listen: "tailscale sysctl"
+
+- name: "Swappiness setting for nuc sysctl restart"
+  ansible.builtin.command:
+    cmd: "sysctl -p /etc/sysctl.d/99-swappiness.conf"
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "swappiness sysctl"

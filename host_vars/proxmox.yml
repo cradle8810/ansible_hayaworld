@@ -10,3 +10,6 @@ ksm:
     value: 1280
   - option: "KSM_THRES_COEF"
     value: 50
+
+swap:
+  swappiness: 20
