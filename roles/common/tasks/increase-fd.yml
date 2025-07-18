@@ -1,0 +1,12 @@
+---
+- name: "Common / Increase file descriptors for user"
+  community.general.ini_file:
+    path: "/etc/systemd/user.conf"
+    section: "Manager"
+    option: "DefaultLimitNOFILE"
+    value: "500000"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  notify: "Daemon Reload"
+  when: ansible_distribution == "Ubuntu"
