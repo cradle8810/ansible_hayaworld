@@ -128,6 +128,12 @@
       tags:
         - users
 
+    - name: "Common / Increase User file descriptors"
+      ansible.builtin.import_tasks:
+        file: tasks/increase-fd.yml
+      tags:
+        - users
+
 - name: "Common / Hayaworld Root CA install"
   ansible.builtin.import_tasks:
     file: tasks/hayaworld_rootCA.yml

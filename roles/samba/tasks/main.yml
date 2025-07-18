@@ -25,3 +25,20 @@
     group: root
     mode: '0644'
   notify: "Restart smbd"
+
+- name: "Increase file descriptors for samba"
+  community.general.ini_file:
+    path: "/etc/systemd/system/smb.service"
+    section: "Service"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  loop:
+    - option: "LimitNPROC"
+      value: 163840
+    - option: "LimitNOFILE"
+      value: 163840
+  notify:
+    - "Restart smbd"
