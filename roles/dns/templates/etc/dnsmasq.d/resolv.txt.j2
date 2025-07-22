@@ -1,4 +1,2 @@
-server={{ dnsmasq.ipv6.dns6_server_self }}
-server={{ dnsmasq.ipv6.dns6_server_other}}
-server={{ dnsmasq.dhcp_option.dns4_self }}
-server={{ dnsmasq.dhcp_option.dns4_other }}
+server={{ outer_dns_servers.ipv4 }}
+server={{ outer_dns_servers.ipv6 }}
