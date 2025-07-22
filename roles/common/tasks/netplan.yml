@@ -3,10 +3,13 @@
   ansible.builtin.import_role:
     name: mrlesmithjr.netplan
   any_errors_fatal: true
-  when: hostinfo.shortname != "terminal"
+  when:
+    - hostinfo.shortname != "terminal"
+    - hostinfo.shortname != "mai"
   notify: "Reconfigure netplan"
   vars:
     ipv4_addr: "{{ hostinfo.ipv4 }}"
+    ipv6_addr: "{{ hostinfo.ipv6_addr }}"
     netplan_enabled: true
     netplan_renderer: networkd
     netplan_configuration:
@@ -16,9 +19,10 @@
           ens18:
             addresses:
               - "{{ ipv4_addr }}/{{ subnet.mask }}"
+              - "{{ ipv6_addr }}/64"
             nameservers:
               addresses:
-                "{{ subnet.dns4 }}"
+                "{{ subnet.dns4 + ipv6.ula.dns6 }}"
               search:
                 "{{ subnet.search }}"
             routes:
@@ -34,6 +38,7 @@
   notify: "Reconfigure netplan"
   vars:
     ipv4_addr: "{{ hostinfo.ipv4 }}"
+    ipv6_addr: "{{ hostinfo.ipv6_addr }}"
     netplan_enabled: true
     netplan_renderer: networkd
     netplan_configuration:
@@ -43,9 +48,10 @@
           enx6c1ff7023273:
             addresses:
               - "{{ ipv4_addr }}/{{ subnet.mask }}"
+              - "{{ ipv6_addr }}/64"
             nameservers:
               addresses:
-                "{{ subnet.dns4 }}"
+                "{{ subnet.dns4 + ipv6.ula.dns6 }}"
               search:
                 "{{ subnet.search }}"
             routes:
@@ -62,6 +68,7 @@
   notify: "Reconfigure netplan"
   vars:
     ipv4_addr: "{{ hostinfo.ipv4 }}"
+    ipv6_addr: "{{ hostinfo.ipv6_addr }}"
     netplan_enabled: true
     netplan_renderer: networkd
     netplan_configuration:
@@ -71,9 +78,10 @@
           enp1s0:
             addresses:
               - "{{ ipv4_addr }}/{{ subnet.mask }}"
+              - "{{ ipv6_addr }}/64"
             nameservers:
               addresses:
-                "{{ subnet.dns4 }}"
+                "{{ subnet.dns4 + ipv6.ula.dns6 }}"
               search:
                 "{{ subnet.search }}"
             routes:
