@@ -14,7 +14,8 @@ dnsmasq:
     ttl: "12h"
   dhcp_option:
     ntp_server: 210.130.188.10
-    dns_server: "{{ rui_info.ipv4 }},{{ mai_info.ipv4 }}"
+    dns4_self: "{{ rui_info.ipv4 }}"
+    dns4_other: "{{ mai_info.ipv4 }}"
     router: "{{ subnet.gw4 }}"
     netmask: "255.255.255.0"
   dns:
@@ -23,6 +24,13 @@ dnsmasq:
   logs:
     log_facility: local5
     log_to: "log.hayaworld.home"
+  ipv6:
+    dhcp_range:
+      start: "2000"
+      end: "2fff"
+      ttl: "12h"
+    dns6_server_self: "{{ rui_info.ipv6_addr }}"
+    dns6_server_other: "{{ mai_info.ipv6_addr }}"
 
 services_start:
   - dnsmasq
@@ -56,6 +64,22 @@ firewall:
     - name: "DHCP Client from service line"
       proto: "udp"
       src: "any"
+      port: "68"
+    - name: "DNS from service line(IPv6)"
+      proto: "tcp"
+      src: "{{ ipv6.ula.prefix }}::/48"
+      port: "53"
+    - name: "DNS(UDP) from service line(IPv6)"
+      proto: "udp"
+      src: "{{ ipv6.ula.prefix }}::/48"
+      port: "53"
+    - name: "DHCP from service line(IPv6)"
+      proto: "udp"
+      src: "::"
+      port: "67"
+    - name: "DHCP Client from service line(IPv6)"
+      proto: "udp"
+      src: "::"
       port: "68"
     - name: "Runner Docker ssh"
       proto: "tcp"
