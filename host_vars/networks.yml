@@ -3,102 +3,119 @@ network:
   - hostname: pskylark.hayaworld.home
     interface: eth0
     ipv4: 192.168.1.10
+    ipv6_addr: "{{ ipv6.ula.prefix }}::10"
     shortname: pskylark
     sshuser: hayato
     self_org: false
   - hostname: nuc03.hayaworld.home
     interface: enp86s0
     ipv4: 192.168.1.13
+    ipv6_addr: "{{ ipv6.ula.prefix }}::13"
     shortname: nuc03
     sshuser: root
     self_org: false
   - hostname: nuc04.hayaworld.home
     interface: enp86s0
     ipv4: 192.168.1.14
+    ipv6_addr: "{{ ipv6.ula.prefix }}::14"
     shortname: nuc04
     sshuser: root
     self_org: false
   - hostname: rui.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.100
+    ipv6_addr: "{{ ipv6.ula.prefix }}::100"
     shortname: rui
     sshuser: hayato
     self_org: true
   - hostname: origin.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.102
+    ipv6_addr: "{{ ipv6.ula.prefix }}::102"
     shortname: origin
     sshuser: hayato
     self_org: true
   - hostname: console.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.105
+    ipv6_addr: "{{ ipv6.ula.prefix }}::105"
     shortname: console
     sshuser: hayato
     self_org: true
   - hostname: runner03.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.108
+    ipv6_addr: "{{ ipv6.ula.prefix }}::108"
     shortname: runner03
     sshuser: runner
     self_org: true
   - hostname: log.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.109
+    ipv6_addr: "{{ ipv6.ula.prefix }}::109"
     shortname: log
     sshuser: hayato
     self_org: true
   - hostname: runner04.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.110
+    ipv6_addr: "{{ ipv6.ula.prefix }}::110"
     shortname: runner04
     sshuser: runner
     self_org: true
   - hostname: tm.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.112
+    ipv6_addr: "{{ ipv6.ula.prefix }}::112"
     shortname: tm
     sshuser: hayato
     self_org: true
   - hostname: scanner.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.113
+    ipv6_addr: "{{ ipv6.ula.prefix }}::113"
     shortname: scanner
     sshuser: hayato
     self_org: true
   - hostname: tsgw.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.114
+    ipv6_addr: "{{ ipv6.ula.prefix }}::114"
     shortname: tsgw
     sshuser: hayato
     self_org: true
   - hostname: terminal.hayaworld.home
     interface: enx6c1ff7023273
     ipv4: 192.168.1.130
+    ipv6_addr: "{{ ipv6.ula.prefix }}::115"
     shortname: terminal
     sshuser: ansible
     self_org: true
   - hostname: mai.hayaworld.home
     interface: enp1s0
     ipv4: 192.168.1.150
+    ipv6_addr: "{{ ipv6.ula.prefix }}::150"
     shortname: mai
     sshuser: hayato
     self_org: true
   - hostname: skylark.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.200
+    ipv6_addr: "{{ ipv6.ula.prefix }}::200"
     shortname: skylark
     sshuser: hayato
     self_org: true
   - hostname: haccho02.hayaworld.home
     interface: none
     ipv4: 192.168.1.253
+    ipv6_addr: "{{ ipv6.ula.prefix }}::253"
     shortname: haccho
     sshuser: hayato
     self_org: false
   - hostname: haccho01.hayaworld.home
     interface: none
     ipv4: 192.168.1.254
+    ipv6_addr: "{{ ipv6.ula.prefix }}::254"
     shortname: haccho
     sshuser: hayato
     self_org: false
@@ -121,3 +138,12 @@ subnet:
     - to: default
       via: 192.168.1.1
   mtu: 9000
+
+ipv6:
+  ula:
+    prefix: "fd9c:a3a2:5659"
+    dns6:
+      - "fd9c:a3a2:5659::100"
+      - "fd9c:a3a2:5659::150"
+      - "2001:240::13"
+      - "2001:240::14"
