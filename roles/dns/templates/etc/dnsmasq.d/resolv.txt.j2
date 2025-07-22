@@ -1,3 +1,4 @@
-{% for resolver in subnet.dns4 %}
-server={{ resolver }}
-{% endfor %}
+server={{ dnsmasq.ipv6.dns6_server_self }}
+server={{ dnsmasq.ipv6.dns6_server_other}}
+server={{ dnsmasq.dhcp_option.dns4_self }}
+server={{ dnsmasq.dhcp_option.dns4_other }}
