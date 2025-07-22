@@ -1,2 +1,3 @@
-server={{ outer_dns_servers.ipv4 }}
-server={{ outer_dns_servers.ipv6 }}
+{% for resolver in subnet.dns4 %}
+server={{ resolver }}
+{% endfor %}
