@@ -14,8 +14,7 @@ dnsmasq:
     ttl: "12h"
   dhcp_option:
     ntp_server: 210.130.188.10
-    dns4_self: "{{ mai_info.ipv4 }}"
-    dns4_other: "{{ rui_info.ipv4 }}"
+    dns_server: "{{ mai_info.ipv4 }},{{ rui_info.ipv4 }}"
     router: "{{ subnet.gw4 }}"
     netmask: "255.255.255.0"
   dns:
@@ -25,10 +24,6 @@ dnsmasq:
     log_facility: local5
     log_to: "log.hayaworld.home"
   ipv6:
-    dhcp_range:
-      start: "2000"
-      end: "2fff"
-      ttl: "12h"
     dns6_server_self: "{{ mai_info.ipv6_addr }}"
     dns6_server_other: "{{ rui_info.ipv6_addr }}"
 

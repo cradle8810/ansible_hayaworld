@@ -8,17 +8,10 @@ interface={{ dnsmasq.interface }}
 
 dhcp-range=lan,{{ dnsmasq.dhcp_range.start }},{{ dnsmasq.dhcp_range.end }},{{ dnsmasq.dhcp_range.netmask }},{{ dnsmasq.dhcp_range.ttl }}
 
-dhcp-option=option:dns-server,{{ dnsmasq.dhcp_option.dns4_self }},{{ dnsmasq.dhcp_option.dns4_other }}
+dhcp-option=option:dns-server,{{ dnsmasq.dhcp_option.dns_server }}
 dhcp-option=option:netmask,{{ dnsmasq.dhcp_option.netmask }}
 dhcp-option=option:ntp-server,{{ dnsmasq.dhcp_option.ntp_server }}
 dhcp-option=option:router,{{ dnsmasq.dhcp_option.router }}
-
-# IPv6
-ra-param={{ dnsmasq.interface }},high,0,0
-quiet-ra
-dhcp-range=::{{ dnsmasq.ipv6.dhcp_range.start }},::{{ dnsmasq.ipv6.dhcp_range.end }},constructor:{{ dnsmasq.interface }},ra-names,slaac,{{ dnsmasq.ipv6.dhcp_range.ttl }}
-dhcp-option=option6:dns-server,[{{ dnsmasq.ipv6.dns6_server_self }}],[{{ dnsmasq.ipv6.dns6_server_other }}]
-dhcp-option=option6:information-refresh-time,6h
 
 cache-size={{ dnsmasq.dns.cache_size }}
 dhcp-sequential-ip

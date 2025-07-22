@@ -1,10 +1,20 @@
 interface {{ dnsmasq.interface }} {
-    AdvDefaultPreference high;
-    AdvManagedFlag on;
-    AdvOtherConfigFlag on;
-    AdvSendAdvert on;
-    MaxRtrAdvInterval 100;
-    MinRtrAdvInterval 30;
-    prefix {{ ipv6.ula.prefix }}::/64 {};
-    RDNSS {{ dnsmasq.ipv6.dns6_server_self }} {{ dnsmasq.ipv6.dns6_server_other }} { };
+  AdvDefaultPreference high;
+  AdvHomeAgentFlag off;
+  AdvManagedFlag off;
+  AdvOtherConfigFlag off;
+  AdvSendAdvert on;
+  MaxRtrAdvInterval 100;
+  MinRtrAdvInterval 30;
+  prefix {{ ipv6.ula.prefix }}::/64 {
+    AdvOnLink on;
+    AdvAutonomous on;
+    AdvRouterAddr off;
+  };
+  RDNSS {{ dnsmasq.ipv6.dns6_server_self }} {
+    AdvRDNSSPreference 8;
+    AdvRDNSSOpen off;
+    AdvRDNSSLifetime 30;
+  };
+  DNSSL {{ dnsmasq.domain }} {};
 };
