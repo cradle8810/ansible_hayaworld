@@ -14,3 +14,10 @@
     state: restarted
     enabled: true
   listen: "Restart dnsmasq"
+
+- name: "RAdvd / Start and enable radvd"
+  ansible.builtin.systemd_service:
+    name: radvd
+    state: restarted
+    enabled: true
+  listen: "Restart radvd"

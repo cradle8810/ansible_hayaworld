@@ -1,0 +1,10 @@
+interface {{ dnsmasq.interface }} {
+    AdvDefaultPreference high;
+    AdvManagedFlag on;
+    AdvOtherConfigFlag on;
+    AdvSendAdvert on;
+    MaxRtrAdvInterval 100;
+    MinRtrAdvInterval 30;
+    prefix {{ ipv6.ula.prefix }}::/64 {};
+    RDNSS {{ dnsmasq.ipv6.dns6_server_self }} {{ dnsmasq.ipv6.dns6_server_other }} { };
+};
