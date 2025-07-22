@@ -59,6 +59,10 @@
   notify:
     - "Restart dnsmasq"
 
+- name: "RAdvd / Setting RAdvd"
+  ansible.builtin.import_tasks:
+    file: tasks/radvd.yml
+
 - name: "Set Systemd-Resolved status"
   block:
     - name: "Get Systemd-Resolved status"

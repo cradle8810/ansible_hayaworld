@@ -1,0 +1,18 @@
+---
+- name: "RAdvd / Install RAdvd"
+  ansible.builtin.apt:
+    name: "radvd"
+    state: present
+    update_cache: true
+  notify:
+    - "Restart radvd"
+
+- name: "RAdvd / Put radvd.conf"
+  ansible.builtin.template:
+    src: templates/etc/radvd.conf.j2
+    dest: /etc/radvd.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - "Restart radvd"

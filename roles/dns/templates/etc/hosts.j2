@@ -3,4 +3,5 @@
 
 {% for host in network %}
 {{ host.ipv4 }} {{ host.hostname }}
+{{ host.ipv6_addr }} {{ host.hostname }}
 {% endfor %}
