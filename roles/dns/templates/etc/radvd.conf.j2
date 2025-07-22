@@ -1,5 +1,4 @@
 interface {{ dnsmasq.interface }} {
-  AdvDefaultPreference high;
   AdvHomeAgentFlag off;
   AdvManagedFlag off;
   AdvOtherConfigFlag off;
@@ -11,10 +10,12 @@ interface {{ dnsmasq.interface }} {
     AdvAutonomous on;
     AdvRouterAddr off;
   };
-  RDNSS {{ dnsmasq.ipv6.dns6_server_self }} {
+  RDNSS {{ dnsmasq.ipv6.dns6_server_self }} {{ dnsmasq.ipv6.dns6_server_other }} {
     AdvRDNSSPreference 8;
     AdvRDNSSOpen off;
     AdvRDNSSLifetime 30;
   };
-  DNSSL {{ dnsmasq.domain }} {};
+  DNSSL {{ dnsmasq.domain }} {
+    FlushDNSSL on;
+  };
 };
