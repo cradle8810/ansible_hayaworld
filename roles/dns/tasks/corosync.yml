@@ -1,0 +1,75 @@
+---
+- name: "Corosync / Install corosync"
+  ansible.builtin.apt:
+    pkg:
+      - corosync
+      - pacemaker
+      - pcs
+    state: present
+    update_cache: true
+  notify:
+    - "Restart corosync"
+
+- name: "Corosync / Set pcs command user"
+  ansible.builtin.user:
+    append: true
+    group: "haclient"
+    name: "hacluster"
+    password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          39656637366137353831643862633033323065393232663866616333633061373963663966343862
+          3434343065653830393964366666313537323564333735320a633866363438626438656438323534
+          64343235383861393935343466363532346566633931343736653165393230653166353437383738
+          6666646538353938390a623035393836303136316333626539323730373366366265353163303632
+          3637
+    state: "present"
+  notify:
+    - "Restart corosync"
+
+- name: "Corosync / Put Cluster authkey"
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: '0400'
+  loop:
+    - src: templates/etc/corosync/authkey
+      dest: /etc/corosync/authkey
+    - src: templates/etc/pacemaker/authkey
+      dest: /etc/pacemaker/authkey
+  notify:
+    - "Restart corosync"
+
+- name: "Corosync / Put corosync.conf"
+  ansible.builtin.template:
+    src: templates/etc/corosync/corosync.conf.j2
+    dest: /etc/corosync/corosync.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - "Restart corosync"
+
+- name: "RAdvd resource configurations"
+  block:
+    - name: "Is radvd resource configured?"
+      become: true
+      ansible.builtin.shell:
+        cmd: |
+          set -o pipefail
+          pcs resource | grep 'radvd'
+        executable: /bin/bash
+      register: is_radvd_configured
+      changed_when: is_radvd_configured.rc != 0
+  rescue:
+    - name: "Add resource configurations"
+      become: true
+      ansible.builtin.command:
+        cmd: |
+          pcs resource create radvd systemd:radvd op monitor interval=10s
+      when:
+        - is_radvd_configured.rc != 0
+        - hostinfo.ipv4 == dns_cluster_01_ipv4
+      register: retval
+      changed_when: retval.rc == 0

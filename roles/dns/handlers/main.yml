@@ -15,9 +15,18 @@
     enabled: true
   listen: "Restart dnsmasq"
 
-- name: "RAdvd / Start and enable radvd"
+- name: "RAdvd / Don't startup radvd"
   ansible.builtin.systemd_service:
     name: radvd
+    state: stopped
+    enabled: false
+  listen: "Stop radvd"
+
+- name: "Corosync / Start and enable corosync"
+  ansible.builtin.systemd_service:
+    name:
+      - corosync
+      - pacemaker
     state: restarted
     enabled: true
-  listen: "Restart radvd"
+  listen: "Restart corosync"
