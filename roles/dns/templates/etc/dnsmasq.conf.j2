@@ -15,6 +15,7 @@ dhcp-option=option:ntp-server,{{ dnsmasq.dhcp_option.ntp_server }}
 dhcp-option=option:router,{{ dnsmasq.dhcp_option.router }}
 
 # IPv6 Configurations(SLACC)
+dhcp-range=::,static
 dhcp-option=option6:dns-server,[{{ dnsmasq.ipv6.dns6_server_self }}],[{{ dnsmasq.ipv6.dns6_server_other }}]
 dhcp-option=option6:domain-search,{{ dnsmasq.domain }}
 
