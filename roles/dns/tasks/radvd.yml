@@ -5,7 +5,7 @@
     state: present
     update_cache: true
   notify:
-    - "Restart radvd"
+    - "Stop radvd"
 
 - name: "RAdvd / Put radvd.conf"
   ansible.builtin.template:
@@ -15,4 +15,4 @@
     group: root
     mode: '0644'
   notify:
-    - "Restart radvd"
+    - "Stop radvd"
