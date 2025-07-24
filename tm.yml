@@ -42,6 +42,7 @@
         name: artis3n.tailscale
       tags:
         - tailscale
+      when: not ansible_check_mode
       vars:
         tailscale_authkey: "{{ all.vars.tailscale.client_secret }}"
         tailscale_args: "--accept-dns=false"
