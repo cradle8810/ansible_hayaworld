@@ -133,3 +133,7 @@ firewall:
       proto: "udp"
       src: "{{ ipv6.ula.prefix }}::/48"
       port: "2049"
+    - name: "DHCPv6 Client from service line"
+      proto: "udp"
+      src: "::"
+      port: "546"

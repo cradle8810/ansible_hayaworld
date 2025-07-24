@@ -29,6 +29,10 @@ firewall:
       proto: "tcp"
       src: "192.168.1.0/24"
       port: '514'
+    - name: "DHCPv6 Client from service line"
+      proto: "udp"
+      src: "::"
+      port: "546"
 
 drives:
   hayaworld:

@@ -15,8 +15,7 @@ dhcp-option=option:ntp-server,{{ dnsmasq.dhcp_option.ntp_server }}
 dhcp-option=option:router,{{ dnsmasq.dhcp_option.router }}
 
 # IPv6 Configurations(SLACC)
-enable-ra
-dhcp-range=::,constructor:{{ dnsmasq.interface }},ra-stateless,64
+dhcp-range=::,static
 dhcp-option=option6:dns-server,[{{ dnsmasq.ipv6.dns6_server_self }}],[{{ dnsmasq.ipv6.dns6_server_other }}]
 dhcp-option=option6:domain-search,{{ dnsmasq.domain }}
 
@@ -29,6 +28,9 @@ resolv-file=/etc/dnsmasq.d/resolv.txt
 server=/flets/123.107.190.7
 server=/v4flets-east.jp/123.107.190.7
 server=/speed.flets/123.107.190.7
+
+# Tailscale
+server=/*.ts.net/100.100.100.100
 
 #log-queries
 log-dhcp

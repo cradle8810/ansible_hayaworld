@@ -34,6 +34,10 @@ firewall:
       proto: "tcp"
       src: "172.17.0.0/16"
       port: "22"
+    - name: "DHCPv6 Client from service line"
+      proto: "udp"
+      src: "::"
+      port: "546"
 
 runner:
   user:
