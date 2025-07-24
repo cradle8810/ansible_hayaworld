@@ -13,7 +13,7 @@
 
 - name: "RAdvd / Setting RAdvd"
   ansible.builtin.import_tasks:
-    file: roles/dns/tasks/corosync.yml
+    file: tasks/corosync.yml
   tags:
     - corosync
 
