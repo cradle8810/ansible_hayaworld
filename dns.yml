@@ -30,7 +30,7 @@
         dns_cluster_01_ipv4: "192.168.1.100"
         dns_cluster_02_ipv4: "192.168.1.150"
       tags:
-        - dnsmasq
+        - dns
 
     - name: Setup journalctl
       ansible.builtin.import_tasks:
@@ -41,7 +41,6 @@
         file: tasks/dns/rsyslog-rui.yml
       tags:
         - rsyslog
-        - dnsmasq
 
     - name: Setup for mai.hayaworld.home
       when: hostinfo.shortname == 'mai'
