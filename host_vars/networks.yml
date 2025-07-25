@@ -7,6 +7,13 @@ network:
     shortname: pskylark
     sshuser: hayato
     self_org: false
+  - hostname: nuc02.hayaworld.home
+    interface: enp1s0
+    ipv4: 192.168.1.12
+    ipv6_addr: "{{ ipv6.ula.prefix }}::12"
+    shortname: nuc02
+    sshuser: root
+    self_org: false
   - hostname: nuc03.hayaworld.home
     interface: enp86s0
     ipv4: 192.168.1.13
