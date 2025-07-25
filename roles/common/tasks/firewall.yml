@@ -1,6 +1,7 @@
 ---
 - name: "Common / UFW Settings"
   when: common_firewall.allow_rules is defined
+  notify: "commit ufw"
   block:
     - name: "Common / Install UFW"
       ansible.builtin.apt:
@@ -14,13 +15,7 @@
         proto: "{{ item.proto }}"
         src: "{{ item.src }}"
         port: "{{ item.port }}"
-        state: enabled
       loop: "{{ common_firewall.allow_rules }}"
-
-    - name: "Common / Set UFW Default Policy"
-      community.general.ufw:
-        state: enabled
-        policy: "{{ common_firewall.policy }}"
 
     - name: Set logging
       community.general.ufw:

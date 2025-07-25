@@ -16,3 +16,8 @@
   register: retval
   changed_when: retval.rc == 0
   listen: "nf_conntrack_max sysctl"
+
+- name: "Common / Commit firewall rules"
+  community.general.ufw:
+    state: enabled
+  listen: "commit ufw"
