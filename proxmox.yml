@@ -14,6 +14,14 @@
         file: handlers/main.yml
 
   tasks:
+    - name: "Common / Set Hostinfo"
+      ansible.builtin.set_fact:
+        hostinfo: "{{ network | selectattr('ipv4', 'eq', mgmt_ipv4) | first }}"
+      vars:
+        mgmt_ipv4: "{{ ansible_all_ipv4_addresses | select('match', '192.168.1.') | first }}"
+      tags:
+        - always
+
     - name: Put LXC Privilige Container Cheatsheet
       ansible.builtin.copy:
         src: templates/proxmox/root/lxc_docker.txt
@@ -25,6 +33,8 @@
     - name: I915 Driver Install
       ansible.builtin.import_tasks:
         file: tasks/proxmox/igpu_driver_install.yml
+      when:
+        - hostinfo.shortname != "nuc02"
       tags:
         - igpu
 
