@@ -35,6 +35,7 @@ network:
     shortname: rui
     sshuser: hayato
     self_org: true
+    mtu: 9000
   - hostname: origin.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.102
@@ -42,6 +43,7 @@ network:
     shortname: origin
     sshuser: hayato
     self_org: true
+    mtu: 9000
   - hostname: console.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.105
@@ -49,6 +51,7 @@ network:
     shortname: console
     sshuser: hayato
     self_org: true
+    mtu: 9000
   - hostname: runner03.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.108
@@ -56,6 +59,7 @@ network:
     shortname: runner03
     sshuser: runner
     self_org: true
+    mtu: 9000
   - hostname: log.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.109
@@ -63,6 +67,7 @@ network:
     shortname: log
     sshuser: hayato
     self_org: true
+    mtu: 9000
   - hostname: runner04.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.110
@@ -70,6 +75,7 @@ network:
     shortname: runner04
     sshuser: runner
     self_org: true
+    mtu: 9000
   - hostname: tm.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.112
@@ -77,6 +83,7 @@ network:
     shortname: tm
     sshuser: hayato
     self_org: true
+    mtu: 9000
   - hostname: scanner.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.113
@@ -84,13 +91,23 @@ network:
     shortname: scanner
     sshuser: hayato
     self_org: true
-  - hostname: tsgw.hayaworld.home
+    mtu: 9000
+  - hostname: tsgw1.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.114
     ipv6_addr: "{{ ipv6.ula.prefix }}::114"
-    shortname: tsgw
+    shortname: tsgw1
     sshuser: hayato
     self_org: true
+    mtu: 9000
+  - hostname: tsgw2.hayaworld.home
+    interface: ens18
+    ipv4: 192.168.1.115
+    ipv6_addr: "{{ ipv6.ula.prefix }}::115"
+    shortname: tsgw2
+    sshuser: hayato
+    self_org: true
+    mtu: 1500
   - hostname: terminal.hayaworld.home
     interface: enx6c1ff7023273
     ipv4: 192.168.1.130
@@ -98,6 +115,7 @@ network:
     shortname: terminal
     sshuser: ansible
     self_org: true
+    mtu: 9000
   - hostname: mai.hayaworld.home
     interface: enp1s0
     ipv4: 192.168.1.150
@@ -105,6 +123,7 @@ network:
     shortname: mai
     sshuser: hayato
     self_org: true
+    mtu: 1500
   - hostname: skylark.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.200
@@ -112,6 +131,7 @@ network:
     shortname: skylark
     sshuser: hayato
     self_org: true
+    mtu: 9000
   - hostname: haccho02.hayaworld.home
     interface: none
     ipv4: 192.168.1.253
