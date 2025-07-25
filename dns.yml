@@ -1,6 +1,6 @@
 - name: Play for DNS servers
   hosts: dns
-  remote_user: root
+  remote_user: ansible
   gather_facts: true
   become: true
 
@@ -41,16 +41,6 @@
         file: tasks/dns/rsyslog-rui.yml
       tags:
         - rsyslog
-
-    - name: Setup for mai.hayaworld.home
-      when: hostinfo.shortname == 'mai'
-      block:
-        - name: Install QDevice for NUC(Proxmox)
-          ansible.builtin.import_tasks:
-            file: tasks/mai/nuc_quorum_install.yml
-          tags:
-            - quorum
-            - proxmox
 
     - name: Make Started Services
       ansible.builtin.import_tasks:
