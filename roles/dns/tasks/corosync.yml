@@ -25,6 +25,7 @@
     state: "present"
   notify:
     - "Restart corosync"
+    - "Restart pacemaker"
 
 - name: "Corosync / Put Cluster authkey"
   ansible.builtin.copy:
@@ -40,6 +41,7 @@
       dest: /etc/pacemaker/authkey
   notify:
     - "Restart corosync"
+    - "Restart pacemaker"
 
 - name: "Corosync / Put corosync.conf"
   ansible.builtin.template:
@@ -50,6 +52,7 @@
     mode: '0644'
   notify:
     - "Restart corosync"
+    - "Restart pacemaker"
 
 - name: "RAdvd resource configurations"
   block:

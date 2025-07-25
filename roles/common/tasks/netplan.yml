@@ -29,7 +29,7 @@
             routes:
               "{{ subnet.routes }}"
             mtu:
-              "{{ subnet.mtu }}"
+              "{{ hostinfo.mtu }}"
 
 - name: "Common / Apply netplan config (Terminal/Physical)"
   ansible.builtin.import_role:
@@ -58,7 +58,7 @@
             routes:
               "{{ subnet.routes }}"
             mtu:
-              "{{ subnet.mtu }}"
+              "{{ hostinfo.mtu }}"
 
 
 - name: "Common / Apply netplan config (Mai/Physical)"
@@ -90,7 +90,7 @@
             routes:
               "{{ subnet.routes }}"
             mtu:
-              "{{ subnet.mtu }}"
+              "{{ hostinfo.mtu }}"
 
 - name: "Common / Apply netplan config (rui / VMs)"
   ansible.builtin.import_role:
@@ -122,4 +122,4 @@
             routes:
               "{{ subnet.routes }}"
             mtu:
-              "{{ subnet.mtu }}"
+              "{{ hostinfo.mtu }}"
