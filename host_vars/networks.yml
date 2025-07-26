@@ -108,6 +108,14 @@ network:
     sshuser: hayato
     self_org: true
     mtu: 1500
+  - hostname: qd.hayaworld.home
+    interface: ens18
+    ipv4: 192.168.1.116
+    ipv6_addr: "{{ ipv6.ula.prefix }}::116"
+    shortname: qd
+    sshuser: ansible
+    self_org: true
+    mtu: 1500
   - hostname: terminal.hayaworld.home
     interface: enx6c1ff7023273
     ipv4: 192.168.1.130
