@@ -24,16 +24,14 @@
 
 - name: "Corosync / Start and enable corosync"
   ansible.builtin.systemd_service:
-    name:
-      - corosync
+    name: corosync
     state: restarted
     enabled: true
   listen: "Restart corosync"
 
 - name: "Pacemaker / Start and enable pacemaker"
   ansible.builtin.systemd_service:
-    name:
-      - pacemaker
+    name: pacemaker
     state: restarted
     enabled: true
   listen: "Restart pacemaker"
