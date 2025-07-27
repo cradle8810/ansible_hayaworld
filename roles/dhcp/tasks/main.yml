@@ -1,0 +1,37 @@
+---
+- name: "Kea DHCP / Install Kea"
+  ansible.builtin.apt:
+    name:
+      - "kea-dhcp4-server"
+      - "kea-dhcp6-server"
+    state: present
+    update_cache: true
+  notify:
+    - "Restart kea-dhcpv4"
+    - "Restart kea-dhcpv6"
+  tags:
+    - kea
+
+- name: "Kea DHCP / Copy DHCPv4 Config"
+  ansible.builtin.template:
+    src: templates/etc/kea/kea-dhcp4.conf.j2
+    dest: /etc/kea/kea-dhcp4.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - "Restart kea-dhcpv4"
+  tags:
+    - kea
+
+- name: "Kea DHCP / Copy DHCPv6 Config"
+  ansible.builtin.template:
+    src: templates/etc/kea/kea-dhcp6.conf.j2
+    dest: /etc/kea/kea-dhcp6.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - "Restart kea-dhcpv6"
+  tags:
+    - kea

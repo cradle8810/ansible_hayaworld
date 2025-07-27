@@ -32,6 +32,14 @@
       tags:
         - dns
 
+    - name: "Setup Kea"
+      ansible.builtin.import_role:
+        name: dhcp
+      vars:
+        dhcp_info: "{{ dhcp }}"
+      tags:
+        - dhcp
+
     - name: Setup journalctl
       ansible.builtin.import_tasks:
         file: tasks/dns/journalctl.yml

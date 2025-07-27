@@ -7,16 +7,6 @@ dnsmasq:
   local: /hayaworld.home/
   listen_address: "{{ mai_info.ipv4 }}"
   interface: "{{ mai_info.interface }}"
-  dhcp_range:
-    start: 192.168.1.151
-    end: 192.168.1.199
-    netmask: 255.255.255.0
-    ttl: "12h"
-  dhcp_option:
-    ntp_server: 210.130.188.10
-    dns_server: "{{ mai_info.ipv4 }},{{ rui_info.ipv4 }}"
-    router: "{{ subnet.gw4 }}"
-    netmask: "255.255.255.0"
   dns:
     cache_size: 4000
     NXDOMAIN_hosts: /etc/dnsmasq.d/NXDOMAIN.conf
@@ -29,6 +19,37 @@ dnsmasq:
   ipv4:
     dns4_server_self: "{{ mai_info.ipv4 }}"
     dns4_server_other: "{{ rui_info.ipv4 }}"
+
+dhcp:
+  interface: "{{ mai_info.interface }}"
+  me: "mai"
+  peer:
+    - name: "mai"
+      url: "http://{{ mai_info.ipv4 }}:8080/"
+      role: "primary"
+      auto-failover: true
+    - name: "rui"
+      url: "http://{{ rui_info.ipv4 }}:8080/"
+      role: "standby"
+      auto-failover: true
+  ipv4:
+    subnet: "192.168.1.0/24"
+    pool: "192.168.1.21 - 192.168.1.99"
+    ttl: "0xf0"
+    gw: "{{ subnet.gw4 }}"
+    dns: "{{ mai_info.ipv4 }},{{ rui_info.ipv4 }}"
+    lease_db: "/var/lib/kea/kea-leases4.csv"
+  ipv6:
+    subnet: "{{ ipv6.ula.prefix }}::/64"
+    pool: "{{ ipv6.ula.prefix }}::1000-{{ ipv6.ula.prefix }}::2000"
+    lease_db: "/var/lib/kea/kea-leases6.csv"
+    option_data:
+      - "name": "dns-servers"
+        "data": "{{ mai_info.ipv6_addr }}, {{ rui_info.ipv6_addr }}"
+        "always-send": true
+      - "name": "domain-search"
+        "data": "{{ subnet.search | join }}"
+        "always-send": true
 
 services_start:
   - dnsmasq
@@ -103,15 +124,7 @@ firewall:
       proto: "udp"
       src: "::"
       port: "546"
-    - name: "Tailscale WireGuard Tunnel"
-      proto: "udp"
-      src: "any"
-      port: "41641"
-    - name: "Tailscale WireGuard Tunnel"
-      proto: "udp"
-      src: "any"
-      port: "41641"
-    - name: "Tailscale STUN"
-      proto: "udp"
-      src: "any"
-      port: "3478"
+    - name: "Kea DHCP HA heartbeat"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: "8080"
