@@ -34,10 +34,10 @@ dhcp:
       auto-failover: true
   ipv4:
     subnet: "192.168.1.0/24"
-    pool: "192.168.1.151 - 192.168.1.199"
+    pool: "192.168.1.21-192.168.1.99"
     ttl: "0xf0"
     gw: "{{ subnet.gw4 }}"
-    dns: "{{ rui_info.ipv4 }},{{ mai_info.ipv4 }}"
+    dns: "{{ mai_info.ipv4 }},{{ rui_info.ipv4 }}"
     lease_db: "/var/lib/kea/kea-leases4.csv"
   ipv6:
     subnet: "{{ ipv6.ula.prefix }}::/64"

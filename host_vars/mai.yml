@@ -34,7 +34,7 @@ dhcp:
       auto-failover: true
   ipv4:
     subnet: "192.168.1.0/24"
-    pool: "192.168.1.21 - 192.168.1.99"
+    pool: "192.168.1.21-192.168.1.99"
     ttl: "0xf0"
     gw: "{{ subnet.gw4 }}"
     dns: "{{ mai_info.ipv4 }},{{ rui_info.ipv4 }}"

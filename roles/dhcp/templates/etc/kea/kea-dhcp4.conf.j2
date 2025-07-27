@@ -63,10 +63,10 @@
   "subnet4": [
     {
       "id": 1,
-      "subnet": "{{ dhcp_info.ipv4.subnet }}",
       "pools": [
           { "pool": "{{ dhcp_info.ipv4.pool }}" }
       ],
+      "subnet": "{{ dhcp_info.ipv4.subnet }}",
       "option-data": [
           {
               "name": "routers",
