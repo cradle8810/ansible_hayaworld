@@ -6,14 +6,6 @@ local={{ dnsmasq.local }}
 listen-address={{ dnsmasq.listen_address }}
 interface={{ dnsmasq.interface }}
 
-dhcp-range=lan,{{ dnsmasq.dhcp_range.start }},{{ dnsmasq.dhcp_range.end }},{{ dnsmasq.dhcp_range.netmask }},{{ dnsmasq.dhcp_range.ttl }}
-
-dhcp-option=option:dns-server,{{ dnsmasq.dhcp_option.dns_server }}
-dhcp-option=option:domain-search,{{ dnsmasq.domain }}
-dhcp-option=option:netmask,{{ dnsmasq.dhcp_option.netmask }}
-dhcp-option=option:ntp-server,{{ dnsmasq.dhcp_option.ntp_server }}
-dhcp-option=option:router,{{ dnsmasq.dhcp_option.router }}
-
 # IPv6 Configurations(SLACC)
 dhcp-range=::,static
 dhcp-option=option6:dns-server,[{{ dnsmasq.ipv6.dns6_server_self }}],[{{ dnsmasq.ipv6.dns6_server_other }}]

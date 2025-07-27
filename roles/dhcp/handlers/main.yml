@@ -1,0 +1,14 @@
+---
+- name: "Kea DHCP / Reastart Kea DHCPv4 Server"
+  ansible.builtin.systemd_service:
+    name: kea-dhcp4-server.service
+    state: restarted
+    enabled: true
+  listen: "Restart kea-dhcpv4"
+
+- name: "Kea DHCP / Reastart Kea DHCPv6 Server"
+  ansible.builtin.systemd_service:
+    name: kea-dhcp6-server.service
+    state: restarted
+    enabled: true
+  listen: "Restart kea-dhcpv6"

@@ -7,16 +7,6 @@ dnsmasq:
   local: /hayaworld.home/
   listen_address: "{{ mai_info.ipv4 }}"
   interface: "{{ mai_info.interface }}"
-  dhcp_range:
-    start: 192.168.1.151
-    end: 192.168.1.199
-    netmask: 255.255.255.0
-    ttl: "12h"
-  dhcp_option:
-    ntp_server: 210.130.188.10
-    dns_server: "{{ mai_info.ipv4 }},{{ rui_info.ipv4 }}"
-    router: "{{ subnet.gw4 }}"
-    netmask: "255.255.255.0"
   dns:
     cache_size: 4000
     NXDOMAIN_hosts: /etc/dnsmasq.d/NXDOMAIN.conf
@@ -29,6 +19,60 @@ dnsmasq:
   ipv4:
     dns4_server_self: "{{ mai_info.ipv4 }}"
     dns4_server_other: "{{ rui_info.ipv4 }}"
+
+dhcp:
+  interface: "{{ mai_info.interface }}"
+  me: "mai"
+  peer:
+    - name: "mai"
+      url: "http://{{ mai_info.ipv4 }}:8080/"
+      role: "primary"
+      auto-failover: true
+    - name: "rui"
+      url: "http://{{ rui_info.ipv4 }}:8080/"
+      role: "standby"
+      auto-failover: true
+  ipv4:
+    subnet: "192.168.1.0/24"
+    pool: "192.168.1.21 - 192.168.1.99"
+    ttl: "0xf0"
+    gw: "{{ subnet.gw4 }}"
+    dns: "{{ mai_info.ipv4 }},{{ rui_info.ipv4 }}"
+    lease_db: "/var/lib/kea/kea-leases4.csv"
+  ipv6:
+    subnet: "{{ ipv6.ula.prefix }}::/64"
+    pool: "{{ ipv6.ula.prefix }}::1000-{{ ipv6.ula.prefix }}::2000"
+    lease_db: "/var/lib/kea/kea-leases6.csv"
+    option_data:
+      - "name": "dns-servers"
+        "data": "{{ mai_info.ipv6_addr }}, {{ rui_info.ipv6_addr }}"
+        "always-send": true
+      - "name": "domain-search"
+        "data": "{{ subnet.search | join }}"
+        "always-send": true
+
+corosync:
+  user: hacluster
+  passwd: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          30336235643538366330303137356231303939346466633662376131353239373831653131356266
+          3664333031303631383830323139343734633136613030360a306437343632376164386438626536
+          61346562633366303433633662396263383031626534383033633466366363663161393763646237
+          3035623436636262380a396236326338613736633339366334353062653164346562316331353462
+          6166
+  password_hashed: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          66643066306339343061383566396531633363363163666437653164643639376532353139396436
+          3566313135343236623261613364613064383265363235300a303632383864643034633439663036
+          36643039323361623634306534313936326439333064363839386637666461346133346533363333
+          3534633132626563370a303161323136626266656166383738343263623835643061306164376430
+          32316339323337633435323335396166646439373935356366376131633235363338636461306635
+          65396234636637386236303331653936346139316363323239633732353439646631363961363464
+          62356630363430363735666139663232383165326666373038393765633264613261396439333065
+          32343739356337343864306139363136356562656565383435383237323566393436383339656435
+          30326163633133363063386636363637313564353039653932353833323562373266
+  me: "192.168.1.150"
+  other: "192.168.1.100"
 
 services_start:
   - dnsmasq
@@ -103,15 +147,7 @@ firewall:
       proto: "udp"
       src: "::"
       port: "546"
-    - name: "Tailscale WireGuard Tunnel"
-      proto: "udp"
-      src: "any"
-      port: "41641"
-    - name: "Tailscale WireGuard Tunnel"
-      proto: "udp"
-      src: "any"
-      port: "41641"
-    - name: "Tailscale STUN"
-      proto: "udp"
-      src: "any"
-      port: "3478"
+    - name: "Kea DHCP HA heartbeat"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: "8080"
