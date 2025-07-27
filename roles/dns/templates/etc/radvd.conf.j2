@@ -14,9 +14,7 @@ interface {{ dnsmasq.interface }} {
   };
 
   RDNSS {{ dnsmasq.ipv6.dns6_server_self }} {{ dnsmasq.ipv6.dns6_server_other }} {
-    AdvRDNSSPreference 8;
-    AdvRDNSSOpen off;
-    AdvRDNSSLifetime 30;
+    AdvRDNSSLifetime 100;
   };
 
   DNSSL {{ dnsmasq.domain }} {
