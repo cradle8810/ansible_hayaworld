@@ -29,7 +29,7 @@
 
 - name: "Corosync / Check Corosync Cluster built"
   ansible.builtin.stat:
-    path: " /etc/corosync/ansible_configured"
+    path: "/etc/corosync/ansible_configured"
   register: configured
 
 - name: "Corosync / Cluster Initialize"
@@ -82,10 +82,19 @@
         - corosync
         - pacemaker
 
+    - name: "Corosync / Cluster Qurum disable"
+      become: true
+      ansible.builtin.shell:
+        cmd: |
+          pcs property set no-quorum-policy=ignore
+          pcs property set stonith-enabled=false
+      register: retval
+      changed_when: retval.rc == 0
+
     - name: "Corosync / Mark Cluster Configured"
       ansible.builtin.file:
         path: "/etc/corosync/ansible_configured"
-        state: file
+        state: touch
         owner: root
         group: root
         mode: '0644'
@@ -106,8 +115,7 @@
       become: true
       ansible.builtin.shell:
         cmd: |
-          pcs resource create radvd systemd:radvd op monitor interval=10s &&
-          pcs constraint location radvd prefers {{ hostinfo.ipv4 }}
+          pcs resource create radvd systemd:radvd op monitor interval=10s
       when:
         - is_radvd_configured.rc != 0
         - hostinfo.ipv4 == dns_cluster_01_ipv4
