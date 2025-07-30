@@ -107,7 +107,7 @@ network:
     shortname: tsgw2
     sshuser: hayato
     self_org: true
-    mtu: 1500
+    mtu: 9000
   - hostname: qd.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.116
@@ -139,7 +139,7 @@ network:
     shortname: mai
     sshuser: hayato
     self_org: true
-    mtu: 1500
+    mtu: 9000
   - hostname: skylark.hayaworld.home
     interface: ens18
     ipv4: 192.168.1.200
