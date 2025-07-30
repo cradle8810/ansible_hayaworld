@@ -6,8 +6,8 @@ kai_info: "{{ network | selectattr('shortname', 'eq', 'kai') | first }}"
 dnsmasq:
   domain: hayaworld.home
   local: /hayaworld.home/
-  listen_address: "{{ mai_info.ipv4 }}"
-  interface: "{{ mai_info.interface }}"
+  listen_address: "{{ kai_info.ipv4 }}"
+  interface: "{{ kai_info.interface }}"
   dns:
     cache_size: 4000
     NXDOMAIN_hosts: /etc/dnsmasq.d/NXDOMAIN.conf
@@ -15,15 +15,15 @@ dnsmasq:
     log_facility: local5
     log_to: "log.hayaworld.home"
   ipv6:
-    dns6_server_self: "{{ mai_info.ipv6_addr }}"
-    dns6_server_other: "{{ rui_info.ipv6_addr }}"
+    dns6_server_self: "{{ rui_info.ipv6_addr }}"
+    dns6_server_other: "{{ mai_info.ipv6_addr }}"
   ipv4:
-    dns4_server_self: "{{ mai_info.ipv4 }}"
-    dns4_server_other: "{{ rui_info.ipv4 }}"
+    dns4_server_self: "{{ rui_info.ipv4 }}"
+    dns4_server_other: "{{ mai_info.ipv4 }}"
 
 dhcp:
-  interface: "{{ mai_info.interface }}"
-  me: "mai"
+  interface: "{{ kai_info.interface }}"
+  me: "kai"
   peer:
     - name: "mai"
       url: "http://{{ mai_info.ipv4 }}:8080/"
@@ -76,9 +76,9 @@ corosync:
           62356630363430363735666139663232383165326666373038393765633264613261396439333065
           32343739356337343864306139363136356562656565383435383237323566393436383339656435
           30326163633133363063386636363637313564353039653932353833323562373266
-  me: "192.168.1.150"
+  me: "192.168.1.125"
   other: "192.168.1.100"
-  other2: "192.168.1.125"
+  other2: "192.168.1.150"
 
 services_start:
   - dnsmasq
