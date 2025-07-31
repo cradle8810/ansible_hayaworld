@@ -24,6 +24,7 @@ dnsmasq:
 dhcp:
   interface: "{{ mai_info.interface }}"
   me: "mai"
+  lib_base: "/usr/lib/aarch64-linux-gnu/kea/hooks"
   peer:
     - name: "mai"
       url: "http://{{ mai_info.ipv4 }}:8080/"

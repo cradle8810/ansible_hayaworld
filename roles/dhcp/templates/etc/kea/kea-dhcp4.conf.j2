@@ -37,11 +37,11 @@
 
   "hooks-libraries": [
     {
-      "library": "/usr/lib/x86_64-linux-gnu/kea/hooks/libdhcp_lease_cmds.so",
+      "library": "{{ dhcp.lib_base }}/libdhcp_lease_cmds.so",
       "parameters": { }
     },
     {
-      "library": "/usr/lib/x86_64-linux-gnu/kea/hooks/libdhcp_ha.so",
+      "library": "{{ dhcp.lib_base }}/libdhcp_ha.so",
       "parameters": {
         "high-availability": [ {
           "this-server-name": "{{ dhcp_info.me }}",
