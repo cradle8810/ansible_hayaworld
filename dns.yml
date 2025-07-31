@@ -21,6 +21,21 @@
       vars:
         common_firewall: "{{ firewall }}"
 
+    - name: Mount tmpfs for mai(Raspi)
+      ansible.posix.mount:
+        src: "tmpfs"
+        path: "{{ item }}"
+        opts: "defaults"
+        fstype: tmpfs
+        state: mounted
+      when: hostinfo.shortname == "mai"
+      loop:
+        - "/home/ansible/.ansible"
+        - "/var/cache/apt/archives"
+        - "/var/log"
+      tags:
+        - mount
+
     - name: "Setup dnsmasq"
       ansible.builtin.import_role:
         name: dns
