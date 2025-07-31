@@ -32,7 +32,6 @@
       loop:
         - "/home/ansible/.ansible"
         - "/var/cache/apt/archives"
-        - "/var/log"
       tags:
         - mount
 
