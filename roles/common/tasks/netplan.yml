@@ -5,8 +5,6 @@
   any_errors_fatal: true
   when:
     - hostinfo.shortname != "terminal"
-    - hostinfo.shortname != "mai"
-    - hostinfo.shortname != "rui"
   notify: "Reconfigure netplan"
   vars:
     ipv4_addr: "{{ hostinfo.ipv4 }}"
@@ -17,7 +15,7 @@
       network:
         version: 2
         ethernets:
-          ens18:
+          enp6s18:
             addresses:
               - "{{ ipv4_addr }}/{{ subnet.mask }}"
               - "{{ ipv6_addr }}/64"
@@ -53,37 +51,6 @@
             nameservers:
               addresses:
                 "{{ ipv6.ula.dns6 + subnet.dns4 }}"
-              search:
-                "{{ subnet.search }}"
-            routes:
-              "{{ subnet.routes }}"
-            mtu:
-              "{{ hostinfo.mtu }}"
-
-- name: "Common / Apply netplan config ( mai / rui / VMs )"
-  ansible.builtin.import_role:
-    name: mrlesmithjr.netplan
-  any_errors_fatal: true
-  when: hostinfo.shortname == "rui" or hostinfo.shortname == "mai"
-  notify: "Reconfigure netplan"
-  vars:
-    ipv4_addr: "{{ hostinfo.ipv4 }}"
-    ipv6_addr: "{{ hostinfo.ipv6_addr }}"
-    netplan_enabled: true
-    netplan_renderer: networkd
-    netplan_configuration:
-      network:
-        version: 2
-        ethernets:
-          ens18:
-            addresses:
-              - "{{ ipv4_addr }}/{{ subnet.mask }}"
-              - "{{ ipv6_addr }}/64"
-            nameservers:
-              addresses:
-                - "{{ dnsmasq.ipv4.dns4_server_other }}"
-                - "{{ outer_dns_servers.ipv4 }}"
-                - "{{ outer_dns_servers.ipv6 }}"
               search:
                 "{{ subnet.search }}"
             routes:
