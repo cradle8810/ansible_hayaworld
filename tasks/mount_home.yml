@@ -25,6 +25,6 @@
   ansible.posix.mount:
     src: "UUID={{ homedir.UUID }}"
     path: "/home"
-    opts: "defaults,compress=zstd"
+    opts: "defaults,compress=zstd:1"
     fstype: btrfs
     state: mounted

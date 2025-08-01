@@ -4,28 +4,28 @@ drives:
     uuid: 9d7a85bd-7a80-4b03-be2b-e14aa713c27d
     mountpoint: /skylark
     filesystem: "btrfs"
-    options: "defaults,noatime"
+    options: "defaults,noatime,compress=zstd:1"
   backup:
     - uuid: 77af48a6-5a47-4e06-a106-c5c74b6d1449
       mountpoint: /backup/hayato
       subvol: "/hayato"
       filesystem: "btrfs"
-      options: "defaults,users,noatime,compress=zstd"
+      options: "defaults,users,noatime,compress=zstd:1"
     - uuid: 77af48a6-5a47-4e06-a106-c5c74b6d1449
       mountpoint: /backup/Nullpo
       subvol: "/Nullpo"
       filesystem: "btrfs"
-      options: "defaults,users,noatime,compress=zstd"
+      options: "defaults,users,noatime,compress=zstd:1"
     - uuid: 77af48a6-5a47-4e06-a106-c5c74b6d1449
       mountpoint: /backup/nfs
       subvol: "/nfs"
       filesystem: "btrfs"
-      options: "defaults,users,noatime,compress=zstd"
+      options: "defaults,users,noatime,compress=zstd:1"
     - uuid: 77af48a6-5a47-4e06-a106-c5c74b6d1449
       mountpoint: /backup/snapshots
       subvol: "/snapshots"
       filesystem: "btrfs"
-      options: "defaults,users,noatime,compress=zstd"
+      options: "defaults,users,noatime,compress=zstd:1"
 
 smb:
   samba_workgroup: "WORKGROUP"
