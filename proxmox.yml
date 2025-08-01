@@ -49,3 +49,15 @@
         file: tasks/proxmox/swappiness.yml
       tags:
         - swap
+
+    - name: Mount tmpfs for mai(Raspi)
+      ansible.posix.mount:
+        src: "tmpfs"
+        path: "{{ item }}"
+        opts: "defaults"
+        fstype: tmpfs
+        state: mounted
+      loop:
+        - "/var/tmp"
+      tags:
+        - mount
