@@ -13,3 +13,7 @@ ksm:
 
 swap:
   swappiness: 20
+
+zramswap:
+  algo: lz4
+  percent: 15

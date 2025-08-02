@@ -38,19 +38,30 @@
       tags:
         - igpu
 
-    - name: KSM Service Settings
-      ansible.builtin.import_tasks:
-        file: tasks/proxmox/ksm.yml
+    - name: "Memory Configurations"
       tags:
-        - ksm
+        - memory
+      block:
+        - name: KSM Service Settings
+          ansible.builtin.import_tasks:
+            file: tasks/proxmox/ksm.yml
+          tags:
+            - ksm
 
-    - name: Set Swappiness
-      ansible.builtin.import_tasks:
-        file: tasks/proxmox/swappiness.yml
-      tags:
-        - swap
+        - name: Install/Config Zramswap
+          ansible.builtin.import_tasks:
+            file: tasks/zram.yml
+          tags:
+            - zram
+            - swap
 
-    - name: Mount tmpfs for mai(Raspi)
+        - name: Set Swappiness
+          ansible.builtin.import_tasks:
+            file: tasks/proxmox/swappiness.yml
+          tags:
+            - swap
+
+    - name: "Mount tmpfs for /var/tmp"
       ansible.posix.mount:
         src: "tmpfs"
         path: "{{ item }}"
