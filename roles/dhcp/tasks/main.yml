@@ -40,3 +40,25 @@
     mode: '0644'
   notify:
     - "Restart kea-dhcpv6"
+
+- name: "Kea DHCP / Make firectory for lease file"
+  ansible.builtin.file:
+    path: "/var/lib/kea"
+    state: directory
+    owner: "_kea"
+    group: "_kea"
+    mode: '0755'
+  notify:
+    - "Restart kea-dhcpv4"
+    - "Restart kea-dhcpv6"
+
+- name: "Kea DHCP /Mount tmpfs for lease file"
+  ansible.posix.mount:
+    src: "tmpfs"
+    path: "/var/lib/kea"
+    opts: "defaults"
+    fstype: tmpfs
+    state: mounted
+  notify:
+    - "Restart kea-dhcpv4"
+    - "Restart kea-dhcpv6"
