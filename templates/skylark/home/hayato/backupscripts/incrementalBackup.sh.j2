@@ -8,9 +8,10 @@ EXCLUDEFILE='{{ pathinfo.excludefilepath }}'
 TODAY=$(date +%Y%m%d_%H%M%S)
 
 # rsync
-echo "sudo rsync -av8 --delete -H --exclude-from=${EXCLUDEFILE} ${SRC} ${DEST}"
-sudo rsync -av8 --delete -H --exclude-from="${EXCLUDEFILE}" ${SRC} ${DEST}
+echo "sudo rsync -av8 --sparse --delete -H --exclude-from=${EXCLUDEFILE} ${SRC} ${DEST}"
+sudo rsync -av8 --sparse --delete -H --exclude-from="${EXCLUDEFILE}" ${SRC} ${DEST}
 RETVAL=$?
 
 # Snapshot 作成
+echo "Creating Snapshots..."
 sudo btrfs subvolume snapshot -r "${DEST}" "${SNAPSHOTSDIR}/${TODAY}"
