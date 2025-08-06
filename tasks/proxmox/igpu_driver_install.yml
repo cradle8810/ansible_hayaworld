@@ -50,6 +50,7 @@
   notify:
     - "Run update-grub"
     - "Run update-initramfs"
+    - "Run pin-kernel"
     - "Echo reboot notice"
   block:
     - name: "Configure GRUB CMDLINE for Proxmox"
