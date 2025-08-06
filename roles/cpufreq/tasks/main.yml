@@ -1,0 +1,29 @@
+---
+- name: "CPU Governor / Install cpufrequtils (Ubuntu)"
+  ansible.builtin.apt:
+    name: "cpufrequtils"
+    state: present
+    update_cache: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "CPU Governor / Install cpufrequtils (Proxmox)"
+  ansible.builtin.apt:
+    name: "linux-cpupower"
+    state: present
+    update_cache: true
+  when: ansible_distribution == "Debian"
+
+- name: "CPU Governor / Copy CPUFreq set service file"
+  ansible.builtin.template:
+    src: templates/etc/systemd/system/cpufreq.service.j2
+    dest: /etc/systemd/system/cpufreq.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: "CPU Governor / Enable Service"
+  ansible.builtin.systemd_service:
+    name: cpufreq.service
+    state: restarted
+    enabled: true
+    daemon_reload: true
