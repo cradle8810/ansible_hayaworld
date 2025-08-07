@@ -53,3 +53,14 @@
         pskylark_cpu_enable_core1: false
       tags:
         - cpu
+
+    - name: Stop Unused services
+      ansible.builtin.systemd_service:
+        name: "{{ item }}"
+        state: stopped
+        enabled: false
+      loop:
+        - onlined.service
+        - thumbnailDaemon.service
+      tags:
+        - services
