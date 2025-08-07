@@ -44,3 +44,12 @@
         cpufreq_governor: "powersave"
       tags:
         - cpu
+
+    - name: Set CPU configurations
+      ansible.builtin.import_role:
+        name: pskylark_cpu
+      vars:
+        pskylark_cpu_speed_khz: 1600000
+        pskylark_cpu_enable_core1: false
+      tags:
+        - cpu

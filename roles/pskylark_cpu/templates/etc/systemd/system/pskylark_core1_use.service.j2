@@ -1,0 +1,14 @@
+[Unit]
+Description=Set CPU Core 1
+
+[Service]
+User=root
+Type=oneshot
+{% if pskylark_cpu_enable_core1 %}
+ExecStart=/bin/sh -c "echo '1' | tee /sys/devices/system/cpu/cpu1/online"
+{% else %}
+ExecStart=/bin/sh -c "echo '0' | tee /sys/devices/system/cpu/cpu1/online"
+{% endif %}
+
+[Install]
+WantedBy=multi-user.target
