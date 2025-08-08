@@ -33,8 +33,6 @@
     - name: I915 Driver Install
       ansible.builtin.import_tasks:
         file: tasks/proxmox/igpu_driver_install.yml
-      when:
-        - hostinfo.shortname != "nuc02"
       tags:
         - igpu
 
