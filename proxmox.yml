@@ -80,3 +80,12 @@
         cpufreq_governor: "powersave"
       tags:
         - cpu
+
+    - name: WoL Service Settings
+      ansible.builtin.import_tasks:
+        file: tasks/pskylark/wol.yml
+      vars:
+        macaddr: "{{ hostinfo.macaddress }}"
+      tags:
+        - wol
+        - network
