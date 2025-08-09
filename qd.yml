@@ -1,0 +1,37 @@
+---
+- name: Play for qd.hayaworld.home
+  hosts: qd
+  remote_user: ansible
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - host_vars/dns/CNAME.yml
+    - host_vars/dns/NXDOMAIN.yml
+    - host_vars/networks.yml
+
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+
+  tasks:
+    - name: Common Settings
+      ansible.builtin.import_role:
+        name: common
+      vars:
+        common_firewall: "{{ firewall }}"
+        common_pkg: "{{ apt }}"
+
+    - name: Install QDevice for NUC(Proxmox)
+      ansible.builtin.import_tasks:
+        file: tasks/qd/nuc_quorum_install.yml
+      tags:
+        - quorum
+        - proxmox
+
+    - name: Install/Config Zramswap
+      ansible.builtin.import_tasks:
+        file: tasks/zram.yml
+      tags:
+        - zram

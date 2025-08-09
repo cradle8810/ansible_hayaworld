@@ -66,13 +66,6 @@
       tags:
         - rsyslog
 
-    - name: Install/Config Zramswap
-      ansible.builtin.import_tasks:
-        file: tasks/zram.yml
-      when: hostinfo.shortname == 'mai'
-      tags:
-        - zram
-
     - name: Make Started Services
       ansible.builtin.import_tasks:
         file: tasks/service_start.yml
