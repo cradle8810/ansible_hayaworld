@@ -81,11 +81,3 @@
     - name: Make Started Services
       ansible.builtin.import_tasks:
         file: tasks/service_start.yml
-
-    - name: Set CPU Governor
-      ansible.builtin.import_role:
-        name: cpufreq
-      vars:
-        cpufreq_governor: "powersave"
-      tags:
-        - cpu

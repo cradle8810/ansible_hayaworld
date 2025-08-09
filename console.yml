@@ -111,11 +111,3 @@
         tailscale_oauth_ephemeral: false
         tailscale_tags:
           - console
-
-    - name: Set CPU Governor
-      ansible.builtin.import_role:
-        name: cpufreq
-      vars:
-        cpufreq_governor: "powersave"
-      tags:
-        - cpu
