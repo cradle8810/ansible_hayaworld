@@ -87,3 +87,13 @@
       tags:
         - wol
         - network
+
+    - name: "Install corosync-qdevice"
+      ansible.builtin.apt:
+        name: "corosync-qdevice"
+        state: present
+        update_cache: true
+        cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+      tags:
+        - corosync
+        - qdevice
