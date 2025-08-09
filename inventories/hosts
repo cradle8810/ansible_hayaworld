@@ -26,3 +26,16 @@ runner04 ansible_user=ansible ansible_host=runner04.hayaworld.home
 [tailscale]
 tsgw1 ansible_user=ansible ansible_host=192.168.1.114
 tsgw2 ansible_user=ansible ansible_host=192.168.1.115
+
+[vm]
+console
+kai
+mai
+rui
+runner03
+runner04
+scanner
+skylark
+tm
+tsgw1
+tsgw2

@@ -1,0 +1,25 @@
+---
+- name: Play for All VMs
+  hosts: vm
+  remote_user: ansible
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - host_vars/networks.yml
+
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+
+  tasks:
+    - name: "Apt Upgrade All"
+      ansible.builtin.apt:
+        autoclean: true
+        autoremove: true
+        cache_valid_time: 3600
+        install_recommends: false
+        purge: true
+        update_cache: true
+        upgrade: true
