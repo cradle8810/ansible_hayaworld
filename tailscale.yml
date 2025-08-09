@@ -24,11 +24,3 @@
         file: tasks/tailscale.yml
       tags:
         - tailscale
-
-    - name: Set CPU Governor
-      ansible.builtin.import_role:
-        name: cpufreq
-      vars:
-        cpufreq_governor: "powersave"
-      tags:
-        - cpu

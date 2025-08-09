@@ -55,11 +55,3 @@
         file: tasks/service_start.yml
       tags:
         - samba
-
-    - name: Set CPU Governor
-      ansible.builtin.import_role:
-        name: cpufreq
-      vars:
-        cpufreq_governor: "powersave"
-      tags:
-        - cpu
