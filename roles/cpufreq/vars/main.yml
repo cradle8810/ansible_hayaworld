@@ -1,2 +1,2 @@
----
-cpufreq_governor: powersave
+cpufreq_cpu:
+  governor: ondemand

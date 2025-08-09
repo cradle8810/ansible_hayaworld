@@ -1,0 +1,20 @@
+[Unit]
+Description=Set CPU Cores Online
+
+[Service]
+User=root
+Type=oneshot
+{% if cpufreq_cpu.cores is defined %}
+{% for core in cpufreq_cpu.cores %}
+{% if core.core != 0 %}
+{% if core.enable and core.enable is defined %}
+ExecStart=/bin/sh -c "echo '1' | tee /sys/devices/system/cpu/cpu{{ core.core }}/online"
+{% else %}
+ExecStart=/bin/sh -c "echo '0' | tee /sys/devices/system/cpu/cpu{{ core.core }}/online"
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+[Install]
+WantedBy=multi-user.target

@@ -1,9 +1,0 @@
-[Unit]
-Description=Set CPU governer to powersave
-
-[Service]
-Type=simple
-ExecStart=/usr/bin/cpupower frequency-set -g {{ cpufreq_governor }}
-
-[Install]
-WantedBy=multi-user.target
