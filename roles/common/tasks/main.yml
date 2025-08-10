@@ -38,6 +38,10 @@
       ansible.builtin.import_tasks:
         file: tasks/increase-nf_conntrack_max.yml
 
+    - name: "Common / Stop and remove systemd-networkd-wait-online.service"
+      ansible.builtin.import_tasks:
+        file: tasks/stop-systemd-networkd-wait-online.yml
+
 - name: "Common / Locale Settings"
   block:
     - name: "Common / Set timezone to Asia/Tokyo"
