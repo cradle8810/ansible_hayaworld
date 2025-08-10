@@ -1,2 +1,19 @@
 cpufreq_cpu:
   governor: ondemand
+
+# Sample
+# cpu:
+#   governor: powersave
+#   cores:
+#     - core: 0
+#       max_freq_khz: 1000000
+#       enable: true
+#     - core: 1
+#       max_freq_khz: 1000000
+#       enable: true
+#     - core: 2
+#       max_freq_khz: 1000000
+#       enable: true
+#     - core: 3
+#       max_freq_khz: 1000000
+#       enable: true
