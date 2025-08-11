@@ -32,7 +32,11 @@
     {
         "name": "default-ip-ttl",
         "data": "{{ dhcp_info.ipv4.ttl }}"
-    }
+    },
+    {
+        "name": "domain-name",
+        "data": "{{ dhcp_info.search_domain }}"
+    } 
   ],
 
   "hooks-libraries": [

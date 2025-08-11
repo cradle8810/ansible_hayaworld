@@ -26,6 +26,7 @@ dhcp:
   me:
     name: "kai"
     ipaddr: "{{ kai_info.ipv4 }}"
+  search_domain: "hayaworld.home"
   lib_base: "/usr/lib/x86_64-linux-gnu/kea/hooks"
   peer4:
     - name: "mai"
