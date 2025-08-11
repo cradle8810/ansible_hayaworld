@@ -44,15 +44,24 @@
       "library": "{{ dhcp.lib_base }}/libdhcp_ha.so",
       "parameters": {
         "high-availability": [ {
-          "this-server-name": "{{ dhcp_info.me }}",
+          "this-server-name": "{{ dhcp_info.me.name }}",
           "mode": "hot-standby",
           "heartbeat-delay": 10000,
           "max-response-delay": 10000,
           "max-ack-delay": 5000,
           "max-unacked-clients": 5,
           "peers": 
-            {{ dhcp_info.peer | to_nice_json }}
-        } ]
+            {{ dhcp_info.peer4 | to_nice_json }}
+        }],
+        "http-listener": {
+          "ip-address": "{{ dhcp_info.me.ipaddr }}",
+          "port": 8080,
+          "urls": {
+            "leases": "/leases",
+            "commands": "/commands",
+            "status": "/status"
+          }
+        }
       }
     }
   ],
