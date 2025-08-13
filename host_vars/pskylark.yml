@@ -6,8 +6,8 @@ cpu:
   governor: powersave
   cores:
     - core: 0
-      max_freq_khz: 1000000
+      max_freq_khz: 1200000
       enable: true
     - core: 1
-      max_freq_khz: 1000000
-      enable: false
+      max_freq_khz: 1200000
+      enable: true
