@@ -1,0 +1,24 @@
+---
+- name: Play for k8s Controler Machines
+  hosts: k8scontrol
+  remote_user: ansible
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - host_vars/networks.yml
+    - host_vars/k8s_common.yml
+    - host_vars/k8s_controler.yml
+
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+
+  tasks:
+    - name: Common Settings
+      ansible.builtin.import_role:
+        name: common
+      vars:
+        common_firewall: "{{ firewall }}"
+        common_pkg: "{{ apt }}"
