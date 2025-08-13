@@ -139,6 +139,54 @@ network:
     sshuser: hayato
     self_org: true
     mtu: 9000
+  - hostname: ksa1.hayaworld.home
+    interface: enp6s18
+    ipv4: 192.168.1.118
+    ipv6_addr: "{{ ipv6.ula.prefix }}::118"
+    shortname: ksa1
+    sshuser: hayato
+    self_org: true
+    mtu: 9000
+  - hostname: ksa2.hayaworld.home
+    interface: enp6s18
+    ipv4: 192.168.1.119
+    ipv6_addr: "{{ ipv6.ula.prefix }}::119"
+    shortname: ksa2
+    sshuser: hayato
+    self_org: true
+    mtu: 9000
+  - hostname: ksa3.hayaworld.home
+    interface: enp6s18
+    ipv4: 192.168.1.120
+    ipv6_addr: "{{ ipv6.ula.prefix }}::120"
+    shortname: ksa3
+    sshuser: hayato
+    self_org: true
+    mtu: 9000
+  - hostname: ksw1.hayaworld.home
+    interface: enp6s18
+    ipv4: 192.168.1.121
+    ipv6_addr: "{{ ipv6.ula.prefix }}::121"
+    shortname: ksw1
+    sshuser: hayato
+    self_org: true
+    mtu: 9000
+  - hostname: ksw2.hayaworld.home
+    interface: enp6s18
+    ipv4: 192.168.1.122
+    ipv6_addr: "{{ ipv6.ula.prefix }}::122"
+    shortname: ksw2
+    sshuser: hayato
+    self_org: true
+    mtu: 9000
+  - hostname: ksw3.hayaworld.home
+    interface: enp6s18
+    ipv4: 192.168.1.123
+    ipv6_addr: "{{ ipv6.ula.prefix }}::123"
+    shortname: ksw3
+    sshuser: hayato
+    self_org: true
+    mtu: 9000
   - hostname: kai.hayaworld.home
     interface: enp6s18
     ipv4: 192.168.1.125
