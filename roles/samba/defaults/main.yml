@@ -1,0 +1,18 @@
+---
+samba_tunes:
+  - param: "read raw"
+    value: "yes"
+  - param: "write raw"
+    value: "yes"
+  - param: "aio read size"
+    value: "1048576"
+  - param: "aio write size"
+    value: "1048576"
+  - param: "oplocks"
+    value: "yes"
+  - param: "level2 oplocks"
+    value: "yes"
+  - param: "socket options"
+    value: "TCP_NODELAY SO_RCVBUF=131072 SO_SNDBUF=131072 IPTOS_LOWDELAY"
+  - param: "getwd cache"
+    value: "yes"
