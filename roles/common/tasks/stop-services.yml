@@ -1,0 +1,35 @@
+---
+- name: "Common / Stop services (24.04)"
+  when:
+    - ansible_distribution_release == 'noble'
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    state: stopped
+    enabled: false
+    masked: true
+  loop:
+    - apt-daily-upgrade.service
+    - apt-daily-upgrade.timer
+    - apt-daily.service
+    - apt-daily.timer
+    - cloud-final.service
+    - cloud-init-local.service
+    - systemd-networkd-wait-online.service
+
+- name: "Common / Stop services (25.04)"
+  when:
+    - ansible_distribution_release == 'plucky'
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    state: stopped
+    enabled: false
+    masked: true
+  loop:
+    - apt-daily-upgrade.service
+    - apt-daily-upgrade.timer
+    - apt-daily.service
+    - apt-daily.timer
+    - cloud-final.service
+    - cloud-init-local.service
+    - cloud-init.service
+    - systemd-networkd-wait-online.service

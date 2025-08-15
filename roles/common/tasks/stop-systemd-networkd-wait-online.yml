@@ -1,7 +1,0 @@
----
-- name: "Common / Stop and remove systemd-networkd-wait-online.service"
-  ansible.builtin.systemd_service:
-    name: systemd-networkd-wait-online.service
-    state: stopped
-    enabled: false
-    masked: true

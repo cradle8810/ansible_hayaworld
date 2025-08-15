@@ -3,18 +3,12 @@
   ansible.builtin.import_tasks:
     file: tasks/set-users-facts.yml
 
-- name: "Common / Apt Configurations"
-  block:
-    - name: "Common / Change apt mirror"
-      ansible.builtin.replace:
-        path: /etc/apt/sources.list
-        regexp: 'http://jp.archive.ubuntu.com/ubuntu'
-        replace: 'http://ftp.iij.ad.jp/pub/linux/ubuntu/archive'
-        backup: true
-
-    - name: "Common / Stop Apt-daily"
-      ansible.builtin.import_tasks:
-        file: tasks/stop-apt-daily.yml
+- name: "Common / Change apt mirror"
+  ansible.builtin.replace:
+    path: /etc/apt/sources.list
+    regexp: 'http://jp.archive.ubuntu.com/ubuntu'
+    replace: 'http://ftp.iij.ad.jp/pub/linux/ubuntu/archive'
+    backup: true
 
 - name: "Common / Networking"
   when:
@@ -37,10 +31,6 @@
     - name: "Common / Scale up for nf_conntrack_max"
       ansible.builtin.import_tasks:
         file: tasks/increase-nf_conntrack_max.yml
-
-    - name: "Common / Stop and remove systemd-networkd-wait-online.service"
-      ansible.builtin.import_tasks:
-        file: tasks/stop-systemd-networkd-wait-online.yml
 
 - name: "Common / Locale Settings"
   block:
@@ -156,3 +146,9 @@
     file: tasks/hayaworld_rootCA.yml
   tags:
     - ca
+
+- name: "Common / Stop Unused services (Common)"
+  ansible.builtin.import_tasks:
+    file: tasks/stop-services.yml
+  tags:
+    - stop_services
