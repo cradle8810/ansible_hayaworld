@@ -4,6 +4,9 @@
     pkg: "{{ item }}"
     cache_valid_time: "{{ common_apt.cache_valid_time }}"
   loop: "{{ common_pkg }}"
+  when: apt is defined
+  tags:
+    - apt
 
 - name: "Common / Remove Packages"
   ansible.builtin.apt:
