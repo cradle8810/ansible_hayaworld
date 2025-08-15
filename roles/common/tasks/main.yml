@@ -92,14 +92,21 @@
       when: motd_existed.stat.exists
 
 - name: "Common / Disable SELinux"
-  ansible.builtin.copy:
-    src: templates/etc/selinux/config
-    dest: /etc/selinux/config
-    owner: root
-    group: root
-    mode: '0644'
-  notify:
-    - "Echo reboot notice"
+  when:
+    - ansible_facts.virtualization_type == 'kvm'
+    - ansible_virtualization_role == 'guest'
+  notify: "Echo reboot notice"
+  block:
+    - name: "Common / Install python3-selinux"
+      ansible.builtin.apt:
+        name: python3-selinux
+        state: present
+        update_cache: true
+        cache_valid_time: "{{ common_apt.cache_valid_time }}"
+
+    - name: "Common / Disable SELinux"
+      ansible.posix.selinux:
+        state: disabled
 
 - name: "Common / Set Firewall"
   ansible.builtin.import_tasks:
