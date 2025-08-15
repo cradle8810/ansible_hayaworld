@@ -5,22 +5,24 @@ apt:
 firewall:
   policy: deny
   allow_rules:
-    - name: "SSH from service line(IPv6)"
-      proto: "tcp"
-      src: "{{ ipv6.ula.prefix }}::/48"
-      port: '22'
-    - name: "SSH from service line"
-      proto: "tcp"
-      src: "192.168.1.0/24"
-      port: '22'
-    - name: "Runner Docker ssh"
-      proto: "tcp"
-      src: "172.17.0.0/16"
-      port: "22"
-    - name: "Corosync Quorum for Proxmox on service line"
-      proto: "tcp"
-      src: "192.168.1.0/24"
-      port: '5403'
+    ipv4:
+      - name: "SSH from service line"
+        proto: "tcp"
+        src: "192.168.1.0/24"
+        port: '22'
+      - name: "Runner Docker ssh"
+        proto: "tcp"
+        src: "172.17.0.0/16"
+        port: "22"
+      - name: "Corosync Quorum for Proxmox on service line"
+        proto: "tcp"
+        src: "192.168.1.0/24"
+        port: '5403'
+    ipv6:
+      - name: "SSH from service line(IPv6)"
+        proto: "tcp"
+        src: "{{ ipv6.ula.prefix }}::/48"
+        port: '22'
 
 zramswap:
   algo: lz4

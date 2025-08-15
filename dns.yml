@@ -8,6 +8,7 @@
     - host_vars/dns/CNAME.yml
     - host_vars/dns/NXDOMAIN.yml
     - host_vars/networks.yml
+    - host_vars/dns.yml
 
   handlers:
     - name: Restart handler tasks
