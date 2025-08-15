@@ -4,3 +4,7 @@ nfs:
 
 cpu:
   governor: powersave
+
+dmcache:
+  lvs: "vg0/lv0"
+  migration_threshold: "16384"
