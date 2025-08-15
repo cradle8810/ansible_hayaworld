@@ -55,3 +55,35 @@
         - thumbnailDaemon.service
       tags:
         - services
+
+    - name: Set LVM cache migration_threshold
+      tags:
+        - lvm
+      vars:
+        d: "{{ dmcache }}"
+      block:
+        - name: "Get current migration_threshold"
+          ansible.builtin.shell:
+            cmd: |
+              set -o pipefail &&
+              dmsetup table {{ dmcache.lvs }} |
+              awk '{ \
+                for (i=1; i<=NF; i++) { \
+                  if ($i == "migration_threshold") { \
+                    print $(i+1); exit; \
+                  } \
+                } \
+              }'
+          register: migration_threshold_current
+          changed_when: false
+          failed_when: false
+
+        - name: "Set migration_threshold"
+          ansible.builtin.command:
+            cmd:
+              "lvchange --cachesettings 'migration_threshold={{ d.migration_threshold }}' {{ d.lvs }}"
+          register: retval
+          changed_when: retval.rc == 0
+          when:
+            - migration_threshold_current.rc == 0
+            - (migration_threshold_current.stdout | int) != (d.migration_threshold | int)

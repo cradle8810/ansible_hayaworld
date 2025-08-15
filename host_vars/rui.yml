@@ -23,9 +23,12 @@ dnsmasq:
 
 dhcp:
   interface: "{{ rui_info.interface }}"
-  me: "rui"
+  me:
+    name: "rui"
+    ipaddr: "{{ rui_info.ipv4 }}"
+  search_domain: "hayaworld.home"
   lib_base: "/usr/lib/x86_64-linux-gnu/kea/hooks"
-  peer:
+  peer4:
     - name: "mai"
       url: "http://{{ mai_info.ipv4 }}:8080/"
       role: "primary"
@@ -36,6 +39,19 @@ dhcp:
       auto-failover: true
     - name: "kai"
       url: "http://{{ kai_info.ipv4 }}:8080/"
+      role: "backup"
+      auto-failover: true
+  peer6:
+    - name: "mai"
+      url: "http://{{ mai_info.ipv4 }}:8081/"
+      role: "primary"
+      auto-failover: true
+    - name: "rui"
+      url: "http://{{ rui_info.ipv4 }}:8081/"
+      role: "standby"
+      auto-failover: true
+    - name: "kai"
+      url: "http://{{ kai_info.ipv4 }}:8081/"
       role: "backup"
       auto-failover: true
   ipv4:

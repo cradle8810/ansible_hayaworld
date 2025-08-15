@@ -4,10 +4,7 @@ nfs:
 
 cpu:
   governor: powersave
-  cores:
-    - core: 0
-      max_freq_khz: 1000000
-      enable: true
-    - core: 1
-      max_freq_khz: 1000000
-      enable: false
+
+dmcache:
+  lvs: "vg0/lv0"
+  migration_threshold: "16384"

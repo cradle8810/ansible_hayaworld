@@ -9,7 +9,7 @@
   ansible.posix.mount:
     src: "//{{ skylark_ipv4 }}/Home"
     path: "{{ homedir }}/Home"
-    opts: "username={{ username }},password={{ password }},uid={{ uid }},gid={{ gid }}"
+    opts: "username={{ username }},password={{ password }},uid={{ uid }},gid={{ gid }},vers=3.1.1,nobrl"
     fstype: cifs
     state: mounted
   vars:
@@ -23,7 +23,7 @@
   ansible.posix.mount:
     src: "//{{ skylark_ipv4 }}/Nullpo"
     path: "{{ homedir }}/Nullpo"
-    opts: "username={{ username }},password={{ password }},uid={{ uid }},gid={{ gid }}"
+    opts: "username={{ username }},password={{ password }},uid={{ uid }},gid={{ gid }},vers=3.1.1,nobrl"
     fstype: cifs
     state: mounted
   vars:

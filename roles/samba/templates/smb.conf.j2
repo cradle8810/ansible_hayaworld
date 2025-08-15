@@ -18,6 +18,13 @@ fruit:metadata = netatalk
 idmap config * : backend = tdb
 vfs objects = catia fruit streams_xattr
 
+{% if samba_tunes is defined %}
+{% for i in samba_tunes %}
+{{ i.param }} = {{ i.value }}
+{% endfor %}
+{% endif %}
+
+
 #======================= Share Definitions =======================
 
 {% for s in samba_shares %}
