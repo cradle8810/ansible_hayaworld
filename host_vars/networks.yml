@@ -150,7 +150,7 @@ network:
   - hostname: terminal.hayaworld.home
     interface: enx6c1ff7023273
     ipv4: 192.168.1.130
-    ipv6_addr: "{{ ipv6.ula.prefix }}::115"
+    ipv6_addr: "{{ ipv6.ula.prefix }}::130"
     shortname: terminal
     sshuser: ansible
     self_org: true
