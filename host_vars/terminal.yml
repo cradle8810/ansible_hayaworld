@@ -45,9 +45,6 @@ services_start:
   - docker
   - ssh
 
-homedir:
-  UUID: "11816b47-235b-4613-8447-404160d39421"
-
 firewall:
   policy: deny
   allow_rules:
