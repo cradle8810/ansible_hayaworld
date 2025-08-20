@@ -133,14 +133,6 @@ network:
     sshuser: hayato
     self_org: true
     mtu: 9000
-  - hostname: tsgw3.hayaworld.home
-    interface: enp6s18
-    ipv4: 192.168.1.117
-    ipv6_addr: "{{ ipv6.ula.prefix }}::117"
-    shortname: tsgw3
-    sshuser: hayato
-    self_org: true
-    mtu: 9000
   - hostname: terminal.hayaworld.home
     interface: enx6c1ff7023273
     ipv4: 192.168.1.130
