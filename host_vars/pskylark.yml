@@ -1,10 +1,61 @@
 ---
+apt:
+  - hdparm
+  - htop
+  - less
+  - vim
+
+firewall:
+  policy: deny
+  allow_rules:
+    - name: "SSH from service line(IPv6)"
+      proto: "tcp"
+      src: "{{ ipv6.ula.prefix }}::/48"
+      port: '22'
+    - name: "SSH from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: '22'
+    - name: "NFS from service line(IPv6)"
+      proto: "tcp"
+      src: "{{ ipv6.ula.prefix }}::/48"
+      port: '2049'
+    - name: "NFS from service line"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: '2049'
+    - name: "RPC from service line(TCP)"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: '111'
+    - name: "RPC from service line(UDP)"
+      proto: "udp"
+      src: "192.168.1.0/24"
+      port: '111'
+    - name: "RPC from service line(TCP)"
+      proto: "tcp"
+      src: "192.168.1.0/24"
+      port: '20048'
+    - name: "RPC from service line(UDP)"
+      proto: "udp"
+      src: "192.168.1.0/24"
+      port: '20048'
+
 nfs:
   threads: 200
+  exports:
+    - path: "/Volume1/proxmox"
+      allowip: "192.168.1.0/24"
+      options: "rw,no_root_squash,no_subtree_check,crossmnt,async"
+  nfs_folders:
+    - name: "proxmox"
+      uid: 0
+      gid: 0
+      path: "/Volume1/proxmox"
 
 cpu:
   governor: powersave
 
 dmcache:
   lvs: "vg0/lv0"
-  migration_threshold: "16384"
+  migration_threshold: "32768"

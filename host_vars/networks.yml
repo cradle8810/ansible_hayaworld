@@ -1,12 +1,14 @@
 ---
 network:
   - hostname: pskylark.hayaworld.home
-    interface: eth0
+    interface: bond0
     ipv4: 192.168.1.10
     ipv6_addr: "{{ ipv6.ula.prefix }}::10"
     shortname: pskylark
     sshuser: hayato
-    self_org: false
+    self_org: true
+    mtu: 9000
+    macaddress: "6c:bf:b5:03:69:17"
   - hostname: nuc01.hayaworld.home
     interface: enp1s0
     ipv4: 192.168.1.11

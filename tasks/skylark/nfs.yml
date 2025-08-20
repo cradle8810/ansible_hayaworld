@@ -30,7 +30,7 @@
 
 - name: "Set NFS configurations"
   community.general.ini_file:
-    path: /etc/nsmb.conf
+    path: /etc/nfs.conf
     section: "nfsd"
     option: "threads"
     value: "{{ nfs.threads }}"

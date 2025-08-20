@@ -1,8 +1,9 @@
 ---
 - name: Play for pskylark.hayaworld.home
   hosts: pskylark
-  remote_user: hayato
+  remote_user: ansible
   gather_facts: true
+  become: true
 
   vars_files:
     - host_vars/networks.yml
@@ -13,23 +14,12 @@
         file: handlers/main.yml
 
   tasks:
-    - name: "Common / Set user facts"
-      ansible.builtin.import_tasks:
-        file: tasks/all/set-users-facts.yml
-
-    - name: "Common / Put authorized Key for hayato"
-      ansible.builtin.import_tasks:
-        file: tasks/all/authorized_keys.yml
-      tags:
-        - users
-
-    - name: "Fix homedir permission"
-      ansible.builtin.file:
-        path: "/home/hayato"
-        state: directory
-        owner: "hayato"
-        group: "hayato"
-        mode: '0750'
+    - name: Common Settings
+      ansible.builtin.import_role:
+        name: common
+      vars:
+        common_firewall: "{{ firewall }}"
+        common_pkg: "{{ apt }}"
 
     - name: Set nfs
       ansible.builtin.import_tasks:
@@ -45,16 +35,24 @@
       tags:
         - cpu
 
-    - name: Stop Unused services
-      ansible.builtin.systemd_service:
-        name: "{{ item }}"
-        state: stopped
-        enabled: false
-      loop:
-        - onlined.service
-        - thumbnailDaemon.service
-      tags:
-        - services
+    - name: "Prevent to sleep HDD"
+      ansible.builtin.template:
+        src: templates/pskylark/etc/systemd/system/hdd_prevent_sleeping.service
+        dest: /etc/systemd/system/hdd_prevent_sleeping.service
+        owner: root
+        group: root
+        mode: '0644'
+      notify: "hdd_prevent_sleeping"
+
+    - name: "Proxmox WoL / Copy WoL set service file"
+      ansible.builtin.template:
+        src: templates/pskylark/etc/systemd/network/50-wired.link.j2
+        dest: /etc/systemd/network/50-wired.link
+        owner: root
+        group: root
+        mode: '0644'
+      vars:
+        macaddr: "{{ hostinfo.macaddress }}"
 
     - name: Set LVM cache migration_threshold
       tags:

@@ -2,7 +2,7 @@
 console ansible_user=ansible ansible_host=console.hayaworld.home
 log ansible_user=ansible ansible_host=log.hayaworld.home
 macbook ansible_user=hayato
-pskylark ansible_user=hayato ansible_host=192.168.1.10
+pskylark ansible_user=ansible ansible_host=192.168.1.10
 qd ansible_user=ansible ansible_host=qd.hayaworld.home
 scanner ansible_user=ansible ansible_host=scanner.hayaworld.home
 skylark ansible_user=ansible ansible_host=skylark.hayaworld.home
