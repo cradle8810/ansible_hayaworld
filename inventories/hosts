@@ -18,7 +18,6 @@ nuc04 ansible_user=root ansible_host=nuc04.hayaworld.home
 [dns]
 rui ansible_user=ansible ansible_host=192.168.1.100
 mai ansible_user=ansible ansible_host=192.168.1.150
-kai ansible_user=ansible ansible_host=192.168.1.125
 
 [runners]
 runner03 ansible_user=ansible ansible_host=runner03.hayaworld.home
@@ -31,7 +30,6 @@ tsgw3 ansible_user=ansible ansible_host=192.168.1.117
 
 [vm]
 console
-kai
 mai
 rui
 runner03
