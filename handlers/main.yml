@@ -55,6 +55,13 @@
     enabled: true
   listen: "Restart nfs-server"
 
+- name: "Update NFS export"
+  ansible.builtin.command:
+    cmd: "exportfs -ra"
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "Update NFS export"
+
 - name: "Restart accounts-daemon.service"
   ansible.builtin.systemd_service:
     name: accounts-daemon.service
@@ -136,3 +143,10 @@
   register: retval
   changed_when: retval.rc == 0
   listen: "swappiness sysctl"
+
+- name: "Restart ksmtuned"
+  ansible.builtin.systemd_service:
+    name: hdd_prevent_sleeping.service
+    state: restarted
+    enabled: true
+  listen: "hdd_prevent_sleeping"

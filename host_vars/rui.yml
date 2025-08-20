@@ -1,7 +1,6 @@
 ---
 rui_info: "{{ network | selectattr('shortname', 'eq', 'rui') | first }}"
 mai_info: "{{ network | selectattr('shortname', 'eq', 'mai') | first }}"
-kai_info: "{{ network | selectattr('shortname', 'eq', 'kai') | first }}"
 
 dnsmasq:
   domain: hayaworld.home
@@ -37,10 +36,6 @@ dhcp:
       url: "http://{{ rui_info.ipv4 }}:8080/"
       role: "standby"
       auto-failover: true
-    - name: "kai"
-      url: "http://{{ kai_info.ipv4 }}:8080/"
-      role: "backup"
-      auto-failover: true
   peer6:
     - name: "mai"
       url: "http://{{ mai_info.ipv4 }}:8081/"
@@ -50,16 +45,12 @@ dhcp:
       url: "http://{{ rui_info.ipv4 }}:8081/"
       role: "standby"
       auto-failover: true
-    - name: "kai"
-      url: "http://{{ kai_info.ipv4 }}:8081/"
-      role: "backup"
-      auto-failover: true
   ipv4:
     subnet: "192.168.1.0/24"
     pool: "192.168.1.21-192.168.1.99"
     ttl: "0xf0"
     gw: "{{ subnet.gw4 }}"
-    dns: "{{ mai_info.ipv4 }},{{ rui_info.ipv4 }},{{ kai_info.ipv4 }}"
+    dns: "{{ mai_info.ipv4 }},{{ rui_info.ipv4 }}"
     lease_db: "/var/lib/kea/kea-leases4.csv"
   ipv6:
     subnet: "{{ ipv6.ula.prefix }}::/64"
@@ -67,7 +58,7 @@ dhcp:
     lease_db: "/var/lib/kea/kea-leases6.csv"
     option_data:
       - "name": "dns-servers"
-        "data": "{{ mai_info.ipv6_addr }}, {{ rui_info.ipv6_addr }}, {{ kai_info.ipv6_addr }}"
+        "data": "{{ mai_info.ipv6_addr }}, {{ rui_info.ipv6_addr }}"
         "always-send": true
       - "name": "domain-search"
         "data": "{{ subnet.search | join }}"
@@ -95,7 +86,6 @@ corosync:
           30326163633133363063386636363637313564353039653932353833323562373266
   me: "192.168.1.100"
   other: "192.168.1.150"
-  other2: "192.168.1.125"
 
 services_start:
   - dnsmasq

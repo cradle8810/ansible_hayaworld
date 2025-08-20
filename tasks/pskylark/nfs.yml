@@ -1,10 +1,61 @@
 ---
+- name: "Install NFS"
+  ansible.builtin.apt:
+    name: "nfs-kernel-server"
+    state: present
+    update_cache: true
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+
+- name: "Add idmapd.conf"
+  ansible.builtin.template:
+    src: templates/skylark/etc/idmapd.conf.j2
+    dest: /etc/idmapd.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "Restart nfs-server"
+
+- name: "Add exports"
+  ansible.builtin.template:
+    src: templates/skylark/etc/exports.j2
+    dest: /etc/exports
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - "Restart nfs-server"
+    - "Update NFS export"
+
 - name: "Set NFS configurations"
   community.general.ini_file:
-    path: /usr/share/nfs-kernel-server/conffiles/nfs-kernel-server.default
-    option: "RPCNFSDCOUNT"
-    value: "{{ nfs.threads }}"
+    path: /etc/nfs.conf
+    section: "nfsd"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
     state: present
+    no_extra_spaces: true
     mode: "644"
-    ignore_spaces: true
+  notify:
+    - "Restart nfs-server"
+    - "Update NFS export"
+  loop:
+    - option: "threads"
+      value: "{{ nfs.threads }}"
+    - option: "vers3"
+      value: "n"
+    - option: "vers4.0"
+      value: "n"
+    - option: "vers4.1"
+      value: "n"
+    - option: "vers4.2"
+      value: "y"
+
+- name: "Mkdir for users"
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    mode: '0755'
+    owner: "{{ item.uid }}"
+    group: "{{ item.gid }}"
+  loop: "{{ nfs.nfs_folders }}"
   notify: "Restart nfs-server"

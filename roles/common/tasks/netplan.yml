@@ -5,6 +5,7 @@
   any_errors_fatal: true
   when:
     - hostinfo.shortname != "terminal"
+    - hostinfo.shortname != "pskylark"
   notify: "Reconfigure netplan"
   vars:
     ipv4_addr: "{{ hostinfo.ipv4 }}"
@@ -55,5 +56,46 @@
                 "{{ subnet.search }}"
             routes:
               "{{ subnet.routes }}"
+            mtu:
+              "{{ hostinfo.mtu }}"
+
+- name: "Common / Apply netplan config (pskylark/Physical)"
+  ansible.builtin.import_role:
+    name: mrlesmithjr.netplan
+  any_errors_fatal: true
+  when: hostinfo.shortname == "pskylark"
+  notify: "Reconfigure netplan"
+  vars:
+    ipv4_addr: "{{ hostinfo.ipv4 }}"
+    ipv6_addr: "{{ hostinfo.ipv6_addr }}"
+    netplan_enabled: true
+    netplan_renderer: networkd
+    netplan_configuration:
+      network:
+        version: 2
+        ethernets:
+          enp1s0: {}
+          enp2s0: {}
+        bonds:
+          bond0:
+            addresses:
+              - "{{ ipv4_addr }}/{{ subnet.mask }}"
+              - "{{ ipv6_addr }}/64"
+            nameservers:
+              addresses:
+                - 8.8.8.8
+                - 1.1.1.1
+              search:
+                "{{ subnet.search }}"
+            interfaces:
+              - enp2s0
+              - enp1s0
+            parameters:
+              mode: "802.3ad"
+              lacp-rate: "fast"
+              transmit-hash-policy: "layer2"
+            routes:
+              - to: "default"
+                via: "192.168.1.1"
             mtu:
               "{{ hostinfo.mtu }}"

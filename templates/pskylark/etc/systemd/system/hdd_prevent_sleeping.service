@@ -1,0 +1,11 @@
+[Unit]
+Description=Set HDD Sleep Stop
+
+[Service]
+User=root
+Type=oneshot
+ExecStart=/bin/sh -c "hdparm -S 0 /dev/sda"
+ExecStart=/bin/sh -c "hdparm -S 0 /dev/sdb"
+
+[Install]
+WantedBy=multi-user.target
