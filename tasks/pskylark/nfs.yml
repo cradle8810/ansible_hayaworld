@@ -1,23 +1,23 @@
 ---
-- name: "Install NFS"
+- name: "NFS / Install NFS"
   ansible.builtin.apt:
     name: "nfs-kernel-server"
     state: present
     update_cache: true
     cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
 
-- name: "Add idmapd.conf"
+- name: "NFS / Add idmapd.conf"
   ansible.builtin.template:
-    src: templates/skylark/etc/idmapd.conf.j2
+    src: templates/pskylark/etc/idmapd.conf.j2
     dest: /etc/idmapd.conf
     owner: root
     group: root
     mode: '0644'
   notify: "Restart nfs-server"
 
-- name: "Add exports"
+- name: "NFS / Add exports"
   ansible.builtin.template:
-    src: templates/skylark/etc/exports.j2
+    src: templates/pskylark/etc/exports.j2
     dest: /etc/exports
     owner: root
     group: root
@@ -26,7 +26,7 @@
     - "Restart nfs-server"
     - "Update NFS export"
 
-- name: "Set NFS configurations"
+- name: "NFS / Set NFS configurations"
   community.general.ini_file:
     path: /etc/nfs.conf
     section: "nfsd"
@@ -50,7 +50,7 @@
     - option: "vers4.2"
       value: "y"
 
-- name: "Mkdir for users"
+- name: "NFS / Mkdir for exports"
   ansible.builtin.file:
     path: "{{ item.path }}"
     state: directory
@@ -58,4 +58,14 @@
     owner: "{{ item.uid }}"
     group: "{{ item.gid }}"
   loop: "{{ nfs.nfs_folders }}"
+  notify: "Restart nfs-server"
+
+- name: "NFS / Mountup tempdir for proxmox"
+  ansible.posix.mount:
+    src: "tmpfs"
+    path: "{{ item.path }}"
+    opts: "defaults,size={{ item.size }}"
+    fstype: tmpfs
+    state: mounted
+  loop: "{{ nfs.tmpfs }}"
   notify: "Restart nfs-server"
