@@ -4,12 +4,8 @@
     name: mrlesmithjr.netplan
   any_errors_fatal: true
   when:
-<<<<<<< HEAD
     - common_hostinfo.shortname != "terminal"
-=======
-    - hostinfo.shortname != "terminal"
-    - hostinfo.shortname != "pskylark"
->>>>>>> master
+    - common_hostinfo.shortname != "pskylark"
   notify: "Reconfigure netplan"
   vars:
     ipv4_addr: "{{ common_hostinfo.ipv4 }}"
