@@ -4,11 +4,11 @@
     name: mrlesmithjr.netplan
   any_errors_fatal: true
   when:
-    - hostinfo.shortname != "terminal"
+    - common_hostinfo.shortname != "terminal"
   notify: "Reconfigure netplan"
   vars:
-    ipv4_addr: "{{ hostinfo.ipv4 }}"
-    ipv6_addr: "{{ hostinfo.ipv6_addr }}"
+    ipv4_addr: "{{ common_hostinfo.ipv4 }}"
+    ipv6_addr: "{{ common_hostinfo.ipv6_addr }}"
     netplan_enabled: true
     netplan_renderer: networkd
     netplan_configuration:
@@ -27,17 +27,17 @@
             routes:
               "{{ subnet.routes }}"
             mtu:
-              "{{ hostinfo.mtu }}"
+              "{{ common_hostinfo.mtu }}"
 
 - name: "Common / Apply netplan config (Terminal/Physical)"
   ansible.builtin.import_role:
     name: mrlesmithjr.netplan
   any_errors_fatal: true
-  when: hostinfo.shortname == "terminal"
+  when: common_hostinfo.shortname == "terminal"
   notify: "Reconfigure netplan"
   vars:
-    ipv4_addr: "{{ hostinfo.ipv4 }}"
-    ipv6_addr: "{{ hostinfo.ipv6_addr }}"
+    ipv4_addr: "{{ common_hostinfo.ipv4 }}"
+    ipv6_addr: "{{ common_hostinfo.ipv6_addr }}"
     netplan_enabled: true
     netplan_renderer: networkd
     netplan_configuration:
@@ -56,4 +56,4 @@
             routes:
               "{{ subnet.routes }}"
             mtu:
-              "{{ hostinfo.mtu }}"
+              "{{ common_hostinfo.mtu }}"

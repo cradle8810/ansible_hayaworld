@@ -18,7 +18,7 @@
   block:
     - name: "Common / Set Hostname"
       ansible.builtin.hostname:
-        name: "{{ hostinfo.hostname }}"
+        name: "{{ common_hostinfo.hostname }}"
 
     - name: "Common / Setting Network"
       ansible.builtin.import_tasks:

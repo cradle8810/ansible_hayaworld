@@ -29,7 +29,7 @@
         opts: "defaults"
         fstype: tmpfs
         state: mounted
-      when: hostinfo.shortname == "mai"
+      when: common_hostinfo.shortname == "mai"
       loop:
         - "/home/ansible/.ansible"
         - "/var/cache/apt/archives"
