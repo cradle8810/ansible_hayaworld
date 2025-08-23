@@ -1,8 +1,0 @@
----
-- name: Add User ssh config
-  ansible.builtin.template:
-    src: templates/terminal/home/hayato/.ssh/config.j2
-    dest: /home/hayato/.ssh/config
-    owner: hayato
-    group: staff
-    mode: '0644'
