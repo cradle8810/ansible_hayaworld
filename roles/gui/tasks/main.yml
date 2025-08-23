@@ -9,7 +9,7 @@
 
 - name: "Desktop / Put ~/.ssh/config"
   ansible.builtin.import_tasks:
-    file: tasks/home_ssh_config.yml
+    file: tasks/common/home_ssh_config.yml
 
 - name: "Desktop / Set CapsLock as Ctrl"
   ansible.builtin.import_tasks:
