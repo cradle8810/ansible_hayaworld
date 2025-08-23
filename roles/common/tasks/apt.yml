@@ -1,18 +1,27 @@
+---
+- name: "Common / Mount /var/cache/apt as tmpfs"
+  ansible.posix.mount:
+    src: "tmpfs"
+    path: "/var/cache/apt"
+    opts: "defaults"
+    fstype: tmpfs
+    state: mounted
+
 - name: "Common / Install Packages from apt"
   ansible.builtin.apt:
     update_cache: true
-    pkg: "{{ item }}"
+    pkg: "{{ common_pkg }}"
     cache_valid_time: "{{ common_apt.cache_valid_time }}"
-  loop: "{{ common_pkg }}"
+  when: apt is defined
+  tags:
+    - apt
 
 - name: "Common / Remove Packages"
   ansible.builtin.apt:
-    pkg:
-      "{{ item }}"
+    pkg: "{{ common_pkg_remove }}"
     state: absent
     autoremove: true
     purge: true
-  loop: "{{ common_pkg_remove }}"
   when: common_pkg_remove is defined
   tags:
     - apt

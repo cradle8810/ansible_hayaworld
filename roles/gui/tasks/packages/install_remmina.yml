@@ -1,5 +1,14 @@
 ---
-- name: "Desktop / Remmina Configure"
+- name: "Remmina / Install Remmina"
+  ansible.builtin.apt:
+    install_recommends: false
+    update_cache: true
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+    pkg:
+      - remmina
+      - remmina-plugin-rdp
+
+- name: "Remmina / Remmina Configure"
   community.general.ini_file:
     path: "/home/hayato/.config/remmina/remmina.pref"
     section: "{{ item.section }}"

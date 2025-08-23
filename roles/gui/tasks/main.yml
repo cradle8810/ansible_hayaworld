@@ -1,0 +1,89 @@
+---
+- name: "Desktop / Put GUI session rc"
+  ansible.builtin.copy:
+    src: templates/guis/home/hayato/.xsessionrc
+    dest: /home/hayato/.xsessionrc
+    owner: hayato
+    group: hayato
+    mode: '0644'
+
+- name: "Desktop / Put ~/.ssh/config"
+  ansible.builtin.import_tasks:
+    file: tasks/common/home_ssh_config.yml
+
+- name: "Desktop / Set CapsLock as Ctrl"
+  ansible.builtin.import_tasks:
+    file: tasks/common/caps2ctrl.yml
+
+- name: "Desktop / Mount skylark"
+  ansible.builtin.import_tasks:
+    file: tasks/common/mount_skylark.yml
+
+- name: "Desktop / Install Initial Desktop Packages"
+  ansible.builtin.import_tasks:
+    file: tasks/common/desktop.yml
+
+- name: "Desktop / Configure Desktop using dconf"
+  vars:
+    ansible_become: false
+    ansible_user: hayato
+  ansible.builtin.import_tasks:
+    file: tasks/common/dconf.yml
+  tags:
+    - desktop
+    - dconf
+
+- name: "Desktop / Remove ansible user from login screen"
+  ansible.builtin.import_tasks:
+    file: tasks/common/disappear_ansible_user.yml
+  tags:
+    - desktop
+
+- name: "Desktop / Install Language Supports"
+  ansible.builtin.import_tasks:
+    file: tasks/common/install_lang_support.yml
+  tags:
+    - desktop
+    - language-support
+
+- name: "Install/Configuration Additional Packages"
+  when: gui_install is defined
+  block:
+    - name: Install/Configure iGPU
+      ansible.builtin.import_tasks:
+        file: tasks/packages/install_igpu.yml
+      when: gui_install.igpu
+
+    - name: Install GNOME sushi and thumbnailer
+      ansible.builtin.import_tasks:
+        file: tasks/packages/install_nautilus_thumbnail.yml
+      when: gui_install.sushi
+
+    - name: Install Google Chrome Repo
+      ansible.builtin.import_tasks:
+        file: tasks/packages/install_chrome.yml
+      when: gui_install.chrome
+
+    - name: Install Wine
+      ansible.builtin.import_tasks:
+        file: tasks/packages/install_wine.yml
+      when: gui_install.wine
+
+    - name: Install VLC with DVD Playback
+      ansible.builtin.import_tasks:
+        file: tasks/packages/install_wine.yml
+      when: gui_install.vlc
+
+    - name: Install Remmina
+      ansible.builtin.import_tasks:
+        file: tasks/packages/install_remmina.yml
+      when: gui_install.remmina
+
+    - name: Install Mozc
+      ansible.builtin.import_tasks:
+        file: tasks/packages/install_wine.yml
+      when: gui_install.mozc
+
+    - name: Install Supplemental Packages
+      ansible.builtin.import_tasks:
+        file: tasks/packages/install_supplementals.yml

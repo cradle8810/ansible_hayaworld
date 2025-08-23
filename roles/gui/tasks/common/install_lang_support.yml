@@ -1,0 +1,16 @@
+---
+- name: "Lang / Installing Language Supports"
+  ansible.builtin.apt:
+    install_recommends: false
+    update_cache: true
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+    pkg:
+      - gnome-user-docs-ja
+      - hunspell-en-au
+      - hunspell-en-ca
+      - hunspell-en-gb
+      - hunspell-en-za
+      - language-pack-gnome-en
+      - language-pack-gnome-ja
+      - wamerican
+      - wbritish

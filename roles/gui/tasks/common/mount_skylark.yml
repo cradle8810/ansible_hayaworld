@@ -1,11 +1,11 @@
 ---
-- name: Get Skylark facts
+- name: "Mount Skylark / Get Skylark facts"
   ansible.builtin.set_fact:
     skylark_ipv4: "{{ skylark_info[0].ipv4 }}"
   vars:
     skylark_info: "{{ network | selectattr('shortname', 'eq', 'skylark') }}"
 
-- name: Mount skylark/Home
+- name: "Mount Skylark / Mount skylark/Home"
   ansible.posix.mount:
     src: "//{{ skylark_ipv4 }}/Home"
     path: "{{ homedir }}/Home"
@@ -19,7 +19,7 @@
     username: "{{ all.vars.user[0].username }}"
     password: "{{ all.vars.user[0].samba_password }}"
 
-- name: Mount skylark/Nullpo
+- name: "Mount Skylark / Mount skylark/Nullpo"
   ansible.posix.mount:
     src: "//{{ skylark_ipv4 }}/Nullpo"
     path: "{{ homedir }}/Nullpo"

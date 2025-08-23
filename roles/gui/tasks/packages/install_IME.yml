@@ -5,6 +5,7 @@
     cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
     pkg:
       - fcitx5-mozc
+      - ibus-mozc
       - mozc-data
       - mozc-server
       - mozc-utils-gui

@@ -1,6 +1,6 @@
 ---
 - name: "Common / Set users own VM"
-  when: hostinfo.self_org is true
+  when: common_hostinfo.self_org is true
   block:
     - name: "Common / Make directory ~/.ssh/"
       ansible.builtin.file:
@@ -29,14 +29,14 @@
         - authorized_keys
 
 - name: "Common / Set users vender Machines"
-  when: hostinfo.self_org is false
+  when: common_hostinfo.self_org is false
   block:
     - name: "Common / Make directory ~/.ssh/"
       ansible.builtin.file:
-        path: "/home/{{ hostinfo.sshuser }}/.ssh/"
+        path: "/home/{{ common_hostinfo.sshuser }}/.ssh/"
         state: directory
-        owner: "{{ hostinfo.sshuser }}"
-        group: "{{ hostinfo.sshuser }}"
+        owner: "{{ common_hostinfo.sshuser }}"
+        group: "{{ common_hostinfo.sshuser }}"
         mode: '0700'
       tags:
         - authorized_keys
@@ -44,9 +44,9 @@
     - name: "Common / Put authorized_keys"
       ansible.builtin.copy:
         src: templates/all/home/hayato/.ssh/authorized_keys
-        dest: "/home/{{ hostinfo.sshuser }}/.ssh/authorized_keys"
-        owner: "{{ hostinfo.sshuser }}"
-        group: "{{ hostinfo.sshuser }}"
+        dest: "/home/{{ common_hostinfo.sshuser }}/.ssh/authorized_keys"
+        owner: "{{ common_hostinfo.sshuser }}"
+        group: "{{ common_hostinfo.sshuser }}"
         mode: '0600'
       tags:
         - authorized_keys

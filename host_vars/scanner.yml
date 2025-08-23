@@ -3,8 +3,6 @@ apt:
   - bind9-dnsutils
   - cifs-utils
   - curl
-  - gpm
-  - gprename
   - htop
   - nfs-common
   - openssh-server
@@ -15,8 +13,12 @@ apt:
   - rsync
   - samba-common
   - vim
-  - xrdp
   - zsh
+
+gui_additional_packages:
+  - gprename
+  - heif-thumbnailer
+  - libheif1
 
 remove:
   - firefox
@@ -31,26 +33,28 @@ services_start:
 firewall:
   policy: deny
   allow_rules:
-    - name: "SSH from service line(IPv6)"
-      proto: "tcp"
-      src: "{{ ipv6.ula.prefix }}::/48"
-      port: '22'
-    - name: "SSH from service line"
-      proto: "tcp"
-      src: "192.168.1.0/24"
-      port: '22'
-    - name: "RDP from service line(IPv6)"
-      proto: "tcp"
-      src: "{{ ipv6.ula.prefix }}::/48"
-      port: '3389'
-    - name: "RDP from service line"
-      proto: "tcp"
-      src: "192.168.1.0/24"
-      port: '3389'
-    - name: "DHCPv6 Client from service line"
-      proto: "udp"
-      src: "::"
-      port: "546"
+    ipv4:
+      - name: "SSH from service line"
+        proto: "tcp"
+        src: "192.168.1.0/24"
+        port: '22'
+      - name: "RDP from service line"
+        proto: "tcp"
+        src: "192.168.1.0/24"
+        port: '3389'
+    ipv6:
+      - name: "SSH from service line(IPv6)"
+        proto: "tcp"
+        src: "{{ ipv6.ula.prefix }}::/48"
+        port: '22'
+      - name: "RDP from service line(IPv6)"
+        proto: "tcp"
+        src: "{{ ipv6.ula.prefix }}::/48"
+        port: '3389'
+      - name: "DHCPv6 Client from service line"
+        proto: "udp"
+        src: "::"
+        port: "546"
 
 zramswap:
   algo: lz4

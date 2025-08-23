@@ -27,9 +27,9 @@
       ansible.builtin.import_tasks:
         file: tasks/install_rename.yml
 
-    - name: Setup GUI
-      ansible.builtin.import_tasks:
-        file: tasks/guis/common/main.yml
+    - name: GUI Install/Settings
+      ansible.builtin.import_role:
+        name: gui
       tags:
         - gui
 

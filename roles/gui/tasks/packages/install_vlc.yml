@@ -1,0 +1,16 @@
+- name: "VLC / Install VLC with DVD/Blu-ray Playback"
+  ansible.builtin.apt:
+    install_recommends: false
+    update_cache: true
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+    pkg:
+      - libaacs0
+      - libbluray-bdj
+      - libbluray2
+      - libdvd-pkg
+      - libdvdcss2
+      - libdvdnav4
+      - libdvdread8t64
+      - ubuntu-restricted-extras
+      - vlc
+  notify: "Reconfigure libdvd"

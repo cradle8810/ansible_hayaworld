@@ -29,12 +29,6 @@
     state: restarted
   listen: "Restart multipathd"
 
-- name: Remove Nautilus cache dir
-  ansible.builtin.file:
-    path: /home/hayato/.cache/thumbnails/
-    state: absent
-  listen: "Remove nautilus cache"
-
 - name: Restart zramswap
   ansible.builtin.systemd_service:
     name: zramswap
@@ -62,20 +56,6 @@
   changed_when: retval.rc == 0
   listen: "Update NFS export"
 
-- name: "Restart accounts-daemon.service"
-  ansible.builtin.systemd_service:
-    name: accounts-daemon.service
-    state: restarted
-    enabled: true
-  listen: "Restart accounts-daemon"
-
-- name: "Restart console-setup"
-  ansible.builtin.systemd_service:
-    name: console-setup.service
-    state: restarted
-    enabled: true
-  listen: "Restart console-setup"
-
 - name: "Run update-grub"
   ansible.builtin.command:
     cmd: update-grub
@@ -101,13 +81,6 @@
   ansible.builtin.debug:
     msg: "Please Reboot Here."
   listen: "Echo reboot notice"
-
-- name: "Reconfigure libdvd"
-  ansible.builtin.command:
-    cmd: "dpkg-reconfigure --frontend noninteractive libdvd-pkg"
-  register: retval
-  changed_when: retval.rc == 0
-  listen: "Reconfigure libdvd"
 
 - name: "Reconfigure netplan"
   ansible.builtin.command:

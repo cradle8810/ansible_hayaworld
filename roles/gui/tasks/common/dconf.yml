@@ -1,41 +1,41 @@
 ---
-- name: Display Applications on the bottom
+- name: "Dconf / Display Applications on the bottom"
   community.general.dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock"
     value: "false"
     state: present
 
-- name: Allow Nautilus treeview
+- name: "Dconf / Allow Nautilus treeview"
   community.general.dconf:
     key: "/org/gnome/nautilus/list-view/use-tree-view"
     value: "true"
     state: present
 
-- name: Use CapsLock as Ctrl
+- name: "Dconf / Use CapsLock as Ctrl"
   community.general.dconf:
     key: "/org/gnome/desktop/input-sources/xkb-options"
     value: "['ctrl:nocaps']"
     state: present
 
-- name: Nautilus Thumbnail Cache size (MB)
+- name: "Dconf / Nautilus Thumbnail Cache size (MB)"
   community.general.dconf:
     key: "/org/gnome/desktop/thumbnail-cache/maximum-size"
     value: "2048"
     state: present
 
-- name: GNOME world clock setting (GNOME Shell)
+- name: "Dconf / GNOME world clock setting (GNOME Shell)"
   community.general.dconf:
     key: "/org/gnome/shell/world-clocks/locations"
     value: "{{ all.vars.world_clocks }}"
     state: present
 
-- name: GNOME world clock setting
+- name: "Dconf / GNOME world clock setting"
   community.general.dconf:
     key: "/org/gnome/clocks/world-clocks"
     value: "{{ all.vars.world_clocks }}"
     state: present
 
-- name: "Be quiet Update Notifications"
+- name: "Dconf / Be quiet Update Notifications"
   community.general.dconf:
     key: "/com/ubuntu/update-notifier/no-show-notifications"
     value: true

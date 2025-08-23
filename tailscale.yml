@@ -6,6 +6,7 @@
 
   vars_files:
     - host_vars/networks.yml
+    - host_vars/tailscale.yml
 
   handlers:
     - name: Restart handler tasks

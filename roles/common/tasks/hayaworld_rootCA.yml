@@ -14,9 +14,9 @@
     owner: root
     group: root
     mode: '0644'
-  register: "put_hayaworld_ca"
+  register: "common_put_hayaworld_ca"
 
 - name: "Common / Update Root CAs"
   ansible.builtin.command:
     cmd: "update-ca-certificates"
-  changed_when: put_hayaworld_ca.changed == True
+  changed_when: common_put_hayaworld_ca.changed == True
