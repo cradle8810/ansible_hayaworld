@@ -1,3 +1,12 @@
+---
+- name: "Common / Mount /var/cache/apt as tmpfs"
+  ansible.posix.mount:
+    src: "tmpfs"
+    path: "/var/cache/apt"
+    opts: "defaults"
+    fstype: tmpfs
+    state: mounted
+
 - name: "Common / Install Packages from apt"
   ansible.builtin.apt:
     update_cache: true
