@@ -63,7 +63,7 @@
   ansible.builtin.import_role:
     name: mrlesmithjr.netplan
   any_errors_fatal: true
-  when: hostinfo.shortname == "pskylark"
+  when: common_hostinfo.shortname == "pskylark"
   notify: "Reconfigure netplan"
   vars:
     ipv4_addr: "{{ hostinfo.ipv4 }}"
