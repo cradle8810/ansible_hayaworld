@@ -2,7 +2,7 @@
 console ansible_user=ansible ansible_host=console.hayaworld.home
 log ansible_user=ansible ansible_host=log.hayaworld.home
 macbook ansible_user=hayato
-pskylark ansible_user=hayato ansible_host=192.168.1.10
+pskylark ansible_user=ansible ansible_host=192.168.1.10
 qd ansible_user=ansible ansible_host=qd.hayaworld.home
 scanner ansible_user=ansible ansible_host=scanner.hayaworld.home
 skylark ansible_user=ansible ansible_host=skylark.hayaworld.home
@@ -18,7 +18,6 @@ nuc04 ansible_user=root ansible_host=nuc04.hayaworld.home
 [dns]
 rui ansible_user=ansible ansible_host=192.168.1.100
 mai ansible_user=ansible ansible_host=192.168.1.150
-kai ansible_user=ansible ansible_host=192.168.1.125
 
 [runners]
 runner03 ansible_user=ansible ansible_host=runner03.hayaworld.home
@@ -27,11 +26,9 @@ runner04 ansible_user=ansible ansible_host=runner04.hayaworld.home
 [tailscale]
 tsgw1 ansible_user=ansible ansible_host=192.168.1.114
 tsgw2 ansible_user=ansible ansible_host=192.168.1.115
-tsgw3 ansible_user=ansible ansible_host=192.168.1.117
 
 [vm]
 console
-kai
 mai
 rui
 runner03
@@ -41,4 +38,3 @@ skylark
 tm
 tsgw1
 tsgw2
-tsgw3

@@ -17,13 +17,6 @@
         - network
 
   tasks:
-    - name: Mount Home drive
-      ansible.builtin.import_tasks:
-        file: tasks/mount_home.yml
-      tags:
-        - home
-        - mount
-
     - name: Common Settings
       ansible.builtin.import_role:
         name: common
