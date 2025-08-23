@@ -1,27 +1,15 @@
 ---
 apt:
   - bind9-dnsutils
-  - brasero
   - cifs-utils
   - curl
   - dstat
-  - emacs
-  - ffmpeg
-  - ffmpegthumbnailer
-  - firefox
-  - gimp
   - git
   - golang
-  - gpm
   - gprename
-  - heif-thumbnailer
   - htop
   - imagemagick
   - jq
-  - libaacs0
-  - libbluray-bdj
-  - libbluray2
-  - libheif1
   - nfs-common
   - openssh-server
   - openssl
@@ -32,13 +20,19 @@ apt:
   - rsync
   - samba-common
   - sshpass
-  - thunderbird
   - vim
   - vlc
   - whois
-  - wireshark
-  - xrdp
   - zsh
+
+gui_additional_packages:
+  - bleachbit
+  - emacs
+  - gimp
+  - heif-thumbnailer
+  - libheif1
+  - thunderbird
+  - wireshark
 
 remove:
   - gnome-power-manager

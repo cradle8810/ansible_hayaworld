@@ -76,9 +76,12 @@
       tags:
         - ansible
 
-    - name: Setup GUI
-      ansible.builtin.import_tasks:
-        file: tasks/guis/common/main.yml
+    - name: GUI Install/Settings
+      ansible.builtin.import_role:
+        name: gui
+      vars:
+        gui_additional_packages:
+          - brasero
       tags:
         - gui
 
@@ -93,27 +96,6 @@
         file: tasks/zram.yml
       tags:
         - services
-
-    - name: Install IME
-      ansible.builtin.import_tasks:
-        file: tasks/guis/install_IME.yml
-      tags:
-        - desktop
-        - ime
-
-    - name: Configure DVD Playback
-      ansible.builtin.import_tasks:
-        file: tasks/guis/install_dvd_playback.yml
-      tags:
-        - desktop
-        - dvd
-
-    - name: "Install Wine"
-      ansible.builtin.import_tasks:
-        file: tasks/guis/install_wine.yml
-      tags:
-        - desktop
-        - wine
 
     - name: Set CPU Governor
       ansible.builtin.import_role:

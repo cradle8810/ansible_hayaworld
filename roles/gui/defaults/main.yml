@@ -1,0 +1,15 @@
+---
+gui_install:
+  chrome: true
+  igpu: true
+  remmina: true
+  vlc: true
+  wine: true
+  mozc: true
+  sushi: true
+
+gui_supplemental_packages:
+  - ffmpeg
+  - ffmpegthumbnailer
+
+gui_additional_packages:

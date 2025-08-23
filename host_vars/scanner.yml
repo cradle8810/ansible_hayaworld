@@ -3,8 +3,6 @@ apt:
   - bind9-dnsutils
   - cifs-utils
   - curl
-  - gpm
-  - gprename
   - htop
   - nfs-common
   - openssh-server
@@ -15,8 +13,12 @@ apt:
   - rsync
   - samba-common
   - vim
-  - xrdp
   - zsh
+
+gui_additional_packages:
+  - gprename
+  - heif-thumbnailer
+  - libheif1
 
 remove:
   - firefox

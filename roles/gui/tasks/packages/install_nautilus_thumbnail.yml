@@ -1,4 +1,4 @@
-- name: "Installing Nautilus Thumbnails and Preview tools"
+- name: "Sushi / Installing Nautilus Thumbnails and Preview tools"
   ansible.builtin.apt:
     install_recommends: false
     update_cache: true
@@ -8,15 +8,14 @@
       - gstreamer1.0-gtk3
       - gstreamer1.0-pulseaudio
       - gstreamer1.0-libav
-  notify: "Remove nautilus cache"
 
-- name: "Make directory for ffmpegthumbnailer cache"
+- name: "Sushi / Make directory for ffmpegthumbnailer cache"
   ansible.builtin.file:
     path: "/home/hayato/.local/share/thumbnailers"
     state: directory
     mode: '0755'
 
-- name: "Make symlinks for User (ffmpegthumbnailer bugfix)"
+- name: "Sushi / Make symlinks for User (ffmpegthumbnailer bugfix)"
   ansible.builtin.file:
     dest: "/home/hayato/.local/share/thumbnailers/ffmpegthumbnailer.thumbnailer"
     src: "/usr/share/thumbnailers/ffmpegthumbnailer.thumbnailer"
@@ -24,4 +23,3 @@
     group: "hayato"
     state: link
     follow: false
-  notify: "Remove nautilus cache"

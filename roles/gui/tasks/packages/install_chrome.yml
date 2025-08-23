@@ -1,18 +1,18 @@
 ---
-- name: Get Chrome GPG Key
+- name: "Chrome / Get Chrome GPG Key"
   ansible.builtin.get_url:
     url: https://dl.google.com/linux/linux_signing_key.pub
     dest: /etc/apt/trusted.gpg.d/google.asc
     checksum: "sha256:0acccf28849439e3b2f7c60f899da45186a3a9b2fd02cc88cd44b25200016c56"
     mode: "0644"
 
-- name: Add Chrome Repos
+- name: "Chrome / Add Chrome Repos"
   ansible.builtin.apt_repository:
     repo: deb http://dl.google.com/linux/chrome/deb/ stable main
     state: present
     filename: google-chrome
 
-- name: Installing Google Chrome
+- name: "Chrome / Installing Google Chrome"
   ansible.builtin.apt:
     install_recommends: false
     update_cache: true
@@ -20,7 +20,7 @@
     pkg:
       - google-chrome-stable
 
-- name: "Mount tmpdir as Google-Chrome Cache"
+- name: "Chrome / Mount tmpdir as Google-Chrome Cache"
   ansible.posix.mount:
     src: "tmpfs"
     path: "/home/hayato/.cache/google-chrome/Default"

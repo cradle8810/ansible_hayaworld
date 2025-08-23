@@ -78,9 +78,12 @@
       tags:
         - packer
 
-    - name: Setup GUI
-      ansible.builtin.import_tasks:
-        file: tasks/guis/common/main.yml
+    - name: GUI Install/Settings
+      ansible.builtin.import_role:
+        name: gui
+      vars:
+        gui_additional_packages:
+          - brasero
       tags:
         - gui
 
@@ -91,13 +94,6 @@
     - name: Install/Config Zramswap
       ansible.builtin.import_tasks:
         file: tasks/zram.yml
-
-    - name: Configure DVD Playback
-      ansible.builtin.import_tasks:
-        file: tasks/guis/install_dvd_playback.yml
-      tags:
-        - desktop
-        - dvd
 
     - name: "Setup Tailscale Endpoint"
       ansible.builtin.import_role:

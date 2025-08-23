@@ -12,8 +12,6 @@
     - apt-daily-upgrade.timer
     - apt-daily.service
     - apt-daily.timer
-    - cloud-final.service
-    - cloud-init-local.service
     - systemd-networkd-wait-online.service
 
 - name: "Common / Stop services (25.04)"
@@ -29,7 +27,4 @@
     - apt-daily-upgrade.timer
     - apt-daily.service
     - apt-daily.timer
-    - cloud-final.service
-    - cloud-init-local.service
-    - cloud-init.service
     - systemd-networkd-wait-online.service
