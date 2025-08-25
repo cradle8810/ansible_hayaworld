@@ -50,10 +50,10 @@
         "high-availability": [ {
           "this-server-name": "{{ dhcp_info.me.name }}",
           "mode": "hot-standby",
-          "heartbeat-delay": 10000,
-          "max-response-delay": 10000,
-          "max-ack-delay": 5000,
-          "max-unacked-clients": 5,
+          "heartbeat-delay": 2000,
+          "max-response-delay": 1000,
+          "max-ack-delay": 3000,
+          "max-unacked-clients": 0,
           "peers": 
             {{ dhcp_info.peer4 | to_nice_json }}
         }],
