@@ -83,7 +83,7 @@
       ansible.builtin.import_tasks:
         file: tasks/proxmox/wol.yml
       vars:
-        macaddr: "{{ hostinfo.macaddress }}"
+        macaddr: "{{ common_hostinfo.macaddress }}"
       tags:
         - wol
         - network
