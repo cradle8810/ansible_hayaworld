@@ -30,6 +30,12 @@ services_start:
   - ssh
   - xrdp
 
+gui_install:
+  remmina: false
+  vlc: false
+  wine: false
+  mozc: false
+
 firewall:
   policy: deny
   allow_rules:
