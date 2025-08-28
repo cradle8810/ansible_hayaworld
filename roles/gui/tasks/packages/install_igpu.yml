@@ -68,7 +68,7 @@
 
 - name: "GPU / Integrated GPU Permission Fix"
   ansible.builtin.copy:
-    src: templates/guis/etc/udev/rules.d/99-render.rules
+    src: templates/etc/udev/rules.d/99-render.rules
     dest: /etc/udev/rules.d/99-render.rules
     owner: root
     group: root

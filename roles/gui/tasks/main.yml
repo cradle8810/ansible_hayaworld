@@ -1,7 +1,7 @@
 ---
 - name: "Desktop / Put GUI session rc"
   ansible.builtin.copy:
-    src: templates/guis/home/hayato/.xsessionrc
+    src: templates/home/hayato/.xsessionrc
     dest: /home/hayato/.xsessionrc
     owner: hayato
     group: hayato
