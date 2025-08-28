@@ -52,38 +52,46 @@
     - name: Install/Configure iGPU
       ansible.builtin.import_tasks:
         file: tasks/packages/install_igpu.yml
-      when: gui_install.igpu
+      when:
+        (gui_install.igpu is undefined) or gui_install.igpu
 
     - name: Install GNOME sushi and thumbnailer
       ansible.builtin.import_tasks:
         file: tasks/packages/install_nautilus_thumbnail.yml
-      when: gui_install.sushi
+      when:
+        (gui_install.sushi is undefined) or gui_install.sushi
 
     - name: Install Google Chrome Repo
       ansible.builtin.import_tasks:
         file: tasks/packages/install_chrome.yml
-      when: gui_install.chrome
+      when:
+        (gui_install.chrome is undefined) or gui_install.chrome
 
     - name: Install Wine
       ansible.builtin.import_tasks:
         file: tasks/packages/install_wine.yml
-      when: gui_install.wine
+      when:
+        (gui_install.wine is undefined) or gui_install.wine
 
     - name: Install VLC with DVD Playback
       ansible.builtin.import_tasks:
         file: tasks/packages/install_vlc.yml
-      when: gui_install.vlc
+      when:
+        (gui_install.vlc is undefined) or gui_install.vlc
 
     - name: Install Remmina
       ansible.builtin.import_tasks:
         file: tasks/packages/install_remmina.yml
-      when: gui_install.remmina
+      when:
+        (gui_install.remmina is undefined) or gui_install.remmina
 
     - name: Install Mozc
       ansible.builtin.import_tasks:
         file: tasks/packages/install_IME.yml
-      when: gui_install.mozc
+      when:
+        (gui_install.mozc is undefined) or gui_install.mozc
 
     - name: Install Supplemental Packages
       ansible.builtin.import_tasks:
         file: tasks/packages/install_supplementals.yml
+      when: gui_additional_packages is defined
