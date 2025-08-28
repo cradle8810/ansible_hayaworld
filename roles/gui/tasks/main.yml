@@ -1,7 +1,7 @@
 ---
 - name: "Desktop / Put GUI session rc"
   ansible.builtin.copy:
-    src: templates/guis/home/hayato/.xsessionrc
+    src: templates/home/hayato/.xsessionrc
     dest: /home/hayato/.xsessionrc
     owner: hayato
     group: hayato
@@ -71,7 +71,7 @@
 
     - name: Install VLC with DVD Playback
       ansible.builtin.import_tasks:
-        file: tasks/packages/install_wine.yml
+        file: tasks/packages/install_vlc.yml
       when: gui_install.vlc
 
     - name: Install Remmina
@@ -81,7 +81,7 @@
 
     - name: Install Mozc
       ansible.builtin.import_tasks:
-        file: tasks/packages/install_wine.yml
+        file: tasks/packages/install_IME.yml
       when: gui_install.mozc
 
     - name: Install Supplemental Packages
