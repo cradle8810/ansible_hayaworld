@@ -5,6 +5,7 @@ apt:
   - htop
   - nfs-common
   - qemu-guest-agent
+  - rsync
 
 drives:
   tm:
@@ -25,6 +26,13 @@ smb:
       group: hayato
       time_machine: 'Yes'
       time_machine_max_size: '700G'
+
+backup_scripts:
+  dirs:
+    - name: "tm"
+      src: "/tm/"
+      dest: "/backup/"
+      snapshotdir: "/backup/snapshots/tm"
 
 services_start:
   - qemu-guest-agent

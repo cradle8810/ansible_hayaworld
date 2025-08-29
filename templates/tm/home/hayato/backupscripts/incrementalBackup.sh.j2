@@ -1,0 +1,10 @@
+#!/bin/sh
+
+SRC='{{ pathinfo.src }}'
+DEST='{{ pathinfo.dest }}'
+
+TODAY=$(date +%Y%m%d_%H%M%S)
+
+# rsync
+echo "sudo rsync -av8 --sparse --delete -H ${SRC} ${DEST}"
+sudo rsync -av8 --sparse --delete -H ${SRC} ${DEST}

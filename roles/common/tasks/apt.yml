@@ -12,7 +12,7 @@
     update_cache: true
     pkg: "{{ common_pkg }}"
     cache_valid_time: "{{ common_apt.cache_valid_time }}"
-  when: apt is defined
+  when: common_pkg is defined
   tags:
     - apt
 
