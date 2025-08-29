@@ -42,20 +42,6 @@
     enabled: true
   listen: "Restart systemd-resolved"
 
-- name: "Restart nfs-server.service"
-  ansible.builtin.systemd_service:
-    name: nfs-server.service
-    state: restarted
-    enabled: true
-  listen: "Restart nfs-server"
-
-- name: "Update NFS export"
-  ansible.builtin.command:
-    cmd: "exportfs -ra"
-  register: retval
-  changed_when: retval.rc == 0
-  listen: "Update NFS export"
-
 - name: "Run update-grub"
   ansible.builtin.command:
     cmd: update-grub

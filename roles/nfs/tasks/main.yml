@@ -8,7 +8,7 @@
 
 - name: "NFS / Add idmapd.conf"
   ansible.builtin.template:
-    src: templates/pskylark/etc/idmapd.conf.j2
+    src: templates/etc/idmapd.conf.j2
     dest: /etc/idmapd.conf
     owner: root
     group: root
@@ -17,7 +17,7 @@
 
 - name: "NFS / Add exports"
   ansible.builtin.template:
-    src: templates/pskylark/etc/exports.j2
+    src: templates/etc/exports.j2
     dest: /etc/exports
     owner: root
     group: root
@@ -50,22 +50,23 @@
     - option: "vers4.2"
       value: "y"
 
-- name: "NFS / Mkdir for exports"
+- name: "NFS / mkdir for exports"
   ansible.builtin.file:
     path: "{{ item.path }}"
     state: directory
-    mode: '0755'
+    mode: "{{ item.mode }}"
     owner: "{{ item.uid }}"
     group: "{{ item.gid }}"
-  loop: "{{ nfs.nfs_folders }}"
+  loop: "{{ nfs_exports }}"
   notify: "Restart nfs-server"
 
-- name: "NFS / Mountup tempdir for proxmox"
+- name: "NFS / Mountup tempdir if needs"
   ansible.posix.mount:
     src: "tmpfs"
     path: "{{ item.path }}"
     opts: "defaults,size={{ item.size }}"
     fstype: tmpfs
     state: mounted
-  loop: "{{ nfs.tmpfs }}"
+  loop: "{{ nfs_tmpfs }}"
+  when: nfs_tmpfs is defined
   notify: "Restart nfs-server"

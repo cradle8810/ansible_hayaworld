@@ -45,22 +45,20 @@ firewall:
 
 nfs:
   threads: 200
+  domain: "{{ subnet.search }}"
   exports:
     - path: "/Volume1/proxmox"
       allowip: "192.168.1.0/24"
       options: "rw,no_root_squash,no_subtree_check,crossmnt,async"
+      uid: 0
+      gid: 0
+      mode: '0755'
     - path: "/tempdir"
       allowip: "192.168.1.0/24"
       options: "rw,no_root_squash,no_subtree_check,crossmnt,async,fsid=1"
-  nfs_folders:
-    - name: "proxmox"
       uid: 0
       gid: 0
-      path: "/Volume1/proxmox"
-    - name: "tempdir"
-      uid: 0
-      gid: 0
-      path: "/tempdir"
+      mode: '0777'
   tmpfs:
     - path: "/tempdir"
       size: "8G"

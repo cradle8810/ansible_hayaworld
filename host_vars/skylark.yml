@@ -42,15 +42,14 @@ smb:
 
 nfs:
   threads: 20
+  domain: "{{ subnet.search }}"
   exports:
     - path: "/skylark/nfs"
       allowip: "192.168.1.0/24"
       options: "rw,no_root_squash"
-  nfs_folders:
-    - name: "hayato"
-      uid: 10000
-      gid: 10000
-      path: "/skylark/nfs/hayato"
+      uid: 0
+      gid: 0
+      mode: '0755'
 
 backup_exclude:
   home:
@@ -75,7 +74,6 @@ backup_scripts:
       excludefilepath: "/home/hayato/backupscripts/Home_exclude.txt"
 
 services_start:
-  - nfs-server
   - qemu-guest-agent
   - ssh
 

@@ -21,9 +21,14 @@
         common_firewall: "{{ firewall }}"
         common_pkg: "{{ apt }}"
 
-    - name: Set nfs
-      ansible.builtin.import_tasks:
-        file: tasks/pskylark/nfs.yml
+    - name: NFS settings
+      ansible.builtin.import_role:
+        name: nfs
+      vars:
+        nfs_threads: "{{ nfs.threads }}"
+        nfs_domain: "{{ nfs.domain }}"
+        nfs_exports: "{{ nfs.exports }}"
+        nfs_tmpfs: "{{ nfs.tmpfs }}"
       tags:
         - nfs
 
