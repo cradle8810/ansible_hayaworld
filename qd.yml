@@ -35,3 +35,25 @@
         file: tasks/zram.yml
       tags:
         - zram
+
+    - name: APC UPS Settings
+      ansible.builtin.import_role:
+        name: apcupsd
+      vars:
+        apcupsd_role: "{{ ups.role }}"
+      tags:
+        - apc
+        - ups
+
+    - name: "Setup Tailscale Endpoint"
+      ansible.builtin.import_role:
+        name: artis3n.tailscale
+      tags:
+        - tailscale
+      when: not ansible_check_mode
+      vars:
+        tailscale_authkey: "{{ all.vars.tailscale.client_secret }}"
+        tailscale_args: "--accept-dns=false"
+        tailscale_oauth_ephemeral: false
+        tailscale_tags:
+          - console

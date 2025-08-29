@@ -90,3 +90,12 @@
           when:
             - migration_threshold_current.rc == 0
             - (migration_threshold_current.stdout | int) != (d.migration_threshold | int)
+
+    - name: APC UPS Settings
+      ansible.builtin.import_role:
+        name: apcupsd
+      vars:
+        apcupsd_role: slave
+      tags:
+        - apc
+        - ups

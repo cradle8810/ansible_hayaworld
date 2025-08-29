@@ -1,0 +1,19 @@
+---
+- name: "Install apcupsd(slave)"
+  ansible.builtin.apt:
+    name:
+      - apcupsd
+    state: present
+    update_cache: true
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+
+- name: "Put apcupsd configuration(slave)"
+  ansible.builtin.template:
+    src: templates/etc/apcupsd/apcupsd.conf.slave.j2
+    dest: /etc/apcupsd/apcupsd.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - "Put configured file"
+    - "Start Apcupsd"
