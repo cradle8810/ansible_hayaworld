@@ -1,0 +1,16 @@
+---
+- name: "Mark as Configured for apcupsd"
+  ansible.builtin.copy:
+    src: templates/etc/default/apcupsd
+    dest: /etc/default/apcupsd
+    owner: root
+    group: root
+    mode: '0644'
+  listen: "Put configured file"
+
+- name: "Restart apcupsd.service"
+  ansible.builtin.systemd_service:
+    name: apcupsd.service
+    state: restarted
+    enabled: true
+  listen: "Start Apcupsd"

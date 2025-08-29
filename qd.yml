@@ -35,3 +35,12 @@
         file: tasks/zram.yml
       tags:
         - zram
+
+    - name: APC UPS Settings
+      ansible.builtin.import_role:
+        name: apcupsd
+      vars:
+        apcupsd_role: "{{ ups.role }}"
+      tags:
+        - apc
+        - ups

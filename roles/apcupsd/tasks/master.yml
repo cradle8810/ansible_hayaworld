@@ -1,0 +1,20 @@
+---
+- name: "Install apcupsd and apcupsd-cgi(master)"
+  ansible.builtin.apt:
+    name:
+      - apcupsd
+      - apcupsd-cgi
+    state: present
+    update_cache: true
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+
+- name: "Put apcupsd configuration(master)"
+  ansible.builtin.template:
+    src: templates/etc/apcupsd/apcupsd.conf.master.j2
+    dest: /etc/apcupsd/apcupsd.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - "Put configured file"
+    - "Start Apcupsd"

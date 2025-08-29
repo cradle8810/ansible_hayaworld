@@ -97,3 +97,12 @@
       tags:
         - corosync
         - qdevice
+
+    - name: APC UPS Settings
+      ansible.builtin.import_role:
+        name: apcupsd
+      vars:
+        apcupsd_role: slave
+      tags:
+        - apc
+        - ups

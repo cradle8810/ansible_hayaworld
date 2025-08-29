@@ -1,0 +1,10 @@
+---
+- name: Install apcupsd for master
+  ansible.builtin.include_tasks:
+    file: roles/apcupsd/tasks/master.yml
+  when: apcupsd_role == 'master'
+
+- name: Install apcupsd for slave
+  ansible.builtin.include_tasks:
+    file: roles/apcupsd/tasks/slave.yml
+  when: apcupsd_role == 'slave'
