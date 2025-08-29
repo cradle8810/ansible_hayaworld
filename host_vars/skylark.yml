@@ -26,6 +26,11 @@ drives:
       subvol: "/snapshots"
       filesystem: "btrfs"
       options: "defaults,users,noatime,compress=zstd:1"
+    - uuid: 77af48a6-5a47-4e06-a106-c5c74b6d1449
+      mountpoint: /backup/tm
+      subvol: "/tm"
+      filesystem: "btrfs"
+      options: "defaults,users,noatime,compress=zstd:1"
 
 smb:
   samba_workgroup: "WORKGROUP"
@@ -49,6 +54,12 @@ nfs:
       options: "rw,no_root_squash"
       uid: 0
       gid: 0
+      mode: '0755'
+    - path: "/backup/tm"
+      allowip: "192.168.1.0/24"
+      options: "rw,no_root_squash,no_subtree_check"
+      uid: 10000
+      gid: 10000
       mode: '0755'
 
 backup_exclude:
