@@ -45,15 +45,8 @@
         - apc
         - ups
 
-    - name: "Setup Tailscale Endpoint"
-      ansible.builtin.import_role:
-        name: artis3n.tailscale
+    - name: Install Tailscale as gateway (for maintenance)
+      ansible.builtin.import_tasks:
+        file: tasks/tailscale.yml
       tags:
         - tailscale
-      when: not ansible_check_mode
-      vars:
-        tailscale_authkey: "{{ all.vars.tailscale.client_secret }}"
-        tailscale_args: "--accept-dns=false"
-        tailscale_oauth_ephemeral: false
-        tailscale_tags:
-          - console
