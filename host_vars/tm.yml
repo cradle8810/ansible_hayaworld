@@ -30,8 +30,8 @@ smb:
 backup_scripts:
   dirs:
     - name: "tm"
-      src: "/tm/"
-      dest: "/backup/"
+      src: "/tm"
+      dest: "/backup"
       snapshotdir: "/backup/snapshots/tm"
 
 services_start:
