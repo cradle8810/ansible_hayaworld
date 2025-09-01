@@ -3,8 +3,21 @@
 SRC='{{ pathinfo.src }}'
 DEST='{{ pathinfo.dest }}'
 
-TODAY=$(date +%Y%m%d_%H%M%S)
+# fail if snapshot dir exists 
+if [ -d "/tm/snapshot" ]; then
+  echo "[ERR] ${SRC}/snapshot exist. Does previous backup failed? Remove that dir with that command:" > /dev/stderr
+  echo "[ERR] sudo btrfs subvolume delete ${SRC}/snapshot"  > /dev/stderr
+  exit 1
+fi
+
+# Pre-processing
+sudo btrfs subvolume snapshot -r "${SRC}" "/${SRC}/snapshot"
+sudo mount -t nfs -o 'nfsvers=4,hard,async' 192.168.1.200:/backup/tm /${DEST}
 
 # rsync
-echo "sudo rsync -av8 --sparse --delete -H ${SRC} ${DEST}"
-sudo rsync -av8 --sparse --delete -H ${SRC} ${DEST}
+echo "sudo rsync -av8 --sparse --delete -H ${SRC}/snapshot/ ${DEST}"
+sudo rsync -av8 --sparse --delete -H ${SRC}/snapshot/ ${DEST}
+
+# Post-processing
+sudo btrfs subvolume delete "${SRC}/snapshot"
+sudo umount /backup
