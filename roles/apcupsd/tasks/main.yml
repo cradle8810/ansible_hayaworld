@@ -8,3 +8,21 @@
   ansible.builtin.include_tasks:
     file: roles/apcupsd/tasks/slave.yml
   when: apcupsd_role == 'slave'
+
+- name: Install apccontrol script
+  ansible.builtin.copy:
+    src: templates/etc/apcupsd/apccontrol
+    dest: /etc/apcupsd/apccontrol
+    owner: root
+    group: root
+    mode: '0755'
+  when: not apcupsd_proxmox
+
+- name: Install apccontrol script with proxmox cluster shutdown
+  ansible.builtin.copy:
+    src: templates/proxmox/etc/apcupsd/apccontrol
+    dest: /etc/apcupsd/apccontrol
+    owner: root
+    group: root
+    mode: '0755'
+  when: apcupsd_proxmox

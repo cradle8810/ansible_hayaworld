@@ -25,3 +25,13 @@
         file: tasks/tailscale.yml
       tags:
         - tailscale
+
+    - name: APC UPS Settings
+      ansible.builtin.import_role:
+        name: apcupsd
+      vars:
+        apcupsd_role: "slave"
+        apcupsd_timeout: 60
+      tags:
+        - apc
+        - ups
