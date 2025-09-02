@@ -96,6 +96,7 @@
         name: apcupsd
       vars:
         apcupsd_role: slave
+        apcupsd_timeout: 300
       tags:
         - apc
         - ups
