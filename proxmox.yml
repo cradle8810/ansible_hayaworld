@@ -103,6 +103,8 @@
         name: apcupsd
       vars:
         apcupsd_role: slave
+        apcupsd_timeout: 100
+        apcupsd_proxmox: true
       tags:
         - apc
         - ups

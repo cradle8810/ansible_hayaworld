@@ -69,3 +69,13 @@
     - name: Make Started Services
       ansible.builtin.import_tasks:
         file: tasks/service_start.yml
+
+    - name: APC UPS Settings
+      ansible.builtin.import_role:
+        name: apcupsd
+      vars:
+        apcupsd_role: "slave"
+        apcupsd_timeout: 60
+      tags:
+        - apc
+        - ups
