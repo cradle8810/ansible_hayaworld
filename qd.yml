@@ -41,6 +41,7 @@
         name: apcupsd
       vars:
         apcupsd_role: "{{ ups.role }}"
+        apcupsd_timeout: 600
       tags:
         - apc
         - ups
