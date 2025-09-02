@@ -106,8 +106,10 @@ case "$1" in
     ;;
     doshutdown)
       echo "UPS ${2} initiated Shutdown Sequence" | ${WALL}
+{% if apcupsd_proxmox %}
       /usr/bin/systemctl stop pve-ha-lrm
       sleep 15
+{% endif %}
       ${SHUTDOWN} -h now "apcupsd UPS ${2} initiated shutdown"
     ;;
     annoyme)
