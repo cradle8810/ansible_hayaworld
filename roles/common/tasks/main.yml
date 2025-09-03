@@ -24,6 +24,10 @@
       ansible.builtin.import_tasks:
         file: tasks/netplan.yml
 
+    - name: "Common / Add own hostname record to hosts(5)"
+      ansible.builtin.import_tasks:
+        file: tasks/hostname_etc_hosts.yml
+
     - name: "Common / Stop Systemd-resolved"
       ansible.builtin.import_tasks:
         file: tasks/stop-systemd-resolved.yml
