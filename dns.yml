@@ -21,6 +21,7 @@
         name: common
       vars:
         common_firewall: "{{ firewall }}"
+        common_add_hosts: false
 
     - name: Mount tmpfs for mai(Raspi)
       ansible.posix.mount:

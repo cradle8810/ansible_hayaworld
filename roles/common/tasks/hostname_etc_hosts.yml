@@ -1,0 +1,13 @@
+---
+- name: "Common / Add own record to hosts(5)"
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    regexp: '^{{ h.ipv4 | replace(match, replace) }}'
+    line: "{{ h.ipv4 }} {{ h.shortname }} {{ h.hostname }}"
+    state: present
+    mode: "644"
+  vars:
+    h: "{{ common_hostinfo }}"
+    match: '.'
+    replace: '\.'
+  when: common_add_hosts
