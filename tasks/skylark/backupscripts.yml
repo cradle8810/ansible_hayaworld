@@ -28,6 +28,24 @@
     - /home/hayato/backupscripts/Home_exclude.txt
     - /home/hayato/backupscripts/NFS_exclude.txt
 
+- name: Put Backup to Wasabi Script
+  ansible.builtin.template:
+    src: "templates/skylark/home/hayato/backupscripts/BackupToWasabi.j2"
+    dest: "/home/hayato/backupscripts/BackupToWasabi_{{ item.name }}.sh"
+    owner: hayato
+    group: hayato
+    mode: '0755'
+  loop: "{{ backup_wasabi }}"
+
+- name: Put Backup to Wasabi Exclude file
+  ansible.builtin.template:
+    src: "templates/skylark/home/hayato/backupscripts/Wasabi_exclude.txt.j2"
+    dest: "/home/hayato/backupscripts/Wasabi_exclude_{{ item.name }}.txt"
+    owner: hayato
+    group: hayato
+    mode: '0755'
+  loop: "{{ backup_wasabi }}"
+
 - name: "Sudo password passthrough"
   ansible.builtin.blockinfile:
     path: "/etc/sudoers"
