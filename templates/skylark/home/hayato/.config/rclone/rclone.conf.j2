@@ -6,3 +6,10 @@ secret_access_key = {{ all.vars.wasabi.secret_access_key }}
 endpoint = {{ all.vars.wasabi.endpoint }}
 acl = private
 env_auth = false
+
+[crypt]
+type = crypt
+remote = wasabi-skylark:
+filename_encryption = off
+directory_name_encryption = false
+password = {{ all.vars.wasabi.encrypt_passwd }}
