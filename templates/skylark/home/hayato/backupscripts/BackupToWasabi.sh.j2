@@ -12,5 +12,9 @@ fi
 
 # rclone
 rclone sync -v --metadata --track-renames \
+  --delete-during \
+  --max-connections 200 \
+  --transfers 100 \
+  --checkers 100 \
   --exclude-from /home/hayato/backupscripts/Wasabi_exclude_{{ item.name }}.txt \
-  ${SRC}/ wasabi-skylark:{{ all.vars.wasabi.bucket }}/{{ item.name }}
+  ${SRC}/ crypt:{{ all.vars.wasabi.bucket }}/${DEST}

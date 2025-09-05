@@ -30,7 +30,7 @@
 
 - name: Put Backup to Wasabi Script
   ansible.builtin.template:
-    src: "templates/skylark/home/hayato/backupscripts/BackupToWasabi.j2"
+    src: "templates/skylark/home/hayato/backupscripts/BackupToWasabi.sh.j2"
     dest: "/home/hayato/backupscripts/BackupToWasabi_{{ item.name }}.sh"
     owner: hayato
     group: hayato
@@ -45,12 +45,3 @@
     group: hayato
     mode: '0755'
   loop: "{{ backup_wasabi }}"
-
-- name: "Sudo password passthrough"
-  ansible.builtin.blockinfile:
-    path: "/etc/sudoers"
-    backup: true
-    insertafter: "EOF"
-    validate: "visudo -cf %s"
-    block: |
-      hayato  ALL=(ALL:ALL) NOPASSWD: /usr/bin/btrfs
