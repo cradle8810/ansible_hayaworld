@@ -84,19 +84,6 @@ backup_scripts:
       snapshotdir: "/backup/snapshots/hayato"
       excludefilepath: "/home/hayato/backupscripts/Home_exclude.txt"
 
-backup_wasabi:
-  - name: "Nullpo"
-    src: "/backup/Nullpo"
-    dest: "Nullpo"
-  - name: "Home"
-    src: "/backup/hayato"
-    dest: "hayato"
-    exclude:
-      - ".DS_Store"
-      - ".Trash-*/**"
-      - "ISO/**"
-      - "Symlinks/**"
-
 services_start:
   - qemu-guest-agent
   - ssh

@@ -117,9 +117,3 @@
       tags:
         - apc
         - ups
-
-    - name: Configure Wasabi backup mechanism
-      ansible.builtin.import_tasks:
-        file: tasks/skylark/backup_wasabi.yml
-      tags:
-        - wasabi
