@@ -67,23 +67,6 @@
     ntp_tinker_panic: true
     ntp_manage_config: true
 
-- name: "Common / Disable SELinux"
-  when:
-    - ansible_facts.virtualization_type == 'kvm'
-    - ansible_virtualization_role == 'guest'
-  notify: "Echo reboot notice"
-  block:
-    - name: "Common / Install python3-selinux"
-      ansible.builtin.apt:
-        name: python3-selinux
-        state: present
-        update_cache: true
-        cache_valid_time: "{{ common_apt.cache_valid_time }}"
-
-    - name: "Common / Disable SELinux"
-      ansible.posix.selinux:
-        state: disabled
-
 - name: "Common / Set Firewall"
   ansible.builtin.import_tasks:
     file: tasks/firewall.yml

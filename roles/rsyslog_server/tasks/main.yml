@@ -1,0 +1,23 @@
+---
+
+- name: "Make hayaworld logs mountpoint"
+  ansible.builtin.file:
+    path: "{{ rsyslog_mountpoint }}"
+    state: directory
+    owner: syslog
+    group: adm
+    mode: '0755'
+
+- name: "Mount drive"
+  ansible.posix.mount:
+    src: "UUID={{ rsyslog_server_uuid }}"
+    path: "{{ rsyslog_server_mountpoint }}"
+    fstype: "{{ rsyslog_server_fstype }}"
+    opts: "{{ rsyslog_server_options }}"
+    state: mounted
+
+- name: "Install rsyslog"
+  ansible.builtin.apt:
+    pkg: rsylog
+    cache_valid_time: "{{ apt.cache_valid_time }}"
+  notify: "Restart rsyslog"
