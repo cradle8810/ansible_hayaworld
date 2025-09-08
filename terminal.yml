@@ -97,3 +97,9 @@
         cpufreq_governor: "powersave"
       tags:
         - cpu
+
+    - name: "Configure Rsyslog"
+      ansible.builtin.import_role:
+        name: rsyslog_client
+      tags:
+        - rsyslog

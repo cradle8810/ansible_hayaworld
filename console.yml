@@ -117,3 +117,9 @@
       tags:
         - apc
         - ups
+
+    - name: "Configure Rsyslog"
+      ansible.builtin.import_role:
+        name: rsyslog_client
+      tags:
+        - rsyslog

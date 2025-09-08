@@ -1,0 +1,6 @@
+{% if rsyslog_client_actions is defined %}
+{% for a in rsyslog_client_actions %}
+{{ a.facility }}.{{ a.priority }} @@{{ rsyslog_client_sendto }}
+{% endfor %}
+{% endif %}
+& stop

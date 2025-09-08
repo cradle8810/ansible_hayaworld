@@ -51,3 +51,9 @@
         file: tasks/tailscale.yml
       tags:
         - tailscale
+
+    - name: "Configure Rsyslog"
+      ansible.builtin.import_role:
+        name: rsyslog_client
+      tags:
+        - rsyslog
