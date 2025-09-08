@@ -94,14 +94,12 @@
         "name": "kea-dhcp4",
         "output_options": [
             {
-                "output": "/var/log/kea/kea-dhcp4.log",
-                "maxver": 8,
-                "maxsize": 204800,
-                "flush": true
+                "output": "syslog:local7",
+                "pattern": "%D{{ '{%' }}Y-%m-%d %H:%M:%S.%q} %-5p [%c/%i.%t] %m\n"
             }
         ],
         "severity": "INFO",
-        "debuglevel": 99
+        "debuglevel": 0
     }
   ]
 }
