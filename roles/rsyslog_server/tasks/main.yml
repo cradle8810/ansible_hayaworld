@@ -29,6 +29,11 @@
     group: adm
     mode: '0755'
 
+- name: "Remove default config"
+  ansible.builtin.file:
+    path: "/etc/rsyslog.d/50-default.conf"
+    state: absent
+
 - name: "Install rsyslog Config"
   ansible.builtin.template:
     src: "{{ item.src }}"
