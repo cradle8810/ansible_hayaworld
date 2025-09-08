@@ -30,5 +30,8 @@ logging {
     to_logfile: yes
     logfile: /var/log/corosync/corosync.log
     to_syslog: yes
+    syslog_facility: local6
+    syslog_priority: info
+    debug: off
     timestamp: on
 }
