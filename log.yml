@@ -28,3 +28,13 @@
         rsyslog_server_actions: "{{ syslog.rsyslog_server_actions }}"
       tags:
         - rsyslog
+
+    - name: APC UPS Settings
+      ansible.builtin.import_role:
+        name: apcupsd
+      vars:
+        apcupsd_role: "slave"
+        apcupsd_timeout: 80
+      tags:
+        - apc
+        - ups
