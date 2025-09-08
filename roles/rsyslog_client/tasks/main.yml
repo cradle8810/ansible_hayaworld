@@ -1,20 +1,4 @@
 ---
-- name: "Make logs mountpoint"
-  ansible.builtin.file:
-    path: "{{ rsyslog_server_mountpoint }}"
-    state: directory
-    owner: syslog
-    group: adm
-    mode: '0755'
-
-- name: "Mount drive"
-  ansible.posix.mount:
-    src: "UUID={{ rsyslog_server_uuid }}"
-    path: "{{ rsyslog_server_mountpoint }}"
-    fstype: "{{ rsyslog_server_fstype }}"
-    opts: "{{ rsyslog_server_options }}"
-    state: mounted
-
 - name: "Install rsyslog"
   ansible.builtin.apt:
     pkg: rsyslog
@@ -25,21 +9,16 @@
   ansible.builtin.file:
     path: "/etc/rsyslog.d"
     state: directory
-    owner: syslog
-    group: adm
+    owner: "{{ rsyslog_client_config_owner }}"
+    group: "{{ rsyslog_client_config_group }}"
     mode: '0755'
-
-- name: "Remove default config"
-  ansible.builtin.file:
-    path: "/etc/rsyslog.d/50-default.conf"
-    state: absent
 
 - name: "Install rsyslog Config"
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-    owner: syslog
-    group: adm
+    owner: "{{ rsyslog_client_config_owner }}"
+    group: "{{ rsyslog_client_config_group }}"
     mode: '0644'
   loop:
     - src: templates/etc/rsyslog.d/10-hayaworld.conf.j2

@@ -40,3 +40,9 @@
     - name: Install/Config Zramswap
       ansible.builtin.import_tasks:
         file: tasks/zram.yml
+
+    - name: "Configure Rsyslog"
+      ansible.builtin.import_role:
+        name: rsyslog_client
+      tags:
+        - rsyslog

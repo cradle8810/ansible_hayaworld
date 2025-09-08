@@ -29,6 +29,7 @@
         groups:
           - "{{ item.username }}"
           - "sudo"
+          - "adm"
         name: "{{ item.username }}"
         password: "{{ item.password_hashed }}"
         shell: "{{ item.shell }}"
