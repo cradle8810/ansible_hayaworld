@@ -1,8 +1,7 @@
 ---
-
-- name: "Make hayaworld logs mountpoint"
+- name: "Make logs mountpoint"
   ansible.builtin.file:
-    path: "{{ rsyslog_mountpoint }}"
+    path: "{{ rsyslog_server_mountpoint }}"
     state: directory
     owner: syslog
     group: adm
@@ -18,6 +17,28 @@
 
 - name: "Install rsyslog"
   ansible.builtin.apt:
-    pkg: rsylog
-    cache_valid_time: "{{ apt.cache_valid_time }}"
+    pkg: rsyslog
+    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+  notify: "Restart rsyslog"
+
+- name: "Make Config directory"
+  ansible.builtin.file:
+    path: "/etc/rsyslog.d"
+    state: directory
+    owner: syslog
+    group: adm
+    mode: '0755'
+
+- name: "Install rsyslog Config"
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: syslog
+    group: adm
+    mode: '0644'
+  loop:
+    - src: templates/etc/rsyslog.d/10-hayaworld.conf.j2
+      dest: /etc/rsyslog.d/10-hayaworld.conf
+    - src: templates/etc/rsyslog.conf.j2
+      dest: /etc/rsyslog.conf
   notify: "Restart rsyslog"

@@ -22,7 +22,9 @@
         common_pkg: "{{ apt }}"
 
     - name: "Install Rsyslog"
-      ansible.builtin.import_tasks:
-        file: tasks/log/install_rsyslog.yml
+      ansible.builtin.import_role:
+        name: rsyslog_server
+      vars:
+        rsyslog_server_actions: "{{ syslog.rsyslog_server_actions }}"
       tags:
         - rsyslog

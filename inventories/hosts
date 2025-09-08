@@ -29,6 +29,7 @@ tsgw2 ansible_user=ansible ansible_host=192.168.1.115
 
 [vm]
 console
+log
 mai
 rui
 runner03
