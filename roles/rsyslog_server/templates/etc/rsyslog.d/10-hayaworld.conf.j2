@@ -1,6 +1,6 @@
 {% if rsyslog_server_actions is defined %}
 {% for a in rsyslog_server_actions %}
-{{ a.facility }}.{{ a.priority }} {{ a.file }}
+{{ a.facility }} {{ a.file }}
 {% endfor %}
 {% endif %}
 & stop
