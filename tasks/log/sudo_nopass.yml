@@ -1,0 +1,12 @@
+---
+- name: "Sudo password passthrough"
+  ansible.builtin.blockinfile:
+    path: "/etc/sudoers"
+    backup: true
+    insertafter: "EOF"
+    validate: "visudo -cf %s"
+    block: |
+      hayato  ALL=(ALL:ALL) NOPASSWD: /usr/bin/rsync
+      hayato  ALL=(ALL:ALL) NOPASSWD: /usr/bin/btrfs
+      hayato  ALL=(ALL:ALL) NOPASSWD: /usr/bin/mount
+      hayato  ALL=(ALL:ALL) NOPASSWD: /usr/bin/umount

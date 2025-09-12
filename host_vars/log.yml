@@ -75,3 +75,10 @@ syslog:
         local5.none;local6.none;local7.none;\
         "
       file: "/var/log/hayaworld/misc.log"
+
+backup_scripts:
+  dirs:
+    - name: "log"
+      src: "/var/log/hayaworld"
+      dest: "/backup"
+      snapshotdir: "/backup/snapshots/log"

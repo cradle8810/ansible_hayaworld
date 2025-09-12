@@ -38,3 +38,44 @@
       tags:
         - apc
         - ups
+
+    - name: Backup log backups
+      tags:
+        - backup
+      block:
+        - name: "Install Rsync"
+          ansible.builtin.apt:
+            pkg: rsync
+            state: present
+            update_cache: true
+            cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+
+        - name: "Create skylark mount directory"
+          ansible.builtin.file:
+            path: "/backup"
+            state: directory
+            owner: hayato
+            group: hayato
+            mode: '0755'
+
+        - name: "Making backupscripts directory"
+          ansible.builtin.file:
+            path: "/home/hayato/backupscripts"
+            state: directory
+            owner: hayato
+            group: hayato
+            mode: '0755'
+
+        - name: Put Backup Script
+          ansible.builtin.template:
+            src: "templates/log/home/hayato/backupscripts/incrementalBackup.sh.j2"
+            dest: "/home/hayato/backupscripts/incrementalLogBackup.sh"
+            owner: hayato
+            group: hayato
+            mode: '0755'
+          vars:
+            pathinfo: "{{ backup_scripts.dirs[0] }}"
+
+        - name: Sudo nopassword Settings
+          ansible.builtin.import_tasks:
+            file: tasks/log/sudo_nopass.yml
