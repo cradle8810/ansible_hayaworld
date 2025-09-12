@@ -3,3 +3,5 @@ rsyslog_server_fstype: "btrfs"
 rsyslog_server_mountpoint: "/var/log/hayaworld"
 rsyslog_server_options: "defaults,noatime,compress=zstd:1"
 rsyslog_server_uuid: "eae4947a-1397-48f6-a4c0-c13a3cc30c2a"
+rsyslog_server_rotate: 100
+rsyslog_server_maxsize: "50M"

@@ -23,11 +23,18 @@
 
 - name: "Make Config directory"
   ansible.builtin.file:
-    path: "/etc/rsyslog.d"
+    path: "{{ item.path }}"
     state: directory
-    owner: syslog
-    group: adm
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
     mode: '0755'
+  loop:
+    - path: "/etc/rsyslog.d"
+      owner: syslog
+      group: adm
+    - path: "/etc/logrotate.d"
+      owner: root
+      group: root
 
 - name: "Remove default config"
   ansible.builtin.file:
@@ -38,12 +45,22 @@
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-    owner: syslog
-    group: adm
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
     mode: '0644'
   loop:
     - src: templates/etc/rsyslog.d/10-hayaworld.conf.j2
       dest: /etc/rsyslog.d/10-hayaworld.conf
+      owner: syslog
+      group: adm
     - src: templates/etc/rsyslog.conf.j2
       dest: /etc/rsyslog.conf
-  notify: "Restart rsyslog"
+      owner: syslog
+      group: adm
+    - src: templates/etc/logrotate.d/10-hayaworld.j2
+      dest: /etc/logrotate.d/10-hayaworld
+      owner: root
+      group: root
+  notify:
+    - "Restart rsyslog"
+    - "Restart logrotate"

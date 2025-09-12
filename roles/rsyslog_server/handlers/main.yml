@@ -5,3 +5,10 @@
     state: restarted
     enabled: true
   listen: "Restart rsyslog"
+
+- name: "Restart logrotate.service"
+  ansible.builtin.systemd_service:
+    name: logrotate.service
+    state: restarted
+    enabled: true
+  listen: "Restart logrotate"

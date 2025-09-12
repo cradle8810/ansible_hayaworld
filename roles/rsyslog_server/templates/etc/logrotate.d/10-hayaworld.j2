@@ -1,0 +1,9 @@
+{{ rsyslog_server_mountpoint }}/* {
+    weekly
+    missingok
+    rotate {{ rsyslog_server_rotate }}
+    delaycompress
+    copytruncate
+    notifempty
+    maxsize {{ rsyslog_server_maxsize }}
+}
