@@ -5,7 +5,7 @@
       - btrfs-progs
       - btrfs-compsize
     update_cache: true
-    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+    cache_valid_time: "{{ apt_cache_valid_time }}"
 
 - name: "Check if exists /home"
   ansible.builtin.stat:

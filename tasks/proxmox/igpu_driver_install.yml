@@ -68,7 +68,7 @@
         pkg: sysfsutils
         state: present
         update_cache: true
-        cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+        cache_valid_time: "{{ apt_cache_valid_time }}"
 
     - name: "Configure VFs for Proxmox"
       community.general.ini_file:

@@ -16,7 +16,7 @@
   ansible.builtin.apt:
     install_recommends: false
     update_cache: true
-    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+    cache_valid_time: "{{ apt_cache_valid_time }}"
     pkg:
       - google-chrome-stable
 
