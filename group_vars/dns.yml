@@ -76,3 +76,9 @@ firewall:
         proto: "udp"
         src: "::/0"
         port: "546"
+
+syslog:
+  additional_actions: |
+    if ($syslogfacility-text == 'local7') then {
+      stop
+    }
