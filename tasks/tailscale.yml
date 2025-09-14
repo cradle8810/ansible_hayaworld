@@ -21,7 +21,7 @@
     - tailscale
   when: not ansible_check_mode
   vars:
-    tailscale_authkey: "{{ all.vars.tailscale.client_secret }}"
+    tailscale_authkey: "{{ tailscale.client_secret }}"
     tailscale_args: "--advertise-routes=192.168.1.0/24 --advertise-exit-node --accept-dns=false"
     tailscale_oauth_ephemeral: false
     tailscale_tags:

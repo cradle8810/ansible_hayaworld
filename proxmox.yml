@@ -6,7 +6,6 @@
 
   vars_files:
     - host_vars/networks.yml
-    - host_vars/proxmox.yml
 
   handlers:
     - name: Restart handler tasks
@@ -93,7 +92,7 @@
         name: "corosync-qdevice"
         state: present
         update_cache: true
-        cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+        cache_valid_time: "{{ apt_cache_valid_time }}"
       tags:
         - corosync
         - qdevice

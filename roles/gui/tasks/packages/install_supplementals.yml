@@ -3,12 +3,12 @@
   ansible.builtin.apt:
     pkg: "{{ gui_additional_packages }}"
     update_cache: true
-    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+    cache_valid_time: "{{ apt_cache_valid_time }}"
   when: gui_supplemental_packages is defined
 
 - name: "Supplemental / Install Additional Packages"
   ansible.builtin.apt:
     pkg: "{{ gui_additional_packages }}"
     update_cache: true
-    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+    cache_valid_time: "{{ apt_cache_valid_time }}"
   when: gui_additional_packages is defined

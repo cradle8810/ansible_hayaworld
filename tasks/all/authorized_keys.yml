@@ -10,7 +10,7 @@
         group: "{{ item.gid }}"
         mode: '0700'
       loop:
-        "{{ all.vars.user }}"
+        "{{ user }}"
       no_log: true
       tags:
         - authorized_keys
@@ -23,7 +23,7 @@
         group: "{{ item.gid }}"
         mode: '0600'
       loop:
-        "{{ all.vars.user }}"
+        "{{ user }}"
       no_log: true
       tags:
         - authorized_keys

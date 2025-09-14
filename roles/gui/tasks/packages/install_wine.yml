@@ -44,7 +44,7 @@
   ansible.builtin.apt:
     update_cache: true
     pkg: "{{ item }}"
-    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+    cache_valid_time: "{{ apt_cache_valid_time }}"
   loop:
     - winehq-stable
     - winetricks

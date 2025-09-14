@@ -13,11 +13,11 @@
     fstype: cifs
     state: mounted
   vars:
-    gid: "{{ all.vars.user[0].gid }}"
-    uid: "{{ all.vars.user[0].uid }}"
-    homedir: "{{ all.vars.user[0].homedir }}"
-    username: "{{ all.vars.user[0].username }}"
-    password: "{{ all.vars.user[0].samba_password }}"
+    gid: "{{ user[0].gid }}"
+    uid: "{{ user[0].uid }}"
+    homedir: "{{ user[0].homedir }}"
+    username: "{{ user[0].username }}"
+    password: "{{ user[0].samba_password }}"
 
 - name: "Mount Skylark / Mount skylark/Nullpo"
   ansible.posix.mount:
@@ -27,8 +27,8 @@
     fstype: cifs
     state: mounted
   vars:
-    gid: "{{ all.vars.user[0].gid }}"
-    uid: "{{ all.vars.user[0].uid }}"
-    homedir: "{{ all.vars.user[0].homedir }}"
-    username: "{{ all.vars.user[0].username }}"
-    password: "{{ all.vars.user[0].samba_password }}"
+    gid: "{{ user[0].gid }}"
+    uid: "{{ user[0].uid }}"
+    homedir: "{{ user[0].homedir }}"
+    username: "{{ user[0].username }}"
+    password: "{{ user[0].samba_password }}"

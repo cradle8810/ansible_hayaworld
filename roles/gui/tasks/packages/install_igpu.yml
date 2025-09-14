@@ -3,7 +3,7 @@
   ansible.builtin.apt:
     install_recommends: false
     update_cache: true
-    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+    cache_valid_time: "{{ apt_cache_valid_time }}"
     pkg:
       - intel-media-va-driver-non-free
       - libmfx-gen-dev
@@ -25,18 +25,18 @@
           - linux-headers-generic
         state: present
         update_cache: true
-        cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+        cache_valid_time: "{{ apt_cache_valid_time }}"
 
     - name: "GPU / Download and Install i915 Driver"
       ansible.builtin.get_url:
-        url: "{{ all.vars.i915.driver_url }}"
-        dest: "{{ all.vars.i915.dest }}"
-        checksum: "{{ all.vars.i915.checksum }}"
+        url: "{{ i915.driver_url }}"
+        dest: "{{ i915.dest }}"
+        checksum: "{{ i915.checksum }}"
         mode: '0600'
 
     - name: "GPU / Install i915 Driver"
       ansible.builtin.apt:
-        deb: "{{ all.vars.i915.dest }}"
+        deb: "{{ i915.dest }}"
         state: present
       notify:
         - "Run update-grub"
@@ -64,7 +64,7 @@
           - vainfo
         state: present
         update_cache: true
-        cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+        cache_valid_time: "{{ apt_cache_valid_time }}"
 
 - name: "GPU / Integrated GPU Permission Fix"
   ansible.builtin.copy:

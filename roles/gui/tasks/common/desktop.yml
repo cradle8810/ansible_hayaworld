@@ -3,7 +3,7 @@
   ansible.builtin.apt:
     install_recommends: false
     update_cache: true
-    cache_valid_time: "{{ all.vars.apt.cache_valid_time }}"
+    cache_valid_time: "{{ common_apt.cache_valid_time }}"
     pkg:
       - adwaita-icon-theme
       - dconf-cli
