@@ -6,7 +6,6 @@
   become: true
 
   vars_files:
-    - host_vars/runners.yml
     - host_vars/networks.yml
 
   handlers:

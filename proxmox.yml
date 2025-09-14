@@ -6,7 +6,6 @@
 
   vars_files:
     - host_vars/networks.yml
-    - host_vars/proxmox.yml
 
   handlers:
     - name: Restart handler tasks

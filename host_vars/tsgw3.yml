@@ -1,9 +1,0 @@
----
-apt:
-  - dstat
-  - htop
-  - qemu-guest-agent
-
-services_start:
-  - qemu-guest-agent
-  - ssh
