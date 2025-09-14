@@ -42,3 +42,20 @@
       value: 163840
   notify:
     - "Restart smbd"
+
+- name: "SMB / Set Restarting SMB Service"
+  community.general.ini_file:
+    path: /usr/lib/systemd/system/smbd.service
+    section: "Service"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  notify:
+    - "Restart smbd"
+  loop:
+    - option: "Restart"
+      value: "always"
+    - option: "RestartSec"
+      value: "500"
