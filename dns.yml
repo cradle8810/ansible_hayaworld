@@ -8,7 +8,6 @@
     - host_vars/dns/CNAME.yml
     - host_vars/dns/NXDOMAIN.yml
     - host_vars/networks.yml
-    - host_vars/dns.yml
 
   handlers:
     - name: Restart handler tasks
@@ -61,12 +60,6 @@
       ansible.builtin.import_tasks:
         file: tasks/dns/journalctl.yml
 
-    - name: Setup rsyslog
-      ansible.builtin.import_tasks:
-        file: tasks/dns/rsyslog-rui.yml
-      tags:
-        - rsyslog
-
     - name: Make Started Services
       ansible.builtin.import_tasks:
         file: tasks/service_start.yml
@@ -84,5 +77,7 @@
     - name: "Configure Rsyslog"
       ansible.builtin.import_role:
         name: rsyslog_client
+      vars:
+        rsyslog_client_additional_actions: "{{ syslog.additional_actions }}"
       tags:
         - rsyslog
