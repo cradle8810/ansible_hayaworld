@@ -21,9 +21,9 @@
 
 - name: Download yt-dlp (Linux)
   ansible.builtin.get_url:
-    url: "{{ all.vars.ytdlp.linux.url }}"
+    url: "{{ ytdlp.linux.url }}"
     dest: /opt/bin/yt-dlp
-    checksum: "{{ all.vars.ytdlp.linux.checksum }}"
+    checksum: "{{ ytdlp.linux.checksum }}"
     mode: "0755"
   when: ansible_distribution == "Ubuntu"
 
@@ -52,7 +52,7 @@
     mode: '0755'
     owner: "{{ item.username }}"
     group: "{{ item.username }}"
-  loop: "{{ all.vars.user }}"
+  loop: "{{ user }}"
   when:
     - ansible_distribution == "Ubuntu"
     - item.username != 'ansible'
@@ -66,7 +66,7 @@
     group: "{{ item.username }}"
     state: link
     follow: false
-  loop: "{{ all.vars.user }}"
+  loop: "{{ user }}"
   when:
     - ansible_distribution == "Ubuntu"
     - item.username != 'ansible'
@@ -79,7 +79,7 @@
     mode: '0755'
     owner: "{{ item.username }}"
     group: "staff"
-  loop: "{{ all.vars.user }}"
+  loop: "{{ user }}"
   when:
     - ansible_distribution == "MacOSX"
     - item.username != 'ansible'
@@ -92,7 +92,7 @@
     owner: "{{ item.username }}"
     group: "staff"
     state: link
-  loop: "{{ all.vars.user }}"
+  loop: "{{ user }}"
   when:
     - ansible_distribution == "MacOSX"
     - item.username != 'ansible'

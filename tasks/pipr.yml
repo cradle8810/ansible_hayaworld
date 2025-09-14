@@ -1,8 +1,8 @@
 ---
 - name: Download pipr (Linux)
   ansible.builtin.get_url:
-    url: "{{ all.vars.pipr.url }}"
-    checksum: "{{ all.vars.pipr.checksum }}"
+    url: "{{ pipr.url }}"
+    checksum: "{{ pipr.checksum }}"
     dest: /opt/bin/pipr
     mode: "0755"
   when: ansible_distribution == "Ubuntu"

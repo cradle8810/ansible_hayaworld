@@ -7,16 +7,16 @@
 
 - name: "Set Facts for Script dir (Linux)"
   ansible.builtin.set_fact:
-    script_base_dir: "{{ all.vars.user[0].homedir }}/Scripts/"
-    script_gid: "{{ all.vars.user[0].gid }}"
-    script_uid: "{{ all.vars.user[0].uid }}"
+    script_base_dir: "{{ user[0].homedir }}/Scripts/"
+    script_gid: "{{ user[0].gid }}"
+    script_uid: "{{ user[0].uid }}"
   when: ansible_distribution == "Ubuntu"
 
 - name: "Set Facts for Script dir (macOS)"
   ansible.builtin.set_fact:
-    script_base_dir: "{{ all.vars.user[0].homedir_mac }}/Scripts"
-    script_gid: "{{ all.vars.user[0].gid_mac }}"
-    script_uid: "{{ all.vars.user[0].uid_mac }}"
+    script_base_dir: "{{ user[0].homedir_mac }}/Scripts"
+    script_gid: "{{ user[0].gid_mac }}"
+    script_uid: "{{ user[0].uid_mac }}"
   when: ansible_distribution == "MacOSX"
 
 - name: Mkdir Homedir Scripts
