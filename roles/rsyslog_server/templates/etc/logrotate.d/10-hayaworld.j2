@@ -1,4 +1,4 @@
-{{ rsyslog_server_mountpoint }}/* {
+{{ rsyslog_server_mountpoint }}/*.log {
     weekly
     missingok
     rotate {{ rsyslog_server_rotate }}
