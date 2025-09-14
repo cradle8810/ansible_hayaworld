@@ -121,3 +121,9 @@
     file: tasks/stop-services.yml
   tags:
     - stop_services
+
+- name: "Common / Configure Restart When Kernel Panic happened"
+  ansible.builtin.import_tasks:
+    file: tasks/restart_when_panic.yml
+  tags:
+    - panic

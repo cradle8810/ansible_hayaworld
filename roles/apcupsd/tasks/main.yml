@@ -16,3 +16,20 @@
     owner: root
     group: root
     mode: '0755'
+
+- name: "Set Restarting Apcupsd Service when failed"
+  community.general.ini_file:
+    path: /usr/lib/systemd/system/apcupsd.service
+    section: "Service"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  notify:
+    - "Start Apcupsd"
+  loop:
+    - option: "Restart"
+      value: "always"
+    - option: "RestartSec"
+      value: "500"

@@ -1,0 +1,16 @@
+---
+- name: "Common / Reboot when Kernel Panic happened"
+  community.general.ini_file:
+    path: /etc/sysctl.conf
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  notify:
+    - "Reload sysctl"
+  loop:
+    - option: "kernel.panic"
+      value: "30"
+    - option: "kernel.panic_on_oops"
+      value: "1"

@@ -13,4 +13,5 @@
     name: apcupsd.service
     state: restarted
     enabled: true
+    daemon_reload: true
   listen: "Start Apcupsd"
