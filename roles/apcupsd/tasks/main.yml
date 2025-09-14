@@ -17,9 +17,9 @@
     group: root
     mode: '0755'
 
-- name: "NFS / Set Restarting Rsyslog Service"
+- name: "Set Restarting Apcupsd Service when failed"
   community.general.ini_file:
-    path: /usr/lib/systemd/system/rsyslog.service
+    path: /usr/lib/systemd/system/apcupsd.service
     section: "Service"
     option: "{{ item.option }}"
     value: "{{ item.value }}"
@@ -27,7 +27,7 @@
     no_extra_spaces: true
     mode: "644"
   notify:
-    - "Restart rsyslog"
+    - "Start Apcupsd"
   loop:
     - option: "Restart"
       value: "always"
