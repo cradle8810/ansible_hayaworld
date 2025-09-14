@@ -23,6 +23,8 @@
   loop:
     - src: templates/etc/rsyslog.d/10-hayaworld.conf.j2
       dest: /etc/rsyslog.d/10-hayaworld.conf
+    - src: templates/etc/rsyslog.d/11-additional.conf.j2
+      dest: /etc/rsyslog.d/11-additional.conf
     - src: templates/etc/rsyslog.conf.j2
       dest: /etc/rsyslog.conf
   notify: "Restart rsyslog"
