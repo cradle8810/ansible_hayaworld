@@ -57,3 +57,9 @@
         name: rsyslog_client
       tags:
         - rsyslog
+
+    - name: Configure Raspberry Pi Watchdog
+      ansible.builtin.import_tasks:
+        file: tasks/qd/raspi_watchdog.yml
+      tags:
+        - watchdog

@@ -1,0 +1,27 @@
+---
+- name: "Watchdog / Active Watchdog module"
+  community.general.ini_file:
+    path: /boot/config.txt
+    option: "dtparam"
+    value: "watchdog=on"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+
+- name: "Watchdog / Configure Watchdog Time"
+  community.general.ini_file:
+    path: /etc/systemd/system.conf.d/main.conf
+    section: "Manager"
+    option: "RuntimeWatchdogSec"
+    value: "60"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+
+- name: "Watchdog / Configure Watchdog Time Kernel Module"
+  ansible.builtin.lineinfile:
+    create: true
+    path: /etc/modprobe.d/bcm2835-wdt.conf
+    regexp: '^#options bcm2835_wdt heartbeat=10 nowayout=0'
+    line: 'options bcm2835_wdt heartbeat=10 nowayout=0'
+    mode: "644"
