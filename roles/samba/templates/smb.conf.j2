@@ -13,10 +13,14 @@ map to guest = bad user
 # For MacOS
 idmap config * : backend = tdb
 fruit:model = RackMac
-fruit:encoding = native
-fruit:metadata = netatalk
 idmap config * : backend = tdb
 vfs objects = catia fruit streams_xattr
+
+fruit:aapl = yes
+fruit:nfs_aces = no
+fruit:zero_file_id = yes
+fruit:metadata = stream
+fruit:encoding = native
 
 {% if samba_tunes is defined %}
 {% for i in samba_tunes %}
