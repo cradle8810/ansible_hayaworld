@@ -4,7 +4,6 @@
     name: nfs-server.service
     state: restarted
     enabled: true
-    daemon_reload: true
   listen: "Restart nfs-server"
 
 - name: "Update NFS export"

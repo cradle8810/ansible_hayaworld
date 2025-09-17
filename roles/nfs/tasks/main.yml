@@ -70,20 +70,3 @@
   loop: "{{ nfs_tmpfs }}"
   when: nfs_tmpfs is defined
   notify: "Restart nfs-server"
-
-- name: "NFS / Set Restarting NFS DCLD Service"
-  community.general.ini_file:
-    path: /usr/lib/systemd/system/nfsdcld.service
-    section: "Service"
-    option: "{{ item.option }}"
-    value: "{{ item.value }}"
-    state: present
-    no_extra_spaces: true
-    mode: "644"
-  notify:
-    - "Restart nfs-server"
-  loop:
-    - option: "Restart"
-      value: "always"
-    - option: "RestartSec"
-      value: "500"
