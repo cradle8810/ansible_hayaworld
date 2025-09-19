@@ -96,6 +96,6 @@
               transmit-hash-policy: "layer2"
             routes:
               - to: "default"
-                via: "192.168.1.1"
+                via: "192.168.88.1"
             mtu:
               "{{ common_hostinfo.mtu }}"

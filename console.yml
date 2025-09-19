@@ -97,7 +97,7 @@
 
     - name: "Setup Tailscale Endpoint"
       ansible.builtin.import_role:
-        name: artis3n.tailscale
+        name: artis3n.tailscale.machine
       tags:
         - tailscale
       when: not ansible_check_mode

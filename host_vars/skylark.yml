@@ -55,19 +55,19 @@ nfs:
   domain: "{{ subnet.search }}"
   exports:
     - path: "/skylark/nfs"
-      allowip: "192.168.1.0/24"
+      allowip: "192.168.88.0/24"
       options: "rw,no_root_squash"
       uid: 0
       gid: 0
       mode: '0755'
     - path: "/backup/tm"
-      allowip: "192.168.1.0/24"
+      allowip: "192.168.88.0/24"
       options: "rw,no_root_squash,no_subtree_check"
       uid: 10000
       gid: 10000
       mode: '0755'
     - path: "/backup/log"
-      allowip: "192.168.1.0/24"
+      allowip: "192.168.88.0/24"
       options: "rw,no_root_squash,no_subtree_check"
       uid: 10000
       gid: 10000
@@ -116,7 +116,7 @@ firewall:
     ipv4:
       - name: "SSH from service line"
         proto: "tcp"
-        src: "192.168.1.0/24"
+        src: "192.168.88.0/24"
         port: '22'
       - name: "SSH from CGN Network"
         proto: "tcp"
@@ -128,7 +128,7 @@ firewall:
         port: "445"
       - name: "SMB from service line"
         proto: "tcp"
-        src: "192.168.1.0/24"
+        src: "192.168.88.0/24"
         port: "445"
       - name: "Runner Docker ssh"
         proto: "tcp"
@@ -136,11 +136,11 @@ firewall:
         port: "22"
       - name: "NFS service(TCP)"
         proto: "tcp"
-        src: "192.168.1.0/24"
+        src: "192.168.88.0/24"
         port: "2049"
       - name: "NFS service(UDP)"
         proto: "udp"
-        src: "192.168.1.0/24"
+        src: "192.168.88.0/24"
         port: "2049"
     ipv6:
       - name: "SSH from service line(IPv6)"

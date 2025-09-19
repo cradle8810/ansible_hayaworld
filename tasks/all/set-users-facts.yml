@@ -3,6 +3,6 @@
   ansible.builtin.set_fact:
     common_hostinfo: "{{ network | selectattr('ipv4', 'eq', mgmt_ipv4) | first }}"
   vars:
-    mgmt_ipv4: "{{ ansible_all_ipv4_addresses | select('match', '192.168.1.') | first }}"
+    mgmt_ipv4: "{{ ansible_all_ipv4_addresses | select('match', '192.168.88.') | first }}"
   tags:
     - always

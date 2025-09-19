@@ -43,8 +43,8 @@
       vars:
         dns_nxdomain: "{{ nxdomain }}"
         dns_cname: "{{ cname }}"
-        dns_cluster_01_ipv4: "192.168.1.100"
-        dns_cluster_02_ipv4: "192.168.1.150"
+        dns_cluster_01_ipv4: "192.168.88.100"
+        dns_cluster_02_ipv4: "192.168.88.150"
       tags:
         - dns
 

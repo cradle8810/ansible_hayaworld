@@ -16,13 +16,13 @@
 
 - name: "Setup Tailscale Endpoint"
   ansible.builtin.import_role:
-    name: artis3n.tailscale
+    name: artis3n.tailscale.machine
   tags:
     - tailscale
   when: not ansible_check_mode
   vars:
     tailscale_authkey: "{{ tailscale.client_secret }}"
-    tailscale_args: "--advertise-routes=192.168.1.0/24 --advertise-exit-node --accept-dns=false"
+    tailscale_args: "--advertise-routes=192.168.88.0/24 --advertise-exit-node --accept-dns=false"
     tailscale_oauth_ephemeral: false
     tailscale_tags:
       - gw
