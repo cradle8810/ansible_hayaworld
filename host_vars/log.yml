@@ -68,13 +68,16 @@ syslog:
       file: "-/var/log/hayaworld/local6.log"
     - facility: "local7.*"
       file: "-/var/log/hayaworld/local7.log"
-    - facility: "
-        *.info;\
-        kern.none;user.none;mail.none;daemon.none;auth.none;syslog.none;\
-        local1.none;local2.none;local3.none;local4.none;\
-        local5.none;local6.none;local7.none;\
-        "
+    - facility: "*.info;\
+        kern,user,mail,daemon,auth,syslog.none;\
+        local1,local2,local3,local4,local5,local6,local7.none"
       file: "-/var/log/hayaworld/misc.log"
+  rsyslog_server_additional_actions: |
+    set $.ha_recvd = "COMMAND_RECEIVED Received command 'ha-heartbeat'";
+    if ($programname == 'kea-dhcp4' and $msg contains $.ha_recvd) or
+       ($programname == 'kea-dhcp6' and $msg contains $.ha_recvd) then {
+      stop
+    }
 
 backup_scripts:
   dirs:

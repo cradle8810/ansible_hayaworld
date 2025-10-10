@@ -26,6 +26,7 @@
         name: rsyslog_server
       vars:
         rsyslog_server_actions: "{{ syslog.rsyslog_server_actions }}"
+        rsyslog_server_additional_actions: "{{ syslog.rsyslog_server_additional_actions }}"
       tags:
         - rsyslog
 

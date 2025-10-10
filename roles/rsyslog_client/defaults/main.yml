@@ -17,6 +17,5 @@ rsyslog_client_actions:
   - "local6.*"
   - "local7.*"
   - "*.info;\
-    kern.none;user.none;mail.none;daemon.none;auth.none;syslog.none;\
-    local1.none;local2.none;local3.none;local4.none;\
-    local5.none;local6.none;local7.none;"
+      kern,user,mail,daemon,auth,syslog.none;\
+      local1,local2,local3,local4,local5,local6,local7.none"
