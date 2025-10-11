@@ -36,6 +36,11 @@ drives:
       subvol: "/log"
       filesystem: "btrfs"
       options: "defaults,users,noatime,compress=zstd:1"
+    - uuid: 77af48a6-5a47-4e06-a106-c5c74b6d1449
+      mountpoint: /backup/guest
+      subvol: "/guest"
+      filesystem: "btrfs"
+      options: "defaults,users,noatime,compress=zstd:1"
 
 smb:
   samba_workgroup: "WORKGROUP"
@@ -49,6 +54,10 @@ smb:
       path: "/skylark/Nullpo"
       owner: hayato
       group: hayato
+    - name: guestuser
+      path: "/skylark/guest"
+      owner: guestuser
+      group: guestuser
 
 nfs:
   threads: 20
@@ -94,6 +103,11 @@ backup_scripts:
       dest: "/backup/hayato"
       snapshotdir: "/backup/snapshots/hayato"
       excludefilepath: "/home/hayato/backupscripts/Home_exclude.txt"
+    - name: "Guest"
+      src: "/skylark/guest/"
+      dest: "/backup/guest"
+      snapshotdir: "/backup/snapshots/guest"
+      excludefilepath: "/home/hayato/backupscripts/Guest_exclude.txt"
 
 services_start:
   - qemu-guest-agent
