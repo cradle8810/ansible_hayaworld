@@ -5,18 +5,6 @@
   tags:
     - dnsmasq
 
-- name: "RAdvd / Setting RAdvd"
-  ansible.builtin.import_tasks:
-    file: tasks/radvd.yml
-  tags:
-    - radvd
-
-- name: "RAdvd / Setting RAdvd"
-  ansible.builtin.import_tasks:
-    file: tasks/corosync.yml
-  tags:
-    - corosync
-
 - name: "Set Systemd-Resolved status"
   block:
     - name: "Get Systemd-Resolved status"

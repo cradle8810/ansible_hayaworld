@@ -22,14 +22,13 @@
         common_firewall: "{{ firewall }}"
         common_add_hosts: false
 
-    - name: Mount tmpfs for mai(Raspi)
+    - name: Mount tmpfs for temporary dirs
       ansible.posix.mount:
         src: "tmpfs"
         path: "{{ item }}"
         opts: "defaults"
         fstype: tmpfs
         state: mounted
-      when: common_hostinfo.shortname == "mai"
       loop:
         - "/home/ansible/.ansible"
         - "/var/cache/apt/archives"
