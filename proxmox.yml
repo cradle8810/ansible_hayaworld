@@ -97,17 +97,6 @@
         - corosync
         - qdevice
 
-    - name: APC UPS Settings
-      ansible.builtin.import_role:
-        name: apcupsd
-      vars:
-        apcupsd_role: slave
-        apcupsd_timeout: 100
-        apcupsd_proxmox: true
-      tags:
-        - apc
-        - ups
-
     - name: "Configure Rsyslog"
       ansible.builtin.import_role:
         name: rsyslog_client
@@ -116,3 +105,26 @@
         rsyslog_client_config_group: root
       tags:
         - rsyslog
+
+    - name: "APC UPS Settings (For Mgmt node)"
+      ansible.builtin.import_role:
+        name: apcupsd
+      vars:
+        apcupsd_role: "master"
+        apcupsd_timeout: 600
+      when: common_hostinfo.shortname == proxmox.mgmt_host
+      tags:
+        - apc
+        - ups
+
+    - name: "APC UPS Settings (For Non Mgmt node)"
+      ansible.builtin.import_role:
+        name: apcupsd
+      vars:
+        apcupsd_role: slave
+        apcupsd_timeout: 100
+        apcupsd_proxmox: true
+      when: common_hostinfo.shortname != proxmox.mgmt_host
+      tags:
+        - apc
+        - ups

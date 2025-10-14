@@ -14,6 +14,7 @@ nuc01 ansible_user=root ansible_host=192.168.88.11
 nuc02 ansible_user=root ansible_host=192.168.88.12
 nuc03 ansible_user=root ansible_host=192.168.88.13
 nuc04 ansible_user=root ansible_host=192.168.88.14
+nuc05 ansible_user=root ansible_host=192.168.88.15
 
 [dns]
 rui ansible_user=ansible ansible_host=192.168.88.100
