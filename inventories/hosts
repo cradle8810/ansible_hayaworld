@@ -21,8 +21,11 @@ rui ansible_user=ansible ansible_host=192.168.88.100
 mai ansible_user=ansible ansible_host=192.168.88.150
 
 [runners]
+runner01 ansible_user=ansible ansible_host=runner01.hayaworld.home
+runner02 ansible_user=ansible ansible_host=runner02.hayaworld.home
 runner03 ansible_user=ansible ansible_host=runner03.hayaworld.home
 runner04 ansible_user=ansible ansible_host=runner04.hayaworld.home
+runner05 ansible_user=ansible ansible_host=runner05.hayaworld.home
 
 [tailscale]
 tsgw1 ansible_user=ansible ansible_host=192.168.88.114
