@@ -1,0 +1,15 @@
+runners:
+  basepath: "/opt/runner"
+  runners:
+    - runner_name: zopflipng_01-01
+      github_repo: zopflipng
+    - runner_name: zopflipng_01-02
+      github_repo: zopflipng
+    - runner_name: periodic_backup_01-01
+      github_repo: periodic_backup
+    - runner_name: ansible_hayaworld_01-01
+      github_repo: ansible_hayaworld
+
+docker_network:
+  base: "172.17.1.0/24"
+  size: "28"
