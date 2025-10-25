@@ -112,6 +112,10 @@ symlinks_user:
     dest: "$TMPDIR/../C/com.apple.quicklook.ThumbnailsAgent"
     owner: hayato
     group: staff
+  - src: "/dev/null"
+    dest: "/Users/hayato/Library/Application Support/discord/Cache"
+    owner: hayato
+    group: staff
 
 symlinks_system:
   - src: /Volumes/RAMDisk/.logs
