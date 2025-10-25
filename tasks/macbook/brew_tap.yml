@@ -1,0 +1,6 @@
+---
+- name: Tap a Homebrew repository, state present
+  community.general.homebrew_tap:
+    name: "{{ item }}"
+  with_items: "{{ brew.tap }}"
+  when: (brew.tap is defined)

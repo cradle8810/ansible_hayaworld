@@ -1,6 +1,16 @@
 ---
-- name: Install Macbook brew taps
+- name: Install Macbook brew
   community.general.homebrew:
-    name: "{{ item }}"
-    state: upgraded
-  with_items: "{{ brew_taps }}"
+    name: "{{ brew.apps }}"
+    state: present
+  register: brew_rc
+
+- name: Show Installed/Updated brew packages
+  debug:
+    var: brew_rc.changed_pkgs
+
+- name: Restart services if needs
+  community.general.homebrew_services:
+    name: "{{ brew_rc.changed_pkgs }}"
+    state: restarted
+  when: "( brew_rc.changed_pkgs | length > 0 ) and ( brew.service is defined )"

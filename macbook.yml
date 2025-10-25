@@ -24,10 +24,16 @@
         - symlinks
 
     - name: Brew install
-      ansible.builtin.import_tasks:
-        file: tasks/macbook/brew.yml
       tags:
         - brew
+      block:
+        - name: Brew tap
+          ansible.builtin.import_tasks:
+            file: tasks/macbook/brew_tap.yml
+
+        - name: Brew install Apps
+          ansible.builtin.import_tasks:
+            file: tasks/macbook/brew.yml
 
     - name: Install Pre-builded SNS downloaders
       ansible.builtin.import_tasks:

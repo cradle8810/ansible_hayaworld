@@ -1,35 +1,41 @@
 ---
-brew_taps:
-  - ansible
-  - ansible-lint
-  - cmigemo
-  - figlet
-  - gh
-  - gnu-tar
-  - gnupg
-  - htop
-  - imagemagick
-  - java
-  - libaacs
-  - libbdplus
-  - libbluray
-  - libde265
-  - libheif
-  - mas
-  - minica
-  - nkf
-  - p7zip
-  - pdftoipe
-  - pipx
-  - python-packaging
-  - toilet
-  - unzip
-  - util-linux
-  - wget
-  - x264
-  - x265
-  - yt-dlp
-  - zsh
+brew:
+  apps:
+    - ansible
+    - ansible-lint
+    - apple-music-discord-rpc
+    - cmigemo
+    - figlet
+    - gh
+    - gnu-tar
+    - gnupg
+    - htop
+    - imagemagick
+    - java
+    - libaacs
+    - libbdplus
+    - libbluray
+    - libde265
+    - libheif
+    - mas
+    - minica
+    - nkf
+    - p7zip
+    - pdftoipe
+    - pipx
+    - python-packaging
+    - toilet
+    - unzip
+    - util-linux
+    - wget
+    - x264
+    - x265
+    - yt-dlp
+    - zsh
+  tap:
+    - nextfire/tap
+  service:
+    - apple-music-discord-rpc
 
 symlinks_user:
   - src: /Volumes/RAMDisk
