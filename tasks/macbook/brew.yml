@@ -7,7 +7,7 @@
   register: brew_rc
 
 - name: Show Installed/Updated brew packages
-  debug:
+  ansible.builtin.debug:
     var: brew_rc.changed_pkgs
 
 - name: Restart services if needs
