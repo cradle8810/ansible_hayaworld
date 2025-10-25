@@ -2,7 +2,8 @@
 - name: Install Macbook brew
   community.general.homebrew:
     name: "{{ brew.apps }}"
-    state: present
+    state: upgraded
+    update_homebrew: true
   register: brew_rc
 
 - name: Show Installed/Updated brew packages
