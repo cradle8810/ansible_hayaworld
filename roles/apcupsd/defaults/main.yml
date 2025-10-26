@@ -1,6 +1,6 @@
 ---
 apcupsd_role: "slave"
-apcupsd_master: "192.168.88.15"
+apcupsd_master: "192.168.88.116"
 apcupsd_name: "mamoru"
 apcupsd_timeout: "180"
 apcupsd_proxmox: false
