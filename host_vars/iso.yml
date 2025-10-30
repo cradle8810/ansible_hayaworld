@@ -1,0 +1,62 @@
+---
+apt:
+  - qemu-guest-agent
+
+services_start:
+  - qemu-guest-agent
+  - ssh
+
+nginx:
+  drive:
+    src_UUID: "40a55c09-adf1-47c9-9805-f2a2e22fcf58"
+    dest: "/ISO"
+    fstype: "btrfs"
+  opts:
+    nginx_branch: "stable"
+    nginx_setup_license: false
+  logs:
+    nginx_logrotate_conf_enable: true
+    nginx_logrotate_conf:
+      paths: /var/log/nginx/*.log
+      options:
+        - weekly
+        - missingok
+        - rotate 14
+        - compress
+        - delaycompress
+        - notifempty
+        - sharedscripts
+
+firewall:
+  policy: deny
+  allow_rules:
+    ipv4:
+      - name: "SSH from service line"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: '22'
+      - name: "Zabbix from Zabbix-server"
+        proto: "tcp"
+        src: "192.168.88.106/24"
+        port: "10050"
+      - name: "mDNS service line"
+        proto: "udp"
+        src: "192.168.88.0/24"
+        port: "5353"
+      - name: "http service line"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: "80"
+    ipv6:
+      - name: "SSH from service line(IPv6)"
+        proto: "tcp"
+        src: "{{ ipv6.ula.prefix }}::/48"
+        port: '22'
+      - name: "HTTP from service line(IPv6)"
+        proto: "tcp"
+        src: "{{ ipv6.ula.prefix }}::/48"
+        port: '80'
+      - name: "DHCPv6 Client from service line"
+        proto: "udp"
+        src: "::"
+        port: "546"

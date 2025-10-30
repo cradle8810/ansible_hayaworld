@@ -182,6 +182,14 @@ network:
     sshuser: runner
     self_org: true
     mtu: 9000
+  - hostname: iso.hayaworld.home
+    interface: enp6s18
+    ipv4: 192.168.88.121
+    ipv6_addr: "{{ ipv6.ula.prefix }}::121"
+    shortname: iso
+    sshuser: ansible
+    self_org: true
+    mtu: 9000
   - hostname: terminal.hayaworld.home
     interface: enx6c1ff7023273
     ipv4: 192.168.88.130

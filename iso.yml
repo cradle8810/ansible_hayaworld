@@ -1,0 +1,67 @@
+---
+- name: Play for ISO local hosted VM
+  hosts: iso
+  remote_user: ansible
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - host_vars/networks.yml
+
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+
+  tasks:
+    - name: Common Settings
+      ansible.builtin.import_role:
+        name: common
+      vars:
+        common_firewall: "{{ firewall }}"
+        common_pkg: "{{ apt }}"
+
+    - name: Install and Configure NGiNX
+      tags:
+        - nginx
+      block:
+        - name: Install NGiNX
+          ansible.builtin.import_role:
+            name: nginxinc.nginx
+          vars:
+            nginx_branch: "{{ nginx.opts.nginx_branch }}"
+            nginx_setup_license: "{{ nginx.opts.nginx_setup_license }}"
+            nginx_logrotate_conf_enable: "{{ nginx.logs.nginx_logrotate_conf_enable }}"
+            nginx_logrotate_conf: "{{ nginx.logs.nginx_logrotate_conf }}"
+
+        - name: Make mountpoint
+          ansible.builtin.file:
+            path: "{{ nginx.drive.dest }}"
+            state: directory
+            owner: hayato
+            group: hayato
+            mode: '0755'
+
+        - name: Mountup ISO directory
+          ansible.posix.mount:
+            src: "UUID={{ nginx.drive.src_UUID }}"
+            path: "{{ nginx.drive.dest }}"
+            opts: "defaults"
+            fstype: "{{ nginx.drive.fstype }}"
+            state: mounted
+
+    - name: APC UPS Settings
+      ansible.builtin.import_role:
+        name: apcupsd
+      vars:
+        apcupsd_role: "slave"
+        apcupsd_timeout: 60
+      tags:
+        - apc
+        - ups
+
+    - name: "Configure Rsyslog"
+      ansible.builtin.import_role:
+        name: rsyslog_client
+      tags:
+        - rsyslog
