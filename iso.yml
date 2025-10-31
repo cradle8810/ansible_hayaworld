@@ -24,6 +24,7 @@
     - name: Install and Configure NGiNX
       tags:
         - nginx
+      notify: "Restart NGiNX"
       block:
         - name: Install NGiNX
           ansible.builtin.import_role:
@@ -58,8 +59,29 @@
             group: root
             mode: '0644'
           vars:
-            shortname: "{{ common_hostinfo.shortname }}"
+            hostname: "{{ common_hostinfo.hostname }}"
             documentroot: "{{ nginx.drive.dest }}"
+
+        - name: Put Certifications Directory
+          ansible.builtin.file:
+            path: "/etc/nginx/certs/"
+            state: directory
+            owner: root
+            group: www-data
+            mode: '0750'
+
+        - name: Put Certifications
+          ansible.builtin.copy:
+            src: "{{ item.src }}"
+            dest: "{{ item.dest }}"
+            owner: root
+            group: www-data
+            mode: '0640'
+          loop:
+            - src: "templates/iso/etc/nginx/certs/cert.pem"
+              dest: "/etc/nginx/certs/cert.pem"
+            - src: "templates/iso/etc/nginx/certs/key.pem"
+              dest: "/etc/nginx/certs/key.pem"
 
     - name: APC UPS Settings
       ansible.builtin.import_role:
