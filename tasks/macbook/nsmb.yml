@@ -18,12 +18,14 @@
     - option: streams
       value: "yes"
     - option: notify_off
-      value: "yes"
+      value: "no"
     - option: soft
       value: "yes"
     - option: dir_cache_max_cnt
       value: 0
     - option: dir_cache_max
+      value: 0
+    - option: dir_cache_async_cnt
       value: 0
     - option: dir_cache_off
       value: "yes"
@@ -34,6 +36,8 @@
     - option: mc_on
       value: "yes"
     - option: mc_prefer_wired
+      value: "yes"
+    - option: file_ids_off
       value: "yes"
 
 - name: "Set do not write DS_Store"

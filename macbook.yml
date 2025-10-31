@@ -55,6 +55,7 @@
         - ssh
 
     - name: "Fixup smbd connection speed"
+      become: true
       ansible.builtin.import_tasks:
         file: tasks/macbook/nsmb.yml
       tags:
