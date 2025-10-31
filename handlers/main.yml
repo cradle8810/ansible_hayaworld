@@ -109,3 +109,10 @@
     state: restarted
     enabled: true
   listen: "hdd_prevent_sleeping"
+
+- name: "Restart NGiNX"
+  ansible.builtin.systemd_service:
+    name: nginx.service
+    state: restarted
+    enabled: true
+  listen: "Restart NGiNX"

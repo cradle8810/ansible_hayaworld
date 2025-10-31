@@ -50,6 +50,17 @@
             fstype: "{{ nginx.drive.fstype }}"
             state: mounted
 
+        - name: Put NGiNX Configure files
+          ansible.builtin.template:
+            src: "templates/iso/etc/nginx/nginx.conf.j2"
+            dest: "/etc/nginx/nginx.conf"
+            owner: root
+            group: root
+            mode: '0644'
+          vars:
+            shortname: "{{ common_hostinfo.shortname }}"
+            documentroot: "{{ nginx.drive.dest }}"
+
     - name: APC UPS Settings
       ansible.builtin.import_role:
         name: apcupsd

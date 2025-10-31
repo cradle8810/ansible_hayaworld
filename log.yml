@@ -43,6 +43,7 @@
     - name: Backup log backups
       tags:
         - backup
+      notify: "Restart NGiNX"
       block:
         - name: "Install Rsync"
           ansible.builtin.apt:
