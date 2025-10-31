@@ -98,3 +98,16 @@
         name: rsyslog_client
       tags:
         - rsyslog
+
+    - name: "Download ISOs"
+      ansible.builtin.get_url:
+        url: "{{ item.url }}"
+        dest: "{{ nginx.drive.dest }}"
+        checksum: "sha256:{{ item.sha256 }}"
+        owner: www-data
+        group: www-data
+        mode: "0644"
+      loop: "{{ iso_url }}"
+      tags:
+        - download
+        - iso

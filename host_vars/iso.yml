@@ -68,3 +68,13 @@ firewall:
         proto: "udp"
         src: "::"
         port: "546"
+
+iso_url:
+  - url: "http://ftp.riken.go.jp/Linux/ubuntu-releases/releases/22.04.5/ubuntu-22.04.5-live-server-amd64.iso"
+    sha256: "9bc6028870aef3f74f4e16b900008179e78b130e6b0b9a140635434a46aa98b0"
+  - url: "http://ftp.riken.go.jp/Linux/ubuntu-releases/releases/24.04.3/ubuntu-24.04.3-live-server-amd64.iso"
+    sha256: "c3514bf0056180d09376462a7a1b4f213c1d6e8ea67fae5c25099c6fd3d8274b"
+  - url: "http://ftp.riken.go.jp/Linux/ubuntu-releases/releases/25.04/ubuntu-25.04-live-server-amd64.iso"
+    sha256: "8b44046211118639c673335a80359f4b3f0d9e52c33fe61c59072b1b61bdecc5"
+  - url: "http://ftp.riken.go.jp/Linux/ubuntu-releases/releases/25.10/ubuntu-25.10-live-server-amd64.iso"
+    sha256: "dc54870e5261c0abad19f74b8146659d10e625971792bd42d7ecde820b60a1d0"
