@@ -1,0 +1,80 @@
+---
+apt:
+  - qemu-guest-agent
+
+services_start:
+  - qemu-guest-agent
+  - ssh
+
+nginx:
+  drive:
+    src_UUID: "40a55c09-adf1-47c9-9805-f2a2e22fcf58"
+    dest: "/ISO"
+    fstype: "btrfs"
+  opts:
+    nginx_branch: "stable"
+    nginx_setup_license: false
+  logs:
+    nginx_logrotate_conf_enable: true
+    nginx_logrotate_conf:
+      paths: /var/log/nginx/*.log
+      options:
+        - weekly
+        - missingok
+        - rotate 14
+        - compress
+        - delaycompress
+        - notifempty
+        - sharedscripts
+
+firewall:
+  policy: deny
+  allow_rules:
+    ipv4:
+      - name: "SSH from service line"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: '22'
+      - name: "Zabbix from Zabbix-server"
+        proto: "tcp"
+        src: "192.168.88.106/24"
+        port: "10050"
+      - name: "mDNS service line"
+        proto: "udp"
+        src: "192.168.88.0/24"
+        port: "5353"
+      - name: "http service line"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: "80"
+      - name: "http service line"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: "443"
+    ipv6:
+      - name: "SSH from service line(IPv6)"
+        proto: "tcp"
+        src: "{{ ipv6.ula.prefix }}::/48"
+        port: '22'
+      - name: "HTTP from service line(IPv6)"
+        proto: "tcp"
+        src: "{{ ipv6.ula.prefix }}::/48"
+        port: '80'
+      - name: "HTTP from service line(IPv6)"
+        proto: "tcp"
+        src: "{{ ipv6.ula.prefix }}::/48"
+        port: '443'
+      - name: "DHCPv6 Client from service line"
+        proto: "udp"
+        src: "::"
+        port: "546"
+
+iso_url:
+  - url: "http://ftp.riken.go.jp/Linux/ubuntu-releases/releases/22.04.5/ubuntu-22.04.5-live-server-amd64.iso"
+    sha256: "9bc6028870aef3f74f4e16b900008179e78b130e6b0b9a140635434a46aa98b0"
+  - url: "http://ftp.riken.go.jp/Linux/ubuntu-releases/releases/24.04.3/ubuntu-24.04.3-live-server-amd64.iso"
+    sha256: "c3514bf0056180d09376462a7a1b4f213c1d6e8ea67fae5c25099c6fd3d8274b"
+  - url: "http://ftp.riken.go.jp/Linux/ubuntu-releases/releases/25.04/ubuntu-25.04-live-server-amd64.iso"
+    sha256: "8b44046211118639c673335a80359f4b3f0d9e52c33fe61c59072b1b61bdecc5"
+  - url: "http://ftp.riken.go.jp/Linux/ubuntu-releases/releases/25.10/ubuntu-25.10-live-server-amd64.iso"
+    sha256: "dc54870e5261c0abad19f74b8146659d10e625971792bd42d7ecde820b60a1d0"

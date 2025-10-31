@@ -8,6 +8,7 @@ scanner ansible_user=ansible ansible_host=scanner.hayaworld.home
 skylark ansible_user=ansible ansible_host=skylark.hayaworld.home
 terminal ansible_user=ansible ansible_host=terminal.hayaworld.home
 tm ansible_user=ansible ansible_host=tm.hayaworld.home
+iso ansible_user=ansible ansible_host=iso.hayaworld.home
 
 [proxmox]
 nuc01 ansible_user=root ansible_host=192.168.88.11
@@ -43,3 +44,4 @@ skylark
 tm
 tsgw1
 tsgw2
+iso
