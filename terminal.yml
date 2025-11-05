@@ -78,12 +78,6 @@
       tags:
         - gui
 
-    - name: Make Started Services
-      ansible.builtin.import_tasks:
-        file: tasks/service_start.yml
-      tags:
-        - services
-
     - name: Install/Config Zramswap
       ansible.builtin.import_tasks:
         file: tasks/zram.yml
@@ -103,3 +97,9 @@
         name: rsyslog_client
       tags:
         - rsyslog
+
+    - name: Make Started Services
+      ansible.builtin.import_tasks:
+        file: tasks/service_start.yml
+      tags:
+        - services
