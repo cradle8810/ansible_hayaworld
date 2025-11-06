@@ -14,40 +14,13 @@
         file: handlers/main.yml
 
   tasks:
-    - name: Common Settings
-      ansible.builtin.import_role:
-        name: common
+    - name: "Common / Set Hostinfo"
+      ansible.builtin.set_fact:
+        common_hostinfo: "{{ network | selectattr('ipv4', 'eq', mgmt_ipv4) | first }}"
       vars:
-        common_firewall: "{{ firewall }}"
-        common_pkg: "{{ apt }}"
-
-    - name: NFS settings
-      ansible.builtin.import_role:
-        name: nfs
-      vars:
-        nfs_threads: "{{ nfs.threads }}"
-        nfs_domain: "{{ nfs.domain }}"
-        nfs_exports: "{{ nfs.exports }}"
-        nfs_tmpfs: "{{ nfs.tmpfs }}"
+        mgmt_ipv4: "{{ ansible_all_ipv4_addresses | select('match', '192.168.88.') | first }}"
       tags:
-        - nfs
-
-    - name: Set CPU configurations
-      ansible.builtin.import_role:
-        name: cpufreq
-      vars:
-        cpufreq_cpu: "{{ cpu }}"
-      tags:
-        - cpu
-
-    - name: "Prevent to sleep HDD"
-      ansible.builtin.template:
-        src: templates/pskylark/etc/systemd/system/hdd_prevent_sleeping.service
-        dest: /etc/systemd/system/hdd_prevent_sleeping.service
-        owner: root
-        group: root
-        mode: '0644'
-      notify: "hdd_prevent_sleeping"
+        - always
 
     - name: "Pskylark WoL / Copy WoL set service file"
       ansible.builtin.template:
@@ -59,38 +32,6 @@
       vars:
         macaddr: "{{ common_hostinfo.macaddress }}"
 
-    - name: Set LVM cache migration_threshold
-      tags:
-        - lvm
-      vars:
-        d: "{{ dmcache }}"
-      block:
-        - name: "Get current migration_threshold"
-          ansible.builtin.shell:
-            cmd: |
-              set -o pipefail &&
-              dmsetup table {{ dmcache.lvs }} |
-              awk '{ \
-                for (i=1; i<=NF; i++) { \
-                  if ($i == "migration_threshold") { \
-                    print $(i+1); exit; \
-                  } \
-                } \
-              }'
-          register: migration_threshold_current
-          changed_when: false
-          failed_when: false
-
-        - name: "Set migration_threshold"
-          ansible.builtin.command:
-            cmd:
-              "lvchange --cachesettings 'migration_threshold={{ d.migration_threshold }}' {{ d.lvs }}"
-          register: retval
-          changed_when: retval.rc == 0
-          when:
-            - migration_threshold_current.rc == 0
-            - (migration_threshold_current.stdout | int) != (d.migration_threshold | int)
-
     - name: APC UPS Settings
       ansible.builtin.import_role:
         name: apcupsd
@@ -100,9 +41,3 @@
       tags:
         - apc
         - ups
-
-    - name: "Configure Rsyslog"
-      ansible.builtin.import_role:
-        name: rsyslog_client
-      tags:
-        - rsyslog
