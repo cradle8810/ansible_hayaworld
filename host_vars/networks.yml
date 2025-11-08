@@ -1,10 +1,10 @@
 ---
 network:
-  - hostname: pskylark.hayaworld.home
+  - hostname: tank.hayaworld.home
     interface: bond0
     ipv4: 192.168.88.10
     ipv6_addr: "{{ ipv6.ula.prefix }}::10"
-    shortname: pskylark
+    shortname: tank
     sshuser: hayato
     self_org: true
     mtu: 9000
@@ -110,14 +110,6 @@ network:
     sshuser: runner
     self_org: true
     mtu: 9000
-  - hostname: tm.hayaworld.home
-    interface: enp6s18
-    ipv4: 192.168.88.112
-    ipv6_addr: "{{ ipv6.ula.prefix }}::112"
-    shortname: tm
-    sshuser: hayato
-    self_org: true
-    mtu: 9000
   - hostname: scanner.hayaworld.home
     interface: enp6s18
     ipv4: 192.168.88.113
@@ -212,7 +204,7 @@ network:
     ipv6_addr: "{{ ipv6.ula.prefix }}::200"
     shortname: skylark
     sshuser: hayato
-    self_org: true
+    self_org: false
     mtu: 9000
   - hostname: haccho02.hayaworld.home
     interface: none
