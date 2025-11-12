@@ -80,8 +80,6 @@ jobs:
         vm:
           - console
           - dns
-          - skylark
-          - tm
     environment: Production
     container:
       image: ghcr.io/ansible/community-ansible-dev-tools:latest
@@ -137,8 +135,6 @@ jobs:
         vm:
           - console
           - dns
-          - skylark
-          - tm
     environment: Production
     container:
       image: ghcr.io/ansible/community-ansible-dev-tools:latest
