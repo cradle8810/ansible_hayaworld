@@ -79,8 +79,6 @@ jobs:
         vm:
           - console
           - dns
-          - skylark
-          - tm
     container:
       image: ghcr.io/ansible/community-ansible-dev-tools:latest
       volumes:

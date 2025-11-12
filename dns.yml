@@ -59,10 +59,6 @@
       ansible.builtin.import_tasks:
         file: tasks/dns/journalctl.yml
 
-    - name: Make Started Services
-      ansible.builtin.import_tasks:
-        file: tasks/service_start.yml
-
     - name: APC UPS Settings
       ansible.builtin.import_role:
         name: apcupsd
@@ -92,3 +88,7 @@
         tailscale_oauth_ephemeral: false
         tailscale_tags:
           - dns
+
+    - name: Make Started Services
+      ansible.builtin.import_tasks:
+        file: tasks/service_start.yml

@@ -2,12 +2,9 @@
 console ansible_user=ansible ansible_host=console.hayaworld.home
 log ansible_user=ansible ansible_host=log.hayaworld.home
 macbook ansible_user=hayato
-pskylark ansible_user=ansible ansible_host=192.168.88.10
 qd ansible_user=ansible ansible_host=qd.hayaworld.home
 scanner ansible_user=ansible ansible_host=scanner.hayaworld.home
-skylark ansible_user=ansible ansible_host=skylark.hayaworld.home
 terminal ansible_user=ansible ansible_host=terminal.hayaworld.home
-tm ansible_user=ansible ansible_host=tm.hayaworld.home
 iso ansible_user=ansible ansible_host=iso.hayaworld.home
 
 [proxmox]
@@ -40,8 +37,6 @@ rui
 runner03
 runner04
 scanner
-skylark
-tm
 tsgw1
 tsgw2
 iso
