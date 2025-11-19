@@ -123,9 +123,9 @@ world_clocks: "[\
         ]"
 apt_cache_valid_time: 3600
 i915:
-  driver_url: https://github.com/strongtz/i915-sriov-dkms/releases/download/2025.07.22/i915-sriov-dkms_2025.07.22_amd64.deb
-  dest: "/root/i915-sriov-dkms_2025.07.22_amd64.deb"
-  checksum: "sha256:3689d15571ac895ef3f8f1128e9251b9597ccd60deae52f5db637755d0253d53"
+  driver_url: https://github.com/strongtz/i915-sriov-dkms/releases/download/2025.11.10/i915-sriov-dkms_2025.11.10_amd64.deb
+  dest: "/root/i915-sriov-dkms_2025.11.10_amd64.deb"
+  checksum: "sha256:6e98a79af4dc6c4a9763de0b37efc40d4c436a5e48813abb4904e0210aa143df"
 pipr:
   url: "https://github.com/elkowar/pipr/releases/download/v0.0.16/pipr"
   checksum: "sha256:11366ae3bb4b14172223da0fa3b568ae9824c829472a01740b0869f54750cad0"
