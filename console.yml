@@ -30,6 +30,7 @@
       vars:
         common_firewall: "{{ firewall }}"
         common_pkg: "{{ apt }}"
+        common_install_langs: true
 
     - name: Install Pre-builded Rename-util
       ansible.builtin.import_tasks:

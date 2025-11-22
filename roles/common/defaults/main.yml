@@ -1,2 +1,3 @@
 ---
 common_add_hosts: true
+common_install_langs: false

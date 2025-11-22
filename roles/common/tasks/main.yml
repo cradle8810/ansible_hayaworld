@@ -44,6 +44,7 @@
       loop:
         - locales-all
         - language-pack-en
+      when: common_install_langs
 
     - name: "Common / Set locale as en_US.UTF-8"
       community.general.locale_gen:
