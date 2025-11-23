@@ -4,20 +4,3 @@
     file: tasks/dnsmasq.yml
   tags:
     - dnsmasq
-
-- name: "Set Systemd-Resolved status"
-  block:
-    - name: "Get Systemd-Resolved status"
-      ansible.builtin.stat:
-        path: "/etc/systemd/system/systemd-resolved.service"
-      register: dns_sr
-
-    - name: "Set Systemd-Resolved status"
-      ansible.builtin.set_fact:
-        dns_sr_masked: true
-      when: dns_sr.stat.lnk_source == "/dev/null"
-
-  rescue:
-    - name: "Set Systemd-Resolved status (Systemd-Resolved does not exist)"
-      ansible.builtin.set_fact:
-        dns_sr_masked: false

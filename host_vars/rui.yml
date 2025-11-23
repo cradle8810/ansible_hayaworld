@@ -88,7 +88,6 @@ corosync:
   other: "192.168.88.150"
 
 services_start:
-  - dnsmasq
   - rsyslog
   - ssh
   - systemd-journald
