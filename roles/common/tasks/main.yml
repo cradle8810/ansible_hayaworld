@@ -84,7 +84,7 @@
 
 - name: "Common / Users Settings"
   when:
-    ansible_facts.virtualization_type != 'lxc'
+    ansible_facts.virtualization_type != 'lxc' or common_install_users
   tags:
     - users
   block:
