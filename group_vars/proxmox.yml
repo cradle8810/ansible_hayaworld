@@ -21,3 +21,11 @@ zramswap:
 
 cpu:
   governor: powersave
+
+rsyslog:
+  rsyslog_client_additional_actions: |
+    if ($msg contains "Attempting to mount") or
+       ($msg contains "enabling forceuid mount option implicitly") or
+       ($msg contains "enabling forcegid mount option implicitly") then {
+        stop
+    }

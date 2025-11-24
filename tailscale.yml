@@ -18,6 +18,7 @@
         name: common
       vars:
         common_firewall: "{{ firewall }}"
+        common_install_users: false
 
     - name: Install Tailscale
       ansible.builtin.import_tasks:
@@ -38,5 +39,7 @@
     - name: "Configure Rsyslog"
       ansible.builtin.import_role:
         name: rsyslog_client
+      vars:
+        rsyslog_client_journald_persistent: false
       tags:
         - rsyslog

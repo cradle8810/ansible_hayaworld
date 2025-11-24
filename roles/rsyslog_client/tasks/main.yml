@@ -28,3 +28,16 @@
     - src: templates/etc/rsyslog.conf.j2
       dest: /etc/rsyslog.conf
   notify: "Restart rsyslog"
+
+- name: "Suppress to write logs persistent drive on journald"
+  community.general.ini_file:
+    path: /etc/systemd/journald.conf
+    section: "Journal"
+    option: "Storage"
+    value: "volatile"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  when: not rsyslog_client_journald_persistent
+  notify:
+    - "Restart journald"

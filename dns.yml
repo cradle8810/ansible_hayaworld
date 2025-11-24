@@ -21,6 +21,7 @@
       vars:
         common_firewall: "{{ firewall }}"
         common_add_hosts: false
+        common_install_users: false
 
     - name: Mount tmpfs for temporary dirs
       ansible.posix.mount:
@@ -74,20 +75,9 @@
         name: rsyslog_client
       vars:
         rsyslog_client_additional_actions: "{{ syslog.additional_actions }}"
+        rsyslog_client_journald_persistent: false
       tags:
         - rsyslog
-
-    - name: "Setup Tailscale"
-      ansible.builtin.import_role:
-        name: artis3n.tailscale.machine
-      tags:
-        - tailscale
-      when: not ansible_check_mode
-      vars:
-        tailscale_authkey: "{{ tailscale.client_secret }}"
-        tailscale_oauth_ephemeral: false
-        tailscale_tags:
-          - dns
 
     - name: Make Started Services
       ansible.builtin.import_tasks:
