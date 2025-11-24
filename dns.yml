@@ -21,6 +21,7 @@
       vars:
         common_firewall: "{{ firewall }}"
         common_add_hosts: false
+        common_install_users: false
 
     - name: Mount tmpfs for temporary dirs
       ansible.posix.mount:

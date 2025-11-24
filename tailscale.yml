@@ -18,6 +18,7 @@
         name: common
       vars:
         common_firewall: "{{ firewall }}"
+        common_install_users: false
 
     - name: Install Tailscale
       ansible.builtin.import_tasks:

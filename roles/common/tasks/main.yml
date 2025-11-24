@@ -83,6 +83,7 @@
   notify: "Restart qemu-guest-agent"
 
 - name: "Common / Users Settings"
+  when: common_install_users
   tags:
     - users
   block:
