@@ -104,6 +104,7 @@
         rsyslog_client_config_owner: root
         rsyslog_client_config_group: root
         rsyslog_client_additional_actions: "{{ rsyslog.rsyslog_client_additional_actions }}"
+        rsyslog_client_journald_persistent: false
       tags:
         - rsyslog
 

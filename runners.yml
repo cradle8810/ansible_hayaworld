@@ -94,5 +94,6 @@
         name: rsyslog_client
       vars:
         rsyslog_client_additional_actions: "{{ rsyslog.rsyslog_client_additional_actions }}"
+        rsyslog_client_journald_persistent: false
       tags:
         - rsyslog

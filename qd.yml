@@ -55,6 +55,8 @@
     - name: "Configure Rsyslog"
       ansible.builtin.import_role:
         name: rsyslog_client
+      vars:
+        rsyslog_client_journald_persistent: false
       tags:
         - rsyslog
 
