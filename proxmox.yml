@@ -103,6 +103,7 @@
       vars:
         rsyslog_client_config_owner: root
         rsyslog_client_config_group: root
+        rsyslog_client_additional_actions: "{{ rsyslog.rsyslog_client_additional_actions }}"
       tags:
         - rsyslog
 

@@ -91,5 +91,7 @@
     - name: "Configure Rsyslog"
       ansible.builtin.import_role:
         name: rsyslog_client
+      vars:
+        rsyslog_client_additional_actions: "{{ rsyslog.rsyslog_client_additional_actions }}"
       tags:
         - rsyslog

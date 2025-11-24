@@ -62,3 +62,11 @@ runner:
           6466643333336266340a633530653935313365353639386532326333666564336163363136383333
           39643236383637633663373138663961393937633764316161313337306265363662333935616436
           3561323139373365326132353130626633363234666334303963
+
+rsyslog:
+  rsyslog_client_additional_actions: |
+    if ($msg contains "Attempting to mount") or
+       ($msg contains "enabling forceuid mount option implicitly") or
+       ($msg contains "enabling forcegid mount option implicitly") then {
+        stop
+    }
