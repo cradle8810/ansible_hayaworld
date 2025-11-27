@@ -29,6 +29,9 @@ runner05 ansible_user=root ansible_host=runner05.hayaworld.home
 tsgw1 ansible_user=root ansible_host=192.168.88.114
 tsgw2 ansible_user=root ansible_host=192.168.88.115
 
+[scrutiny]
+diskmon ansible_user=root ansible_host=diskmon.hayaworld.home
+
 [vm]
 console
 log
@@ -40,3 +43,4 @@ scanner
 tsgw1
 tsgw2
 iso
+diskmon
