@@ -1,0 +1,50 @@
+---
+- name: Play for Diskmonitor using Scrutiny
+  hosts: diskmon
+  remote_user: root
+  gather_facts: true
+
+  vars_files:
+    - host_vars/networks.yml
+
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+
+  tasks:
+    - name: Common Settings
+      ansible.builtin.import_role:
+        name: common
+      vars:
+        common_firewall: "{{ firewall }}"
+        common_pkg: "{{ apt }}"
+        common_install_users: false
+
+    - name: Install Docker
+      ansible.builtin.import_tasks:
+        file: tasks/runner/install_docker.yml
+      vars:
+        hostname: "{{ common_hostinfo.shortname }}"
+      tags:
+        - runners
+        - docker
+
+    - name: APC UPS Settings
+      ansible.builtin.import_role:
+        name: apcupsd
+      vars:
+        apcupsd_role: "slave"
+        apcupsd_timeout: 60
+      tags:
+        - apc
+        - ups
+
+    - name: "Configure Rsyslog"
+      ansible.builtin.import_role:
+        name: rsyslog_client
+      vars:
+        rsyslog_client_additional_actions: "{{ rsyslog.rsyslog_client_additional_actions }}"
+        rsyslog_client_journald_persistent: false
+      tags:
+        - rsyslog
