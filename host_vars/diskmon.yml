@@ -1,0 +1,18 @@
+---
+firewall:
+  policy: deny
+  allow_rules:
+    ipv4:
+      - name: "SSH from service line"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: '22'
+    ipv6:
+      - name: "SSH from service line(IPv6)"
+        proto: "tcp"
+        src: "{{ ipv6.ula.prefix }}::/48"
+        port: '22'
+
+docker_network:
+  base: "172.17.121.0/24"
+  size: "28"
