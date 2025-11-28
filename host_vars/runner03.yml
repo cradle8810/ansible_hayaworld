@@ -13,14 +13,8 @@ runners:
       github_repo: periodic_twitter_dl
     - runner_name: periodic_backup_03-01
       github_repo: periodic_backup
-    - runner_name: zopflipng_03-01
-      github_repo: zopflipng
-    - runner_name: zopflipng_03-02
-      github_repo: zopflipng
-    - runner_name: zopflipng_03-03
-      github_repo: zopflipng
-    - runner_name: zopflipng_03-04
-      github_repo: zopflipng
+    - runner_name: ecs03
+      github_repo: ecs
 
 docker_network:
   base: "172.17.3.0/24"

@@ -1,10 +1,8 @@
 runners:
   basepath: "/opt/runner"
   runners:
-    - runner_name: zopflipng_05-01
-      github_repo: zopflipng
-    - runner_name: zopflipng_05-02
-      github_repo: zopflipng
+    - runner_name: ecs05
+      github_repo: ecs
     - runner_name: periodic_backup_05-01
       github_repo: periodic_backup
     - runner_name: ansible_hayaworld_05-01
