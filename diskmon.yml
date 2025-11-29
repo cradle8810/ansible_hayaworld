@@ -30,6 +30,19 @@
         - runners
         - docker
 
+    - name: "Configure Scrutiny"
+      ansible.builtin.import_role:
+        name: scrutiny_server
+      vars:
+        scrutiny_server_mail_address: "{{ scrutiny.mail.address }}"
+        scrutiny_server_mail_app_passwd: "{{ scrutiny.mail.app_passwd }}"
+        scrutiny_server_mail_smtp_server: "smtp.gmail.com"
+        scrutiny_server_mail_smtp_port: "587"
+        scrutiny_server_discord_webhook_id: "ID"
+        scrutiny_server_discord_webhook_token: "TOKEN"
+      tags:
+        - scrutiny
+
     - name: APC UPS Settings
       ansible.builtin.import_role:
         name: apcupsd

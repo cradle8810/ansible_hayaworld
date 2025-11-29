@@ -1,0 +1,29 @@
+services:
+  influxdb:
+      image: influxdb:2.2
+      ports:
+        - '8086:8086'
+      volumes:
+        - ./influxdb:/var/lib/influxdb2
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:8086/health"]
+        interval: 5s
+        timeout: 10s
+        retries: 5
+
+  scrutiny:
+    image: ghcr.io/analogj/scrutiny:master-web
+    ports:
+      - '8080:8080'
+    depends_on:
+      influxdb:
+        condition: service_healthy
+    environment:
+      - SCRUTINY_WEB_INFLUXDB_HOST=influxdb
+      - SCRUTINY_WEB_INFLUXDB_PORT=8086
+    volumes:
+      - ./config:/opt/scrutiny/config
+      - /run/udev:/run/udev:ro
+    cap_add:
+      - SYS_RAWIO
+    restart: always
