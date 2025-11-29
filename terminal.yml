@@ -99,6 +99,15 @@
       tags:
         - rsyslog
 
+    - name: Scrutiny collector setting
+      ansible.builtin.import_role:
+        name: scrutiny_collector
+      vars:
+        scrutiny_collector_server_id: "{{ common_hostinfo.shortname }}"
+        scrutiny_collector_cron: true
+      tags:
+        - scrutiny
+
     - name: Make Started Services
       ansible.builtin.import_tasks:
         file: tasks/service_start.yml
