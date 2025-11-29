@@ -1,0 +1,38 @@
+---
+- name: Install Dir mkdir(/opt/bin/)
+  ansible.builtin.file:
+    path: "/opt/bin"
+    state: directory
+    mode: '0755'
+  when: scrutiny_collector_install_bin == "/opt/bin"
+
+- name: Install Dir mkdir(/opt/etc/)
+  ansible.builtin.file:
+    path: "/opt/etc"
+    state: directory
+    mode: '0755'
+  when: scrutiny_collector_install_etc == "/opt/etc"
+
+- name: "Download scrutiny-collector"
+  ansible.builtin.get_url:
+    url: "https://github.com/AnalogJ/scrutiny/releases/latest/download/scrutiny-collector-metrics-linux-amd64"
+    dest: "{{ scrutiny_collector_install_bin }}/scrutiny-collector"
+    checksum: "sha256:904056ddc4e0bd3455a0db45d56f98084135a967eef018d18bfc8e4c0ef6887e"
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: "Copy scrutiny.yml"
+  ansible.builtin.template:
+    src: "templates/collector.yaml.j2"
+    dest: "{{ scrutiny_collector_install_etc }}/collector.yaml"
+    owner: "root"
+    group: "root"
+    mode: '0644'
+
+- name: "Set crontab"
+  ansible.builtin.cron:
+    name: "Scrutiny Collector"
+    minute: "15"
+    job: "/opt/bin/scrutiny-collector run --config /opt/etc/collector.yaml"
+  when: scrutiny_collector_cron
