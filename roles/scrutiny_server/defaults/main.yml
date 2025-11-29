@@ -1,0 +1,14 @@
+---
+scrutiny_server_docker_dir: "/root/scrutiny"
+scrutiny_server_docker_dir_owner: "root"
+scrutiny_server_docker_dir_group: "root"
+
+scrutiny_server_mail_address: "example@example.com"
+scrutiny_server_mail_app_passwd: "PASSWORD"
+scrutiny_server_mail_smtp_server: "smtp.example.com"
+scrutiny_server_mail_smtp_port: "465"
+
+scrutiny_server_discord_webhook_id: "ID"
+scrutiny_server_discord_webhook_token: "TOKEN"
+
+scrutiny_server_ipaddr: "192.168.88.121"
