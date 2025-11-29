@@ -33,6 +33,9 @@
 - name: "Set crontab"
   ansible.builtin.cron:
     name: "Scrutiny Collector"
-    minute: "15"
-    job: "/opt/bin/scrutiny-collector run --config /opt/etc/collector.yaml"
+    minute: "*/15"
+    job: "/opt/bin/scrutiny-collector run --config /opt/etc/collector.yaml > /dev/null 2>&1"
+    cron_file: scrutiny-collector
+    user: root
   when: scrutiny_collector_cron
+  notify: "Restart cron"

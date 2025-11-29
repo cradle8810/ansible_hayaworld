@@ -1,15 +1,16 @@
 services:
   influxdb:
-      image: influxdb:2.2
-      ports:
-        - '8086:8086'
-      volumes:
-        - ./influxdb:/var/lib/influxdb2
-      healthcheck:
-        test: ["CMD", "curl", "-f", "http://localhost:8086/health"]
-        interval: 5s
-        timeout: 10s
-        retries: 5
+    image: influxdb:2.2
+    ports:
+      - '8086:8086'
+    volumes:
+      - ./influxdb:/var/lib/influxdb2
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8086/health"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+    restart: always
 
   scrutiny:
     image: ghcr.io/analogj/scrutiny:master-web

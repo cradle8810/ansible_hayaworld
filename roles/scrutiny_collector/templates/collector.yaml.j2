@@ -8,3 +8,6 @@ api:
 {% if scrutiny_collector_device is defined %}
 {{ scrutiny_collector_device | to_yaml }}
 {% endif %}
+
+commands:
+  metrics_smartctl_bin: '{{ scrutiny_collector_smartctl }}'
