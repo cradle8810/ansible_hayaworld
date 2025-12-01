@@ -20,6 +20,7 @@
       vars:
         common_firewall: "{{ firewall }}"
         common_pkg: "{{ apt }}"
+        common_install_users: true
 
     - name: "Install Rsyslog"
       ansible.builtin.import_role:
