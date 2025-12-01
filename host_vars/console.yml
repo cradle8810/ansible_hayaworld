@@ -89,3 +89,6 @@ firewall:
 zramswap:
   algo: lz4
   percent: 50
+
+gui_install:
+  wine: false
