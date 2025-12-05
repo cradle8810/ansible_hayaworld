@@ -1,8 +1,8 @@
 runners:
   basepath: "/opt/runner"
   runners:
-    - runner_name: ecs02
-      github_repo: ecs
+    - runner_name: ect02
+      github_repo: ect
     - runner_name: periodic_backup_02-01
       github_repo: periodic_backup
     - runner_name: ansible_hayaworld_02-01

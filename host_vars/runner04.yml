@@ -13,8 +13,8 @@ runners:
       github_repo: periodic_twitter_dl
     - runner_name: periodic_backup_04-01
       github_repo: periodic_backup
-    - runner_name: ecs04
-      github_repo: ecs
+    - runner_name: ect04
+      github_repo: ect
 
 docker_network:
   base: "172.17.4.0/24"
