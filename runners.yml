@@ -54,12 +54,6 @@
       tags:
         - sns
 
-    - name: Install Ansible from PPA
-      ansible.builtin.import_tasks:
-        file: tasks/ansible_install.yml
-      tags:
-        - ansible
-
     - name: Install Packer from Binary Download
       ansible.builtin.import_tasks:
         file: tasks/install_packer.yml
