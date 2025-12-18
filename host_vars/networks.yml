@@ -182,11 +182,11 @@ network:
     sshuser: root
     self_org: true
     mtu: 9000
-  - hostname: iso.hayaworld.home
+  - hostname: jenkins.hayaworld.home
     interface: enp6s18
-    ipv4: 192.168.88.121
-    ipv6_addr: "{{ ipv6.ula.prefix }}::121"
-    shortname: iso
+    ipv4: 192.168.88.122
+    ipv6_addr: "{{ ipv6.ula.prefix }}::122"
+    shortname: jenkins
     sshuser: ansible
     self_org: true
     mtu: 9000

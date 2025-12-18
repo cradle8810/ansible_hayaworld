@@ -33,3 +33,18 @@
     state: restarted
     enabled: true
   listen: "Restart console-setup"
+
+- name: "Restart xrdp"
+  ansible.builtin.systemd_service:
+    name: xrdp.service
+    state: restarted
+    enabled: true
+  listen: "Restart xrdp"
+
+- name: "Enable RDP Wayland"
+  ansible.builtin.command:
+    cmd: "grdctl rdp enable"
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "Enable RDP Wayland"
+  become: true

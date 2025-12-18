@@ -31,15 +31,21 @@
       - task-gnome-desktop
       - ttf-mscorefonts-installer
       - ubuntu-desktop
-      - x11-common
-      - xinit
-      - xorg
-      - xorgxrdp
-      - xrdp
-      - xserver-xorg
       - yaru-theme-gnome-shell
       - yaru-theme-gtk
       - yaru-theme-icon
+
+- name: "Desktop / Installing Desktop and Dependency(X11/Not Ubuntu 25.10)"
+  when: ansible_distribution_release != 'questing'
+  ansible.builtin.apt:
+    install_recommends: false
+    update_cache: true
+    cache_valid_time: "{{ common_apt.cache_valid_time }}"
+    pkg:
+      - x11-common
+      - xinit
+      - xorg
+      - xserver-xorg
 
 - name: "Desktop / Mount tmpdir as ~/Downloads"
   ansible.posix.mount:

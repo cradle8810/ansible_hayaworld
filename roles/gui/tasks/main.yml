@@ -33,6 +33,13 @@
     - desktop
     - dconf
 
+- name: "Desktop / Install Language Supports"
+  ansible.builtin.import_tasks:
+    file: tasks/common/install_rdp.yml
+  tags:
+    - desktop
+    - rdp
+
 - name: "Desktop / Remove ansible user from login screen"
   ansible.builtin.import_tasks:
     file: tasks/common/disappear_ansible_user.yml

@@ -43,7 +43,6 @@ services_start:
   - gpm
   - qemu-guest-agent
   - ssh
-  - xrdp
 
 homedir:
   UUID: "03038d24-672a-4707-ba6f-f5beb16d830e"

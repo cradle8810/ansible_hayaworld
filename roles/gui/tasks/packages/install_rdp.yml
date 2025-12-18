@@ -1,0 +1,40 @@
+---
+- name: "RDP / Installing RDP (X11/For Not Ubuntu 25.10)"
+  when: ansible_distribution_release != 'questing'
+  ansible.builtin.apt:
+    install_recommends: false
+    update_cache: true
+    cache_valid_time: "{{ common_apt.cache_valid_time }}"
+    pkg:
+      - xorgxrdp
+      - xrdp
+  notify: "Restart xrdp"
+
+- name: "RDP / Installing RDP (Wayland/For Ubuntu 25.10)"
+  when: ansible_distribution_release == 'questing'
+  notify: "Enable RDP Wayland"
+  block:
+    - name: "Remove xrdp"
+      ansible.builtin.apt:
+        state: absent
+        cache_valid_time: "{{ common_apt.cache_valid_time }}"
+        pkg:
+          - xorgxrdp
+          - xrdp
+
+    - name: "Installing RDP server for Wayland"
+      ansible.builtin.apt:
+        install_recommends: false
+        update_cache: true
+        cache_valid_time: "{{ common_apt.cache_valid_time }}"
+        pkg:
+          - gnome-remote-desktop
+
+    - name: "Set RDP Credentials"
+      become: true
+      ansible.builtin.shell:
+        cmd: |
+          grdctl rdp set-credentials "{{ item.username }}" "{{ item.password }}"
+      register: retval
+      changed_when: retval.rc == 0
+      loop: user
