@@ -33,9 +33,9 @@
     - desktop
     - dconf
 
-- name: "Desktop / Install Language Supports"
+- name: "Desktop / Install RDP"
   ansible.builtin.import_tasks:
-    file: tasks/common/install_rdp.yml
+    file: tasks/packages/install_rdp.yml
   tags:
     - desktop
     - rdp
