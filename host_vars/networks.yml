@@ -184,10 +184,18 @@ network:
     mtu: 9000
   - hostname: iso.hayaworld.home
     interface: enp6s18
-    ipv4: 192.168.88.121
-    ipv6_addr: "{{ ipv6.ula.prefix }}::121"
+    ipv4: 192.168.88.122
+    ipv6_addr: "{{ ipv6.ula.prefix }}::122"
     shortname: iso
     sshuser: ansible
+    self_org: true
+    mtu: 9000
+  - hostname: ds.hayaworld.home
+    interface: enp6s18
+    ipv4: 192.168.88.123
+    ipv6_addr: "{{ ipv6.ula.prefix }}::123"
+    shortname: ds
+    sshuser: root
     self_org: true
     mtu: 9000
   - hostname: terminal.hayaworld.home
