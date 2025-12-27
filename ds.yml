@@ -3,6 +3,7 @@
   hosts: ds
   remote_user: root
   gather_facts: true
+  become: true
 
   vars_files:
     - host_vars/networks.yml
@@ -21,7 +22,7 @@
         common_pkg: "{{ apt }}"
         common_install_users: false
 
-    - name: Add user for runner execution
+    - name: Add user for nextcloud execution
       ansible.builtin.user:
         name: "www-data"
         shell: /bin/false
@@ -39,6 +40,62 @@
       tags:
         - runners
         - docker
+
+    - name: "Install and Configure NextCloud"
+      tags:
+        - nextcloud
+      block:
+        - name: "Make directory to mount up skylark"
+          ansible.builtin.file:
+            path: "{{ nextcloud.nfs.dest }}"
+            state: directory
+            owner: www-data
+            group: www-data
+            mode: '0755'
+
+        - name: "Mount up skylark"
+          ansible.posix.mount:
+            src: "{{ nextcloud.nfs.src }}"
+            path: "{{ nextcloud.nfs.dest }}"
+            opts: "defaults"
+            fstype: nfs4
+            state: mounted
+
+        - name: "Initialize Directories (NextCloud)"
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+            owner: www-data
+            group: www-data
+            mode: '0750'
+          loop: 
+            - "{{ nextcloud.dest.data }}"
+            - "{{ nextcloud.dest.config }}"
+            - "{{ nextcloud.dest.db }}"
+            - "/root/ds/"
+
+        - name: "Initialize Directories (MySQL)"
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+            owner: 999
+            group: 999
+            mode: '0750'
+          loop: 
+            - "{{ nextcloud.dest.db }}"
+
+        - name: "Put docker-compose.yml"
+          ansible.builtin.template:
+            src: templates/ds/root/ds/docker-compose.yml.j2
+            dest: /root/ds/docker-compose.yml
+            owner: root
+            group: root
+            mode: '0644'
+
+        - name: "Start NextCloud Docker Compose"
+          community.docker.docker_compose_v2:
+            project_src: /root/ds/
+            state: present
 
     - name: APC UPS Settings
       ansible.builtin.import_role:
