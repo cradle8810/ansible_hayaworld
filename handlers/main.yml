@@ -123,3 +123,11 @@
     state: restarted
     enabled: true
   listen: "Restart cron"
+
+- name: "Run Tailscale funnel"
+  ansible.builtin.debug:
+    msg: |
+      Run That Command on This node:
+       tailscale funnel --bg --https=443 https://localhost:8080
+  listen: "Run funnel"
+  changed_when: true

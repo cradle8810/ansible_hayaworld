@@ -47,6 +47,12 @@
       tags:
         - nextcloud
 
+    - name: "Install and Configure Tailscale"
+      ansible.builtin.import_tasks:
+        file: tasks/ds/tailscale.yml
+      tags:
+        - tailscale
+
     - name: APC UPS Settings
       ansible.builtin.import_role:
         name: apcupsd

@@ -2,7 +2,7 @@ services:
   db:
     image: mariadb:10.11
     restart: always
-    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
+    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW --innodb_use_native_aio=0
     volumes:
       - {{ nextcloud.dest.db }}:/var/lib/mysql
     environment:
@@ -25,4 +25,6 @@ services:
       - MYSQL_USER=nextcloud
       - MYSQL_HOST=db
       - OVERWRITEPROTOCOL=https
-      - TRUSTED_PROXIES=127.0.0.1
+      - NEXTCLOUD_TRUSTED_DOMAINS=hayaworld.home {{ nextcloud.domain }}
+      - OVERWRITEPROTOCOL=https
+      - TRUSTED_PROXIES=127.0.0.1 100.64.0.0/10
