@@ -6,6 +6,7 @@
   when: not ansible_check_mode
   vars:
     tailscale_authkey: "{{ tailscale.client_secret }}"
+    tailscale_args: "--accept-dns=true"
     tailscale_oauth_ephemeral: false
     tailscale_tags:
       - ds
