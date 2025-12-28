@@ -7,6 +7,7 @@ scanner ansible_user=ansible ansible_host=scanner.hayaworld.home
 terminal ansible_user=ansible ansible_host=terminal.hayaworld.home
 iso ansible_user=ansible ansible_host=iso.hayaworld.home
 tank ansible_user=hayato ansible_host=192.168.88.10
+ds ansible_user=root ansible_host=192.168.88.123
 
 [proxmox]
 nuc01 ansible_user=root ansible_host=192.168.88.11
