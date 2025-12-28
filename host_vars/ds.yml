@@ -15,11 +15,11 @@ firewall:
         port: '22'
       - name: "HTTP server"
         proto: "tcp"
-        src: "192.168.88.0/24"
+        src: "0.0.0.0/0"
         port: "80"
       - name: "HTTPS server"
         proto: "tcp"
-        src: "192.168.88.0/24"
+        src: "0.0.0.0/0"
         port: "443"
     ipv6:
       - name: "DHCPv6 Client from service line"

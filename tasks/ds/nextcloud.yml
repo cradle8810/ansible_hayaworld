@@ -44,8 +44,4 @@
     owner: root
     group: root
     mode: '0644'
-
-- name: "Start NextCloud Docker Compose"
-  community.docker.docker_compose_v2:
-    project_src: /root/ds/
-    state: present
+  notify: "Exec NextCloud"

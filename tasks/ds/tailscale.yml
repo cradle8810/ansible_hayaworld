@@ -36,7 +36,7 @@
 
 - name: "Set Tailscale serve"
   ansible.builtin.command:
-    cmd: tailscale serve --bg --https=443 --set-path=/ http://localhost:8080
+    cmd: tailscale serve --bg --http=443 --set-path=/ http://localhost:8080
   register: retval
   changed_when: retval.rc == 0
   when:
