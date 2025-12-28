@@ -45,3 +45,14 @@
     group: root
     mode: '0644'
   notify: "Exec NextCloud"
+
+- name: "Set crontab for run cron.php"
+  ansible.builtin.cron:
+    name: "Set crontab for run cron.php"
+    minute: "*/5"
+    job: "docker exec --user www-data ds-nextcloud-1 php -f /var/www/html/cron.php"
+    cron_file: ds-nextcloud-cron_php
+    user: root
+  notify: "Restart cron"
+  tags:
+    - sync
