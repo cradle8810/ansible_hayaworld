@@ -11,7 +11,7 @@
   ansible.posix.mount:
     src: "{{ nextcloud.nfs.src }}"
     path: "{{ nextcloud.nfs.dest }}"
-    opts: "defaults,async"
+    opts: "rw,noatime,async,vers=4.2,rsize=1048576,wsize=1048576,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys"
     fstype: nfs4
     state: mounted
 
