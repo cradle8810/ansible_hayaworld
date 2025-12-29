@@ -45,6 +45,19 @@
       tags:
         - rsyslog
 
+    - name: "Setup Tailscale Endpoint"
+      ansible.builtin.import_role:
+        name: artis3n.tailscale.machine
+      tags:
+        - tailscale
+      when: not ansible_check_mode
+      vars:
+        tailscale_authkey: "{{ tailscale.client_secret }}"
+        tailscale_args: "--accept-dns=true"
+        tailscale_oauth_ephemeral: false
+        tailscale_tags:
+          - console
+
     - name: Make Started Services
       ansible.builtin.import_tasks:
         file: tasks/service_start.yml
