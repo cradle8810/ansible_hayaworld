@@ -5,7 +5,7 @@ roles:
   - name: geerlingguy.docker
     version: '7.4.1'
   - name: geerlingguy.ntp
-    version: '2.7.0'
+    version: '3.0.0'
   - name: mrlesmithjr.netplan
     version: 'v0.4.2'
   - name: monolithprojects.github_actions_runner

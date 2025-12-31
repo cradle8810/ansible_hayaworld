@@ -30,8 +30,7 @@
 - name: Install yt-dlp-FixupMtime
   ansible.builtin.pip:
     name: "git+https://github.com/bradenhilton/yt-dlp-FixupMtime"
-    break_system_packages: true
-    extra_args: "--upgrade"
+    extra_args: "--upgrade --break-system-packages"
 
 - name: "Get yt-dlp-FixupMtime Installed Path"
   ansible.builtin.shell:
@@ -108,5 +107,4 @@
 - name: Install instaloader
   ansible.builtin.pip:
     name: "git+https://github.com/instaloader/instaloader@v4.14.1"
-    break_system_packages: true
-    extra_args: "--upgrade --use-pep517"
+    extra_args: "--upgrade --use-pep517 --break-system-packages"
