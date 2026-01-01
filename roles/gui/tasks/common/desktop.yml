@@ -54,6 +54,7 @@
     cache_valid_time: "{{ common_apt.cache_valid_time }}"
     pkg:
       - adwaita-icon-theme
+      - alsa-base
       - dconf-cli
       - eog
       - evince
@@ -75,6 +76,7 @@
       - gnome-tweaks
       - gpm
       - language-pack-ja
+      - pulseaudio
       - python3-psutil
       - seahorse
       - task-gnome-desktop
