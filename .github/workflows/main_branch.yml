@@ -78,7 +78,6 @@ jobs:
       fail-fast: false
       matrix:
         vm:
-          - console
           - dns
     environment: Production
     container:
@@ -133,7 +132,6 @@ jobs:
       fail-fast: false
       matrix:
         vm:
-          - console
           - dns
     environment: Production
     container:

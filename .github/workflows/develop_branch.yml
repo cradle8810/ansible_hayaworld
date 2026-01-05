@@ -77,7 +77,6 @@ jobs:
       fail-fast: false
       matrix:
         vm:
-          - console
           - dns
     container:
       image: ghcr.io/ansible/community-ansible-dev-tools:latest
