@@ -9,7 +9,7 @@ roles:
   - name: mrlesmithjr.netplan
     version: 'v0.4.2'
   - name: monolithprojects.github_actions_runner
-    version: '1.25.0'
+    version: '1.27.0'
     src: https://github.com/MonolithProjects/ansible-github_actions_runner
   - name: nginxinc.nginx
     version: '0.25.0'
