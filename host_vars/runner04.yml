@@ -10,6 +10,7 @@ runners:
     - runner_name: ect04
       github_repo: ect
 
-docker_network:
-  base: "172.17.4.0/24"
-  size: "28"
+docker_config:
+  default-address-pools:
+    - base: "172.17.4.0/24"
+      size: 28
