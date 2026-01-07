@@ -102,17 +102,11 @@
         - scrutiny
 
     - name: "Setup Tailscale Endpoint"
-      ansible.builtin.import_role:
-        name: artis3n.tailscale.machine
+      ansible.builtin.import_tasks:
+        file: tasks/tailscale_console.yml
+      when: not ansible_check_mode
       tags:
         - tailscale
-      when: not ansible_check_mode
-      vars:
-        tailscale_authkey: "{{ tailscale.client_secret }}"
-        tailscale_args: "--accept-dns=true"
-        tailscale_oauth_ephemeral: false
-        tailscale_tags:
-          - console
 
     - name: "Put periodic home dir backup"
       ansible.builtin.import_tasks:
