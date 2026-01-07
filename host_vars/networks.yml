@@ -59,7 +59,7 @@ network:
     ipv4: 192.168.88.100
     ipv6_addr: "{{ ipv6.ula.prefix }}::100"
     shortname: rui
-    sshuser: hayato
+    sshuser: root
     self_org: true
     mtu: 9000
   - hostname: bluray.hayaworld.home
@@ -123,7 +123,7 @@ network:
     ipv4: 192.168.88.114
     ipv6_addr: "{{ ipv6.ula.prefix }}::114"
     shortname: tsgw1
-    sshuser: hayato
+    sshuser: root
     self_org: true
     mtu: 9000
   - hostname: tsgw2.hayaworld.home
@@ -131,7 +131,7 @@ network:
     ipv4: 192.168.88.115
     ipv6_addr: "{{ ipv6.ula.prefix }}::115"
     shortname: tsgw2
-    sshuser: hayato
+    sshuser: root
     self_org: true
     mtu: 9000
   - hostname: qd.hayaworld.home
@@ -211,7 +211,7 @@ network:
     ipv4: 192.168.88.150
     ipv6_addr: "{{ ipv6.ula.prefix }}::150"
     shortname: mai
-    sshuser: hayato
+    sshuser: root
     self_org: true
     mtu: 9000
   - hostname: skylark.hayaworld.home
