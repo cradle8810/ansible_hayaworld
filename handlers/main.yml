@@ -144,3 +144,11 @@
     state: restarted
     daemon_reload: true
   listen: "Restart and update tailscale"
+
+- name: "Disable CoW if btrfs"
+  when: docker_btrfs is defined and docker_btrfs
+  ansible.builtin.command:
+    cmd: chattr +C /var/lib/docker
+  register: retval
+  changed_when: retval.rc == 0
+  notify: "Disable CoW if btrfs"

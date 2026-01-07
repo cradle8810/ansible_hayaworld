@@ -10,9 +10,18 @@
   community.general.ini_file:
     path: /etc/systemd/resolved.conf
     section: "Resolve"
-    option: "DNSStubListener"
-    value: "no"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
     state: present
     no_extra_spaces: true
     mode: "644"
+  loop:
+    - option: "DNSStubListener"
+      value: "no"
+    - option: "LLMNR"
+      value: "no"
+    - option: "MulticastDNS"
+      value: "no"
   notify: "Restart systemd-resolved"
+  tags:
+    - resolve
