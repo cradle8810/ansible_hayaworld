@@ -92,3 +92,11 @@ zramswap:
 
 gui_install:
   wine: false
+
+docker_config:
+  default-address-pools:
+    - base: "172.18.1.0/24"
+      size: 28
+  dns:
+    - 192.168.88.100
+    - 192.168.88.150

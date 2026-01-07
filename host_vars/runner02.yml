@@ -8,6 +8,7 @@ runners:
     - runner_name: ansible_hayaworld_02-01
       github_repo: ansible_hayaworld
 
-docker_network:
-  base: "172.17.2.0/24"
-  size: "28"
+docker_config:
+  default-address-pools:
+    - base: "172.17.2.0/24"
+      size: 28

@@ -9,12 +9,13 @@
 
 - name: "Define Docker configs"
   ansible.builtin.template:
-    src: "templates/runners/etc/docker/daemon.json.j2"
+    src: "templates/all/etc/docker/daemon.json.j2"
     dest: /etc/docker/daemon.json
     owner: root
     group: root
     mode: '0644'
   notify: "Restart docker"
+  when: docker_config is defined
 
 - name: Install Docker(ce)
   ansible.builtin.import_role:
@@ -26,6 +27,3 @@
     docker_service_state: started
     docker_service_enabled: true
     docker_restart_handler_state: restarted
-    docker_users:
-      - hayato
-      - runner
