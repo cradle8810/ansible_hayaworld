@@ -20,7 +20,7 @@
       vars:
         common_firewall: "{{ firewall }}"
         common_pkg: "{{ apt }}"
-        common_install_users: true
+        common_install_users: false
 
     - name: Install Docker
       ansible.builtin.import_tasks:
