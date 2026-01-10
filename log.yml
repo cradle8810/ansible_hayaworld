@@ -22,13 +22,19 @@
         common_pkg: "{{ apt }}"
         common_install_users: true
 
-    - name: "Install Rsyslog"
-      ansible.builtin.import_role:
-        name: rsyslog_server
+    - name: Install Docker
+      ansible.builtin.import_tasks:
+        file: tasks/install_docker.yml
       vars:
-        rsyslog_server_actions: "{{ syslog.rsyslog_server_actions }}"
-        rsyslog_server_additional_actions: "{{ syslog.rsyslog_server_additional_actions }}"
+        hostname: "{{ common_hostinfo.shortname }}"
       tags:
+        - docker
+
+    - name: "Install and Configure Graylog"
+      ansible.builtin.import_tasks:
+        file: tasks/log/graylog.yml
+      tags:
+        - graylog
         - rsyslog
 
     - name: APC UPS Settings
@@ -41,43 +47,8 @@
         - apc
         - ups
 
-    - name: Backup log backups
+    - name: "Install and Configure Tailscale"
+      ansible.builtin.import_tasks:
+        file: tasks/ds/tailscale.yml
       tags:
-        - backup
-      block:
-        - name: "Install Rsync"
-          ansible.builtin.apt:
-            pkg: rsync
-            state: present
-            update_cache: true
-            cache_valid_time: "{{ apt_cache_valid_time }}"
-
-        - name: "Create skylark mount directory"
-          ansible.builtin.file:
-            path: "/backup"
-            state: directory
-            owner: hayato
-            group: hayato
-            mode: '0755'
-
-        - name: "Making backupscripts directory"
-          ansible.builtin.file:
-            path: "/home/hayato/backupscripts"
-            state: directory
-            owner: hayato
-            group: hayato
-            mode: '0755'
-
-        - name: Put Backup Script
-          ansible.builtin.template:
-            src: "templates/log/home/hayato/backupscripts/incrementalBackup.sh.j2"
-            dest: "/home/hayato/backupscripts/incrementalLogBackup.sh"
-            owner: hayato
-            group: hayato
-            mode: '0755'
-          vars:
-            pathinfo: "{{ backup_scripts.dirs[0] }}"
-
-        - name: Sudo nopassword Settings
-          ansible.builtin.import_tasks:
-            file: tasks/log/sudo_nopass.yml
+        - tailscale

@@ -1,0 +1,143 @@
+---
+- name: Graylog Configurations
+  block:
+    - name: Make Project Directory
+      ansible.builtin.file:
+        path: /root/gl/
+        state: directory
+        owner: root
+        group: root
+        mode: '0700'
+
+    - name: Make Data Directory
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: directory
+        owner: "{{ item.owner }}"
+        group: "{{ item.group }}"
+        mode: '0700'
+      loop:
+        - path: "{{ data_root }}/mongodb"
+          owner: 999
+          group: 999
+        - path: "{{ data_root }}/opensearch"
+          owner: 1000
+          group: 1000
+        - path: "{{ data_root }}/graylog"
+          owner: 1100
+          group: 1100
+        - path: "{{ data_root }}/graylog/config"
+          owner: 1100
+          group: 1100
+
+    - name: Put docker-compose.yml
+      ansible.builtin.template:
+        src: templates/log/root/gl/docker-compose.yml.j2
+        dest: /root/gl/docker-compose.yml
+        owner: root
+        group: root
+        mode: '0600'
+      notify: "Exec Graylog"
+
+    - name: Put Initial graylog configuration file
+      ansible.builtin.template:
+        src: "templates/log/opt/data/graylog/config/graylog.conf.j2"
+        dest: "{{ data_root }}/graylog/config/graylog.conf"
+        owner: 1100
+        group: 1100
+        mode: '0640'
+      notify: "Exec Graylog"
+
+    - name: Set vm.max_map_count
+      community.general.ini_file:
+        path: /etc/sysctl.conf
+        option: "vm.max_map_count"
+        value: "262144"
+        state: present
+        no_extra_spaces: true
+        mode: "644"
+      notify:
+        - "Reload sysctl"
+
+- name: Backup Configurations
+  block:
+    - name: Make Backup Root Directory
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: directory
+        owner: "{{ item.owner }}"
+        group: "{{ item.group }}"
+        mode: '0700'
+      loop:
+        - path: "{{ nfs.dest }}"
+          owner: root
+          group: root
+
+    - name: Mount up backup nfs server
+      ansible.posix.mount:
+        src: "{{ nfs.src }}"
+        path: "{{ nfs.dest }}"
+        opts: "rw,noatime,async,vers=4.2,rsize=1048576,wsize=1048576,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys"
+        fstype: nfs4
+        state: mounted
+
+    - name: Make Backup Directory
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: directory
+        owner: "{{ item.owner }}"
+        group: "{{ item.group }}"
+        mode: '0700'
+      loop:
+        - path: "{{ nfs.dest }}/mongodb"
+          owner: 999
+          group: 999
+        - path: "{{ nfs.dest }}/opensearch"
+          owner: 1000
+          group: 1000
+
+    - name: Put Backup Script
+      ansible.builtin.template:
+        src: "templates/log/root/gl/backup.sh.j2"
+        dest: "/root/gl/backup.sh"
+        owner: root
+        group: root
+        mode: '0700'
+      notify: "Restart cron"
+
+    - name: Set crontab for backup
+      ansible.builtin.cron:
+        name: "Dump syslog"
+        minute: "15"
+        job: "/root/gl/backup.sh > /dev/null 2>&1"
+        cron_file: dump-logs
+        user: root
+      notify: "Restart cron"
+
+    - name: Check is there backup path on Opensearch
+      ansible.builtin.stat:
+        path: "{{ data_root }}/opensearch_backup_configured"
+      register: opensearch_backup_configured
+
+    - name: Call Create Backup Endpoint API for Opensearch
+      when:
+        - opensearch_backup_configured.stat.exists is false
+      ansible.builtin.uri:
+        url: "http://localhost:9200/_snapshot/backup"
+        method: POST
+        body_format: json
+        body:
+          type: "fs"
+          settings:
+            location: "/usr/share/opensearch/backup"
+        status_code: 200
+        validate_certs: false
+      register: api_response
+
+    - name: Set configured file for Opensearch backup
+      ansible.builtin.file:
+        path: "{{ data_root }}/opensearch_backup_configured"
+        state: touch
+        mode: '600'
+      when:
+        - opensearch_backup_configured.stat.exists is false
