@@ -46,3 +46,9 @@
       tags:
         - apc
         - ups
+
+    - name: "Install and Configure Tailscale"
+      ansible.builtin.import_tasks:
+        file: tasks/ds/tailscale.yml
+      tags:
+        - tailscale
