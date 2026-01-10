@@ -21,7 +21,7 @@ rsyslog_client_actions:
       kern,user,mail,daemon,auth,syslog.none;\
       local1,local2,local3,local4,local5,local6,local7.none"
 rsyslog_client_default_actions: |
-  if ($programname isequal "ntpd") and
+  if ($programname == "ntpd") and
       ($msg contains "DNS: ") then {
       stop
   }
