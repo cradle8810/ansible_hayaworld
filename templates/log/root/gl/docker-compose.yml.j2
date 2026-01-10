@@ -1,12 +1,14 @@
 services:
   mongodb:
     image: "mongo:8.2.3-noble"
+    restart: always
     volumes:
       - /opt/data/mongodb:/data/db
 
   # Graylog requires Opensearch 2.0.0. The latest version doesn't work with it.
   opensearch:
     image: "opensearchproject/opensearch:2.0.0"
+    restart: always
     environment:
       - "OPENSEARCH_INITIAL_ADMIN_PASSWORD={{ graylog.OPENSEARCH_INITIAL_ADMIN_PASSWORD }}"
       - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
@@ -35,6 +37,7 @@ services:
         condition: service_started
       opensearch:
         condition: service_started
+    restart: always
     entrypoint: /usr/bin/tini -- wait-for-it opensearch:9200 -- /docker-entrypoint.sh
     ports:
       - "9000:9000"
