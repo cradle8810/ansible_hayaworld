@@ -25,3 +25,7 @@ rsyslog_client_default_actions: |
       ($msg contains "DNS: ") then {
       stop
   }
+  if ($syslogfacility-text == "kern") and
+      ($msg contains "CIFS: ") then {
+      stop
+  }
