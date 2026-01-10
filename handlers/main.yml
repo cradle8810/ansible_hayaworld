@@ -152,3 +152,9 @@
   register: retval
   changed_when: retval.rc == 0
   notify: "Disable CoW if btrfs"
+
+- name: "Start Graylog Docker Compose"
+  community.docker.docker_compose_v2:
+    project_src: /root/gl/
+    state: restarted
+  listen: "Exec Graylog"
