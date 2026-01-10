@@ -25,6 +25,8 @@
       dest: /etc/rsyslog.d/10-hayaworld.conf
     - src: templates/etc/rsyslog.d/00-additional.conf.j2
       dest: /etc/rsyslog.d/00-additional.conf
+    - src: roles/rsyslog_client/templates/etc/rsyslog.d/00-default-actions.conf.j2
+      dest: /etc/rsyslog.d/00-default-actions.conf
     - src: templates/etc/rsyslog.conf.j2
       dest: /etc/rsyslog.conf
   notify: "Restart rsyslog"
