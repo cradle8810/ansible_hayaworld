@@ -29,3 +29,7 @@ rsyslog_client_default_actions: |
       ($msg contains "CIFS: ") then {
       stop
   }
+  if ($syslogfacility-text == "kern") and
+      ($msg contains 'comm="rsyslogd"') then {
+      stop
+  }
