@@ -92,6 +92,7 @@ zramswap:
 
 gui_install:
   wine: false
+  firefox: true
 
 docker_config:
   storage-driver: "btrfs"
