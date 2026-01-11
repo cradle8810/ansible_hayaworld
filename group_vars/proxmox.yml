@@ -20,7 +20,7 @@ zramswap:
   percent: 15
 
 cpu:
-  governor: powersave
+  governor: performance
 
 rsyslog:
   rsyslog_client_additional_actions: |
