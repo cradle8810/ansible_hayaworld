@@ -4,9 +4,10 @@ gui_install:
   igpu: true
   remmina: true
   vlc: true
-  wine: true
+  wine: false
   mozc: true
   sushi: true
+  firefox: false
 
 gui_supplemental_packages:
   - ffmpeg

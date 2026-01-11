@@ -1,0 +1,7 @@
+- name: "Firefox / Install Firefox"
+  ansible.builtin.apt:
+    install_recommends: false
+    update_cache: true
+    cache_valid_time: "{{ apt_cache_valid_time }}"
+    pkg:
+      - firefox

@@ -67,6 +67,12 @@
       when:
         (gui_install.chrome is undefined) or gui_install.chrome
 
+    - name: Install Firefox
+      ansible.builtin.import_tasks:
+        file: tasks/packages/install_firefox.yml
+      when:
+        (gui_install.firefox is undefined) or gui_install.firefox
+
     - name: Install Wine
       ansible.builtin.import_tasks:
         file: tasks/packages/install_wine.yml
