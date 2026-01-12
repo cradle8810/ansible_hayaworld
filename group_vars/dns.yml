@@ -79,6 +79,7 @@ firewall:
 
 syslog:
   additional_actions: |
-    if ($syslogfacility-text == 'local7') then {
+    if ($syslogfacility-text == 'local7') and
+      ($msg contains "COMMAND_RECEIVED Received command 'ha-heartbeat'") then {
       stop
     }
