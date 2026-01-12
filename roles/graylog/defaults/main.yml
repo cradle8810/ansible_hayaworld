@@ -1,0 +1,11 @@
+---
+graylog_data_root: "/opt/data"
+graylog_backup_src: "skylark.hayaworld.home:/mnt/skylark/graylog_dump"
+graylog_backup_dest: "/backup"
+
+graylog_opensearch_initial_admin_password: "none"
+graylog_password_secret: "none"
+graylog_root_password: "none"
+graylog_email_user: "example@example.com"
+graylog_email_password: "password"
+graylog_email_host: "example.com"
