@@ -1,0 +1,4 @@
+---
+dependencies:
+  - role: geerlingguy.docker
+    version: '7.9.0'

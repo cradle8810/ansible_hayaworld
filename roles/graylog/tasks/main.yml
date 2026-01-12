@@ -3,7 +3,7 @@
   block:
     - name: Make Project Directory
       ansible.builtin.file:
-        path: /root/gl/
+        path: "{{ graylog_project_root }}"
         state: directory
         owner: root
         group: root
@@ -33,7 +33,7 @@
     - name: Put docker-compose.yml
       ansible.builtin.template:
         src: templates/root/gl/docker-compose.yml.j2
-        dest: /root/gl/docker-compose.yml
+        dest: "{{ graylog_project_root }}/docker-compose.yml"
         owner: root
         group: root
         mode: '0600'
@@ -61,6 +61,11 @@
 
 - name: Backup Configurations
   block:
+    - name: Install NFS utils
+      ansible.builtin.apt:
+        name: "nfs-common"
+        state: present
+
     - name: Make Backup Root Directory
       ansible.builtin.file:
         path: "{{ item.path }}"
@@ -98,8 +103,8 @@
 
     - name: Put Backup Script
       ansible.builtin.template:
-        src: "templates/log/root/gl/backup.sh.j2"
-        dest: "/root/gl/backup.sh"
+        src: "templates/root/gl/backup.sh.j2"
+        dest: "{{ graylog_project_root }}/backup.sh"
         owner: root
         group: root
         mode: '0700'
@@ -109,7 +114,7 @@
       ansible.builtin.cron:
         name: "Dump syslog"
         minute: "15"
-        job: "/root/gl/backup.sh > /dev/null 2>&1"
+        job: "{{ graylog_project_root }}/backup.sh > /dev/null 2>&1"
         cron_file: dump-logs
         user: root
       notify: "Restart cron"
