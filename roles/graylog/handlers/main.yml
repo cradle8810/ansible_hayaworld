@@ -1,0 +1,20 @@
+---
+- name: "Start Graylog Docker Compose"
+  community.docker.docker_compose_v2:
+    project_src: /root/gl/
+    state: restarted
+  listen: "Exec Graylog"
+
+- name: "Common / Reload sysctl"
+  ansible.builtin.command:
+    cmd: "sysctl -p"
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "Reload sysctl"
+
+- name: "Restart cron"
+  ansible.builtin.systemd_service:
+    name: cron.service
+    state: restarted
+    enabled: true
+  listen: "Restart cron"

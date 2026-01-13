@@ -22,17 +22,11 @@
         common_pkg: "{{ apt }}"
         common_install_users: false
 
-    - name: Install Docker
-      ansible.builtin.import_tasks:
-        file: tasks/install_docker.yml
-      vars:
-        hostname: "{{ common_hostinfo.shortname }}"
-      tags:
-        - docker
-
     - name: "Install and Configure Graylog"
-      ansible.builtin.import_tasks:
-        file: tasks/log/graylog.yml
+      ansible.builtin.import_role:
+        name: graylog
+      vars:
+        graylog_hostname: "{{ common_hostinfo.shortname }}"
       tags:
         - graylog
         - rsyslog
