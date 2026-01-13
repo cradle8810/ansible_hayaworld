@@ -99,7 +99,7 @@ network:
     ipv4: 192.168.88.109
     ipv6_addr: "{{ ipv6.ula.prefix }}::109"
     shortname: log
-    sshuser: hayato
+    sshuser: root
     self_org: true
     mtu: 9000
   - hostname: runner04.hayaworld.home
@@ -130,8 +130,8 @@ network:
     interface: enp6s18
     ipv4: 192.168.88.115
     ipv6_addr: "{{ ipv6.ula.prefix }}::115"
-    shortname: root
-    sshuser: hayato
+    shortname: tsgw2
+    sshuser: root
     self_org: true
     mtu: 9000
   - hostname: qd.hayaworld.home
@@ -174,12 +174,28 @@ network:
     sshuser: runner
     self_org: true
     mtu: 9000
-  - hostname: iso.hayaworld.home
+  - hostname: diskmon.hayaworld.home
     interface: enp6s18
     ipv4: 192.168.88.121
     ipv6_addr: "{{ ipv6.ula.prefix }}::121"
+    shortname: diskmon
+    sshuser: root
+    self_org: true
+    mtu: 9000
+  - hostname: iso.hayaworld.home
+    interface: enp6s18
+    ipv4: 192.168.88.122
+    ipv6_addr: "{{ ipv6.ula.prefix }}::122"
     shortname: iso
     sshuser: ansible
+    self_org: true
+    mtu: 9000
+  - hostname: ds.hayaworld.home
+    interface: enp6s18
+    ipv4: 192.168.88.123
+    ipv6_addr: "{{ ipv6.ula.prefix }}::123"
+    shortname: ds
+    sshuser: root
     self_org: true
     mtu: 9000
   - hostname: terminal.hayaworld.home

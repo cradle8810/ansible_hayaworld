@@ -23,6 +23,7 @@
         common_firewall: "{{ firewall }}"
         common_pkg: "{{ apt }}"
         common_install_langs: true
+        common_install_users: true
 
     - name: Install Pre-builded Rename-util
       ansible.builtin.import_tasks:
@@ -43,6 +44,22 @@
         name: rsyslog_client
       tags:
         - rsyslog
+
+    - name: "Setup Tailscale Endpoint"
+      ansible.builtin.import_tasks:
+        file: tasks/tailscale_console.yml
+      when: not ansible_check_mode
+      tags:
+        - tailscale
+
+    - name: "Put periodic home dir backup"
+      ansible.builtin.import_tasks:
+        file: tasks/periodic_backup_home.yml
+      vars:
+        nfs_server: "skylark.hayaworld.home"
+        hostname: "{{ common_hostinfo.shortname }}"
+      tags:
+        - backup
 
     - name: Make Started Services
       ansible.builtin.import_tasks:

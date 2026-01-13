@@ -103,6 +103,8 @@
       vars:
         rsyslog_client_config_owner: root
         rsyslog_client_config_group: root
+        rsyslog_client_additional_actions: "{{ rsyslog.rsyslog_client_additional_actions }}"
+        rsyslog_client_journald_persistent: false
       tags:
         - rsyslog
 
@@ -116,3 +118,29 @@
       tags:
         - apc
         - ups
+
+    - name: Scrutiny collector setting
+      ansible.builtin.import_role:
+        name: scrutiny_collector
+      vars:
+        scrutiny_collector_server_id: "{{ common_hostinfo.shortname }}"
+        scrutiny_collector_cron: true
+        scrutiny_collector_device:
+          devices:
+            - device: /dev/sda
+              type: 'sat'
+            - device: /dev/sdb
+              type: 'sat'
+      tags:
+        - scrutiny
+
+    - name: "Set crontab for sync every 3min"
+      ansible.builtin.cron:
+        name: "Sync every 3min"
+        minute: "*/3"
+        job: "/usr/bin/sync > /dev/null 2>&1"
+        cron_file: sync-everymin
+        user: root
+      notify: "Restart cron"
+      tags:
+        - sync

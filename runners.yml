@@ -36,10 +36,12 @@
         file: tasks/runner/authorized_keys.yml
 
     - name: Install Docker
-      ansible.builtin.import_tasks:
-        file: tasks/runner/install_docker.yml
+      ansible.builtin.import_role:
+        name: docker
       vars:
-        hostname: "{{ common_hostinfo.shortname }}"
+        docker_users:
+          - hayato
+          - runner
       tags:
         - runners
         - docker
@@ -53,12 +55,6 @@
         file: tasks/sns_dl.yml
       tags:
         - sns
-
-    - name: Install Ansible from PPA
-      ansible.builtin.import_tasks:
-        file: tasks/ansible_install.yml
-      tags:
-        - ansible
 
     - name: Install Packer from Binary Download
       ansible.builtin.import_tasks:
@@ -92,5 +88,8 @@
     - name: "Configure Rsyslog"
       ansible.builtin.import_role:
         name: rsyslog_client
+      vars:
+        rsyslog_client_additional_actions: "{{ rsyslog.rsyslog_client_additional_actions }}"
+        rsyslog_client_journald_persistent: false
       tags:
         - rsyslog

@@ -1,5 +1,7 @@
 ---
 - name: "Desktop / Installing Desktop and Dependency"
+  when:
+    - ansible_distribution_release != 'questing'
   ansible.builtin.apt:
     install_recommends: false
     update_cache: true
@@ -9,6 +11,8 @@
       - dconf-cli
       - eog
       - evince
+      - ffmpeg
+      - ffmpegthumbnailer
       - file-roller
       - fonts-ipaexfont
       - fonts-ipafont
@@ -26,6 +30,53 @@
       - gpm
       - language-pack-ja
       - nautilus-extension-gnome-terminal
+      - python3-psutil
+      - seahorse
+      - task-gnome-desktop
+      - ttf-mscorefonts-installer
+      - ubuntu-desktop
+      - x11-common
+      - xinit
+      - xorg
+      - xorgxrdp
+      - xrdp
+      - xserver-xorg
+      - yaru-theme-gnome-shell
+      - yaru-theme-gtk
+      - yaru-theme-icon
+
+- name: "Desktop / Installing Desktop and Dependency"
+  when:
+    - ansible_distribution_release == 'questing'
+  ansible.builtin.apt:
+    install_recommends: false
+    update_cache: true
+    cache_valid_time: "{{ common_apt.cache_valid_time }}"
+    pkg:
+      - adwaita-icon-theme
+      - alsa-base
+      - dconf-cli
+      - eog
+      - evince
+      - ffmpeg
+      - ffmpegthumbnailer
+      - file-roller
+      - fonts-ipaexfont
+      - fonts-ipafont
+      - fonts-liberation
+      - fonts-liberation2
+      - fonts-noto-cjk
+      - fonts-noto-cjk-extra
+      - fonts-noto-color-emoji
+      - fonts-noto-core
+      - fonts-takao
+      - gedit
+      - gnome-shell-extension-desktop-icons-ng
+      - gnome-shell-extension-manager
+      - gnome-tweaks
+      - gpm
+      - language-pack-ja
+      - pulseaudio
       - python3-psutil
       - seahorse
       - task-gnome-desktop

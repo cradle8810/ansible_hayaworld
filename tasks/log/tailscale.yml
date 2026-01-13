@@ -1,0 +1,46 @@
+- name: "Setup Tailscale Endpoint"
+  ansible.builtin.import_role:
+    name: artis3n.tailscale.machine
+  tags:
+    - tailscale
+  when: not ansible_check_mode
+  vars:
+    tailscale_authkey: "{{ tailscale.client_secret }}"
+    tailscale_args: "--accept-dns=true"
+    tailscale_oauth_ephemeral: false
+    tailscale_tags:
+      - log
+
+# tailscale_serve_retval == 0 when not configured
+- name: "Check Tailscale serve configured"
+  ansible.builtin.shell:
+    cmd: |
+        set -o pipefail
+        tailscale serve status | grep 'No serve config'
+    executable: /bin/bash
+  register: tailscale_serve_retval
+  changed_when: tailscale_serve_retval.rc == 0
+  failed_when: tailscale_serve_retval.rc != 0 and tailscale_serve_retval.rc != 1
+  when: not ansible_check_mode
+
+# tailscale_serve_retval == 0 when not configured
+- name: "Check Tailscale funnel configured"
+  ansible.builtin.shell:
+    cmd: |
+        set -o pipefail
+        tailscale funnel status | grep 'No serve config'
+    executable: /bin/bash
+  register: tailscale_funnel_retval
+  changed_when: tailscale_funnel_retval.rc == 0
+  failed_when: tailscale_funnel_retval.rc != 0 and tailscale_funnel_retval.rc != 1
+  when: not ansible_check_mode
+
+# This node doesn't need to reveal WebUI to the Internet.
+- name: "Set Tailscale serve"
+  ansible.builtin.command:
+    cmd: tailscale serve --bg --https=443 --set-path=/ http://127.0.0.1:9000
+  register: retval
+  changed_when: retval.rc == 0
+  when:
+    - not ansible_check_mode
+    - tailscale_serve_retval.rc == 0

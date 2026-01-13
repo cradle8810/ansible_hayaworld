@@ -23,6 +23,8 @@
       vars:
         common_firewall: "{{ firewall }}"
         common_pkg: "{{ apt }}"
+        common_install_users: true
+        common_install_langs: true
 
     - name: Install Pre-builded Rename-util
       ansible.builtin.import_tasks:
@@ -48,26 +50,15 @@
       tags:
         - put_script
 
-    - name: Install Docker(ce)
+    - name: Install Docker
       ansible.builtin.import_role:
-        name: geerlingguy.docker
+        name: docker
       vars:
-        docker_edition: 'ce'
-        docker_packages_state: present
-        docker_service_manage: true
-        docker_service_state: started
-        docker_service_enabled: true
-        docker_restart_handler_state: restarted
         docker_users:
           - hayato
-
-    - name: Install Ansible from PPA
-      ansible.builtin.import_tasks:
-        file: tasks/ansible_install.yml
-      when:
-        - ansible_distribution_release != 'plucky'
       tags:
-        - ansible
+        - runners
+        - docker
 
     - name: GUI Install/Settings
       ansible.builtin.import_role:
@@ -97,6 +88,31 @@
         name: rsyslog_client
       tags:
         - rsyslog
+
+    - name: Scrutiny collector setting
+      ansible.builtin.import_role:
+        name: scrutiny_collector
+      vars:
+        scrutiny_collector_server_id: "{{ common_hostinfo.shortname }}"
+        scrutiny_collector_cron: true
+      tags:
+        - scrutiny
+
+    - name: "Setup Tailscale Endpoint"
+      ansible.builtin.import_tasks:
+        file: tasks/tailscale_console.yml
+      when: not ansible_check_mode
+      tags:
+        - tailscale
+
+    - name: "Put periodic home dir backup"
+      ansible.builtin.import_tasks:
+        file: tasks/periodic_backup_home.yml
+      vars:
+        nfs_server: "skylark.hayaworld.home"
+        hostname: "{{ common_hostinfo.shortname }}"
+      tags:
+        - backup
 
     - name: Make Started Services
       ansible.builtin.import_tasks:

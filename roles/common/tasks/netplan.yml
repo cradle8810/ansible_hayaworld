@@ -18,10 +18,9 @@
           enp6s18:
             addresses:
               - "{{ ipv4_addr }}/{{ subnet.mask }}"
-              - "{{ ipv6_addr }}/64"
             nameservers:
               addresses:
-                "{{ ipv6.ula.dns6 + subnet.dns4 }}"
+                "{{ subnet.dns4 }}"
               search:
                 "{{ subnet.search }}"
             routes:
@@ -47,10 +46,9 @@
           enx6c1ff7023273:
             addresses:
               - "{{ ipv4_addr }}/{{ subnet.mask }}"
-              - "{{ ipv6_addr }}/64"
             nameservers:
               addresses:
-                "{{ ipv6.ula.dns6 + subnet.dns4 }}"
+                "{{ subnet.dns4 }}"
               search:
                 "{{ subnet.search }}"
             routes:

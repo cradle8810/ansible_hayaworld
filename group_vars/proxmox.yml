@@ -20,4 +20,12 @@ zramswap:
   percent: 15
 
 cpu:
-  governor: powersave
+  governor: performance
+
+rsyslog:
+  rsyslog_client_additional_actions: |
+    if ($msg contains "Attempting to mount") or
+       ($msg contains "enabling forceuid mount option implicitly") or
+       ($msg contains "enabling forcegid mount option implicitly") then {
+        stop
+    }

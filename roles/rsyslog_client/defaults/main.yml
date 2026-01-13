@@ -1,4 +1,5 @@
 ---
+rsyslog_client_journald_persistent: true
 rsyslog_client_config_owner: syslog
 rsyslog_client_config_group: adm
 rsyslog_client_sendto: "192.168.88.109"
@@ -19,3 +20,16 @@ rsyslog_client_actions:
   - "*.info;\
       kern,user,mail,daemon,auth,syslog.none;\
       local1,local2,local3,local4,local5,local6,local7.none"
+rsyslog_client_default_actions: |
+  if ($programname == "ntpd") and
+      ($msg contains "DNS: ") then {
+      stop
+  }
+  if ($syslogfacility-text == "kern") and
+      ($msg contains "CIFS: ") then {
+      stop
+  }
+  if ($syslogfacility-text == "kern") and
+      ($msg contains 'comm="rsyslogd"') then {
+      stop
+  }

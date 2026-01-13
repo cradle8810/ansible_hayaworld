@@ -2,3 +2,6 @@ exclude_paths:
   - templates/
   - .ansible-lint
   - .ansible/
+
+skip_list:
+  - var-naming[no-role-prefix]

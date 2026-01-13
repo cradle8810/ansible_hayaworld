@@ -1,0 +1,27 @@
+---
+- name: "Setup Tailscale Endpoint for console"
+  ansible.builtin.import_role:
+    name: artis3n.tailscale.machine
+  vars:
+    tailscale_authkey: "{{ tailscale.client_secret }}"
+    tailscale_args: "--accept-dns=true"
+    tailscale_oauth_ephemeral: false
+    tailscale_tags:
+      - console
+
+- name: "Make directory Tailscale Daemon Configuration for console"
+  ansible.builtin.file:
+    path: "/etc/systemd/system/tailscaled.service.d/"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: "Update Tailscale Daemon Configuration for console"
+  ansible.builtin.copy:
+    src: "templates/all/etc/systemd/system/tailscaled.service.d/override.conf"
+    dest: "/etc/systemd/system/tailscaled.service.d/override.conf"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "Restart and update tailscale"

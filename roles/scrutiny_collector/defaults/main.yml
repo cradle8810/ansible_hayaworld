@@ -1,0 +1,7 @@
+---
+scrutiny_collector_server_ipaddr: "192.168.88.121"
+scrutiny_collector_server_id: "none"
+scrutiny_collector_cron: false
+scrutiny_collector_install_bin: "/opt/bin"
+scrutiny_collector_install_etc: "/opt/etc"
+scrutiny_collector_smartctl: "/usr/sbin/smartctl"

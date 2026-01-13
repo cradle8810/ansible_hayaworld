@@ -1,0 +1,28 @@
+---
+- name: Configuration Dir mkdir
+  ansible.builtin.file:
+    path: /etc/docker/
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+# geerlingguy.docker : Ensure handlers are notified immediately to update the apt cache.
+# 初回インストール実行時、上記handlerが走るがこれは
+# geerlingguy.dockerの仕様(handlerをflushしている)でありplaybookを再度実行する必要がある
+# See also:
+# https://github.com/geerlingguy/ansible-role-docker/blob/30ba30832134ac03714bb1813ded1560b8478563/tasks/setup-Debian.yml#L42
+- name: "Define Docker configs"
+  ansible.builtin.template:
+    src: "templates/etc/docker/daemon.json.j2"
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "Restart docker"
+  when: docker_config is defined
+
+- name: Install Docker(ce)
+  ansible.builtin.import_role:
+    name: geerlingguy.docker
+  notify: "Disable CoW if btrfs"

@@ -31,6 +31,7 @@
         common_firewall: "{{ firewall }}"
         common_pkg: "{{ apt }}"
         common_install_langs: true
+        common_install_users: true
 
     - name: Install Pre-builded Rename-util
       ansible.builtin.import_tasks:
@@ -52,26 +53,15 @@
       tags:
         - put_script
 
-    - name: Install Docker(ce)
+    - name: Install Docker
       ansible.builtin.import_role:
-        name: geerlingguy.docker
+        name: docker
       vars:
-        docker_edition: 'ce'
-        docker_packages_state: present
-        docker_service_manage: true
-        docker_service_state: started
-        docker_service_enabled: true
-        docker_restart_handler_state: restarted
         docker_users:
           - hayato
-
-    - name: Install Ansible from PPA
-      ansible.builtin.import_tasks:
-        file: tasks/ansible_install.yml
-      when:
-        - ansible_distribution_release != 'plucky'
       tags:
-        - ansible
+        - runners
+        - docker
 
     - name: Install Packer from Binary Download
       ansible.builtin.import_tasks:
@@ -93,17 +83,11 @@
         file: tasks/zram.yml
 
     - name: "Setup Tailscale Endpoint"
-      ansible.builtin.import_role:
-        name: artis3n.tailscale.machine
+      ansible.builtin.import_tasks:
+        file: tasks/tailscale_console.yml
+      when: not ansible_check_mode
       tags:
         - tailscale
-      when: not ansible_check_mode
-      vars:
-        tailscale_authkey: "{{ tailscale.client_secret }}"
-        tailscale_args: "--accept-dns=false"
-        tailscale_oauth_ephemeral: false
-        tailscale_tags:
-          - console
 
     - name: APC UPS Settings
       ansible.builtin.import_role:
@@ -120,6 +104,15 @@
         name: rsyslog_client
       tags:
         - rsyslog
+
+    - name: "Put periodic home dir backup"
+      ansible.builtin.import_tasks:
+        file: tasks/periodic_backup_home.yml
+      vars:
+        nfs_server: "skylark.hayaworld.home"
+        hostname: "{{ common_hostinfo.shortname }}"
+      tags:
+        - backup
 
     - name: Make Started Services
       ansible.builtin.import_tasks:

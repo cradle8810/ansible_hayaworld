@@ -55,11 +55,17 @@
   ansible.builtin.import_role:
     name: geerlingguy.ntp
   vars:
+    ntp_package: chrony
+    ntp_config_file: /etc/chrony/chrony.conf
+    ntp_cron_daemon: chrony
+    ntp_daemon: chrony
     ntp_enabled: true
     ntp_timezone: "Asia/Tokyo"
     ntp_servers: "{{ common_ntp.ntp_servers }}"
     ntp_tinker_panic: true
     ntp_manage_config: true
+  tags:
+    - ntp
 
 - name: "Common / Set Firewall"
   ansible.builtin.import_tasks:
@@ -83,8 +89,12 @@
   notify: "Restart qemu-guest-agent"
 
 - name: "Common / Users Settings"
+<<<<<<< HEAD
   when:
     ansible_facts.virtualization_type != 'lxc' or common_install_users
+=======
+  when: common_install_users
+>>>>>>> master
   tags:
     - users
   block:

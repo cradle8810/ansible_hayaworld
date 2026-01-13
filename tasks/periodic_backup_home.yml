@@ -1,0 +1,25 @@
+---
+- name: "Apt install cron"
+  ansible.builtin.apt:
+    pkg: apt
+    state: present
+    update_cache: true
+    cache_valid_time: "{{ apt_cache_valid_time }}"
+
+- name: "Put periodic home dir backup script"
+  ansible.builtin.template:
+    src: templates/console/home/hayato/Scripts/kickbackup.sh.j2
+    dest: /home/hayato/Scripts/kickbackup.sh
+    owner: hayato
+    group: hayato
+    mode: '0700'
+
+- name: "Set crontab"
+  ansible.builtin.cron:
+    name: "For homedir backup script"
+    minute: "30"
+    hour: "15"
+    job: "/home/hayato/Scripts/kickbackup.sh"
+    cron_file: homedir_backup_kick
+    user: root
+  notify: "Restart cron"

@@ -1,0 +1,49 @@
+---
+- name: Install Docker
+  ansible.builtin.import_role:
+    name: docker
+  tags:
+    - docker
+
+- name: Install dependencies
+  ansible.builtin.apt:
+    pkg: python3-debian
+    state: present
+
+- name: "Mkdir docker-compose.yml to homedir"
+  ansible.builtin.file:
+    path: "{{ scrutiny_server_docker_dir }}"
+    owner: "{{ scrutiny_server_docker_dir_owner }}"
+    group: "{{ scrutiny_server_docker_dir_group }}"
+    mode: '0755'
+    state: directory
+
+- name: "Put Files"
+  block:
+    - name: "Make config directories"
+      ansible.builtin.file:
+        path: "{{ scrutiny_server_docker_dir }}/config"
+        owner: "{{ scrutiny_server_docker_dir_owner }}"
+        group: "{{ scrutiny_server_docker_dir_group }}"
+        mode: '0755'
+        state: directory
+
+    - name: "Copy docker-compose.yml"
+      ansible.builtin.template:
+        src: templates/scrutiny/docker-compose.yml.j2
+        dest: "{{ scrutiny_server_docker_dir }}/docker-compose.yml"
+        owner: "{{ scrutiny_server_docker_dir_owner }}"
+        group: "{{ scrutiny_server_docker_dir_group }}"
+        mode: '0644'
+
+    - name: "Copy scrutiny.yml"
+      ansible.builtin.template:
+        src: templates/scrutiny/config/scrutiny.yaml.j2
+        dest: "{{ scrutiny_server_docker_dir }}/config/scrutiny.yaml"
+        owner: "{{ scrutiny_server_docker_dir_owner }}"
+        group: "{{ scrutiny_server_docker_dir_group }}"
+        mode: '0644'
+
+- name: "Up Scrutiny"
+  community.docker.docker_compose_v2:
+    project_src: "{{ scrutiny_server_docker_dir }}"

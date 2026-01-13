@@ -21,10 +21,3 @@
   community.general.ufw:
     state: enabled
   listen: "commit ufw"
-
-- name: "Common / Reload sysctl"
-  ansible.builtin.command:
-    cmd: "sysctl -p"
-  register: retval
-  changed_when: retval.rc == 0
-  listen: "Reload sysctl"

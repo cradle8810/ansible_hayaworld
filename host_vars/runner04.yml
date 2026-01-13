@@ -3,25 +3,14 @@ runners:
   runners:
     - runner_name: ansible_hayaworld_04-01
       github_repo: ansible_hayaworld
-    - runner_name: ansible_hayaworld_04-02
-      github_repo: ansible_hayaworld
-    - runner_name: ansible_hayaworld_04-03
-      github_repo: ansible_hayaworld
-    - runner_name: ansible_hayaworld_04-04
-      github_repo: ansible_hayaworld
     - runner_name: periodic_twitter_dl_04-01
       github_repo: periodic_twitter_dl
     - runner_name: periodic_backup_04-01
       github_repo: periodic_backup
-    - runner_name: zopflipng_04-01
-      github_repo: zopflipng
-    - runner_name: zopflipng_04-02
-      github_repo: zopflipng
-    - runner_name: zopflipng_04-03
-      github_repo: zopflipng
-    - runner_name: zopflipng_04-04
-      github_repo: zopflipng
+    - runner_name: ect04
+      github_repo: ect
 
-docker_network:
-  base: "172.17.4.0/24"
-  size: "28"
+docker_config:
+  default-address-pools:
+    - base: "172.17.4.0/24"
+      size: 28

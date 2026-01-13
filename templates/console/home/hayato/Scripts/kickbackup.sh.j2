@@ -1,0 +1,40 @@
+#!/bin/sh
+
+NFS_SERVER="{{ nfs_server }}"
+REMOTE_PATH="/mnt/skylark/nfs"
+LOCAL_MOUNT_POINT="/mnt/skylark"
+BACKUP_SCRIPT="$LOCAL_MOUNT_POINT/hayato/{{ hostname }}/home/backuphomedir.sh"
+
+echoError () {
+  echo "$1" > /dev/stderr
+  logger -p local6.info "$1"
+}
+
+# Make the mountpoint to mount skylark
+if [ ! -d "$LOCAL_MOUNT_POINT" ]; then
+  echoError "[ERROR] No mountpoint $LOCAL_MOUNT_POINT"
+  exit 1 
+fi
+
+# Mount Skylark
+MOUNTCMD="mount -t nfs -o nfsvers=4 $NFS_SERVER:$REMOTE_PATH $LOCAL_MOUNT_POINT"
+if [ "$($MOUNTCMD)" -ne 0 ]; then
+  echoError "[ERROR] Cannot mount NFS server"
+  exit 1
+fi
+
+# Kick Backup script on skylark
+if [ -x "$BACKUP_SCRIPT" ]; then
+  BACKUP_EXIT_CODE="$($BACKUP_SCRIPT)"
+else
+  echoError "[ERROR] Can't execute the backup script"
+  BACKUP_EXIT_CODE=1
+fi
+
+# Finalize umount
+if [ "$(umount "$LOCAL_MOUNT_POINT")" -ne 0 ]; then
+  echoError "[ERROR] Failed to umount"
+  exit 1
+fi
+
+exit "${BACKUP_EXIT_CODE}"
