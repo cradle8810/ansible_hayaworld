@@ -89,12 +89,7 @@
   notify: "Restart qemu-guest-agent"
 
 - name: "Common / Users Settings"
-<<<<<<< HEAD
-  when:
-    ansible_facts.virtualization_type != 'lxc' or common_install_users
-=======
   when: common_install_users
->>>>>>> master
   tags:
     - users
   block:
