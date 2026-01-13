@@ -48,18 +48,6 @@ firewall:
         src: "192.168.88.0/24"
         port: "8080:8081"
     ipv6:
-      - name: "SSH from service line(IPv6)"
-        proto: "tcp"
-        src: "{{ ipv6.ula.prefix }}::/48"
-        port: '22'
-      - name: "DNS from service line(IPv6)"
-        proto: "tcp"
-        src: "{{ ipv6.ula.prefix }}::/48"
-        port: "53"
-      - name: "DNS(UDP) from service line(IPv6)"
-        proto: "udp"
-        src: "{{ ipv6.ula.prefix }}::/48"
-        port: "53"
       - name: "DNS from service line(IPv6/LinkLocal)"
         proto: "tcp"
         src: "fe80::/16"

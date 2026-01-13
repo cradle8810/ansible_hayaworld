@@ -30,10 +30,6 @@ firewall:
         src: "127.0.0.1/32"
         port: '9200'
     ipv6:
-      - name: "SSH from service line(IPv6)"
-        proto: "tcp"
-        src: "{{ ipv6.ula.prefix }}::/48"
-        port: '22'
       - name: "DHCPv6 Client from service line"
         proto: "udp"
         src: "::"
