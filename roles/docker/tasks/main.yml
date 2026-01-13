@@ -14,7 +14,7 @@
 # https://github.com/geerlingguy/ansible-role-docker/blob/30ba30832134ac03714bb1813ded1560b8478563/tasks/setup-Debian.yml#L42
 - name: "Define Docker configs"
   ansible.builtin.template:
-    src: "templates/all/etc/docker/daemon.json.j2"
+    src: "templates/etc/docker/daemon.json.j2"
     dest: /etc/docker/daemon.json
     owner: root
     group: root
@@ -25,11 +25,4 @@
 - name: Install Docker(ce)
   ansible.builtin.import_role:
     name: geerlingguy.docker
-  vars:
-    docker_edition: 'ce'
-    docker_packages_state: present
-    docker_service_manage: true
-    docker_service_state: started
-    docker_service_enabled: true
-    docker_restart_handler_state: restarted
   notify: "Disable CoW if btrfs"

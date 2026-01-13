@@ -21,14 +21,6 @@
         common_pkg: "{{ apt }}"
         common_install_users: false
 
-    - name: Install Docker
-      ansible.builtin.import_tasks:
-        file: tasks/install_docker.yml
-      vars:
-        hostname: "{{ common_hostinfo.shortname }}"
-      tags:
-        - docker
-
     - name: "Configure Scrutiny"
       ansible.builtin.import_role:
         name: scrutiny_server
