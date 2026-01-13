@@ -1,32 +1,28 @@
 services:
-  db:
-    image: mariadb:10.11
-    restart: always
-    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
-    volumes:
-      - {{ nextcloud.dest.db }}:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD={{ nextcloud.db.rootpasswd }}
-      - MYSQL_PASSWORD={{ nextcloud.db.passwd }}
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nextcloud
-
   nextcloud:
-    image: nextcloud:latest
+    container_name: nextcloud-aio-mastercontainer
+    image: ghcr.io/nextcloud-releases/all-in-one:20251218_095503
     restart: always
-    depends_on:
-      - "db"
+    init: true
+    user: root
+    privileged: true
+    security_opt:
+      - label:disable
     ports:
-      - "8080:80"
+      - "8080:8080"
     volumes:
-      - {{ nextcloud.dest.config }}/nextcloud_config:/var/www/html
-      - {{ nextcloud.dest.data }}:/var/www/html/data
+      - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
-      - MYSQL_PASSWORD={{ nextcloud.db.passwd }}
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nextcloud
-      - MYSQL_HOST=db
       - OVERWRITEPROTOCOL=https
       - OVERWRITEHOST=ds.{{ nextcloud.domain }}
-      - NEXTCLOUD_TRUSTED_DOMAINS={{ nextcloud.domain }} ds.{{ nextcloud.domain }} hayaworld.home
-      - TRUSTED_PROXIES=127.0.0.1 100.64.0.0/10 192.168.88.0/24 {{ docker_network.base }}
+      - NEXTCLOUD_ADDITIONAL_APKS=imagemagick ffmpeg
+      - NEXTCLOUD_ADDITIONAL_PHP_EXTENSIONS=imagick ffmpeg
+      - NEXTCLOUD_ENABLE_DRI_DEVICE=false
+      - SKIP_DOMAIN_VALIDATION=true
+      - APACHE_PORT=11000
+      - APACHE_IP_BINDING=0.0.0.0
+
+volumes:
+  nextcloud_aio_mastercontainer:
+    name: nextcloud_aio_mastercontainer

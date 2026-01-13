@@ -35,8 +35,10 @@
     - name: Install Docker
       ansible.builtin.import_role:
         name: docker
+      vars:
+        docker_users:
+          - root
       tags:
-        - runners
         - docker
 
     - name: "Install and Configure NextCloud"
