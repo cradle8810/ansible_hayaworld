@@ -54,10 +54,9 @@
         - put_script
 
     - name: Install Docker
-      ansible.builtin.import_tasks:
-        file: tasks/install_docker.yml
+      ansible.builtin.import_role:
+        name: docker
       vars:
-        hostname: "{{ common_hostinfo.shortname }}"
         docker_users:
           - hayato
       tags:
