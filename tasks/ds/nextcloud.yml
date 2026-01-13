@@ -9,7 +9,7 @@
 
 - name: "Mount up skylark"
   ansible.posix.mount:
-    src: "{{ nextcloud.nfs.src }}"
+    src: "{{ nextcloud.nfs.server }}:{{ nextcloud.nfs.src }}"
     path: "{{ nextcloud.nfs.dest }}"
     opts: "rw,noatime,async,vers=4.2,rsize=1048576,wsize=1048576,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys"
     fstype: nfs4
@@ -17,25 +17,11 @@
 
 - name: "Initialize Directories (NextCloud)"
   ansible.builtin.file:
-    path: "{{ item }}"
+    path: "/root/ds/"
     state: directory
-    owner: www-data
-    group: www-data
+    owner: root
+    group: root
     mode: '0750'
-  loop:
-    - "{{ nextcloud.dest.data }}"
-    - "{{ nextcloud.dest.config }}"
-    - "/root/ds/"
-
-- name: "Initialize Directories (MySQL)"
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: directory
-    owner: 999
-    group: 'systemd-journal'
-    mode: '0750'
-  loop:
-    - "{{ nextcloud.dest.db }}"
 
 - name: "Put docker-compose.yml"
   ansible.builtin.template:
@@ -50,7 +36,7 @@
   ansible.builtin.cron:
     name: "Set crontab for run cron.php"
     minute: "*/5"
-    job: "docker exec --user www-data ds-nextcloud-1 php -f /var/www/html/cron.php"
+    job: "docker exec --user www-data nextcloud-aio-nextcloud php -f /var/www/html/cron.php"
     cron_file: ds-nextcloud-cron_php
     user: root
   notify: "Restart cron"
