@@ -1,16 +1,14 @@
 ---
-- name: "Install pip"
-  ansible.builtin.apt:
-    pkg: pipx
-    state: present
-    update_cache: true
-    cache_valid_time: "{{ apt_cache_valid_time }}"
+- name: Install Docker
+  ansible.builtin.import_role:
+    name: docker
+  tags:
+    - docker
 
-- name: "Install docker python module"
-  ansible.builtin.pip:
-    name: "docker"
-    break_system_packages: true
-    extra_args: "--upgrade"
+- name: Install dependencies
+  ansible.builtin.apt:
+    pkg: python3-debian
+    state: present
 
 - name: "Mkdir docker-compose.yml to homedir"
   ansible.builtin.file:
