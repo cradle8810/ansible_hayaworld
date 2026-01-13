@@ -124,6 +124,8 @@
     - stop_services
 
 - name: "Common / Configure Restart When Kernel Panic happened"
+  when:
+    ansible_facts.virtualization_type != 'lxc'
   ansible.builtin.import_tasks:
     file: tasks/restart_when_panic.yml
   tags:

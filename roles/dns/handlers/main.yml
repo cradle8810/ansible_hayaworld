@@ -5,8 +5,7 @@
     state: stopped
     enabled: false
     masked: true
-  when: not dns_sr_masked
-  listen: "Restart systemd-resolved"
+  listen: "Mask systemd-resolved"
 
 - name: "Dnsmasq / Start and enable dnsmasq"
   ansible.builtin.systemd_service:
@@ -14,23 +13,3 @@
     state: restarted
     enabled: true
   listen: "Restart dnsmasq"
-
-- name: "RAdvd / Don't startup radvd"
-  ansible.builtin.systemd_service:
-    name: radvd
-    enabled: false
-  listen: "Stop radvd"
-
-- name: "Corosync / Start and enable corosync"
-  ansible.builtin.systemd_service:
-    name: corosync
-    state: restarted
-    enabled: true
-  listen: "Restart corosync"
-
-- name: "Pacemaker / Start and enable pacemaker"
-  ansible.builtin.systemd_service:
-    name: pacemaker
-    state: restarted
-    enabled: true
-  listen: "Restart pacemaker"

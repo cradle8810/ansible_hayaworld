@@ -49,14 +49,6 @@ firewall:
         src: "192.168.88.0/24"
         port: '3389'
     ipv6:
-      - name: "SSH from service line(IPv6)"
-        proto: "tcp"
-        src: "{{ ipv6.ula.prefix }}::/48"
-        port: '22'
-      - name: "RDP from service line(IPv6)"
-        proto: "tcp"
-        src: "{{ ipv6.ula.prefix }}::/48"
-        port: '3389'
       - name: "DHCPv6 Client from service line"
         proto: "udp"
         src: "::"

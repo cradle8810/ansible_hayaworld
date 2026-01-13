@@ -73,14 +73,6 @@ firewall:
         src: "172.17.0.0/16"
         port: "22"
     ipv6:
-      - name: "SSH from service line(IPv6)"
-        proto: "tcp"
-        src: "{{ ipv6.ula.prefix }}::/48"
-        port: '22'
-      - name: "RDP from service line(IPv6)"
-        proto: "tcp"
-        src: "{{ ipv6.ula.prefix }}::/48"
-        port: '3389'
       - name: "DHCPv6 Client from service line"
         proto: "udp"
         src: "::"

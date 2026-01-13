@@ -12,15 +12,10 @@ firewall:
         src: "192.168.88.0/24"
         port: '8080'
     ipv6:
-      - name: "SSH from service line(IPv6)"
-        proto: "tcp"
-        src: "{{ ipv6.ula.prefix }}::/48"
-        port: '22'
-      - name: "Scrutiny from service line(IPv6)"
-        proto: "tcp"
-        src: "{{ ipv6.ula.prefix }}::/48"
-        port: '8080'
-
+      - name: "DHCPv6 Client from service line"
+        proto: "udp"
+        src: "::"
+        port: "546"
 docker_network:
   base: "172.17.121.0/24"
   size: "28"

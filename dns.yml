@@ -23,19 +23,6 @@
         common_add_hosts: false
         common_install_users: false
 
-    - name: "Setup Tailscale Endpoint"
-      ansible.builtin.import_role:
-        name: artis3n.tailscale.machine
-      tags:
-        - tailscale
-      when: not ansible_check_mode
-      vars:
-        tailscale_authkey: "{{ tailscale.client_secret }}"
-        tailscale_args: "--accept-dns=false"
-        tailscale_oauth_ephemeral: false
-        tailscale_tags:
-          - dns
-
     - name: Mount tmpfs for temporary dirs
       ansible.posix.mount:
         src: "tmpfs"
