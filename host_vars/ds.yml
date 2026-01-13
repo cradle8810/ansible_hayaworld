@@ -29,7 +29,7 @@ firewall:
 
 nextcloud:
   nfs:
-    src: "skylark.hayaworld.home:/mnt/skylark/nextcloud"
+    src: "192.168.88.10:/mnt/tank/nextcloud"
     dest: "/nextcloud"
   dest:
     data: "/nextcloud/data"
