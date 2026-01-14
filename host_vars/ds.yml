@@ -38,7 +38,7 @@ firewall:
 nextcloud:
   nfs:
     server: "192.168.88.200"
-    src: "/mnt/skylark/nextcloud"
+    src: "/mnt/backup/nextcloud"
     dest: "/mnt/nextcloud"
   domain: !vault |
           $ANSIBLE_VAULT;1.1;AES256
