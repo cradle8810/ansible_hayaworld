@@ -1,10 +1,6 @@
 apt:
   - nfs-common
 
-docker_network:
-  base: "172.17.123.0/24"
-  size: "28"
-
 firewall:
   policy: deny
   allow_rules:
@@ -47,3 +43,20 @@ nextcloud:
           34316165376563363561396337363136626230303635383931313164336333386532633561366163
           6135313438663862390a643862613738656136333332616435346166376561656232393362396637
           65333963393637313035623234653732366361356336323237613163636536626561
+
+rsyslog:
+  rsyslog_client_additional_actions: |
+    if $programname startswith 'nextcloud-aio/' then {
+      if ($msg contains 'GET /') or ($msg contains 'POST /') or
+         ($msg contains 'OPTIONS /') or ($msg contains 'PROPFIND /') then {
+          stop
+      }
+      action(type="omfwd" target="192.168.88.109" port="514" protocol="tcp")
+      stop
+    }
+
+docker_config:
+  log-driver: "syslog"
+  log-opts:
+    syslog-address: "unixgram:///dev/log"
+    tag: "{% raw %}nextcloud-aio/{{.Name}}{% endraw %}"

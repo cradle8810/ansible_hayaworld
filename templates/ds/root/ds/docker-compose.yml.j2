@@ -22,6 +22,12 @@ services:
       - SKIP_DOMAIN_VALIDATION=true
       - APACHE_PORT=11000
       - APACHE_IP_BINDING=0.0.0.0
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "unixgram:///dev/log"
+        tag: "nextcloud"
+        syslog-format: "rfc3164"
 
 volumes:
   nextcloud_aio_mastercontainer:
