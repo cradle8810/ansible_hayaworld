@@ -16,9 +16,9 @@ services:
     environment:
       - OVERWRITEPROTOCOL=https
       - OVERWRITEHOST=ds.{{ nextcloud.domain }}
-      - NEXTCLOUD_ADDITIONAL_APKS=imagemagick ffmpeg
-      - NEXTCLOUD_ADDITIONAL_PHP_EXTENSIONS=imagick ffmpeg
-      - NEXTCLOUD_ENABLE_DRI_DEVICE=false
+      - NEXTCLOUD_ADDITIONAL_APKS=imagemagick ffmpeg intel-media-driver libva-utils mesa-va-intel
+      - NEXTCLOUD_ADDITIONAL_PHP_EXTENSIONS=imagick
+      - NEXTCLOUD_ENABLE_DRI_DEVICE=true
       - SKIP_DOMAIN_VALIDATION=true
       - APACHE_PORT=11000
       - APACHE_IP_BINDING=0.0.0.0
