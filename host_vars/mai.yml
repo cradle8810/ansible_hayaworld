@@ -13,9 +13,6 @@ dnsmasq:
   logs:
     log_facility: local5
     log_to: "log.hayaworld.home"
-  ipv6:
-    dns6_server_self: "{{ mai_info.ipv6_addr }}"
-    dns6_server_other: "{{ rui_info.ipv6_addr }}"
   ipv4:
     dns4_server_self: "{{ mai_info.ipv4 }}"
     dns4_server_other: "{{ rui_info.ipv4 }}"

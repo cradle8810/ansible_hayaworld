@@ -8,7 +8,6 @@
   notify: "Reconfigure netplan"
   vars:
     ipv4_addr: "{{ common_hostinfo.ipv4 }}"
-    ipv6_addr: "{{ common_hostinfo.ipv6_addr }}"
     netplan_enabled: true
     netplan_renderer: networkd
     netplan_configuration:
@@ -36,7 +35,6 @@
   notify: "Reconfigure netplan"
   vars:
     ipv4_addr: "{{ common_hostinfo.ipv4 }}"
-    ipv6_addr: "{{ common_hostinfo.ipv6_addr }}"
     netplan_enabled: true
     netplan_renderer: networkd
     netplan_configuration:
