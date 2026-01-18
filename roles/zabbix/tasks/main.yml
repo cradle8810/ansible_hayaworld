@@ -1,0 +1,53 @@
+---
+- name: Install Docker
+  ansible.builtin.import_role:
+    name: docker
+  tags:
+    - docker
+
+- name: "Configure Zabbix"
+  notify: "Up docker-compose"
+  tags:
+    - zabbix
+  block:
+    - name: Create Zabbix Docker compose dir
+      ansible.builtin.file:
+        path: "{{ zabbix_docker_project_path }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0700'
+
+    - name: Put Zabbix docker-compose.yml
+      ansible.builtin.template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: '0644'
+      loop:
+        - src: "templates/root/zabbix/docker-compose.yml.j2"
+          dest: "{{ zabbix_docker_project_path }}/docker-compose.yml"
+        - src: "roles/zabbix/templates/root/zabbix/backup.sh"
+          dest: "{{ zabbix_docker_project_path }}/backup.sh"
+
+- name: "Configure Crontab"
+  notify: "Restart cron"
+  tags:
+    - zabbix
+  block:
+    - name: "Install cron"
+      ansible.builtin.apt:
+        pkg: "cron"
+        state: present
+        update_cache: true
+        cache_valid_time: "{{ common_apt.cache_valid_time }}"
+
+    - name: "Set crontab for backup every hours"
+      ansible.builtin.cron:
+        name: "Backup every hours"
+        minute: "10"
+        hour: "*"
+        job: "cd /root/zabbix && docker compose run --rm backup"
+        cron_file: backup-zabbix
+        user: root

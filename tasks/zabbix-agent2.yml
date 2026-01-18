@@ -1,22 +1,55 @@
 ---
-
 - name: Zabbix-agent2 repository install
   ansible.builtin.apt:
-    deb: "https://repo.zabbix.com/zabbix/6.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.4-1+ubuntu{{ ansible_facts['lsb']['release'] }}_all.deb"
+    deb: "https://repo.zabbix.com/zabbix/7.4/release/ubuntu/pool/main/z/zabbix-release/zabbix-release_7.4-1+ubuntu{{ ansible_facts['lsb']['release'] }}_all.deb"
 
 - name: Zabbix-agent2 install
   ansible.builtin.apt:
     pkg:
       - zabbix-agent2
-      - zabbix-agent2-plugin-*
     update_cache: true
     cache_valid_time: "{{ apt_cache_valid_time }}"
 
-- name: Put zabbix-agent2.conf
-  ansible.builtin.copy:
-    src: templates/all/etc/zabbix/zabbix_agent2.conf
-    dest: /etc/zabbix/zabbix_agent2.conf
+- name: Configure zabbix-agent2.conf
+  community.general.ini_file:
+    path: "/etc/zabbix/zabbix_agent2.conf"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  notify: "Restart zabbix-agent2"
+  loop:
+    - option: "LogFileSize"
+      value: "50"
+    - option: "Server"
+      value: "zabbix.hayaworld.home"
+    - option: "ServerActive"
+      value: "zabbix.hayaworld.home"
+    - option: "Hostname"
+      value: ""
+
+- name: Make zabbix-agent dropin dir
+  notify: "Restart zabbix-agent2"
+  ansible.builtin.file:
+    path: "/etc/systemd/system/zabbix-agent2.service.d/"
+    state: directory
     owner: root
     group: root
-    mode: '0644'
+    mode: '0755'
+
+- name: Make zabbix-agent dropin Configure
+  community.general.ini_file:
+    path: "/etc/systemd/system/zabbix-agent2.service.d/override.conf"
+    section: "Service"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
   notify: "Restart zabbix-agent2"
+  loop:
+    - option: "User"
+      value: "root"
+    - option: "Group"
+      value: "root"

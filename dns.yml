@@ -82,3 +82,9 @@
     - name: Make Started Services
       ansible.builtin.import_tasks:
         file: tasks/service_start.yml
+
+    - name: Install Zabbix agent
+      ansible.builtin.import_tasks:
+        file: tasks/zabbix-agent2.yml
+      tags:
+        - zabbix
