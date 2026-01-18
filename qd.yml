@@ -65,3 +65,9 @@
         file: tasks/qd/raspi_watchdog.yml
       tags:
         - watchdog
+
+    - name: Install Zabbix agent
+      ansible.builtin.import_tasks:
+        file: tasks/zabbix-agent2.yml
+      tags:
+        - zabbix

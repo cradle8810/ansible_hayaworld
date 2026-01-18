@@ -50,3 +50,9 @@
         file: tasks/zabbix/tailscale.yml
       tags:
         - tailscale
+
+    - name: Install Zabbix agent
+      ansible.builtin.import_tasks:
+        file: tasks/zabbix-agent2.yml
+      tags:
+        - zabbix

@@ -29,6 +29,10 @@ firewall:
         proto: "tcp"
         src: "127.0.0.1/32"
         port: '9200'
+      - name: "Zabbix from Zabbix-server"
+        proto: "tcp"
+        src: "192.168.88.106/24"
+        port: "10050"
     ipv6:
       - name: "DHCPv6 Client from service line"
         proto: "udp"
