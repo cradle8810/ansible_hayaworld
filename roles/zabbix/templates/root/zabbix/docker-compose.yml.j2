@@ -1,0 +1,77 @@
+services:
+  db:
+    image: mysql:8.0
+    command: 
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_bin
+      - --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - backups:/backups
+    environment:
+      MYSQL_DATABASE: {{ zabbix_mysql_database }}
+      MYSQL_USER: {{ zabbix_mysql_user }}
+      MYSQL_PASSWORD: {{ zabbix_mysql_password }}
+      MYSQL_ROOT_PASSWORD: {{ zabbix_mysql_root_password }}
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p{{ zabbix_mysql_root_password }}"]
+      interval: 10s
+      timeout: 10s
+      retries: 100
+
+  zabbix:
+    image: zabbix/zabbix-server-mysql:ubuntu-7.4-latest
+    ports:
+      - "10051:10051"
+    volumes:
+      - ./zabbix_scripts:/usr/lib/zabbix/externalscripts
+    environment:
+      DB_SERVER_HOST: db
+      MYSQL_DATABASE: {{ zabbix_mysql_database }}
+      MYSQL_USER: {{ zabbix_mysql_user }}
+      MYSQL_PASSWORD: {{ zabbix_mysql_password }}
+      MYSQL_ROOT_PASSWORD: {{ zabbix_mysql_root_password }}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    image: zabbix/zabbix-web-nginx-mysql:ubuntu-7.4-latest
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    environment:
+      DB_SERVER_HOST: db
+      MYSQL_DATABASE: {{ zabbix_mysql_database }}
+      MYSQL_USER: {{ zabbix_mysql_user }}
+      MYSQL_PASSWORD: {{ zabbix_mysql_password }}
+      ZBX_SERVER_HOST: zabbix
+      PHP_TZ: Asia/Tokyo
+      ZBX_DEBUGLEVEL: 3
+    depends_on:
+      db:
+        condition: service_healthy
+
+  backup:
+    image: mysql:8.0
+    volumes:
+      - ./backup.sh:/usr/local/bin/backup.sh:ro
+      - backups:/backups
+    environment:
+      DB_SERVER_HOST: db
+      MYSQL_DATABASE: {{ zabbix_mysql_database }}
+      MYSQL_USER: root
+      MYSQL_PASSWORD: {{ zabbix_mysql_root_password }}
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint: ["/bin/bash", "/usr/local/bin/backup.sh"]
+
+volumes:
+  backups:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: "addr=192.168.88.200,hard,nolock,rsize=1048576,wsize=1048576,nfsvers=4"
+      device: ":/mnt/backup/zabbix_backups"
+  mysql_data:
