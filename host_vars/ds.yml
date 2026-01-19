@@ -52,11 +52,15 @@ rsyslog:
   rsyslog_client_additional_actions: |
     if $programname startswith 'nextcloud-aio/' then {
       if ($msg contains 'GET /') or ($msg contains 'POST /') or
-         ($msg contains 'OPTIONS /') or ($msg contains 'PROPFIND /') then {
+         ($msg contains 'OPTIONS /') or ($msg contains 'PROPFIND /') or
+         ($msg contains '"POST /pipeline') then {
           stop
       }
       action(type="omfwd" target="192.168.88.109" port="514" protocol="tcp")
       stop
+    }
+    if ($msg contains '"POST /pipeline') then {
+        stop
     }
 
 docker_config:
