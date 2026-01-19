@@ -1,0 +1,72 @@
+---
+- name: Install SNMPv2
+  ansible.builtin.apt:
+    name:
+      - snmpd
+      - libsnmp-perl
+    state: present
+    update_cache: true
+    cache_valid_time: "{{ apt_cache_valid_time }}"
+  notify:
+    - "Restart snmpd"
+
+- name: Remove apparmor
+  ansible.builtin.apt:
+    name:
+      - apparmor
+      - apparmor-utils
+    state: absent
+    update_cache: true
+    cache_valid_time: "{{ apt_cache_valid_time }}"
+
+- name: Put snmpd.conf
+  ansible.builtin.template:
+    src: templates/all/etc/snmp/snmpd.conf.j2
+    dest: /etc/snmp/snmpd.conf
+    owner: root
+    group: 117
+    mode: '0640'
+  notify:
+    - "Restart snmpd"
+
+- name: "Update SNMP Daemon config"
+  community.general.ini_file:
+    path: "/etc/default/snmpd"
+    option: "SNMPDOPTS"
+    value: "'-Lsd -f -u root -g root -I -smux,mteTrigger,mteTriggerConf -p /run/snmpd.pid'"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  notify:
+    - "Restart snmpd"
+
+- name: Make Additional SNMP config
+  ansible.builtin.file:
+    path: "/etc/systemd/system/snmpd.service.d"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  notify:
+    - "Restart snmpd"
+
+- name: "Update SNMP Daemon config"
+  ansible.builtin.template:
+    src: templates/all/etc/systemd/system/snmpd.service.d/local.conf.j2
+    dest: /etc/systemd/system/snmpd.service.d/local.conf
+    owner: root
+    group: 117
+    mode: '0640'
+  notify:
+    - "Restart snmpd"
+
+- name: Put APC ups script
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/jirutka/apcupsd-snmp/refs/heads/master/mod_apcupsd.pl"
+    dest: "/usr/bin/mod_apcupsd.pl"
+    checksum: "sha256:862aea3d1ea1ce982d67117e351d6d3a320cf0481064a274294e8832795d30c2"
+    owner: root
+    group: root
+    mode: "0755"
+  notify:
+    - "Restart snmpd"

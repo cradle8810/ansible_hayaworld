@@ -71,3 +71,11 @@
         file: tasks/zabbix-agent2.yml
       tags:
         - zabbix
+
+    - name: Install SNMPv2
+      ansible.builtin.import_tasks:
+        file: tasks/qd/snmpd.yml
+      vars:
+        ipaddr: "{{ common_hostinfo.ipv4 }}"
+      tags:
+        - snmp

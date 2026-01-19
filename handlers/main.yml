@@ -152,3 +152,18 @@
     enabled: true
     daemon_reload: true
   listen: "Restart zabbix-agent2"
+
+- name: Restart snmpd
+  ansible.builtin.systemd_service:
+    name: zabbix-agent2
+    state: restarted
+    enabled: true
+    daemon_reload: true
+  listen: "Restart snmpd"
+
+- name: "Apparmor Reconfig"
+  ansible.builtin.command:
+    cmd: "aa-complain /usr/sbin/snmpd"
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "snmp apparmor"

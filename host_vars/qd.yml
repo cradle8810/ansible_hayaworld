@@ -30,6 +30,14 @@ firewall:
         proto: "tcp"
         src: "192.168.88.106/24"
         port: "10050"
+      - name: "SNMPv2 Walk"
+        proto: "udp"
+        src: "192.168.88.0/24"
+        port: '161'
+      - name: "SNMPv2 Trap"
+        proto: "udp"
+        src: "192.168.88.0/24"
+        port: '162'
     ipv6:
       - name: "DHCPv6 Client from service line"
         proto: "udp"

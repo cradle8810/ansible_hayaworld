@@ -1,0 +1,4 @@
+[Service]
+ExecStart=
+ExecStart=/usr/sbin/snmpd -Lsd -f -u root -g root -I -smux,mteTrigger,mteTriggerConf -p /run/snmpd.pid
+NotifyAccess=all
