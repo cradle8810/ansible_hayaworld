@@ -68,3 +68,5 @@ docker_config:
   log-opts:
     syslog-address: "unixgram:///dev/log"
     tag: "{% raw %}nextcloud-aio/{{.Name}}{% endraw %}"
+
+swappiness: 10
