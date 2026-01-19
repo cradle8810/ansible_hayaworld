@@ -1,0 +1,25 @@
+---
+- name: Zabbix-agent2 install
+  ansible.builtin.apt:
+    pkg:
+      - zabbix-agent2
+    update_cache: true
+
+- name: Configure zabbix-agent2.conf
+  community.general.ini_file:
+    path: "/etc/zabbix/zabbix_agent2.conf"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  notify: "Restart zabbix-agent2"
+  loop:
+    - option: "LogFileSize"
+      value: "50"
+    - option: "Server"
+      value: "zabbix.hayaworld.home"
+    - option: "ServerActive"
+      value: "zabbix.hayaworld.home"
+    - option: "Hostname"
+      value: ""

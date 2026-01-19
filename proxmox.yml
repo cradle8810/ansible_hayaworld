@@ -144,3 +144,9 @@
       notify: "Restart cron"
       tags:
         - sync
+
+    - name: WoL Service Settings
+      ansible.builtin.import_tasks:
+        file: tasks/proxmox/zabbix-agent2.yml
+      tags:
+        - zabbix
