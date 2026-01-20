@@ -50,3 +50,11 @@ zramswap:
 
 ups:
   role: master
+
+rsyslog:
+  rsyslog_client_additional_actions: |
+    if $programname startswith 'snmpd' then {
+      if ($msg contains '192.168.88.124') then {
+          stop
+      }
+    }
