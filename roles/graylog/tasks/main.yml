@@ -66,57 +66,32 @@
         name: "nfs-common"
         state: present
 
-    - name: Make Backup Root Directory
-      ansible.builtin.file:
-        path: "{{ item.path }}"
-        state: directory
-        owner: "{{ item.owner }}"
-        group: "{{ item.group }}"
-        mode: '0700'
-      loop:
-        - path: "{{ graylog_backup_dest }}"
-          owner: root
-          group: root
-
-    - name: Mount up backup nfs server
-      ansible.posix.mount:
-        src: "{{ graylog_backup_src }}"
-        path: "{{ graylog_backup_dest }}"
-        opts: "rw,noatime,async,vers=4.2,rsize=1048576,wsize=1048576,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys"
-        fstype: nfs4
-        state: mounted
-
-    - name: Make Backup Directory
-      ansible.builtin.file:
-        path: "{{ item.path }}"
-        state: directory
-        owner: "{{ item.owner }}"
-        group: "{{ item.group }}"
-        mode: '0700'
-      loop:
-        - path: "{{ graylog_backup_dest }}/mongodb"
-          owner: 999
-          group: 999
-        - path: "{{ graylog_backup_dest }}/opensearch"
-          owner: 1000
-          group: 1000
-
     - name: Put Backup Script
       ansible.builtin.template:
-        src: "templates/root/gl/backup.sh.j2"
-        dest: "{{ graylog_project_root }}/backup.sh"
+        src: "templates/root/gl/{{ item.src }}"
+        dest: "{{ graylog_project_root }}/{{ item.dest }}"
         owner: root
         group: root
         mode: '0700'
+      loop:
+        - src: backup-mondodb.sh.j2
+          dest: backup-mondodb.sh
+        - src: backup-opensearch.j2
+          dest: backup-opensearch.sh
       notify: "Restart cron"
 
     - name: Set crontab for backup
       ansible.builtin.cron:
-        name: "Dump syslog"
+        name: "{{ item.name }}"
         minute: "15"
-        job: "{{ graylog_project_root }}/backup.sh > /dev/null 2>&1"
+        job: "{{ item.job }}"
         cron_file: dump-logs
         user: root
+      loop:
+        - name: "Dump MongoDB"
+          job: "cd /root/gl && docker compose run --rm backup_mongodb"
+        - name: "Dump Opensearch"
+          job: "cd /root/gl && docker compose run --rm backup_opensearch"
       notify: "Restart cron"
 
     - name: Check is there backup path on Opensearch

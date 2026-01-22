@@ -1,0 +1,7 @@
+#!/bin/sh
+
+BACKUP_DIR="{{ graylog_backup_dest }}"
+DATE=$(date +%Y%m%d_%H%M)
+
+# Opensearch dump
+curl -X PUT "opensearch:9200/_snapshot/backup/snapshot_${DATE}?wait_for_completion=true"

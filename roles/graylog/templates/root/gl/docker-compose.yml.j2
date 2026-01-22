@@ -28,7 +28,7 @@ services:
         hard: 65536
     volumes:
       - /opt/data/opensearch:/usr/share/opensearch/data
-      - /backup/opensearch:/usr/share/opensearch/backup
+      - backup_opensearch:/usr/share/opensearch/backup
 
   graylog:
     image: "graylog/graylog:7.0"
@@ -45,3 +45,38 @@ services:
       - "514:1514/udp"
     volumes:
       - /opt/data/graylog:/usr/share/graylog/data
+
+  backup_mongodb:
+    image: docker:cli
+    depends_on:
+      mongodb:
+        condition: service_started
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./backup-mondodb.sh:/usr/local/bin/backup-mondodb.sh:ro
+      - backup_mongodb:{{ graylog_backup_dest }}
+    entrypoint: ["/bin/sh", "/usr/local/bin/backup-mondodb.sh"]
+
+  backup_opensearch:
+    image: alpine/curl
+    depends_on:
+      opensearch:
+        condition: service_started
+    volumes:
+      - ./backup-opensearch.sh:/usr/local/bin/backup-opensearch.sh:ro
+    entrypoint: ["/bin/sh", "/usr/local/bin/backup-opensearch.sh"]
+
+volumes:
+  backup_mongodb:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: "addr=192.168.88.200,hard,nolock,rsize=1048576,wsize=1048576,nfsvers=4"
+      device: ":{{ graylog_backup_src }}"
+
+  backup_opensearch:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: "addr=192.168.88.200,hard,nolock,rsize=1048576,wsize=1048576,nfsvers=4"
+      device: ":{{ graylog_backup_src }}/opensearch"
