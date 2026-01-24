@@ -145,8 +145,14 @@
       tags:
         - sync
 
-    - name: WoL Service Settings
+    - name: Zabbix Agent Config
       ansible.builtin.import_tasks:
         file: tasks/proxmox/zabbix-agent2.yml
       tags:
         - zabbix
+
+    - name: "ISCSI writting throttling"
+      ansible.builtin.import_tasks:
+        file: tasks/proxmox/iscsi.yml
+      tags:
+        - iscsi

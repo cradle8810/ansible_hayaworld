@@ -1,0 +1,28 @@
+---
+- name: "Make udev rules for iscsi"
+  ansible.builtin.copy:
+    src: "templates/proxmox/etc/udev/rules.d/99-iscsi-timeout.rules"
+    dest: "/etc/udev/rules.d/99-iscsi-timeout.rules"
+    owner: root
+    group: root
+    mode: '0640'
+  notify: "Rescan udev rules"
+
+- name: "Reconfigure iscsi.conf"
+  community.general.ini_file:
+    path: "/etc/iscsi/iscsid.conf"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  notify: "Restart iscsi"
+  loop:
+    - option: "node.session.timeo.replacement_timeout"
+      value: "1200"
+    - option: "node.conn[0].timeo.noop_out_interval"
+      value: "500"
+    - option: "node.conn[0].timeo.noop_out_timeout"
+      value: "500"
+    - option: "node.session.queue_depth"
+      value: "64"

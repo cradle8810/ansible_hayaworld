@@ -167,3 +167,17 @@
   register: retval
   changed_when: retval.rc == 0
   listen: "snmp apparmor"
+
+- name: "Restart iscsi"
+  ansible.builtin.systemd_service:
+    name: iscsi
+    state: restarted
+    enabled: true
+  listen: "Restart iscsi"
+
+- name: "Rescan udev rules"
+  ansible.builtin.command:
+    cmd: "udevadm control --reload-rules"
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "Rescan udev rules"
