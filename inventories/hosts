@@ -1,6 +1,6 @@
 [all]
 console ansible_user=ansible ansible_host=console.hayaworld.home
-log ansible_user=root ansible_host=log.hayaworld.home
+log ansible_user=ansible ansible_host=log.hayaworld.home
 macbook ansible_user=hayato
 qd ansible_user=ansible ansible_host=qd.hayaworld.home
 scanner ansible_user=ansible ansible_host=scanner.hayaworld.home

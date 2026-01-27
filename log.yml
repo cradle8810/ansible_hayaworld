@@ -20,7 +20,27 @@
       vars:
         common_firewall: "{{ firewall }}"
         common_pkg: "{{ apt }}"
-        common_install_users: false
+        common_install_users: true
+
+    - name: Prepare Graylog data dir
+      tags:
+        - mount
+      block:
+        - name: Create Graylog Mount dir
+          ansible.builtin.file:
+            path: "/opt/data"
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
+
+        - name: "Mount Graylog drive"
+          ansible.posix.mount:
+            src: "UUID={{ graylog_drive_uuid }}"
+            path: "/opt/data"
+            opts: "defaults,compress=zstd:3"
+            fstype: btrfs
+            state: mounted
 
     - name: "Install and Configure Graylog"
       ansible.builtin.import_role:
