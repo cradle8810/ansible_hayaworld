@@ -181,3 +181,10 @@
   register: retval
   changed_when: retval.rc == 0
   listen: "Rescan udev rules"
+
+- name: "Common / Reload sysctl"
+  ansible.builtin.command:
+    cmd: "sysctl -p"
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "Reload sysctl"

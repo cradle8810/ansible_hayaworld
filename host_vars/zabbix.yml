@@ -34,3 +34,5 @@ docker_config:
     - 192.168.88.150
 
 swappiness: 10
+
+docker_drive_uuid: "806af063-0407-4319-96a6-ecb2a9f5963b"

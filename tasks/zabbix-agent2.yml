@@ -8,7 +8,6 @@
     pkg:
       - zabbix-agent2
     update_cache: true
-    cache_valid_time: "{{ apt_cache_valid_time }}"
 
 - name: Configure zabbix-agent2.conf
   community.general.ini_file:

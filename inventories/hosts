@@ -35,7 +35,7 @@ tsgw2 ansible_user=root ansible_host=192.168.88.115
 diskmon ansible_user=root ansible_host=diskmon.hayaworld.home
 
 [watch]
-zabbix ansible_user=root ansible_host=zabbix.hayaworld.home
+zabbix ansible_user=ansible ansible_host=zabbix.hayaworld.home
 
 [vm]
 console
