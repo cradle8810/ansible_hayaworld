@@ -1,4 +1,5 @@
 apt:
+  - cron
   - nfs-common
 
 firewall:
@@ -70,3 +71,5 @@ docker_config:
     tag: "{% raw %}nextcloud-aio/{{.Name}}{% endraw %}"
 
 swappiness: 10
+
+docker_drive_uuid: "397a73b4-c584-4a22-a093-15df469b5360"

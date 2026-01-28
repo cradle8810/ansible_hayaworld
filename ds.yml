@@ -20,7 +20,27 @@
       vars:
         common_firewall: "{{ firewall }}"
         common_pkg: "{{ apt }}"
-        common_install_users: false
+        common_install_users: true
+
+    - name: Prepare Docker data dir
+      tags:
+        - mount
+      block:
+        - name: Create Docker Mount dir
+          ansible.builtin.file:
+            path: "/var/lib/docker"
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
+
+        - name: "Mount Docker drive"
+          ansible.posix.mount:
+            src: "UUID={{ docker_drive_uuid }}"
+            path: "/var/lib/docker"
+            opts: "defaults,compress=zstd:1"
+            fstype: btrfs
+            state: mounted
 
     - name: Add user for nextcloud execution
       ansible.builtin.user:

@@ -171,7 +171,7 @@ network:
     interface: enp6s18
     ipv4: 192.168.88.123
     shortname: ds
-    sshuser: root
+    sshuser: hayato
     self_org: true
     mtu: 9000
   - hostname: zabbix.hayaworld.home
