@@ -48,9 +48,75 @@
         shell: /bin/false
         uid: 33
         group: "www-data"
+        groups:
+          - render
+          - www-data
         append: true
         expires: -1
         password: '!'
+
+    - name: "GPU Configure"
+      tags:
+        - igpu
+        - gpu
+      block:
+        - name: "GPU / Install Requirements"
+          ansible.builtin.apt:
+            pkg:
+              - build-essential
+              - dkms
+              - linux-headers-generic
+              - "linux-image-generic-hwe-{{ ansible_distribution_version }}"
+            state: present
+            update_cache: true
+            cache_valid_time: "{{ apt_cache_valid_time }}"
+
+        - name: "GPU / Download and Install i915 Driver"
+          ansible.builtin.get_url:
+            url: "{{ i915.driver_url }}"
+            dest: "{{ i915.dest }}"
+            checksum: "{{ i915.checksum }}"
+            mode: '0600'
+
+        - name: "GPU / Install i915 Driver"
+          ansible.builtin.apt:
+            deb: "{{ i915.dest }}"
+            state: present
+          notify:
+            - "Run update-grub"
+            - "Run update-initramfs"
+            - "Echo reboot notice"
+
+        - name: "GPU / Configure GRUB CMDLINE"
+          community.general.ini_file:
+            path: /etc/default/grub
+            option: "GRUB_CMDLINE_LINUX_DEFAULT"
+            value: '"intel_iommu=on i915.enable_guc=3 module_blacklist=xe"'
+            state: present
+            no_extra_spaces: true
+            mode: "644"
+          notify:
+            - "Run update-grub"
+            - "Run update-initramfs"
+            - "Echo reboot notice"
+
+        - name: "GPU / Install GPU Utilities"
+          ansible.builtin.apt:
+            pkg:
+              - libmfx-gen-dev
+              - libva-dev
+              - vainfo
+            state: present
+            update_cache: true
+            cache_valid_time: "{{ apt_cache_valid_time }}"
+
+        - name: "GPU / Integrated GPU Permission Fix"
+          ansible.builtin.copy:
+            src: templates/all/etc/udev/rules.d/99-render.rules
+            dest: /etc/udev/rules.d/99-render.rules
+            owner: root
+            group: root
+            mode: '0644'
 
     - name: Install Docker
       ansible.builtin.import_role:

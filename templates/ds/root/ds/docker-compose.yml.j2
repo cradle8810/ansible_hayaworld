@@ -16,7 +16,7 @@ services:
     environment:
       - OVERWRITEPROTOCOL=https
       - OVERWRITEHOST=ds.{{ nextcloud.domain }}
-      - NEXTCLOUD_ADDITIONAL_APKS=imagemagick ffmpeg intel-media-driver libva-utils mesa-va-intel
+      - NEXTCLOUD_ADDITIONAL_APKS=imagemagick ffmpeg intel-media-driver libva-utils mesa-va-intel intel-media-va-driver-non-free
       - NEXTCLOUD_ADDITIONAL_PHP_EXTENSIONS=imagick
       - NEXTCLOUD_ENABLE_DRI_DEVICE=true
       - SKIP_DOMAIN_VALIDATION=true
@@ -28,6 +28,8 @@ services:
         syslog-address: "unixgram:///dev/log"
         tag: "nextcloud"
         syslog-format: "rfc3164"
+    devices:
+      - /dev/dri:/dev/dri
 
 volumes:
   nextcloud_aio_mastercontainer:

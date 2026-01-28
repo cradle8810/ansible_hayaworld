@@ -1,5 +1,5 @@
 ---
-- name: "GPU / Installing Intel iGPU Driver (Not Ubuntu 25.04 or terminal)"
+- name: "GPU / Installing Intel iGPU Driver (For terminal)"
   ansible.builtin.apt:
     install_recommends: false
     update_cache: true
@@ -9,13 +9,10 @@
       - libmfx-gen-dev
       - libva-dev
       - vainfo
-  when:
-    ansible_distribution_release != 'plucky' or ansible_hostname == 'terminal'
+  when: ansible_hostname == 'terminal'
 
-- name: "GPU / Installing Intel iGPU Driver (For Ubuntu 25.04 and Proxmox VMs)"
-  when:
-    - ansible_distribution_release == 'plucky'
-    - ansible_hostname != 'terminal'
+- name: "GPU / Installing Intel iGPU Driver (For Proxmox VMs)"
+  when: ansible_hostname != 'terminal'
   block:
     - name: "GPU / Install Requirements"
       ansible.builtin.apt:
@@ -23,6 +20,7 @@
           - build-essential
           - dkms
           - linux-headers-generic
+          - "linux-image-generic-hwe-{{ ansible_distribution_version }}"
         state: present
         update_cache: true
         cache_valid_time: "{{ apt_cache_valid_time }}"
