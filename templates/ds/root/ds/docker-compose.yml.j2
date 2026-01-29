@@ -22,23 +22,17 @@ services:
       - SKIP_DOMAIN_VALIDATION=true
       - APACHE_PORT=11000
       - APACHE_IP_BINDING=0.0.0.0
-    logging:
-      driver: syslog
-      options:
-        syslog-address: "unixgram:///dev/log"
-        tag: "nextcloud"
-        syslog-format: "rfc3164"
     devices:
       - /dev/dri:/dev/dri
 
   sorry-proxy:
-      image: nginx:alpine
-      container_name: nextcloud-proxy
-      restart: always
-      network_mode: "host"
-      volumes:
-        - ./proxy/conf.d:/etc/nginx/conf.d:ro
-        - ./proxy/html/:/usr/share/nginx/html:ro
+    image: nginx:alpine
+    container_name: nextcloud-proxy
+    restart: always
+    network_mode: "host"
+    volumes:
+      - ./proxy/conf.d:/etc/nginx/conf.d:ro
+      - ./proxy/html/:/usr/share/nginx/html:ro
 
 volumes:
   nextcloud_aio_mastercontainer:

@@ -51,17 +51,12 @@ nextcloud:
 
 rsyslog:
   rsyslog_client_additional_actions: |
-    if $programname startswith 'nextcloud-aio/' then {
-      if ($msg contains 'GET /') or ($msg contains 'POST /') or
-         ($msg contains 'OPTIONS /') or ($msg contains 'PROPFIND /') or
-         ($msg contains '"POST /pipeline') then {
-          stop
+    if ($rawmsg contains 'nextcloud-aio') then {
+      if (re_match($msg, '"[A-Z]+ .* HTTP/[0-9.]+" [23][0-9]{2} ')) then {
+        stop
       }
       action(type="omfwd" target="192.168.88.109" port="514" protocol="tcp")
       stop
-    }
-    if ($msg contains '"POST /pipeline') then {
-        stop
     }
 
 docker_config:
@@ -69,6 +64,7 @@ docker_config:
   log-opts:
     syslog-address: "unixgram:///dev/log"
     tag: "{% raw %}nextcloud-aio/{{.Name}}{% endraw %}"
+    syslog-format: "rfc3164"
 
 swappiness: 10
 
