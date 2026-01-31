@@ -9,6 +9,9 @@
       - libmfx-gen-dev
       - libva-dev
       - vainfo
+      - mesa-utils
+      - mesa-va-drivers 
+      - mesa-vulkan-drivers
   when: ansible_hostname == 'terminal'
 
 - name: "GPU / Installing Intel iGPU Driver (For Proxmox VMs)"
@@ -60,6 +63,9 @@
           - libmfx-gen-dev
           - libva-dev
           - vainfo
+          - mesa-utils
+          - mesa-va-drivers
+          - mesa-vulkan-drivers
         state: present
         update_cache: true
         cache_valid_time: "{{ apt_cache_valid_time }}"
