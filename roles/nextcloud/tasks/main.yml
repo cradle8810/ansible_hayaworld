@@ -1,0 +1,32 @@
+---
+- name: Add user for nextcloud execution
+  ansible.builtin.user:
+    name: "www-data"
+    shell: /bin/false
+    uid: 33
+    group: "www-data"
+    groups:
+      - render
+      - www-data
+    append: true
+    expires: -1
+    password: '!'
+
+- name: Install Docker
+  ansible.builtin.import_role:
+    name: docker
+  vars:
+    docker_users:
+      - root
+
+- name: "Install and Configure NextCloud"
+  ansible.builtin.import_tasks:
+    file: tasks/nextcloud.yml
+
+- name: "Install and Configure Tailscale"
+  ansible.builtin.import_tasks:
+    file: tasks/tailscale.yml
+
+- name: "Install iGPU Drivers"
+  ansible.builtin.import_tasks:
+    file: tasks/igpu.yml
