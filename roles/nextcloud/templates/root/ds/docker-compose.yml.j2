@@ -1,7 +1,7 @@
 services:
   nextcloud:
     container_name: nextcloud-aio-mastercontainer
-    image: ghcr.io/nextcloud-releases/all-in-one:20251218_095503
+    image: ghcr.io/nextcloud-releases/all-in-one:latest
     restart: always
     init: true
     user: root
@@ -15,24 +15,15 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
       - OVERWRITEPROTOCOL=https
-      - OVERWRITEHOST=ds.{{ nextcloud.domain }}
-      - NEXTCLOUD_ADDITIONAL_APKS=imagemagick ffmpeg intel-media-driver libva-utils mesa-va-intel intel-media-va-driver-non-free
-      - NEXTCLOUD_ADDITIONAL_PHP_EXTENSIONS=imagick
+      - OVERWRITEHOST=ds.{{ nextcloud_domain }}
+      - NEXTCLOUD_ADDITIONAL_APKS=imagemagick ffmpeg intel-media-driver libva-utils mesa-vulkan-intel xf86-video-intel mesa-utils mesa opencl
+      - NEXTCLOUD_ADDITIONAL_PHP_EXTENSIONS=imagick exif
       - NEXTCLOUD_ENABLE_DRI_DEVICE=true
       - SKIP_DOMAIN_VALIDATION=true
       - APACHE_PORT=11000
       - APACHE_IP_BINDING=0.0.0.0
     devices:
       - /dev/dri:/dev/dri
-
-  sorry-proxy:
-    image: nginx:alpine
-    container_name: nextcloud-proxy
-    restart: always
-    network_mode: "host"
-    volumes:
-      - ./proxy/conf.d:/etc/nginx/conf.d:ro
-      - ./proxy/html/:/usr/share/nginx/html:ro
 
 volumes:
   nextcloud_aio_mastercontainer:

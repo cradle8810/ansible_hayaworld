@@ -4,7 +4,7 @@ upstream nextcloud {
 
 server {
     listen 8880;
-    server_name ds.{{ nextcloud.domain }};
+    server_name ds.{{ nextcloud_domain }};
 
     root /usr/share/nginx/html;
 

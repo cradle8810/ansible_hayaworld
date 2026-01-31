@@ -1,0 +1,7 @@
+nextcloud_nfs_server: "192.168.88.200"
+nextcloud_nfs_src: "/mnt/backup/nextcloud"
+nextcloud_nfs_dest: "/mnt/nextcloud"
+
+nextcloud_i915_driver_url: https://github.com/strongtz/i915-sriov-dkms/releases/download/2025.12.10/i915-sriov-dkms_2025.12.10_amd64.deb
+nextcloud_i915_driver_dest: "/root/i915-sriov-dkms_2025.12.10_amd64.deb"
+nextcloud_i915_driver_checksum: "sha256:dff94ca92f4b16c18042922fc22983c9ac00581b90a84a6588b67196a3440c1c"

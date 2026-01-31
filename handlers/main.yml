@@ -124,20 +124,6 @@
     enabled: true
   listen: "Restart cron"
 
-- name: "Run Tailscale funnel"
-  ansible.builtin.debug:
-    msg: |
-      Run That Command on This node:
-       tailscale funnel --bg --https=443 http://localhost:8880
-  listen: "Run funnel"
-  changed_when: true
-
-- name: "Start NextCloud Docker Compose"
-  community.docker.docker_compose_v2:
-    project_src: /root/ds/
-    state: present
-  listen: "Exec NextCloud"
-
 - name: Restart and update tailscale
   ansible.builtin.systemd_service:
     name: tailscaled

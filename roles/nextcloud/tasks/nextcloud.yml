@@ -1,7 +1,7 @@
 ---
 - name: "Make directory to mount up skylark"
   ansible.builtin.file:
-    path: "{{ nextcloud.nfs.dest }}"
+    path: "{{ nextcloud_nfs_dest }}"
     state: directory
     owner: www-data
     group: www-data
@@ -9,21 +9,14 @@
 
 - name: "Mount up skylark"
   ansible.posix.mount:
-    src: "{{ nextcloud.nfs.server }}:{{ nextcloud.nfs.src }}"
-    path: "{{ nextcloud.nfs.dest }}"
+    src: "{{ nextcloud_nfs_server }}:{{ nextcloud_nfs_src }}"
+    path: "{{ nextcloud_nfs_dest }}"
     opts: "rw,noatime,async,vers=4.2,rsize=1048576,wsize=1048576,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys"
     fstype: nfs4
     state: mounted
 
-- name: "Initialize Directories (NextCloud)"
-  ansible.builtin.file:
-    path: "/root/ds/"
-    state: directory
-    owner: root
-    group: root
-    mode: '0750'
-
 - name: "Put reverse proxy configs"
+  notify: "Exec Proxy"
   block:
     - name: Create Reverse proxy configuration dir"
       ansible.builtin.file:
@@ -33,36 +26,52 @@
         group: root
         mode: '0755'
       loop:
-        - /root/ds/proxy
-        - /root/ds/proxy/conf.d
-        - /root/ds/proxy/html
+        - /root/proxy
+        - /root/proxy/conf.d
 
     - name: "Put reverse proxy Configuration"
       ansible.builtin.template:
-        src: templates/ds/root/ds/proxy/conf.d/default.conf.j2
-        dest: /root/ds/proxy/conf.d/default.conf
+        src: templates/root/proxy/conf.d/default.conf.j2
+        dest: /root/proxy/conf.d/default.conf
         owner: root
         group: root
         mode: '0644'
-      notify: "Exec NextCloud"
 
     - name: "Put reverse proxy Sorry pages"
       ansible.builtin.copy:
-        src: templates/ds/root/ds/proxy/html
-        dest: /root/ds/proxy/
+        src: templates/root/proxy/html
+        dest: /root/proxy/
         owner: root
         group: root
         directory_mode: '0755'
         mode: '0644'
 
-- name: "Put docker-compose.yml"
-  ansible.builtin.template:
-    src: templates/ds/root/ds/docker-compose.yml.j2
-    dest: /root/ds/docker-compose.yml
-    owner: root
-    group: root
-    mode: '0644'
+    - name: "Put docker-compose.yml"
+      ansible.builtin.template:
+        src: templates/root/proxy/docker-compose.yml.j2
+        dest: /root/proxy/docker-compose.yml
+        owner: root
+        group: root
+        mode: '0644'
+
+- name: "Put Nextcloud AIO configs"
   notify: "Exec NextCloud"
+  block:
+    - name: "Initialize Directories (NextCloud)"
+      ansible.builtin.file:
+        path: "/root/ds/"
+        state: directory
+        owner: root
+        group: root
+        mode: '0750'
+
+    - name: "Put NextCould AIO Docker Compose"
+      ansible.builtin.template:
+        src: templates/root/ds/docker-compose.yml.j2
+        dest: /root/ds/docker-compose.yml
+        owner: root
+        group: root
+        mode: '0644'
 
 - name: "Set crontab for run cron.php"
   ansible.builtin.cron:
