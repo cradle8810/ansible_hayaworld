@@ -138,6 +138,12 @@
     state: present
   listen: "Exec NextCloud"
 
+- name: "Start NextCloud Proxy Compose"
+  community.docker.docker_compose_v2:
+    project_src: /root/proxy/
+    state: present
+  listen: "Exec Proxy"
+
 - name: Restart and update tailscale
   ansible.builtin.systemd_service:
     name: tailscaled

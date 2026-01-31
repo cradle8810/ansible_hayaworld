@@ -1,0 +1,9 @@
+services:
+  sorry-proxy:
+    image: nginx:alpine
+    container_name: nextcloud-proxy
+    restart: always
+    network_mode: "host"
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d:ro
+      - ./html:/usr/share/nginx/html:ro

@@ -25,15 +25,6 @@ services:
     devices:
       - /dev/dri:/dev/dri
 
-  sorry-proxy:
-    image: nginx:alpine
-    container_name: nextcloud-proxy
-    restart: always
-    network_mode: "host"
-    volumes:
-      - ./proxy/conf.d:/etc/nginx/conf.d:ro
-      - ./proxy/html/:/usr/share/nginx/html:ro
-
 volumes:
   nextcloud_aio_mastercontainer:
     name: nextcloud_aio_mastercontainer
