@@ -27,6 +27,8 @@
       value: "zabbix.hayaworld.home"
     - option: "Hostname"
       value: ""
+    - option: "AllowKey"
+      value: "system.run[echo*]"
 
 - name: Make zabbix-agent dropin dir
   notify: "Restart zabbix-agent2"
