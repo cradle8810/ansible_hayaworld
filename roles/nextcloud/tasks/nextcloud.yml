@@ -83,3 +83,15 @@
   notify: "Restart cron"
   tags:
     - sync
+
+- name: "Set crontab for run file rescan"
+  ansible.builtin.cron:
+    name: "Set crontab for run file rescan"
+    minute: "50"
+    hour: "*/6"
+    job: "docker exec -it nextcloud-aio-nextcloud php occ files:scan --all > /dev/null"
+    cron_file: ds-nextcloud-cron_files_scan_all
+    user: root
+  notify: "Restart cron"
+  tags:
+    - sync
