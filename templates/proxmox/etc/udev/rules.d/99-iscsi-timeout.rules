@@ -1,1 +1,0 @@
-ACTION=="add", SUBSYSTEM=="block", ENV{ID_PATH}=="*-iscsi-*", ATTR{timeout}="3000"
