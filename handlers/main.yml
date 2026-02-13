@@ -42,27 +42,6 @@
     enabled: true
   listen: "Restart systemd-resolved"
 
-- name: "Run update-grub"
-  ansible.builtin.command:
-    cmd: update-grub
-  register: retval
-  changed_when: retval.rc == 0
-  listen: "Run update-grub"
-
-- name: "Run update-initramfs"
-  ansible.builtin.command:
-    cmd: update-initramfs -u
-  register: retval
-  changed_when: retval.rc == 0
-  listen: "Run update-initramfs"
-
-- name: "Run update-initramfs"
-  ansible.builtin.command:
-    cmd: "proxmox-boot-tool kernel pin {{ vfs.kernel }}"
-  register: retval
-  changed_when: retval.rc == 0
-  listen: "Run pin-kernel"
-
 - name: "Echo reboot notice"
   ansible.builtin.debug:
     msg: "Please Reboot Here."

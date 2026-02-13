@@ -1,0 +1,4 @@
+---
+- name: I915 Driver Install
+  ansible.builtin.import_tasks:
+    file: tasks/igpu_driver_install.yml

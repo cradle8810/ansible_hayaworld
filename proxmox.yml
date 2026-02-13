@@ -21,6 +21,12 @@
       tags:
         - always
 
+    - name: Proxmox Configurations
+      ansible.builtin.import_role:
+        name: proxmox
+      tags:
+        - proxmox
+
     - name: Put LXC Privilige Container Cheatsheet
       ansible.builtin.copy:
         src: templates/proxmox/root/lxc_docker.txt
@@ -28,12 +34,6 @@
         owner: root
         group: root
         mode: '0644'
-
-    - name: I915 Driver Install
-      ansible.builtin.import_tasks:
-        file: tasks/proxmox/igpu_driver_install.yml
-      tags:
-        - igpu
 
     - name: "Memory Configurations"
       tags:
