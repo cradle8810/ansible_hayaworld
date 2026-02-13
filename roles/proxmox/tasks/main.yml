@@ -28,3 +28,9 @@
 - name: WoL Service Settings
   ansible.builtin.import_tasks:
     file: tasks/wol.yml
+
+- name: "Install corosync-qdevice"
+  ansible.builtin.apt:
+    name: "corosync-qdevice"
+    state: present
+    update_cache: true

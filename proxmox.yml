@@ -29,16 +29,6 @@
       tags:
         - proxmox
 
-    - name: "Install corosync-qdevice"
-      ansible.builtin.apt:
-        name: "corosync-qdevice"
-        state: present
-        update_cache: true
-        cache_valid_time: "{{ apt_cache_valid_time }}"
-      tags:
-        - corosync
-        - qdevice
-
     - name: "Configure Rsyslog"
       ansible.builtin.import_role:
         name: rsyslog_client
