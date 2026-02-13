@@ -27,14 +27,6 @@
       tags:
         - proxmox
 
-    - name: Put LXC Privilige Container Cheatsheet
-      ansible.builtin.copy:
-        src: templates/proxmox/root/lxc_docker.txt
-        dest: /root/lxc_docker.txt
-        owner: root
-        group: root
-        mode: '0644'
-
     - name: "Memory Configurations"
       tags:
         - memory

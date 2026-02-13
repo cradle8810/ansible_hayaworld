@@ -2,3 +2,11 @@
 - name: I915 Driver Install
   ansible.builtin.import_tasks:
     file: tasks/igpu_driver_install.yml
+
+- name: Put LXC Privilige Container Cheatsheet
+  ansible.builtin.copy:
+    src: templates/root/lxc_docker.txt
+    dest: /root/lxc_docker.txt
+    owner: root
+    group: root
+    mode: '0644'
