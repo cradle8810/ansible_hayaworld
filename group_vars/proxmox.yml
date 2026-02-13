@@ -7,21 +7,6 @@ proxmox_vfs_bus: "pci0000:00/0000:00:02.0"
 proxmox_vfs_count: 4
 proxmox_vfs_kernel: "6.14.8-2-pve"
 
-ksm:
-  - option: "KSM_SLEEP_MSEC"
-    value: 30
-  - option: "KSM_NPAGES_MAX"
-    value: 1280
-  - option: "KSM_THRES_COEF"
-    value: 50
-
-swap:
-  swappiness: 20
-
-zramswap:
-  algo: lz4
-  percent: 15
-
 cpu:
   governor: performance
 

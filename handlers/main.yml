@@ -54,20 +54,6 @@
   changed_when: retval.rc == 0
   listen: "Reconfigure netplan"
 
-- name: "KSM Cache extend for ksm service restart"
-  ansible.builtin.command:
-    cmd: "echo '2' > /sys/kernel/mm/ksm/run"
-  register: retval
-  changed_when: retval.rc == 0
-  listen: "KSM cache extend"
-
-- name: "Restart ksmtuned"
-  ansible.builtin.systemd_service:
-    name: ksmtuned.service
-    state: restarted
-    enabled: true
-  listen: "Restart ksmtuned"
-
 - name: "Tailscale sysctl restart"
   ansible.builtin.command:
     cmd: "sysctl -p /etc/sysctl.d/99-tailscale.conf"

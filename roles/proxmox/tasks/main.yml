@@ -10,3 +10,7 @@
     owner: root
     group: root
     mode: '0644'
+
+- name: Memory Configurations
+  ansible.builtin.import_tasks:
+    file: tasks/memory_config.yml
