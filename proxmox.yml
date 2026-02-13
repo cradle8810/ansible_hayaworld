@@ -21,81 +21,13 @@
       tags:
         - always
 
-    - name: Put LXC Privilige Container Cheatsheet
-      ansible.builtin.copy:
-        src: templates/proxmox/root/lxc_docker.txt
-        dest: /root/lxc_docker.txt
-        owner: root
-        group: root
-        mode: '0644'
-
-    - name: I915 Driver Install
-      ansible.builtin.import_tasks:
-        file: tasks/proxmox/igpu_driver_install.yml
-      tags:
-        - igpu
-
-    - name: "Memory Configurations"
-      tags:
-        - memory
-      block:
-        - name: KSM Service Settings
-          ansible.builtin.import_tasks:
-            file: tasks/proxmox/ksm.yml
-          tags:
-            - ksm
-
-        - name: Install/Config Zramswap
-          ansible.builtin.import_tasks:
-            file: tasks/zram.yml
-          tags:
-            - zram
-            - swap
-
-        - name: Set Swappiness
-          ansible.builtin.import_tasks:
-            file: tasks/proxmox/swappiness.yml
-          tags:
-            - swap
-
-    - name: "Mount tmpfs for /var/tmp"
-      ansible.posix.mount:
-        src: "tmpfs"
-        path: "{{ item }}"
-        opts: "defaults"
-        fstype: tmpfs
-        state: mounted
-      loop:
-        - "/var/tmp"
-      tags:
-        - mount
-
-    - name: Set CPU configurations
+    - name: Proxmox Configurations
       ansible.builtin.import_role:
-        name: cpufreq
+        name: proxmox
       vars:
-        cpufreq_cpu: "{{ cpu }}"
+        proxmox_macaddr: "{{ common_hostinfo.macaddress }}"
       tags:
-        - cpu
-
-    - name: WoL Service Settings
-      ansible.builtin.import_tasks:
-        file: tasks/proxmox/wol.yml
-      vars:
-        macaddr: "{{ common_hostinfo.macaddress }}"
-      tags:
-        - wol
-        - network
-
-    - name: "Install corosync-qdevice"
-      ansible.builtin.apt:
-        name: "corosync-qdevice"
-        state: present
-        update_cache: true
-        cache_valid_time: "{{ apt_cache_valid_time }}"
-      tags:
-        - corosync
-        - qdevice
+        - proxmox
 
     - name: "Configure Rsyslog"
       ansible.builtin.import_role:
@@ -107,25 +39,6 @@
         rsyslog_client_journald_persistent: false
       tags:
         - rsyslog
-
-    - name: "Ignore Powerbutton to shutdown host"
-      community.general.ini_file:
-        path: "/etc/systemd/logind.conf"
-        section: "Login"
-        option: "{{ item.option }}"
-        value: "{{ item.value }}"
-        state: present
-        no_extra_spaces: true
-        mode: "644"
-      loop:
-        - option: HandlePowerKey
-          value: ignore
-        - option: HandlePowerKeyLongPress
-          value: poweroff
-      notify:
-        - "Restart systemd-logind"
-      tags:
-        - powerbutton
 
     - name: "APC UPS Settings"
       ansible.builtin.import_role:
@@ -153,25 +66,8 @@
       tags:
         - scrutiny
 
-    - name: "Set crontab for sync every 3min"
-      ansible.builtin.cron:
-        name: "Sync every 3min"
-        minute: "*/3"
-        job: "/usr/bin/sync > /dev/null 2>&1"
-        cron_file: sync-everymin
-        user: root
-      notify: "Restart cron"
-      tags:
-        - sync
-
     - name: Zabbix Agent Config
       ansible.builtin.import_tasks:
         file: tasks/proxmox/zabbix-agent2.yml
       tags:
         - zabbix
-
-    - name: "ISCSI writting throttling"
-      ansible.builtin.import_tasks:
-        file: tasks/proxmox/iscsi.yml
-      tags:
-        - iscsi

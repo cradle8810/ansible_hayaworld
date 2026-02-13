@@ -1,0 +1,74 @@
+---
+- name: "Run update-grub"
+  ansible.builtin.command:
+    cmd: update-grub
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "Run update-grub"
+
+- name: "Run update-initramfs"
+  ansible.builtin.command:
+    cmd: update-initramfs -u
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "Run update-initramfs"
+
+- name: "Pin kernel"
+  ansible.builtin.command:
+    cmd: "proxmox-boot-tool kernel pin {{ vfs.kernel }}"
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "Run pin-kernel"
+
+- name: "Restart ksmtuned"
+  ansible.builtin.systemd_service:
+    name: ksmtuned.service
+    state: restarted
+    enabled: true
+  listen: "Restart ksmtuned"
+
+- name: "KSM Cache extend for ksm service restart"
+  ansible.builtin.command:
+    cmd: "echo '2' > /sys/kernel/mm/ksm/run"
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "KSM cache extend"
+
+- name: Restart zramswap
+  ansible.builtin.systemd_service:
+    name: zramswap
+    state: restarted
+  listen: "Restart zramswap"
+
+- name: "Echo reboot notice"
+  ansible.builtin.debug:
+    msg: "Please Reboot Here."
+  listen: "Echo reboot notice"
+
+- name: "Swappiness setting for nuc sysctl restart"
+  ansible.builtin.command:
+    cmd: "sysctl -p /etc/sysctl.d/99-swappiness.conf"
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "swappiness sysctl"
+
+- name: "Restart cron"
+  ansible.builtin.systemd_service:
+    name: cron.service
+    state: restarted
+    enabled: true
+  listen: "Restart cron"
+
+- name: "Restart iscsi"
+  ansible.builtin.systemd_service:
+    name: iscsi
+    state: restarted
+    enabled: true
+  listen: "Restart iscsi"
+
+- name: "Rescan udev rules"
+  ansible.builtin.command:
+    cmd: "udevadm control --reload-rules"
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "Rescan udev rules"

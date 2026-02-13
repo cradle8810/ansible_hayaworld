@@ -1,0 +1,41 @@
+---
+- name: KSM Service Settings
+  community.general.ini_file:
+    path: /etc/ksmtuned.conf
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    state: present
+    mode: "644"
+    ignore_spaces: true
+    no_extra_spaces: true
+  loop: "{{ proxmox_ksm }}"
+  notify:
+    - "KSM cache extend"
+    - "Restart ksmtuned"
+
+- name: Install/Config Zramswap
+  block:
+    - name: "Install Zramtools"
+      ansible.builtin.apt:
+        name: "zram-tools"
+        state: present
+        update_cache: true
+
+    - name: "Setting zram configurations"
+      ansible.builtin.template:
+        src: templates/etc/default/zramswap.j2
+        dest: /etc/default/zramswap
+        owner: root
+        group: root
+        mode: '0644'
+      notify: "Restart zramswap"
+
+- name: Set Swappiness
+  community.general.ini_file:
+    path: "/etc/sysctl.d/99-swappiness.conf"
+    option: "vm.swappiness"
+    value: "{{ proxmox_swappiness }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  notify: "swappiness sysctl"

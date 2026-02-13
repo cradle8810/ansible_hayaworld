@@ -1,0 +1,53 @@
+---
+- name: I915 Driver Install
+  ansible.builtin.import_tasks:
+    file: tasks/igpu_driver_install.yml
+
+- name: Put LXC Privilige Container Cheatsheet
+  ansible.builtin.copy:
+    src: templates/root/lxc_docker.txt
+    dest: /root/lxc_docker.txt
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Memory Configurations
+  ansible.builtin.import_tasks:
+    file: tasks/memory_config.yml
+
+- name: "Mount tmpfs for /var/tmp"
+  ansible.posix.mount:
+    src: "tmpfs"
+    path: "{{ item }}"
+    opts: "defaults"
+    fstype: tmpfs
+    state: mounted
+  loop:
+    - "/var/tmp"
+
+- name: WoL Service Settings
+  ansible.builtin.import_tasks:
+    file: tasks/wol.yml
+
+- name: "Install corosync-qdevice"
+  ansible.builtin.apt:
+    name: "corosync-qdevice"
+    state: present
+    update_cache: true
+
+- name: "Ignore Powerbutton to shutdown host"
+  community.general.ini_file:
+    path: "/etc/systemd/logind.conf"
+    section: "Login"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  loop:
+    - option: HandlePowerKey
+      value: ignore
+    - option: HandlePowerKeyLongPress
+      value: poweroff
+  notify:
+    - "Restart systemd-logind"

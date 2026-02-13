@@ -42,27 +42,6 @@
     enabled: true
   listen: "Restart systemd-resolved"
 
-- name: "Run update-grub"
-  ansible.builtin.command:
-    cmd: update-grub
-  register: retval
-  changed_when: retval.rc == 0
-  listen: "Run update-grub"
-
-- name: "Run update-initramfs"
-  ansible.builtin.command:
-    cmd: update-initramfs -u
-  register: retval
-  changed_when: retval.rc == 0
-  listen: "Run update-initramfs"
-
-- name: "Run update-initramfs"
-  ansible.builtin.command:
-    cmd: "proxmox-boot-tool kernel pin {{ vfs.kernel }}"
-  register: retval
-  changed_when: retval.rc == 0
-  listen: "Run pin-kernel"
-
 - name: "Echo reboot notice"
   ansible.builtin.debug:
     msg: "Please Reboot Here."
@@ -74,20 +53,6 @@
   register: retval
   changed_when: retval.rc == 0
   listen: "Reconfigure netplan"
-
-- name: "KSM Cache extend for ksm service restart"
-  ansible.builtin.command:
-    cmd: "echo '2' > /sys/kernel/mm/ksm/run"
-  register: retval
-  changed_when: retval.rc == 0
-  listen: "KSM cache extend"
-
-- name: "Restart ksmtuned"
-  ansible.builtin.systemd_service:
-    name: ksmtuned.service
-    state: restarted
-    enabled: true
-  listen: "Restart ksmtuned"
 
 - name: "Tailscale sysctl restart"
   ansible.builtin.command:
@@ -154,30 +119,9 @@
   changed_when: retval.rc == 0
   listen: "snmp apparmor"
 
-- name: "Restart iscsi"
-  ansible.builtin.systemd_service:
-    name: iscsi
-    state: restarted
-    enabled: true
-  listen: "Restart iscsi"
-
-- name: "Rescan udev rules"
-  ansible.builtin.command:
-    cmd: "udevadm control --reload-rules"
-  register: retval
-  changed_when: retval.rc == 0
-  listen: "Rescan udev rules"
-
 - name: "Common / Reload sysctl"
   ansible.builtin.command:
     cmd: "sysctl -p"
   register: retval
   changed_when: retval.rc == 0
   listen: "Reload sysctl"
-
-- name: "Restart and update systemd-logind"
-  ansible.builtin.systemd_service:
-    name: systemd-logind
-    state: restarted
-    daemon_reload: true
-  listen: "Restart systemd-logind"

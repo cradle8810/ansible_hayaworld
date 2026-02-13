@@ -18,3 +18,10 @@
        tailscale funnel --bg --https=443 http://localhost:8880
   listen: "Run funnel"
   changed_when: true
+
+- name: "Restart and update systemd-logind"
+  ansible.builtin.systemd_service:
+    name: systemd-logind
+    state: restarted
+    daemon_reload: true
+  listen: "Restart systemd-logind"
