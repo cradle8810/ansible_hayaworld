@@ -22,3 +22,5 @@ proxmox_swappiness: 20
 proxmox_cpu:
   governor: performance
 
+# Use common_hostinfo.macaddress
+proxmox_macaddr: "00:00:00:00:00:00"

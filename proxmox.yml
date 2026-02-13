@@ -24,29 +24,10 @@
     - name: Proxmox Configurations
       ansible.builtin.import_role:
         name: proxmox
+      vars:
+        proxmox_macaddr: "{{ common_hostinfo.macaddress }}"
       tags:
         - proxmox
-
-    - name: "Mount tmpfs for /var/tmp"
-      ansible.posix.mount:
-        src: "tmpfs"
-        path: "{{ item }}"
-        opts: "defaults"
-        fstype: tmpfs
-        state: mounted
-      loop:
-        - "/var/tmp"
-      tags:
-        - mount
-
-    - name: WoL Service Settings
-      ansible.builtin.import_tasks:
-        file: tasks/proxmox/wol.yml
-      vars:
-        macaddr: "{{ common_hostinfo.macaddress }}"
-      tags:
-        - wol
-        - network
 
     - name: "Install corosync-qdevice"
       ansible.builtin.apt:

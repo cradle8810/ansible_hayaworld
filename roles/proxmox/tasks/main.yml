@@ -24,3 +24,7 @@
     state: mounted
   loop:
     - "/var/tmp"
+
+- name: WoL Service Settings
+  ansible.builtin.import_tasks:
+    file: tasks/wol.yml
