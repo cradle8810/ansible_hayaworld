@@ -18,3 +18,7 @@ proxmox_zramswap_algo: lz4
 proxmox_zramswap_percent: 15
 
 proxmox_swappiness: 20
+
+proxmox_cpu:
+  governor: performance
+

@@ -14,3 +14,49 @@
 - name: Memory Configurations
   ansible.builtin.import_tasks:
     file: tasks/memory_config.yml
+
+- name: "Mount tmpfs for /var/tmp"
+  ansible.posix.mount:
+    src: "tmpfs"
+    path: "{{ item }}"
+    opts: "defaults"
+    fstype: tmpfs
+    state: mounted
+  loop:
+    - "/var/tmp"
+
+- name: WoL Service Settings
+  ansible.builtin.import_tasks:
+    file: tasks/wol.yml
+
+- name: "Install corosync-qdevice"
+  ansible.builtin.apt:
+    name: "corosync-qdevice"
+    state: present
+    update_cache: true
+
+- name: "Ignore Powerbutton to shutdown host"
+  community.general.ini_file:
+    path: "/etc/systemd/logind.conf"
+    section: "Login"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  loop:
+    - option: HandlePowerKey
+      value: ignore
+    - option: HandlePowerKeyLongPress
+      value: poweroff
+  notify:
+    - "Restart systemd-logind"
+
+- name: "Set crontab for sync every 3min"
+  ansible.builtin.cron:
+    name: "Sync every 3min"
+    minute: "*/3"
+    job: "/usr/bin/sync > /dev/null 2>&1"
+    cron_file: sync-everymin
+    user: root
+  notify: "Restart cron"

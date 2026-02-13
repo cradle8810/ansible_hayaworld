@@ -39,14 +39,6 @@
       tags:
         - mount
 
-    - name: Set CPU configurations
-      ansible.builtin.import_role:
-        name: cpufreq
-      vars:
-        cpufreq_cpu: "{{ cpu }}"
-      tags:
-        - cpu
-
     - name: WoL Service Settings
       ansible.builtin.import_tasks:
         file: tasks/proxmox/wol.yml
@@ -121,17 +113,6 @@
               type: 'sat'
       tags:
         - scrutiny
-
-    - name: "Set crontab for sync every 3min"
-      ansible.builtin.cron:
-        name: "Sync every 3min"
-        minute: "*/3"
-        job: "/usr/bin/sync > /dev/null 2>&1"
-        cron_file: sync-everymin
-        user: root
-      notify: "Restart cron"
-      tags:
-        - sync
 
     - name: Zabbix Agent Config
       ansible.builtin.import_tasks:
