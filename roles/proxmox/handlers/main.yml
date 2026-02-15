@@ -8,17 +8,10 @@
 
 - name: "Run update-initramfs"
   ansible.builtin.command:
-    cmd: update-initramfs -u
+    cmd: update-initramfs -u -k all
   register: retval
   changed_when: retval.rc == 0
   listen: "Run update-initramfs"
-
-- name: "Pin kernel"
-  ansible.builtin.command:
-    cmd: "proxmox-boot-tool kernel pin {{ vfs.kernel }}"
-  register: retval
-  changed_when: retval.rc == 0
-  listen: "Run pin-kernel"
 
 - name: "Restart ksmtuned"
   ansible.builtin.systemd_service:

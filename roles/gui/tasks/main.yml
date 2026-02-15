@@ -54,6 +54,8 @@
         file: tasks/packages/install_igpu.yml
       when:
         (gui_install.igpu is undefined) or gui_install.igpu
+      tags:
+        - igpu
 
     - name: Install GNOME sushi and thumbnailer
       ansible.builtin.import_tasks:

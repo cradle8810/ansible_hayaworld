@@ -11,12 +11,12 @@
 - name: "Install i915 Driver Dependency Kernel(Unsigned) for Proxmox"
   ansible.builtin.apt:
     pkg:
-      - "proxmox-headers-{{ proxmox_vfs_kernel }}"
-      - "proxmox-kernel-{{ proxmox_vfs_kernel }}"
+      - "proxmox-default-headers"
+      - "proxmox-default-kernel"
     state: present
   when: proxmox_vfs_kernel is defined
 
-- name: "Download and Install i915 Driver"
+- name: "Download i915 Driver"
   ansible.builtin.get_url:
     url: "{{ proxmox_i915_driver_url }}"
     dest: "{{ proxmox_i915_driver_dest }}"
@@ -32,36 +32,41 @@
     - "Run update-initramfs"
     - "Echo reboot notice"
 
-- name: "Configure GRUB CMDLINE for Linux"
-  community.general.ini_file:
-    path: /etc/default/grub
-    option: "GRUB_CMDLINE_LINUX_DEFAULT"
-    value: '"quiet intel_iommu=on i915.enable_guc=3 module_blacklist=xe"'
-    state: present
-    no_extra_spaces: true
-    mode: "644"
-  when: proxmox_vfs_kernel is undefined
-  notify:
-    - "Run update-grub"
-    - "Run update-initramfs"
-    - "Echo reboot notice"
-
+# https://github.com/strongtz/i915-sriov-dkms?tab=readme-ov-file#required-kernel-parameters
 - name: "Configure for Proxmox"
   notify:
     - "Run update-grub"
     - "Run update-initramfs"
-    - "Run pin-kernel"
     - "Echo reboot notice"
   block:
-    - name: "Configure GRUB CMDLINE for Proxmox"
+    - name: "Configure GRUB CMDLINE for Proxmox (i915)"
       community.general.ini_file:
         path: /etc/default/grub
         option: "GRUB_CMDLINE_LINUX_DEFAULT"
-        value: '"quiet intel_iommu=on i915.enable_guc=3 i915.max_vfs={{ proxmox_vfs_count }} module_blacklist=xe"'
+        value: '"quiet intel_iommu=on i915.enable_guc=3 i915.max_vfs=3 module_blacklist=xe"'
         state: present
         no_extra_spaces: true
         mode: "644"
-      when: proxmox_vfs_kernel is defined
+      when: common_hostinfo.shortname not in proxmox_xe_nodes
+
+    - name: "Get device id"
+      ansible.builtin.command:
+        cmd: cat /sys/devices/pci0000:00/0000:00:02.0/device
+      register: device_id
+      changed_when: false
+      when:
+        - not ansible_check_mode
+        - common_hostinfo.shortname in proxmox_xe_nodes
+
+    - name: "Configure GRUB CMDLINE for Proxmox (Xe)"
+      community.general.ini_file:
+        path: /etc/default/grub
+        option: "GRUB_CMDLINE_LINUX_DEFAULT"
+        value: '"quiet intel_iommu=on xe.max_vfs=7 xe.force_probe={{ device_id.stdout }} module_blacklist=i915"'
+        state: present
+        no_extra_spaces: true
+        mode: "644"
+      when: common_hostinfo.shortname in proxmox_xe_nodes
 
     - name: "Install sysfsutils for allow VFs for Proxmox"
       ansible.builtin.apt:
@@ -72,8 +77,8 @@
     - name: "Configure VFs for Proxmox"
       community.general.ini_file:
         path: /etc/sysfs.conf
-        option: "devices/{{ proxmox_vfs_bus }}/sriov_numvfs"
-        value: "{{ proxmox_vfs_count }}"
+        option: "devices/pci0000:00/0000:00:02.0/sriov_numvfs"
+        value: "7"
         state: present
         no_extra_spaces: false
         mode: "644"

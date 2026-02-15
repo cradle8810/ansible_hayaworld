@@ -10,7 +10,7 @@
       - libva-dev
       - vainfo
       - mesa-utils
-      - mesa-va-drivers 
+      - mesa-va-drivers
       - mesa-vulkan-drivers
   when: ansible_hostname == 'terminal'
 
@@ -28,16 +28,16 @@
         update_cache: true
         cache_valid_time: "{{ apt_cache_valid_time }}"
 
-    - name: "GPU / Download and Install i915 Driver"
+    - name: "GPU / Download i915 Driver"
       ansible.builtin.get_url:
-        url: "{{ i915.driver_url }}"
-        dest: "{{ i915.dest }}"
-        checksum: "{{ i915.checksum }}"
+        url: "{{ gui_i915_driver_url }}"
+        dest: "{{ gui_i915_driver_dest }}"
+        checksum: "{{ gui_i915_driver_checksum }}"
         mode: '0600'
 
     - name: "GPU / Install i915 Driver"
       ansible.builtin.apt:
-        deb: "{{ i915.dest }}"
+        deb: "{{ gui_i915_driver_dest }}"
         state: present
       notify:
         - "Run update-grub"
@@ -48,7 +48,7 @@
       community.general.ini_file:
         path: /etc/default/grub
         option: "GRUB_CMDLINE_LINUX_DEFAULT"
-        value: '"intel_iommu=on i915.enable_guc=3 module_blacklist=xe"'
+        value: '"quiet intel_iommu=on xe.force_probe=0xa7a0 module_blacklist=i915"'
         state: present
         no_extra_spaces: true
         mode: "644"

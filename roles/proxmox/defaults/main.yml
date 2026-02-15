@@ -1,10 +1,6 @@
-proxmox_i915_driver_url: https://github.com/strongtz/i915-sriov-dkms/releases/download/2025.12.10/i915-sriov-dkms_2025.12.10_amd64.deb
-proxmox_i915_driver_dest: "/root/i915-sriov-dkms_2025.12.10_amd64.deb"
-proxmox_i915_driver_checksum: "sha256:dff94ca92f4b16c18042922fc22983c9ac00581b90a84a6588b67196a3440c1c"
-
-proxmox_vfs_bus: "pci0000:00/0000:00:02.0"
-proxmox_vfs_count: 4
-proxmox_vfs_kernel: "6.14.8-2-pve"
+proxmox_i915_driver_checksum: "sha256:e7887156f44a4f24f9f0e49aa93ece1c6658e8fae34a6ab0e414c03db8976511"
+proxmox_i915_driver_dest: "/root/i915-sriov-dkms_2026.02.09_amd64.deb"
+proxmox_i915_driver_url: https://github.com/strongtz/i915-sriov-dkms/releases/download/2026.02.09/i915-sriov-dkms_2026.02.09_amd64.deb
 
 proxmox_ksm:
   - option: "KSM_SLEEP_MSEC"

@@ -14,3 +14,7 @@ gui_supplemental_packages:
   - ffmpegthumbnailer
 
 gui_additional_packages:
+
+gui_i915_driver_url: https://github.com/strongtz/i915-sriov-dkms/releases/download/2026.02.09/i915-sriov-dkms_2026.02.09_amd64.deb
+gui_i915_driver_dest: "/root/i915-sriov-dkms_2026.02.09_amd64.deb"
+gui_i915_driver_checksum: "sha256:e7887156f44a4f24f9f0e49aa93ece1c6658e8fae34a6ab0e414c03db8976511"
