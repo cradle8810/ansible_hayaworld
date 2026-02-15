@@ -5,7 +5,7 @@ proxmox_i915_driver_url: https://github.com/strongtz/i915-sriov-dkms/releases/do
 
 proxmox_vfs_bus: "pci0000:00/0000:00:02.0"
 proxmox_vfs_count: 8
-proxmox_vfs_kernel: "6.14.8-2-pve"
+proxmox_vfs_kernel: "6.17.9-1-pve"
 
 rsyslog:
   rsyslog_client_additional_actions: |
