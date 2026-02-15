@@ -25,3 +25,17 @@
     state: restarted
     daemon_reload: true
   listen: "Restart systemd-logind"
+
+- name: "Run update-grub"
+  ansible.builtin.command:
+    cmd: update-grub
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "Run update-grub"
+
+- name: "Run update-initramfs"
+  ansible.builtin.command:
+    cmd: update-initramfs -u -k all
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "Run update-initramfs"
