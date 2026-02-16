@@ -8,6 +8,7 @@
     pkg:
       - xorgxrdp
       - xrdp
+      - xserver-xorg-video-intel
   notify: "Restart xrdp"
 
 - name: "RDP / Installing RDP (Wayland/For Ubuntu 25.10)"
@@ -21,6 +22,7 @@
         pkg:
           - xorgxrdp
           - xrdp
+          - xserver-xorg-video-intel
 
     - name: "Installing RDP server for Wayland"
       ansible.builtin.apt:
