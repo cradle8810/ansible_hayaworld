@@ -1,9 +1,15 @@
 services:
   sorry-proxy:
     image: nginx:alpine
-    container_name: nextcloud-proxy
+    container_name: nextcloud-aio-proxy
     restart: always
     network_mode: "host"
     volumes:
       - ./conf.d:/etc/nginx/conf.d:ro
       - ./html:/usr/share/nginx/html:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:80"]
+      interval: 10s
+      timeout: 3s
+      retries: 2
+      start_period: 5s

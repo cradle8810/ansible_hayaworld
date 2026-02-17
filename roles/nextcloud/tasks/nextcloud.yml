@@ -38,13 +38,22 @@
         mode: '0644'
 
     - name: "Put reverse proxy Sorry pages"
-      ansible.builtin.copy:
-        src: templates/root/proxy/html
-        dest: /root/proxy/
-        owner: root
-        group: root
-        directory_mode: '0755'
-        mode: '0644'
+      block:
+        - name: "Create Dir for sorry page"
+          ansible.builtin.file:
+            path: "/root/proxy/html"
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
+
+        - name: "Put sorry html file"
+          ansible.builtin.template:
+            src: templates/root/proxy/html/index.html.j2
+            dest: /root/proxy/html/index.html
+            owner: root
+            group: root
+            mode: '0644'
 
     - name: "Put docker-compose.yml"
       ansible.builtin.template:

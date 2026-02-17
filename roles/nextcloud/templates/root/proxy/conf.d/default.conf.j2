@@ -1,34 +1,40 @@
 upstream nextcloud {
-    server 127.0.0.1:11000;
+  server 127.0.0.1:11000;
 }
 
 server {
-    listen 8880;
-    server_name ds.{{ nextcloud_domain }};
+  listen 80;
+  server_name ds.hayaworld.home;
+  return 201;
+}
 
-    root /usr/share/nginx/html;
+server {
+  listen 8880;
+  server_name ds.{{ nextcloud_domain }};
 
-    proxy_intercept_errors on;
-    error_page 500 502 503 504 /index.html;
+  root /usr/share/nginx/html;
 
-    location / {
-        proxy_pass http://nextcloud;
+  proxy_intercept_errors on;
+  error_page 500 502 503 504 /index.html;
 
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto https;
-        proxy_set_header X-Forwarded-Host $host;
+  location / {
+    proxy_pass http://nextcloud;
 
-        client_max_body_size 0;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_read_timeout 3600s;
-        proxy_send_timeout 3600s;
-    }
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto https;
+    proxy_set_header X-Forwarded-Host $host;
 
-    location = /index.html {
-        internal;
-    }
+    client_max_body_size 0;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_read_timeout 3600s;
+    proxy_send_timeout 3600s;
+  }
+
+  location = /index.html {
+      internal;
+  }
 }
