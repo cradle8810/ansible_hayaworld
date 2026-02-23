@@ -1,6 +1,6 @@
 ---
 graylog_data_root: "/opt/data"
-graylog_backup_src: "/mnt/skylark/graylog_dump"
+graylog_backup_src: "/mnt/backup/graylog_dump"
 graylog_backup_dest: "/backup"
 
 graylog_project_root: "/root/gl"
