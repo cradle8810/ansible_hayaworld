@@ -75,6 +75,6 @@ volumes:
     driver: local
     driver_opts:
       type: nfs
-      o: "addr=192.168.88.200,hard,nolock,rsize=1048576,wsize=1048576,nfsvers=4"
+      o: "addr=192.168.88.10,hard,nolock,rsize=1048576,wsize=1048576,nfsvers=4"
       device: ":/mnt/backup/zabbix_backups"
   mysql_data:

@@ -1,4 +1,4 @@
-nextcloud_nfs_server: "192.168.88.200"
+nextcloud_nfs_server: "192.168.88.10"
 nextcloud_nfs_src: "/mnt/backup/nextcloud"
 nextcloud_nfs_dest: "/mnt/nextcloud"
 

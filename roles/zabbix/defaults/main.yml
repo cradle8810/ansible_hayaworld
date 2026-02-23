@@ -1,5 +1,5 @@
 zabbix_docker_project_path: "/root/zabbix"
-zabbix_nfs_server: 192.168.88.200
+zabbix_nfs_server: 192.168.88.10
 zabbix_nfs_export: "/mnt/backup/zabbix_backups"
 
 zabbix_mysql_database: zabbix
