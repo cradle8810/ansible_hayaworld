@@ -27,7 +27,7 @@ raindrop:
 ytdlp:
   linux:
     url: "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux"
-    checksum: "sha256:051ed827a836f56772d662c38ebfabd8d613a21a39376737d56893184bcc53f8"
+    checksum: "sha256:057098b1390e8d4931e143eb889e9bbe088f17e40a2936f31ee218909f806f5f"
   macos:
     url: "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_macos"
     checksum: ""
