@@ -195,6 +195,12 @@ network:
     sshuser: root
     self_org: true
     mtu: 9000
+  - hostname:  HayabookAir2023.hayaworld.home
+    interface: en7
+    ipv4: 192.168.88.151
+    shortname: hayabookair2023
+    sshuser: hayato
+    self_org: false
   - hostname: haccho02.hayaworld.home
     interface: none
     ipv4: 192.168.88.253
