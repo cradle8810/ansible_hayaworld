@@ -40,14 +40,6 @@ network:
     self_org: false
     proxmox: true
     macaddress: "48:21:0b:5f:af:f5"
-  - hostname: nuc05.hayaworld.home
-    interface: enp86s0
-    ipv4: 192.168.88.15
-    shortname: nuc05
-    sshuser: root
-    self_org: false
-    proxmox: true
-    macaddress: "00:e2:59:00:54:da"
   - hostname: rui.hayaworld.home
     interface: enp6s18
     ipv4: 192.168.88.100
@@ -146,13 +138,6 @@ network:
     sshuser: runner
     self_org: true
     mtu: 9000
-  - hostname: runner05.hayaworld.home
-    interface: enp6s18
-    ipv4: 192.168.88.120
-    shortname: runner05
-    sshuser: runner
-    self_org: true
-    mtu: 9000
   - hostname: diskmon.hayaworld.home
     interface: enp6s18
     ipv4: 192.168.88.121
@@ -195,7 +180,7 @@ network:
     sshuser: root
     self_org: true
     mtu: 9000
-  - hostname:  HayabookAir2023.hayaworld.home
+  - hostname: HayabookAir2023.hayaworld.home
     interface: en7
     ipv4: 192.168.88.151
     shortname: hayabookair2023
