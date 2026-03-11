@@ -14,7 +14,6 @@ nuc01 ansible_user=root ansible_host=192.168.88.11
 nuc02 ansible_user=root ansible_host=192.168.88.12
 nuc03 ansible_user=root ansible_host=192.168.88.13
 nuc04 ansible_user=root ansible_host=192.168.88.14
-nuc05 ansible_user=root ansible_host=192.168.88.15
 
 [dns]
 rui ansible_user=root ansible_host=192.168.88.100
@@ -25,7 +24,6 @@ runner01 ansible_user=root ansible_host=runner01.hayaworld.home
 runner02 ansible_user=root ansible_host=runner02.hayaworld.home
 runner03 ansible_user=root ansible_host=runner03.hayaworld.home
 runner04 ansible_user=root ansible_host=runner04.hayaworld.home
-runner05 ansible_user=root ansible_host=runner05.hayaworld.home
 
 [tailscale]
 tsgw1 ansible_user=root ansible_host=192.168.88.114
