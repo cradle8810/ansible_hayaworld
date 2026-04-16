@@ -33,3 +33,11 @@
     state: restarted
     enabled: true
   listen: "Restart console-setup"
+
+- name: "Restart console-setup"
+  ansible.builtin.systemd_service:
+    name: apparmor
+    state: restarted
+    enabled: true
+    daemon_reload: true
+  listen: "Restart apparmor"

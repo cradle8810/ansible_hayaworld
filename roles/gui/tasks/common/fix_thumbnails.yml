@@ -1,0 +1,9 @@
+---
+- name: "Desktop / Fix permission of bwrap on Apparmor"
+  ansible.builtin.copy:
+    src: templates/etc/apparmor.d/bwrap
+    dest: "/etc/apparmor.d/bwrap"
+    owner: "root"
+    group: "root"
+    mode: '0644'
+  notify: "Restart apparmor"
