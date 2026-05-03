@@ -1,5 +1,18 @@
 ---
 nxdomain:
+  - .adsmoloco.com
+  - .applovin.com
+  - .moloco.com
+  - .o-adq.mediation.unity3d.com
+  - .pangle.io
+  - .pixon.ads-pixiv.net
+  - .rt.applovin.com
+  - .tiktokpangle-b.us
+  - .tiktokpangle-cdn-us.com
+  - .tiktokpangle.us
+  - .tplinknbu.com
+  - .v.aaplimg.com
+  - .www.eastus.appgw.inmobi.com
   - 125-6-149-37.data-hotel.net
   - 2517d.v.fwmrm.net
   - 2975c.v.fwmrm.net
@@ -9,7 +22,6 @@ nxdomain:
   - a.admob.com
   - a.adtng.com
   - a.iogous.com
-  - a.mx.openclick.com
   - abunai.club
   - ac.miraku.work
   - ac0.i2i.com
@@ -275,6 +287,7 @@ nxdomain:
   - i.amoad.com
   - i.socdm.com
   - i.socdm.com.edgekey.net
+  - iads.unity3d.com
   - ib.adnxs.com
   - ibreants-por.netlify.app
   - ichiba.nicovideo.jp
