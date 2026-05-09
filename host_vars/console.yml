@@ -29,6 +29,12 @@ gui_additional_packages:
   - gimp
   - heif-thumbnailer
   - libheif1
+  - libheif-examples
+  - libheif-plugin-libde265
+  - libheif-plugin-x265
+  - libheif-plugin-aomdec
+  - libheif-plugin-aomenc
+  - libheif-plugin-dav1d
   - thunderbird
   - wireshark
 
