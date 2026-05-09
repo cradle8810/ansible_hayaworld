@@ -46,6 +46,11 @@
     - desktop
     - language-support
 
+- name: "Desktop / RDP Configuration"
+  ansible.builtin.import_tasks:
+    file: tasks/packages/install_rdp.yml
+  when: gui_rdp
+
 - name: "Install/Configuration Additional Packages"
   when: gui_install is defined
   block:

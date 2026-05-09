@@ -9,6 +9,13 @@ gui_install:
   sushi: true
   firefox: false
 
+gui_wayland: false
+gui_wayland_user: "{{ user[0].username }}"
+gui_wayland_passwd: "{{ user[0].password_hashed }}"
+gui_wayland_homedir: "{{ user[0].homedir }}"
+
+gui_rdp: true
+
 gui_supplemental_packages:
   - ffmpeg
   - ffmpegthumbnailer

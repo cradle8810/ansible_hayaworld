@@ -68,6 +68,13 @@ network:
     sshuser: hayato
     self_org: true
     mtu: 9000
+  - hostname: console2.hayaworld.home
+    interface: enp6s18
+    ipv4: 192.168.88.135
+    shortname: console2
+    sshuser: hayato
+    self_org: true
+    mtu: 9000
   - hostname: runner03.hayaworld.home
     interface: enp6s18
     ipv4: 192.168.88.108

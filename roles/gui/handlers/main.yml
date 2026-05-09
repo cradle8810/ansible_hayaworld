@@ -34,10 +34,18 @@
     enabled: true
   listen: "Restart console-setup"
 
-- name: "Restart console-setup"
+- name: "Restart apparmor"
   ansible.builtin.systemd_service:
     name: apparmor
     state: restarted
     enabled: true
     daemon_reload: true
   listen: "Restart apparmor"
+
+- name: "Ensure system RDP service is running"
+  ansible.builtin.systemd_service:
+    name: gnome-remote-desktop.service
+    state: restarted
+    enabled: true
+  become: true
+  listen: "Restart gnome-remote-desktop.service"

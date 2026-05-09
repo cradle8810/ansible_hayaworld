@@ -1,7 +1,6 @@
 ---
 - name: "Desktop / Installing Desktop and Dependency"
-  when:
-    - ansible_distribution_release != 'questing'
+  when: not gui_wayland
   ansible.builtin.apt:
     install_recommends: false
     update_cache: true
@@ -45,9 +44,8 @@
       - yaru-theme-gtk
       - yaru-theme-icon
 
-- name: "Desktop / Installing Desktop and Dependency"
-  when:
-    - ansible_distribution_release == 'questing'
+- name: "Desktop / Installing Desktop and Dependency (Ubuntu 25.04 or more)"
+  when: gui_wayland
   ansible.builtin.apt:
     install_recommends: false
     update_cache: true
@@ -55,9 +53,8 @@
     pkg:
       - adwaita-icon-theme
       - alsa-base
-      - dconf-cli
       - eog
-      - evince
+      - dconf-cli
       - ffmpeg
       - ffmpegthumbnailer
       - file-roller
@@ -76,18 +73,13 @@
       - gnome-tweaks
       - gpm
       - language-pack-ja
-      - pulseaudio
+      - loupe
+      - ptyxis
       - python3-psutil
       - seahorse
       - task-gnome-desktop
       - ttf-mscorefonts-installer
       - ubuntu-desktop
-      - x11-common
-      - xinit
-      - xorg
-      - xorgxrdp
-      - xrdp
-      - xserver-xorg
       - yaru-theme-gnome-shell
       - yaru-theme-gtk
       - yaru-theme-icon
