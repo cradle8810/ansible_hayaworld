@@ -1,4 +1,5 @@
 - name: "VLC / Install VLC with DVD/Blu-ray Playback"
+  when: not gui_wayland
   ansible.builtin.apt:
     install_recommends: false
     update_cache: true
@@ -7,6 +8,24 @@
       - libaacs0
       - libbluray-bdj
       - libbluray2
+      - libdvd-pkg
+      - libdvdcss2
+      - libdvdnav4
+      - libdvdread8t64
+      - ubuntu-restricted-extras
+      - vlc
+  notify: "Reconfigure libdvd"
+
+- name: "VLC / Install VLC with DVD/Blu-ray Playback for Ubuntu 26.04"
+  when: gui_wayland
+  ansible.builtin.apt:
+    install_recommends: false
+    update_cache: true
+    cache_valid_time: "{{ apt_cache_valid_time }}"
+    pkg:
+      - libaacs0
+      - libbluray-bdj
+      - libbluray3
       - libdvd-pkg
       - libdvdcss2
       - libdvdnav4

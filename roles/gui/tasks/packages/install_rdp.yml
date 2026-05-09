@@ -1,6 +1,6 @@
 ---
 - name: "RDP / Installing RDP (X11/For Not Ubuntu 25.10)"
-  when: ansible_distribution_release != 'questing'
+  when: not gui_wayland
   ansible.builtin.apt:
     install_recommends: false
     update_cache: true
@@ -11,9 +11,9 @@
       - xserver-xorg-video-intel
   notify: "Restart xrdp"
 
-- name: "RDP / Installing RDP (Wayland/For Ubuntu 25.10)"
-  when: ansible_distribution_release == 'questing'
-  notify: "Enable RDP Wayland"
+# https://github.com/rustdesk/rustdesk/discussions/10016
+- name: "RDP / Installing RDP (Wayland/For Ubuntu 25.04 or more)"
+  when: gui_wayland
   block:
     - name: "Remove xrdp"
       ansible.builtin.apt:
@@ -31,12 +31,56 @@
         cache_valid_time: "{{ common_apt.cache_valid_time }}"
         pkg:
           - gnome-remote-desktop
+          - winpr-utils
 
-    - name: "Set RDP Credentials"
+    - name: Create Certdir
+      ansible.builtin.file:
+        path: "/etc/gnome-remote-desktop"
+        state: directory
+        owner: "root"
+        group: "root"
+        mode: '0755'
+
+    - name: "Check rdp is already configurated"
+      ansible.builtin.stat:
+        path: "/etc/gnome-remote-desktop/configurated"
+      register: gui_wayland_rdp_configurated
+
+    - name: "RDP Configurations"
+      when: not gui_wayland_rdp_configurated.stat.exists
+      notify: "Restart gnome-remote-desktop.service"
       become: true
-      ansible.builtin.shell:
-        cmd: |
-          grdctl rdp set-credentials "{{ item.username }}" "{{ item.password }}"
-      register: retval
-      changed_when: retval.rc == 0
-      loop: "{{ user }}"
+      block:
+        - name: "Ensure certificates directory exists"
+          ansible.builtin.file:
+            path: "/etc/gnome-remote-desktop/certificates"
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
+
+        - name: "Create WinPR makecert"
+          ansible.builtin.command:
+            cmd: "winpr-makecert -silent -rdp -y 2 -path /etc/gnome-remote-desktop/certificates rdp-tls"
+          register: retval
+          changed_when: retval.rc == 0
+
+        - name: "Configure System RDP"
+          ansible.builtin.shell:
+            cmd: |
+              grdctl --system rdp enable
+              grdctl --system rdp disable-view-only
+              grdctl --system rdp set-credentials "{{ gui_wayland_user }}" "{{ gui_wayland_passwd }}"
+              grdctl --system rdp set-tls-cert /etc/gnome-remote-desktop/certificates/rdp-tls.crt
+              grdctl --system rdp set-tls-key /etc/gnome-remote-desktop/certificates/rdp-tls.key
+          register: retval
+          changed_when: retval.rc == 0
+
+    - name: "Mark as rdp is already configurated"
+      ansible.builtin.file:
+        path: "/etc/gnome-remote-desktop/configurated"
+        state: touch
+        owner: root
+        group: root
+        mode: '0644'
+      become: true
