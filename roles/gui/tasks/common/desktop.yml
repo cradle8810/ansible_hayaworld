@@ -53,6 +53,7 @@
     pkg:
       - adwaita-icon-theme
       - alsa-base
+      - eog
       - dconf-cli
       - ffmpeg
       - ffmpegthumbnailer
