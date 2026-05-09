@@ -1,5 +1,5 @@
 [all]
-console ansible_user=ansible ansible_host=192.168.88.135
+console ansible_user=ansible ansible_host=console.hayaworld.home
 log ansible_user=ansible ansible_host=log.hayaworld.home
 macbook ansible_user=hayato
 qd ansible_user=ansible ansible_host=qd.hayaworld.home
