@@ -1,0 +1,21 @@
+---
+- name: Install Tailscale
+  tags:
+    - tailscale
+  block:
+    - name: "Setup Tailscale Endpoint"
+      ansible.builtin.import_role:
+        name: artis3n.tailscale.machine
+      when: not ansible_check_mode
+      vars:
+        tailscale_authkey: "{{ tailscale.client_secret }}"
+        tailscale_args: "--advertise-routes={{ shortstory_ipaddr }}/32 --accept-dns=true"
+        tailscale_oauth_ephemeral: false
+        tailscale_tags:
+          - ds
+
+    - name: "Tailscale Firewall accept"
+      community.general.ufw:
+        rule: allow
+        interface_in: tailscale0
+        proto: any
