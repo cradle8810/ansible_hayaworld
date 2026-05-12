@@ -35,6 +35,10 @@ diskmon ansible_user=root ansible_host=diskmon.hayaworld.home
 [watch]
 zabbix ansible_user=ansible ansible_host=zabbix.hayaworld.home
 
+[piholes]
+pi01 ansible_user=root ansible_host=pi01.hayaworld.home
+pi02 ansible_user=root ansible_host=pi02.hayaworld.home
+
 [vm]
 console
 log
