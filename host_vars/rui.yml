@@ -9,7 +9,6 @@ dnsmasq:
   interface: "{{ rui_info.interface }}"
   dns:
     cache_size: 4000
-    NXDOMAIN_hosts: /etc/dnsmasq.d/NXDOMAIN.conf
   logs:
     log_facility: local5
     log_to: "log.hayaworld.home"

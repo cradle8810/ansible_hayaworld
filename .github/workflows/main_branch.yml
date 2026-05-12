@@ -63,11 +63,6 @@ jobs:
       - name: Add exec flag to dupcheck.sh
         run: "chmod +x ./dupcheck.sh"
 
-      - name: NXDOMAIN_Duplicate_Check
-        run: >
-          "./dupcheck.sh"
-          "host_vars/dns/NXDOMAIN.yml"
-
   Dry_Run_ansible:
     needs:
       - Yamllint

@@ -27,16 +27,6 @@
   notify:
     - "Restart dnsmasq"
 
-- name: "DNSmasq / Add NXDOMAIN (Ads Block) config"
-  ansible.builtin.template:
-    src: templates/etc/dnsmasq.d/blocklist.conf.j2
-    dest: /etc/dnsmasq.d/blocklist.conf
-    owner: root
-    group: root
-    mode: '0644'
-  notify:
-    - "Restart dnsmasq"
-
 - name: "DNSmasq / Add CNAME config"
   ansible.builtin.template:
     src: templates/etc/dnsmasq.d/cname.conf.j2
