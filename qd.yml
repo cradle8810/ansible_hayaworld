@@ -7,7 +7,6 @@
 
   vars_files:
     - host_vars/dns/CNAME.yml
-    - host_vars/dns/NXDOMAIN.yml
     - host_vars/networks.yml
 
   handlers:

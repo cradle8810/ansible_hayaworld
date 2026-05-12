@@ -21,13 +21,13 @@
       ansible.builtin.import_tasks:
         file: tasks/hostname_etc_hosts.yml
 
-    - name: "Common / Stop Systemd-resolved"
-      ansible.builtin.import_tasks:
-        file: tasks/stop-systemd-resolved.yml
-
     - name: "Common / Scale up for nf_conntrack_max"
       ansible.builtin.import_tasks:
         file: tasks/increase-nf_conntrack_max.yml
+
+- name: "Common / Stop Systemd-resolved"
+  ansible.builtin.import_tasks:
+    file: tasks/stop-systemd-resolved.yml
 
 - name: "Common / Locale Settings"
   block:
