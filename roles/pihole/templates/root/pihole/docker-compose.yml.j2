@@ -10,8 +10,10 @@ services:
     environment:
       TZ: 'Asia/Tokyo'
       FTLCONF_webserver_api_password: '{{ pihole_http_cred }}'
-      FTLCONF_dns_listeningMode: 'ALL'
+      FTLCONF_dns_listeningMode: 'BIND'
       FTLCONF_dns_upstreams: '202.232.2.3;202.232.2.2'
+      FTLCONF_dns_blocking_mode: 'NX'
+      FTLCONF_dns.domain_name: 'home'
     volumes:
       - './etc-pihole:/etc/pihole'
       - './etc-dnsmasq.d:/etc/dnsmasq.d'

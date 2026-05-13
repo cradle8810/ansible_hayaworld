@@ -15,7 +15,7 @@
     - "/root/pihole/etc-dnsmasq.d"
     - "/root/pihole/etc-pihole"
 
-- name: "Copy configs"
+- name: "Copy configs (Jinja template)"
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -25,4 +25,16 @@
   loop:
     - src: "templates/root/pihole/docker-compose.yml.j2"
       dest: "/root/pihole/docker-compose.yml"
+  notify: "Up pihole"
+
+- name: "Copy configs (Files)"
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: '0644'
+  loop:
+    - src: "templates/root/pihole/etc-pihole/adlists.list"
+      dest: "/root/pihole/etc-pihole/adlists.list"
   notify: "Up pihole"
