@@ -19,6 +19,10 @@ services:
     volumes:
       - './etc-pihole:/etc/pihole'
       - './etc-dnsmasq.d:/etc/dnsmasq.d'
+      - type: tmpfs
+        target: '/var/log'
+        tmpfs:
+          size: 1g
     cap_add:
       - NET_ADMIN
       - SYS_TIME
