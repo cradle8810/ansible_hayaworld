@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Run YAML Lint
         run: yamllint --strict --format github .
@@ -26,10 +26,10 @@ jobs:
         password: "${{ secrets.GHCR_PASSWORD }}"
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Restore Galaxy files
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v5
         with:
           key: ansible_galaxy_cache
           path: "/github/home/.ansible"
@@ -43,7 +43,7 @@ jobs:
           ansible-galaxy collection install -r requirements.yml --ignore-errors
 
       - name: Save Galaxy files
-        uses: actions/cache/save@v3
+        uses: actions/cache/save@v5
         with:
           key: ansible_galaxy_cache
           path: "/github/home/.ansible"
@@ -76,7 +76,7 @@ jobs:
           submodules: "recursive"
 
       - name: Restore Galaxy files
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v5
         with:
           key: ansible_galaxy_cache
           path: "/github/home/.ansible"
