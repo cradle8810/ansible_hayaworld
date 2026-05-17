@@ -125,4 +125,3 @@ rsyslog_client_additional_actions: |
   if ($msg contains "/run/systemd/journal/dev-log") then {
     stop
   }
-  
