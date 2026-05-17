@@ -1,2 +1,3 @@
-server={{ outer_dns_servers.ipv4 }}
-server={{ outer_dns_servers.ipv6 }}
+{% for dns_server in outer_dns_servers.ipv4 %}
+server={{ dns_server.addr }}#{{ dns_server.port }}
+{% endfor %}

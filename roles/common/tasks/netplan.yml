@@ -53,3 +53,30 @@
               "{{ subnet.routes }}"
             mtu:
               "{{ common_hostinfo.mtu }}"
+
+- name: "Common / Apply netplan config (qd.hayaworld.home)"
+  ansible.builtin.import_role:
+    name: mrlesmithjr.netplan
+  any_errors_fatal: true
+  when: common_hostinfo.shortname == "qs"
+  notify: "Reconfigure netplan"
+  vars:
+    ipv4_addr: "{{ common_hostinfo.ipv4 }}"
+    netplan_enabled: true
+    netplan_renderer: networkd
+    netplan_configuration:
+      network:
+        version: 2
+        ethernets:
+          enp1s0:
+            addresses:
+              - "{{ ipv4_addr }}/{{ subnet.mask }}"
+            nameservers:
+              addresses:
+                "{{ subnet.dns4 }}"
+              search:
+                "{{ subnet.search }}"
+            routes:
+              "{{ subnet.routes }}"
+            mtu:
+              "{{ common_hostinfo.mtu }}"

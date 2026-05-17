@@ -1,12 +1,12 @@
+---
 - name: Play for DNS servers
-  hosts: dns
+  hosts: rui
   remote_user: ansible
   gather_facts: true
   become: true
 
   vars_files:
     - host_vars/dns/CNAME.yml
-    - host_vars/dns/NXDOMAIN.yml
     - host_vars/networks.yml
 
   handlers:
@@ -41,14 +41,11 @@
       ansible.builtin.import_role:
         name: dns
       vars:
-        dns_nxdomain: "{{ nxdomain }}"
         dns_cname: "{{ cname }}"
-        dns_cluster_01_ipv4: "192.168.88.100"
-        dns_cluster_02_ipv4: "192.168.88.150"
       tags:
         - dns
 
-    - name: "Setup Kea"
+    - name: "Setup Kea DHCP Server"
       ansible.builtin.import_role:
         name: dhcp
       vars:
@@ -74,26 +71,9 @@
       ansible.builtin.import_role:
         name: rsyslog_client
       vars:
-        rsyslog_client_additional_actions: "{{ syslog.additional_actions }}"
         rsyslog_client_journald_persistent: false
       tags:
         - rsyslog
-
-    - name: "Setup Tailscale Endpoint for console"
-      ansible.builtin.import_role:
-        name: artis3n.tailscale.machine
-      tags:
-        - tailscale
-      vars:
-        tailscale_authkey: "{{ tailscale.client_secret }}"
-        tailscale_args: "--accept-dns=false --advertise-routes={{ common_hostinfo.ipv4 }}/32"
-        tailscale_oauth_ephemeral: false
-        tailscale_tags:
-          - dns
-
-    - name: Make Started Services
-      ansible.builtin.import_tasks:
-        file: tasks/service_start.yml
 
     - name: Install Zabbix agent
       ansible.builtin.import_tasks:

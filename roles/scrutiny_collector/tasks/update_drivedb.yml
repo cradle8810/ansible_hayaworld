@@ -1,0 +1,38 @@
+---
+- name: Check DriveDB updated flag
+  ansible.builtin.stat:
+    path: "/var/lib/smartmontools/drivedb/7.5"
+  register: drivedb
+
+- name: "Update DriveDB"
+  when: drivedb.stat.exists is false
+  block:
+    - name: "Remove DriveDB dir"
+      ansible.builtin.file:
+        path: "/var/lib/smartmontools/drivedb"
+        state: absent
+
+    - name: "ReCreate DriveDB dir"
+      ansible.builtin.file:
+        path: "/var/lib/smartmontools/drivedb"
+        state: directory
+        owner: "root"
+        group: "root"
+        mode: '0755'
+
+    - name: "Get DriveDB 7.5"
+      ansible.builtin.get_url:
+        url: "https://sourceforge.net/p/smartmontools/code/HEAD/tree/branches/RELEASE_7_5_DRIVEDB/smartmontools/drivedb.h?format=raw"
+        dest: "/var/lib/smartmontools/drivedb/drivedb.h"
+        checksum: "sha256:c6a131b5d905b125e8c96c5ab239ee68bd5fa316a9a6c30593632d15738e54c3"
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: "Touch updated flag"
+      ansible.builtin.file:
+        path: "/var/lib/smartmontools/drivedb/7.5"
+        state: touch
+        owner: "root"
+        group: "root"
+        mode: '0644'

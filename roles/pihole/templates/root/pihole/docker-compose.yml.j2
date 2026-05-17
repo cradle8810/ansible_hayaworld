@@ -1,0 +1,30 @@
+services:
+  pihole:
+    hostname: "{{ common_hostinfo.shortname }}"
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "{{ pihole_port }}:53/tcp"
+      - "{{ pihole_port }}:53/udp"
+      - "80:80/tcp"
+    environment:
+      TZ: 'Asia/Tokyo'
+      FTLCONF_webserver_api_password: '{{ pihole_http_cred }}'
+      FTLCONF_dns_listeningMode: 'BIND'
+      FTLCONF_dns_upstreams: '202.232.2.3;202.232.2.2'
+      FTLCONF_dns_blocking_mode: 'NX'
+      FTLCONF_dns.domain_name: 'home'
+      PIHOLE_UID: '0'
+      PIHOLE_GID: '0'
+    volumes:
+      - './etc-pihole:/etc/pihole'
+      - './etc-dnsmasq.d:/etc/dnsmasq.d'
+      - type: tmpfs
+        target: '/var/log'
+        tmpfs:
+          size: 1g
+    cap_add:
+      - NET_ADMIN
+      - SYS_TIME
+      - SYS_NICE
+    restart: unless-stopped

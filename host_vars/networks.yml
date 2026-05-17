@@ -110,13 +110,6 @@ network:
     sshuser: root
     self_org: true
     mtu: 9000
-  - hostname: qd.hayaworld.home
-    interface: enp6s18
-    ipv4: 192.168.88.116
-    shortname: qd
-    sshuser: hayato
-    self_org: true
-    mtu: 9000
   - hostname: subtitle.hayaworld.home
     interface: none
     ipv4: 192.168.88.117
@@ -180,10 +173,10 @@ network:
     sshuser: ansible
     self_org: true
     mtu: 9000
-  - hostname: mai.hayaworld.home
+  - hostname: pi01.hayaworld.home
     interface: enp6s18
-    ipv4: 192.168.88.150
-    shortname: mai
+    ipv4: 192.168.88.148
+    shortname: pi01
     sshuser: root
     self_org: true
     mtu: 9000
@@ -193,6 +186,13 @@ network:
     shortname: hayabookair2023
     sshuser: hayato
     self_org: false
+  - hostname: qd.hayaworld.home
+    interface: enp1s0
+    ipv4: 192.168.88.200
+    shortname: qd
+    sshuser: hayato
+    self_org: true
+    mtu: 9000
   - hostname: haccho02.hayaworld.home
     interface: none
     ipv4: 192.168.88.253
@@ -212,6 +212,7 @@ network_dhcp:
     shortname: HayabookAir2023
 
 subnet:
+  network: 192.168.88.0
   mask: 24
   gw4: 192.168.88.1
   dns4:
@@ -225,5 +226,8 @@ subnet:
   mtu: 9000
 
 outer_dns_servers:
-  ipv4: "202.232.2.3"
-  ipv6: "2001:240::13"
+  ipv4:
+    - addr: 192.168.88.148
+      port: 53
+    - addr: 192.168.88.200
+      port: 5353

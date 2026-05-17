@@ -1,0 +1,42 @@
+- name: Play for pihole upstream servers
+  hosts: piholes
+  remote_user: root
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - host_vars/networks.yml
+
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+
+  tasks:
+    - name: Common Settings
+      ansible.builtin.import_role:
+        name: common
+      vars:
+        common_firewall: "{{ firewall }}"
+        common_add_hosts: false
+        common_install_users: false
+
+    - name: "Setup dnsmasq"
+      ansible.builtin.import_role:
+        name: pihole
+      tags:
+        - docker
+        - pihole
+        - dns
+
+    - name: "Setup Tailscale"
+      ansible.builtin.import_tasks:
+        file: tasks/pihole/tailscale.yml
+      tags:
+        - tailscale
+
+    - name: Install Zabbix agent
+      ansible.builtin.import_tasks:
+        file: tasks/zabbix-agent2.yml
+      tags:
+        - zabbix
