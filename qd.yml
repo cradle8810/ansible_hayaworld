@@ -139,3 +139,12 @@
           tags:
             - apc
             - ups
+
+        - name: Scrutiny collector setting
+          ansible.builtin.import_role:
+            name: scrutiny_collector
+          vars:
+            scrutiny_collector_server_id: "{{ common_hostinfo.shortname }}"
+            scrutiny_collector_cron: true
+          tags:
+            - scrutiny
