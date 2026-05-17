@@ -49,3 +49,5 @@ docker_config:
     syslog-address: "unixgram:///dev/log"
     tag: "{% raw %}nextcloud-aio/{{.Name}}{% endraw %}"
     syslog-format: "rfc3164"
+
+pihole_port: 53

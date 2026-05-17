@@ -38,10 +38,50 @@ firewall:
         proto: "udp"
         src: "192.168.88.0/24"
         port: '162'
+      - name: "DNS from service line"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: "53"
+      - name: "DNS(UDP) from service line"
+        proto: "udp"
+        src: "192.168.88.0/24"
+        port: "53"
+      - name: "DHCP from service line"
+        proto: "udp"
+        src: "0.0.0.0/0"
+        port: "67"
+      - name: "DHCP Client from service line"
+        proto: "udp"
+        src: "0.0.0.0/0"
+        port: "68"
+      - name: "Corosync / pacemaker"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: "3121"
+      - name: "Corosync / corosync"
+        proto: "udp"
+        src: "192.168.88.0/24"
+        port: "5404:5412"
+      - name: "Kea DHCP HA heartbeat"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: "8080:8081"
     ipv6:
+      - name: "DNS from service line(IPv6/LinkLocal)"
+        proto: "tcp"
+        src: "fe80::/16"
+        port: "53"
+      - name: "DNS(UDP) from service line(IPv6/LinkLocal)"
+        proto: "udp"
+        src: "fe80::/16"
+        port: "53"
+      - name: "DHCPv6 from service line"
+        proto: "udp"
+        src: "::/0"
+        port: "547"
       - name: "DHCPv6 Client from service line"
         proto: "udp"
-        src: "::"
+        src: "::/0"
         port: "546"
 
 zramswap:
@@ -51,10 +91,61 @@ zramswap:
 ups:
   role: master
 
-rsyslog:
-  rsyslog_client_additional_actions: |
-    if $programname startswith 'snmpd' then {
-      if ($msg contains '192.168.88.124') then {
-          stop
-      }
+rsyslog_client_additional_actions: |
+  if $programname startswith 'snmpd' then {
+    if ($msg contains '192.168.88.124') then {
+        stop
     }
+  }
+  if ($msg contains "COMMAND_RECEIVED Received command") then {
+    stop
+  }
+
+qd_info: "{{ network | selectattr('shortname', 'eq', 'qd') | first }}"
+rui_info: "{{ network | selectattr('shortname', 'eq', 'rui') | first }}"
+
+dnsmasq:
+  domain: hayaworld.home
+  local: /hayaworld.home/
+  listen_address: "{{ qd_info.ipv4 }}"
+  interface: "{{ qd_info.interface }}"
+  dns:
+    cache_size: 4000
+  logs:
+    log_facility: local5
+    log_to: "log.hayaworld.home"
+
+pihole_port: 5353
+
+dhcp:
+  interface: "{{ qd_info.interface }}"
+  me:
+    name: "qd"
+    ipaddr: "{{ qd_info.ipv4 }}"
+  search_domain: "hayaworld.home"
+  lib_base: "/usr/lib/x86_64-linux-gnu/kea/hooks"
+  peer4:
+    - name: "qd"
+      url: "http://{{ qd_info.ipv4 }}:8080/"
+      role: "primary"
+      auto-failover: true
+    - name: "rui"
+      url: "http://{{ rui_info.ipv4 }}:8080/"
+      role: "standby"
+      auto-failover: true
+  peer6:
+    - name: "qd"
+      url: "http://{{ qd_info.ipv4 }}:8081/"
+      role: "primary"
+      auto-failover: true
+    - name: "rui"
+      url: "http://{{ rui_info.ipv4 }}:8081/"
+      role: "standby"
+      auto-failover: true
+  ipv4:
+    subnet: "192.168.88.0/24"
+    pool: "192.168.88.21-192.168.88.99"
+    ttl: "0xf0"
+    gw: "{{ subnet.gw4 }}"
+    dns: "{{ qd_info.ipv4 }},{{ rui_info.ipv4 }}"
+    lease_db: "/var/lib/kea/kea-leases4.csv"

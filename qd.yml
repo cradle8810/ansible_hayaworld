@@ -21,6 +21,35 @@
       vars:
         common_firewall: "{{ firewall }}"
         common_pkg: "{{ apt }}"
+        common_install_users: true
+
+    - name: "System Configurations"
+      tags:
+        - system
+      block:
+        - name: Mount tmpfs for temporary dirs
+          ansible.posix.mount:
+            src: "tmpfs"
+            path: "{{ item }}"
+            opts: "defaults"
+            fstype: tmpfs
+            state: mounted
+          loop:
+            - "/home/ansible/.ansible"
+            - "/var/cache/apt/archives"
+            - "/var/log/kea"
+          tags:
+            - mount
+
+        - name: Setup journalctl
+          ansible.builtin.import_tasks:
+            file: tasks/dns/journalctl.yml
+
+        - name: Install/Config Zramswap
+          ansible.builtin.import_tasks:
+            file: tasks/zram.yml
+          tags:
+            - zram
 
     - name: Install QDevice for NUC(Proxmox)
       ansible.builtin.import_tasks:
@@ -29,53 +58,84 @@
         - quorum
         - proxmox
 
-    - name: Install/Config Zramswap
-      ansible.builtin.import_tasks:
-        file: tasks/zram.yml
-      tags:
-        - zram
-
-    - name: APC UPS Settings
+    - name: "Install Docker"
       ansible.builtin.import_role:
-        name: apcupsd
+        name: docker
       vars:
-        apcupsd_role: "{{ ups.role }}"
-        apcupsd_timeout: 600
+        docker_users:
+          - ansible
+          - hayato
       tags:
-        - apc
-        - ups
+        - docker
 
-    - name: Install Tailscale as gateway (for maintenance)
-      ansible.builtin.import_tasks:
-        file: tasks/tailscale.yml
+    - name: "Installing Services for DNS"
       tags:
-        - tailscale
+        - dns
+      block:
+        - name: "Setup dnsmasq as resolve hayaworld.home"
+          ansible.builtin.import_role:
+            name: dns
+          vars:
+            dns_cname: "{{ cname }}"
 
-    - name: "Configure Rsyslog"
+        - name: "Setup Upstream DNS Server with pihole"
+          ansible.builtin.import_role:
+            name: pihole
+          vars:
+            pihole_install_docker: false
+
+    - name: "Setup Kea DHCP Server"
       ansible.builtin.import_role:
-        name: rsyslog_client
+        name: dhcp
       vars:
-        rsyslog_client_additional_actions: "{{ rsyslog.rsyslog_client_additional_actions }}"
-        rsyslog_client_journald_persistent: false
+        dhcp_info: "{{ dhcp }}"
       tags:
-        - rsyslog
+        - dhcp
 
-    - name: Configure Raspberry Pi Watchdog
-      ansible.builtin.import_tasks:
-        file: tasks/qd/raspi_watchdog.yml
+    - name: "Installing Maintenance Tools"
       tags:
-        - watchdog
+        - maintenance
+      block:
+        - name: Install Tailscale as Exitnode/Subnet Router (for maintenance)
+          ansible.builtin.import_tasks:
+            file: tasks/tailscale.yml
+          tags:
+            - tailscale
 
-    - name: Install Zabbix agent
-      ansible.builtin.import_tasks:
-        file: tasks/zabbix-agent2.yml
-      tags:
-        - zabbix
+        - name: "Setup Tailscale serve"
+          ansible.builtin.import_tasks:
+            file: tasks/qd/tailscale.yml
+          tags:
+            - tailscale
 
-    - name: Install SNMPv2
-      ansible.builtin.import_tasks:
-        file: tasks/qd/snmpd.yml
-      vars:
-        ipaddr: "{{ common_hostinfo.ipv4 }}"
-      tags:
-        - snmp
+        - name: Install Zabbix agent
+          ansible.builtin.import_tasks:
+            file: tasks/zabbix-agent2.yml
+          tags:
+            - zabbix
+
+        - name: Install SNMPv2
+          ansible.builtin.import_tasks:
+            file: tasks/qd/snmpd.yml
+          vars:
+            ipaddr: "{{ common_hostinfo.ipv4 }}"
+          tags:
+            - snmp
+
+        - name: "Configure Rsyslog"
+          ansible.builtin.import_role:
+            name: rsyslog_client
+          vars:
+            rsyslog_client_journald_persistent: false
+          tags:
+            - rsyslog
+
+        - name: APC UPS Settings
+          ansible.builtin.import_role:
+            name: apcupsd
+          vars:
+            apcupsd_role: "{{ ups.role }}"
+            apcupsd_timeout: 600
+          tags:
+            - apc
+            - ups
