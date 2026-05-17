@@ -41,7 +41,7 @@
 
 - name: "Update DriveDB forcely"
   ansible.builtin.import_tasks:
-    file: roles/scrutiny_collector/tasks/update_drivedb.yml
+    file: tasks/update_drivedb.yml
   when: scrutiny_collector_install_drivedb
 
 - name: "Install cron"
