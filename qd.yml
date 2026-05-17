@@ -85,13 +85,25 @@
           vars:
             pihole_install_docker: false
 
-    - name: "Setup Kea DHCP Server"
-      ansible.builtin.import_role:
-        name: dhcp
-      vars:
-        dhcp_info: "{{ dhcp }}"
+    - name: "DHCP Server Configurations"
       tags:
         - dhcp
+      block:
+        - name: "Setup Kea DHCP Server"
+          ansible.builtin.import_role:
+            name: dhcp
+          vars:
+            dhcp_info: "{{ dhcp }}"
+
+        - name: "Set Swappiness"
+          community.general.ini_file:
+            path: "/etc/sysctl.d/00-localbind.conf"
+            option: "net.ipv4.ip_nonlocal_bind"
+            value: 1
+            state: present
+            no_extra_spaces: true
+            mode: "644"
+          notify: "localbind sysctl"
 
     - name: "Installing Maintenance Tools"
       tags:
