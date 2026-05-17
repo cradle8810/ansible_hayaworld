@@ -38,6 +38,7 @@
             - "/home/ansible/.ansible"
             - "/var/cache/apt/archives"
             - "/var/log/kea"
+            - "/var/log"
           tags:
             - mount
 
