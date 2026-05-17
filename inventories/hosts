@@ -8,6 +8,7 @@ qd ansible_user=ansible ansible_host=192.168.88.200
 rui ansible_user=root ansible_host=192.168.88.100
 scanner ansible_user=ansible ansible_host=scanner.hayaworld.home
 skylark ansible_user=hayato ansible_host=192.168.88.10
+ss ansible_user=root ansible_host=ss.hayaworld.home
 terminal ansible_user=ansible ansible_host=terminal.hayaworld.home
 
 [proxmox]
@@ -37,16 +38,16 @@ pi02 ansible_user=root ansible_host=pi02.hayaworld.home
 
 [vm]
 console
+diskmon
+iso
 log
+pi01
 rui
 runner01
 runner02
 runner03
 runner04
 scanner
+ss
 tsgw1
 tsgw2
-iso
-diskmon
-pi01
-pi02

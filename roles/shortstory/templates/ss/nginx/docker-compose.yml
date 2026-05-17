@@ -1,0 +1,9 @@
+services:
+  ss:
+    image: nginx
+    container_name: ss-nginx
+    restart: always
+    network_mode: "host"
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d:ro
+      - ./html:/usr/share/nginx/html:ro

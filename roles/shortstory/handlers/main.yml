@@ -1,0 +1,26 @@
+---
+- name: Restart docker
+  ansible.builtin.systemd_service:
+    name: docker
+    state: restarted
+  listen: "Restart docker"
+
+- name: "Down Nginx Docker Compose"
+  community.docker.docker_compose_v2:
+    project_src: /ss/nginx
+    state: absent
+  listen: "Down nginx container"
+
+- name: "Start Nginx Docker Compose"
+  community.docker.docker_compose_v2:
+    project_src: /ss/nginx
+    state: present
+  listen: "Up nginx container"
+
+- name: "Run Tailscale funnel"
+  ansible.builtin.debug:
+    msg: |
+      Run That Command on This node:
+       tailscale funnel --bg --https=443 http://localhost:8080
+  listen: "Run funnel"
+  changed_when: true

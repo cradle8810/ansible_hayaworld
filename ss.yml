@@ -1,0 +1,29 @@
+- name: Play for ss store servers
+  hosts: ss
+  remote_user: root
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - host_vars/networks.yml
+
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+
+  tasks:
+    - name: Common Settings
+      ansible.builtin.import_role:
+        name: common
+      vars:
+        common_firewall: "{{ firewall }}"
+        common_install_users: true
+
+    - name: Install ShortStory Store
+      ansible.builtin.import_role:
+        name: shortstory
+      vars:
+        shortstory_ipaddr: "192.168.88.120"
+        docker_users:
+          - hayato

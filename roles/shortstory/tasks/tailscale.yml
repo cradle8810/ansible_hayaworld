@@ -1,0 +1,56 @@
+---
+- name: Install Tailscale
+  tags:
+    - tailscale
+  block:
+    - name: "Setup Tailscale Endpoint"
+      ansible.builtin.import_role:
+        name: artis3n.tailscale.machine
+      when: not ansible_check_mode
+      vars:
+        tailscale_authkey: "{{ tailscale.client_secret }}"
+        tailscale_args: "--advertise-routes={{ shortstory_ipaddr }}/32 --accept-dns=true"
+        tailscale_oauth_ephemeral: false
+        tailscale_tags:
+          - ds
+
+
+    # tailscale_serve_retval == 0 when not configured
+    - name: "Check Tailscale serve configured"
+      ansible.builtin.shell:
+        cmd: |
+            set -o pipefail
+            tailscale serve status | grep 'No serve config'
+        executable: /bin/bash
+      register: tailscale_serve_retval
+      changed_when: tailscale_serve_retval.rc == 0
+      failed_when: tailscale_serve_retval.rc != 0 and tailscale_serve_retval.rc != 1
+      when: not ansible_check_mode
+
+    # tailscale_serve_retval == 0 when not configured
+    - name: "Check Tailscale funnel configured"
+      ansible.builtin.shell:
+        cmd: |
+            set -o pipefail
+            tailscale funnel status | grep 'No serve config'
+        executable: /bin/bash
+      register: tailscale_funnel_retval
+      changed_when: tailscale_funnel_retval.rc == 0
+      failed_when: tailscale_funnel_retval.rc != 0 and tailscale_funnel_retval.rc != 1
+      when: not ansible_check_mode
+
+    - name: "Set Tailscale serve"
+      ansible.builtin.command:
+        cmd: tailscale serve --bg --https=443 --set-path=/ http://127.0.0.1:8080
+      register: retval
+      changed_when: retval.rc == 0
+      when:
+        - not ansible_check_mode
+        - tailscale_serve_retval.rc == 0
+      notify: "Run funnel"
+
+    - name: "Tailscale Firewall accept"
+      community.general.ufw:
+        rule: allow
+        interface_in: tailscale0
+        proto: any

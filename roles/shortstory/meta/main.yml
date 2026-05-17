@@ -1,0 +1,7 @@
+---
+dependencies:
+  - role: geerlingguy.docker
+  - role: artis3n.tailscale.machine
+
+collections:
+  - community.docker

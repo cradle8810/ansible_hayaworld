@@ -1,0 +1,43 @@
+---
+- name: Prepare Data dir
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: hayato
+    group: hayato
+    mode: '0755'
+  loop:
+    - /ss
+    - /ss/nginx
+    - /ss/nginx/html
+    - /ss/nginx/conf.d
+
+- name: Copy Nginx Configurations
+  ansible.builtin.copy:
+    src: templates/ss/nginx/conf.d/default.conf.j2
+    dest: /ss/nginx/conf.d/default.conf
+    owner: hayato
+    group: hayato
+    mode: '0644'
+  notify:
+    - "Down nginx container"
+    - "Up nginx container"
+
+- name: Copy docker-compose.yml
+  ansible.builtin.copy:
+    src: templates/ss/nginx/docker-compose.yml
+    dest: /ss/nginx/docker-compose.yml
+    owner: hayato
+    group: hayato
+    mode: '0644'
+  notify:
+    - "Down nginx container"
+    - "Up nginx container"
+
+- name: Copy Nginx Fancy styles
+  ansible.builtin.copy:
+    src: templates/ss/nginx/html/header.html
+    dest: /ss/nginx/html/header.html
+    owner: hayato
+    group: hayato
+    mode: '0644'

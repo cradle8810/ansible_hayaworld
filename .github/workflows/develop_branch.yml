@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Run YAML Lint
         run: yamllint --strict --format github .
@@ -26,10 +26,10 @@ jobs:
         password: "${{ secrets.GHCR_PASSWORD }}"
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Restore Galaxy files
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v5
         with:
           key: ansible_galaxy_cache
           path: "/github/home/.ansible"
@@ -43,7 +43,7 @@ jobs:
           ansible-galaxy collection install -r requirements.yml --ignore-errors
 
       - name: Save Galaxy files
-        uses: actions/cache/save@v3
+        uses: actions/cache/save@v5
         with:
           key: ansible_galaxy_cache
           path: "/github/home/.ansible"
@@ -53,26 +53,17 @@ jobs:
         run: |
           ansible-lint
 
-  Duplicate_Check:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Add exec flag to dupcheck.sh
-        run: "chmod +x ./dupcheck.sh"
-
   Dry_Run_ansible:
     needs:
       - Yamllint
       - AnsibleLint
-      - Duplicate_Check
     runs-on: self-hosted
     strategy:
       fail-fast: false
       matrix:
         vm:
-          - dns
+          - rui
+          - qd
     container:
       image: ghcr.io/ansible/community-ansible-dev-tools:latest
       volumes:
@@ -84,7 +75,7 @@ jobs:
           submodules: "recursive"
 
       - name: Restore Galaxy files
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v5
         with:
           key: ansible_galaxy_cache
           path: "/github/home/.ansible"
@@ -111,4 +102,5 @@ jobs:
             --ssh-extra-args='-o StrictHostKeyChecking=no' \
             --vault-password-file ./vault_passwd.txt \
             --extra-vars "ansible_sudo_pass=${{ secrets.SUDO }}" \
+            --tags dns \
             ${{ matrix.vm }}.yml
