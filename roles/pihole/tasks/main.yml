@@ -2,6 +2,7 @@
 - name: "Install Docker"
   ansible.builtin.import_role:
     name: docker
+  when: pihole_install_docker
 
 - name: "Create Dirs"
   ansible.builtin.file:
