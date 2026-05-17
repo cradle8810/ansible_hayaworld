@@ -23,3 +23,5 @@
       value: "zabbix.hayaworld.home"
     - option: "Hostname"
       value: ""
+    - option: "LogFile"
+      value: "/var/log/zabbix_agent2.log"
