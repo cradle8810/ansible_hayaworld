@@ -15,9 +15,9 @@
 
 - name: "Download scrutiny-collector"
   ansible.builtin.get_url:
-    url: "https://github.com/AnalogJ/scrutiny/releases/download/v0.8.6/scrutiny-collector-metrics-linux-amd64"
+    url: "https://github.com/AnalogJ/scrutiny/releases/download/v0.9.2/scrutiny-collector-metrics-linux-amd64"
     dest: "{{ scrutiny_collector_install_bin }}/scrutiny-collector"
-    checksum: "sha256:4c163645ce24e5487f4684a25ec73485d77a82a57f084808ff5aad0c11499ad2"
+    checksum: "sha256:a8f0c8efe23afbae07957fe7ebd29ed6b3aecdf40bc00cc300c042b77b80c851"
     owner: root
     group: root
     mode: "0755"
@@ -37,6 +37,12 @@
     state: present
     update_cache: true
     cache_valid_time: "{{ apt_cache_valid_time }}"
+  notify: "Smartmon initial installed"
+
+- name: "Update DriveDB forcely"
+  ansible.builtin.import_tasks:
+    file: roles/scrutiny_collector/tasks/update_drivedb.yml
+  when: scrutiny_collector_install_drivedb
 
 - name: "Install cron"
   ansible.builtin.apt:
@@ -48,7 +54,7 @@
 - name: "Set crontab"
   ansible.builtin.cron:
     name: "Scrutiny Collector"
-    minute: "*/15"
+    minute: "*/2"
     job: "{{ scrutiny_collector_install_bin }}/scrutiny-collector run --config {{ scrutiny_collector_install_etc }}/collector.yaml > /dev/null 2>&1"
     cron_file: scrutiny-collector
     user: root

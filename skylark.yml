@@ -1,6 +1,6 @@
 ---
-- name: Play for tank Datastore
-  hosts: tank
+- name: Play for skylark Datastore
+  hosts: skylark
   remote_user: hayato
   gather_facts: true
   become: true
@@ -25,5 +25,19 @@
         scrutiny_collector_cron: true
         scrutiny_collector_install_bin: "/usr/local/bin"
         scrutiny_collector_install_etc: "/usr/local/etc"
+        scrutiny_collector_smartctl: "/opt/sbin/smartctl"
+        scrutiny_collector_device:
+          - device: /dev/sda
+            type: 'sat,auto'
+          - device: /dev/sdb
+            type: 'sat,auto'
+          - device: /dev/sdc
+            type: 'sat,auto'
+          - device: /dev/sdd
+            type: 'sat,auto'
+          - device: /dev/sde
+            type: 'sat,auto'
+          - device: /dev/sdf
+            type: 'sat,auto'
       tags:
         - scrutiny

@@ -7,7 +7,7 @@ macbook ansible_user=hayato
 qd ansible_user=ansible ansible_host=192.168.88.200
 rui ansible_user=root ansible_host=192.168.88.100
 scanner ansible_user=ansible ansible_host=scanner.hayaworld.home
-tank ansible_user=hayato ansible_host=192.168.88.10
+skylark ansible_user=hayato ansible_host=192.168.88.10
 terminal ansible_user=ansible ansible_host=terminal.hayaworld.home
 
 [proxmox]
