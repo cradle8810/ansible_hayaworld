@@ -57,7 +57,6 @@ jobs:
     needs:
       - Yamllint
       - AnsibleLint
-      - Duplicate_Check
     runs-on: self-hosted
     strategy:
       fail-fast: false
