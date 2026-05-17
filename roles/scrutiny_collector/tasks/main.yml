@@ -15,7 +15,7 @@
 
 - name: "Download scrutiny-collector"
   ansible.builtin.get_url:
-    url: "https://github.com/AnalogJ/scrutiny/releases/latest/download/scrutiny-collector-metrics-linux-amd64"
+    url: "https://github.com/AnalogJ/scrutiny/releases/download/v0.8.6/scrutiny-collector-metrics-linux-amd64"
     dest: "{{ scrutiny_collector_install_bin }}/scrutiny-collector"
     checksum: "sha256:4c163645ce24e5487f4684a25ec73485d77a82a57f084808ff5aad0c11499ad2"
     owner: root
@@ -30,6 +30,14 @@
     group: "root"
     mode: '0644'
 
+- name: "Install smartmontools"
+  when: scrutiny_collector_install_smartmontools
+  ansible.builtin.apt:
+    name: "smartmontools"
+    state: present
+    update_cache: true
+    cache_valid_time: "{{ apt_cache_valid_time }}"
+
 - name: "Install cron"
   ansible.builtin.apt:
     name: "cron"
@@ -41,7 +49,7 @@
   ansible.builtin.cron:
     name: "Scrutiny Collector"
     minute: "*/15"
-    job: "/opt/bin/scrutiny-collector run --config /opt/etc/collector.yaml > /dev/null 2>&1"
+    job: "{{ scrutiny_collector_install_bin }}/scrutiny-collector run --config {{ scrutiny_collector_install_etc }}/collector.yaml > /dev/null 2>&1"
     cron_file: scrutiny-collector
     user: root
   when: scrutiny_collector_cron
