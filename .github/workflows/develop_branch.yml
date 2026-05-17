@@ -53,15 +53,6 @@ jobs:
         run: |
           ansible-lint
 
-  Duplicate_Check:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Add exec flag to dupcheck.sh
-        run: "chmod +x ./dupcheck.sh"
-
   Dry_Run_ansible:
     needs:
       - Yamllint
@@ -72,7 +63,8 @@ jobs:
       fail-fast: false
       matrix:
         vm:
-          - dns
+          - rui
+          - qd
     container:
       image: ghcr.io/ansible/community-ansible-dev-tools:latest
       volumes:
@@ -111,4 +103,5 @@ jobs:
             --ssh-extra-args='-o StrictHostKeyChecking=no' \
             --vault-password-file ./vault_passwd.txt \
             --extra-vars "ansible_sudo_pass=${{ secrets.SUDO }}" \
+            --tags dns \
             ${{ matrix.vm }}.yml
