@@ -12,11 +12,19 @@ server {
 
   root /usr/share/nginx/html;
 
-  location / {
-    autoindex on;
-    autoindex_exact_size off;
-    autoindex_localtime on;
+  autoindex on;
+  autoindex_exact_size off;
+  autoindex_localtime on;
 
-    add_before_body /header.html;
+  add_before_body /header.html;
+
+  location / {
+  }
+
+  location /other {
+    allow 100.64.0.0/10;
+    deny all;
+    set_real_ip_from 127.0.0.1;
+    real_ip_header X-Forwarded-For;
   }
 }
