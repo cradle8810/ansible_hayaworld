@@ -25,3 +25,5 @@
       value: ""
     - option: "LogFile"
       value: "/var/log/zabbix_agent2.log"
+    - option: "LogType"
+      value: "system"
