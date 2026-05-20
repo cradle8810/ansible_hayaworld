@@ -103,13 +103,6 @@ network:
     sshuser: root
     self_org: true
     mtu: 9000
-  - hostname: tsgw2.hayaworld.home
-    interface: enp6s18
-    ipv4: 192.168.88.115
-    shortname: tsgw2
-    sshuser: root
-    self_org: true
-    mtu: 9000
   - hostname: subtitle.hayaworld.home
     interface: none
     ipv4: 192.168.88.117

@@ -25,7 +25,6 @@ runner04 ansible_user=root ansible_host=runner04.hayaworld.home
 
 [tailscale]
 tsgw1 ansible_user=root ansible_host=192.168.88.114
-tsgw2 ansible_user=root ansible_host=192.168.88.115
 
 [scrutiny]
 diskmon ansible_user=root ansible_host=diskmon.hayaworld.home
@@ -50,4 +49,3 @@ runner04
 scanner
 ss
 tsgw1
-tsgw2
