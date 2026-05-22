@@ -1,0 +1,6 @@
+---
+- name: "Start Ollama Docker Compose"
+  community.docker.docker_compose_v2:
+    project_src: /home/hayato/ollama/
+    state: present
+  listen: "Up ollama"
