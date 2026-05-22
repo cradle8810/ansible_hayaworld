@@ -1,0 +1,49 @@
+---
+- name: Play for AI base VM
+  hosts: ai
+  remote_user: ansible
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - host_vars/networks.yml
+
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+
+  tasks:
+    - name: Common Settings
+      ansible.builtin.import_role:
+        name: common
+      vars:
+        common_firewall: "{{ firewall }}"
+        common_install_users: true
+
+    - name: "Install iGPU Relational things"
+      ansible.builtin.import_role:
+        name: igpu
+      vars:
+        igpu_vulkan_install: true
+      tags:
+        - igpu
+        - vulkan
+
+    - name: "Install Ollama"
+      ansible.builtin.import_role:
+        name: ollama
+      tags:
+        - ollama
+
+    - name: Install Zabbix agent
+      ansible.builtin.import_tasks:
+        file: tasks/zabbix-agent2.yml
+      tags:
+        - zabbix
+
+    - name: "Install and Configure Tailscale"
+      ansible.builtin.import_tasks:
+        file: tasks/ai/tailscale.yml
+      tags:
+        - tailscale
