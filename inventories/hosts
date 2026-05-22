@@ -1,4 +1,5 @@
 [all]
+ai ansible_user=ansible ansible_host=ai.hayaworld.home ansible_become_exe=/usr/bin/sudo.ws
 console ansible_user=ansible ansible_host=console.hayaworld.home
 ds ansible_user=ansible ansible_host=192.168.88.123
 iso ansible_user=ansible ansible_host=iso.hayaworld.home

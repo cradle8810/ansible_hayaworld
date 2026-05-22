@@ -1,0 +1,9 @@
+---
+- name: Install i915 Driver
+  ansible.builtin.import_tasks:
+    file: tasks/igpu.yml
+
+- name: Install Vulkan
+  ansible.builtin.import_tasks:
+    file: tasks/vulkan.yml
+  when: igpu_vulkan_install

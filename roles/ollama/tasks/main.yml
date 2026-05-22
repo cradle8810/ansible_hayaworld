@@ -1,0 +1,46 @@
+---
+- name: Prepare Docker data dir
+  tags:
+    - mount
+  block:
+    - name: Create Docker Mount dir
+      ansible.builtin.file:
+        path: "/var/lib/docker"
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: "Mount Docker drive"
+      ansible.posix.mount:
+        src: "UUID={{ docker_drive_uuid }}"
+        path: "/var/lib/docker"
+        opts: "defaults,compress=zstd:1"
+        fstype: btrfs
+        state: mounted
+
+- name: Install Docker
+  ansible.builtin.import_role:
+    name: docker
+  vars:
+    docker_users:
+      - hayato
+
+- name: "Install and Configure Ollama"
+  block:
+    - name: "Mkdir for Ollama docker-compose"
+      ansible.builtin.file:
+        path: "/home/hayato/ollama"
+        state: directory
+        owner: hayato
+        group: hayato
+        mode: '0755'
+
+    - name: "Put Ollama docker-compose"
+      ansible.builtin.copy:
+        src: "templates/home/hayato/ollama/docker-compose.yml"
+        dest: "/home/hayato/ollama/docker-compose.yml"
+        owner: hayato
+        group: hayato
+        mode: '0644'
+      notify: "Up ollama"
