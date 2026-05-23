@@ -1,11 +1,12 @@
 services:
   ollama:
-    image: ollama/ollama:latest
+    image: ollama/ollama:0.30.0-rc23
     container_name: ollama
     ports:
       - "11434:11434"
     volumes:
       - ollama:/root/.ollama
+      - /home/hayato/Models:/root/Models:ro
     devices:
       - /dev/dri:/dev/dri
     environment:
