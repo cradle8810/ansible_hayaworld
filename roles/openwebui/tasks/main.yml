@@ -1,0 +1,33 @@
+---
+- name: Install Docker
+  ansible.builtin.import_role:
+    name: docker
+
+- name: "Mkdir for Ollama docker-compose"
+  ansible.builtin.file:
+    path: "/root/webui"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: "Put Ollama docker-compose"
+  ansible.builtin.copy:
+    src: "templates/root/webui/docker-compose.yml"
+    dest: "/root/webui/docker-compose.yml"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "Up webui"
+
+- name: "Kill AppArmor"
+  ansible.builtin.command:
+    cmd: "aa-teardown"
+  register: retval
+  changed_when: retval.rc == 0
+
+- name: "Disable AppArmor"
+  ansible.builtin.systemd_service:
+    name: apparmor.service
+    state: stopped
+    enabled: false

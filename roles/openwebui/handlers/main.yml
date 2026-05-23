@@ -1,0 +1,6 @@
+---
+- name: "Start Ollama Docker Compose"
+  community.docker.docker_compose_v2:
+    project_src: /root/webui/
+    state: present
+  listen: "Up webui"

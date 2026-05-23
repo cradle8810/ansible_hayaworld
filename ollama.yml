@@ -1,6 +1,6 @@
 ---
-- name: Play for Open WebUI FrontEnd
-  hosts: ai
+- name: Play for AI base VM
+  hosts: ollama
   remote_user: ansible
   gather_facts: true
   become: true
@@ -14,20 +14,29 @@
         file: handlers/main.yml
 
   tasks:
-    - name: "Common Settings"
+    - name: Common Settings
       ansible.builtin.import_role:
         name: common
       vars:
         common_firewall: "{{ firewall }}"
-        common_install_users: false
+        common_install_users: true
 
-    - name: "Install OpenWebUI"
+    - name: "Install iGPU Relational things"
       ansible.builtin.import_role:
-        name: openwebui
+        name: igpu
+      vars:
+        igpu_vulkan_install: true
       tags:
-        - webui
+        - igpu
+        - vulkan
 
-    - name: "Install Zabbix agent"
+    - name: "Install Ollama"
+      ansible.builtin.import_role:
+        name: ollama
+      tags:
+        - ollama
+
+    - name: Install Zabbix agent
       ansible.builtin.import_tasks:
         file: tasks/zabbix-agent2.yml
       tags:

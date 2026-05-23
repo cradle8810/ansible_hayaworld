@@ -35,10 +35,9 @@
   failed_when: tailscale_funnel_retval.rc != 0 and tailscale_funnel_retval.rc != 1
   when: not ansible_check_mode
 
-# This node doesn't need to reveal WebUI to the Internet.
-- name: "Set Tailscale serve for OpenWebUI"
+- name: "Set Tailscale serve for Ollama"
   ansible.builtin.command:
-    cmd: tailscale serve --bg --https=443 --set-path=/ http://127.0.0.1:8080
+    cmd: tailscale serve --bg --https=8443 --set-path=/ http://127.0.0.1:11434
   register: retval
   changed_when: retval.rc == 0
   when:

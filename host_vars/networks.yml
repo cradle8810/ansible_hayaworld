@@ -72,6 +72,13 @@ network:
     interface: enp6s18
     ipv4: 192.168.88.106
     shortname: ai
+    sshuser: root
+    self_org: true
+    mtu: 9000
+  - hostname: ollama.hayaworld.home
+    interface: enp6s18
+    ipv4: 192.168.88.107
+    shortname: ollama
     sshuser: hayato
     self_org: true
     mtu: 9000
@@ -217,7 +224,7 @@ subnet:
   gw4: 192.168.88.1
   dns4:
     - 192.168.88.100
-    - 192.168.88.150
+    - 192.168.88.200
   search:
     - hayaworld.home
   routes:
