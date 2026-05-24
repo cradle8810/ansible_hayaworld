@@ -12,6 +12,7 @@ services:
     environment:
       - OLLAMA_VULKAN=1
       - OLLAMA_ORIGINS="*"
+      - OLLAMA_INTEL_GPU=1
     restart: unless-stopped
 
 volumes:

@@ -57,3 +57,11 @@
     owner: root
     group: root
     mode: '0644'
+
+- name: "GPU / Append render group for root"
+  ansible.builtin.user:
+    name: "root"
+    uid: 0
+    groups:
+      - render
+    append: true
