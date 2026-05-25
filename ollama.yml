@@ -21,11 +21,13 @@
         common_firewall: "{{ firewall }}"
         common_install_users: true
 
+    # https://vulkan.lunarg.com/sdk/home#linux
     - name: "Install iGPU Relational things"
       ansible.builtin.import_role:
         name: igpu
       vars:
-        igpu_vulkan_install: true
+        # TODO: 自前でコンパイルすること
+        igpu_vulkan_install: false
       tags:
         - igpu
         - vulkan
