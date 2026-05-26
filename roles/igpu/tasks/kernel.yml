@@ -1,0 +1,55 @@
+---
+- name: "Kernel / Add cappelikan ppa repo"
+  ansible.builtin.template:
+    src: "templates/etc/apt/sources.list.d/cappelikan-ubuntu-ppa-resolute.sources.j2"
+    dest: "/etc/apt/sources.list.d/cappelikan-ubuntu-ppa-resolute.sources"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: "Kernel / Install Mainline"
+  ansible.builtin.apt:
+    pkg:
+      - mainline
+    state: present
+    update_cache: true
+
+- name: "Kernel / Get Installed version {{ igpu_kernel_version }}"
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+      mainline list-installed | grep unsigned | head -n1
+  register: kernel_installed
+  changed_when: false
+
+- name: "Kernel / Kernel Install Kernel {{ igpu_kernel_version }}"
+  ansible.builtin.command:
+    cmd: "mainline install {{ igpu_kernel_version }}"
+  register: retval
+  changed_when: retval.rc == 0
+  when: kernel_installed.rc != 0
+
+- name: "Kernel / Get Installed version {{ igpu_kernel_version }}"
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+      mainline list-installed | grep unsigned | head -n1
+  register: kernel_ver
+  changed_when: false
+  failed_when: kernel_ver.rc != 0
+
+- name: "Kernel / Get Installed version {{ igpu_kernel_version }}"
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+      mainline list-installed | grep unsigned | head -n1 | awk -F'-' '{print $4."-"$5}'
+  register: kernel_ver
+  changed_when: false
+  failed_when: kernel_ver.rc != 0
+
+- name: "Kernel / Hold Installed version {{ igpu_kernel_version }}"
+  ansible.builtin.command:
+    cmd: "apt-mark hold linux-image-{{ kernel_ver.stdout }} linux-headers-{{ kernel_ver.stdout }}"
+  register: retval
+  changed_when: false
+  failed_when: retval.rc != 0

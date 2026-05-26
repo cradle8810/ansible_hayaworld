@@ -7,3 +7,6 @@ igpu_vulkan_sdk_url: "https://sdk.lunarg.com/sdk/download/1.4.350.1/linux/vulkan
 igpu_vulkan_sdk_filename: "{{ (igpu_vulkan_sdk_url | urlsplit('path')) | basename }}"
 igpu_vulkan_sdk_sha256: "6cce33c7e5383814150c5041820769d93c65a1fd883002e5949b067045a07daa"
 igpu_vulkan_sdk_basepath: "/opt/vulkan"
+
+igpu_kernel_install: false
+igpu_kernel_version: "7.0"

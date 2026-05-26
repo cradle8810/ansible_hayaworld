@@ -1,4 +1,9 @@
 ---
+- name: Install Stable Kernel
+  ansible.builtin.import_tasks:
+    file: tasks/kernel.yml
+  when: igpu_kernel_install
+
 - name: Install i915 Driver
   ansible.builtin.import_tasks:
     file: tasks/igpu.yml

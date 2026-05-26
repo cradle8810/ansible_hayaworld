@@ -26,6 +26,7 @@
       ansible.builtin.import_role:
         name: igpu
       vars:
+        igpu_kernel_install: false
         igpu_vulkan_install: true
       tags:
         - igpu
