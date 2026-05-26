@@ -1,13 +1,59 @@
 ---
-- name: "GPU / Install Vulkan Prerequirements"
+- name: "Vulkan / Install Vulkan Prerequirements"
   ansible.builtin.apt:
     pkg:
-      - libvulkan-dev
-      - libvulkan1
       - mesa-vulkan-drivers
-      - spirv-tools
-      - vulkan-tools
-      - vulkan-validationlayers
     state: present
     update_cache: true
     cache_valid_time: "{{ apt_cache_valid_time }}"
+
+- name: "Vulkan / Check if Vulkan Directories exists"
+  ansible.builtin.stat:
+    path: "{{ igpu_vulkan_sdk_basepath }}"
+  register: sdk_basepath
+
+- name: "Vulkan / Create Vulkan Directories"
+  when: sdk_basepath.stat.exists is false
+  ansible.builtin.file:
+    path: "{{ igpu_vulkan_sdk_basepath }}"
+    recurse: true
+    state: directory
+    owner: hayato
+    group: hayato
+    mode: '0755'
+
+- name: "Vulkan / Get Vulkan Tarball"
+  ansible.builtin.get_url:
+    url: "{{ igpu_vulkan_sdk_url }}"
+    dest: "{{ igpu_vulkan_sdk_basepath }}/{{ igpu_vulkan_sdk_filename }}"
+    checksum: "sha256:{{ igpu_vulkan_sdk_sha256 }}"
+    owner: root
+    group: root
+    mode: "0644"
+  register: vulkan_tarball_get
+
+- name: "Vulkan / Unarchive Vulkan Tarball"
+  when: vulkan_tarball_get is changed
+  ansible.builtin.unarchive:
+    src: "{{ igpu_vulkan_sdk_basepath }}/{{ igpu_vulkan_sdk_filename }}"
+    dest: "{{ igpu_vulkan_sdk_basepath }}"
+    remote_src: true
+    extra_opts:
+      - "--strip-components=1"
+  # noqa: no-handler
+
+- name: "Vulkan / Add Vulkan LDPATH"
+  ansible.builtin.lineinfile:
+    path: "/etc/ld.so.conf.d/vulkan.conf"
+    line: "{{ igpu_vulkan_sdk_basepath }}/x86_64/lib"
+    state: present
+  notify: "Run ldconfig"
+
+- name: "Vulkan / Create Vulkan Layerpath Symlinks"
+  ansible.builtin.file:
+    src: "{{ igpu_vulkan_sdk_basepath }}/x86_64/share/vulkan/explicit_layer.d"
+    dest: "/etc/vulkan/explicit_layer.d"
+    owner: root
+    group: root
+    state: link
+  notify: "Run ldconfig"

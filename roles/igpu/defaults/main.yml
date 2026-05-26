@@ -3,5 +3,7 @@ igpu_i915_driver_dest: "/root/i915-sriov-dkms_2026.03.05_amd64.deb"
 igpu_i915_driver_checksum: "sha256:700b95ee06a511ed30b8bfb8fd9023f9ada89786e81cc889cbacc0c3607a47e9"
 
 igpu_vulkan_install: false
-igpu_vulkan_sdk_url: https://sdk.lunarg.com/sdk/download/1.4.350.0/linux/vulkansdk-linux-x86_64-1.4.350.0.tar.xz
-igpu_vulkan_sdk_filename: vulkansdk-linux-x86_64-1.4.350.0.tar.xz
+igpu_vulkan_sdk_url: "https://sdk.lunarg.com/sdk/download/1.4.350.1/linux/vulkansdk-linux-x86_64-1.4.350.1.tar.xz"
+igpu_vulkan_sdk_filename: "{{ (igpu_vulkan_sdk_url | urlsplit('path')) | basename }}"
+igpu_vulkan_sdk_sha256: "6cce33c7e5383814150c5041820769d93c65a1fd883002e5949b067045a07daa"
+igpu_vulkan_sdk_basepath: "/opt/vulkan"
