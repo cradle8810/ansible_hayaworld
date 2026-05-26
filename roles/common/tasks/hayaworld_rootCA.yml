@@ -1,7 +1,7 @@
 ---
 - name: "Common / Make directory for put hayaworld certs"
   ansible.builtin.file:
-    path: "/usr/local/share/ca-certificates/hayaworld"
+    path: "/usr/local/share/ca-certificates"
     state: directory
     owner: root
     group: root
@@ -9,14 +9,9 @@
 
 - name: "Common / Put hayaworld root CA certs"
   ansible.builtin.copy:
-    src: "templates/usr/local/share/ca-certificates/hayaworld/ca.crt"
-    dest: "/usr/local/share/ca-certificates/hayaworld/ca.crt"
+    src: "templates/usr/local/share/ca-certificates/ca.crt"
+    dest: "/usr/local/share/ca-certificates/ca.crt"
     owner: root
     group: root
     mode: '0644'
-  register: "common_put_hayaworld_ca"
-
-- name: "Common / Update Root CAs"
-  ansible.builtin.command:
-    cmd: "update-ca-certificates"
-  changed_when: common_put_hayaworld_ca.changed == True
+  notify: "update-ca-certificates"

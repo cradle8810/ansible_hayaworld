@@ -21,3 +21,9 @@
   community.general.ufw:
     state: enabled
   listen: "commit ufw"
+
+- name: "Common / Update Root CAs"
+  ansible.builtin.command:
+    cmd: "update-ca-certificates"
+  changed_when: retval.rc == 0
+  listen: "update-ca-certificates"
