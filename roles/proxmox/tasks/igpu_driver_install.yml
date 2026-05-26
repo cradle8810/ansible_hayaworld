@@ -78,7 +78,7 @@
             mode: "644"
 
 
-- name: "Configure VFs for Proxmox (Xe)"
+- name: "Configure VFs for Proxmox (i915/NUC13)"
   notify:
     - "Run update-grub"
     - "Run update-initramfs"
@@ -94,7 +94,7 @@
       when:
         - not ansible_check_mode
 
-    - name: "Edit Configures Ini files (Xe)"
+    - name: "Edit Configures Ini files (i915/NUC13)"
       community.general.ini_file:
         path: "{{ item.path }}"
         option: "{{ item.option }}"
@@ -108,12 +108,12 @@
           value: "7"
         - path: /etc/default/grub
           option: "GRUB_CMDLINE_LINUX_DEFAULT"
-          value: '"quiet intel_iommu=on iommu=pt xe.max_vfs=7 xe.force_probe={{ device_id.stdout }} module_blacklist=i915"'
+          value: '"intel_iommu=on i915.enable_guc=3 i915.max_vfs=7 module_blacklist=xe"'
 
     - name: "Edit blacklist.conf (i915)"
       ansible.builtin.lineinfile:
         path: "/etc/modprobe.d/blacklist.conf"
-        line: "blacklist i915"
+        line: "blacklist xe"
         state: present
         create: true
         mode: "644"
