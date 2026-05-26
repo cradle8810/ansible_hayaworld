@@ -1,10 +1,18 @@
 ---
+- name: "Get Proxmox Kernel Version"
+  ansible.builtin.command:
+    cmd: "uname -r"
+  register: proxmox_kernel_version
+  changed_when: false
+
 - name: "Install i915 Driver Dependency Pkgs"
   ansible.builtin.apt:
     pkg:
+      - "proxmox-headers-{{ proxmox_kernel_version.stdout }}"
       - build-essential
       - dkms
       - mokutil
+      - sysfsutils
       - vainfo
     state: present
 
@@ -33,22 +41,67 @@
     - "Echo reboot notice"
 
 # https://github.com/strongtz/i915-sriov-dkms?tab=readme-ov-file#required-kernel-parameters
-- name: "Configure for Proxmox"
+- name: "Configure VFs for Proxmox (i915)"
   notify:
     - "Run update-grub"
     - "Run update-initramfs"
+    - "Restart sysfsutils"
     - "Echo reboot notice"
+  when: common_hostinfo.shortname not in proxmox_xe_nodes
   block:
-    - name: "Configure GRUB CMDLINE for Proxmox (i915)"
+    - name: "Edit Configures Ini files (i915)"
       community.general.ini_file:
-        path: /etc/default/grub
-        option: "GRUB_CMDLINE_LINUX_DEFAULT"
-        value: '"quiet intel_iommu=on i915.enable_guc=3 i915.max_vfs=3 module_blacklist=xe"'
+        path: "{{ item.path }}"
+        option: "{{ item.option }}"
+        value: "{{ item.value }}"
         state: present
         no_extra_spaces: true
         mode: "644"
-      when: common_hostinfo.shortname not in proxmox_xe_nodes
+      loop:
+        - path: "/etc/sysfs.conf"
+          option: "devices/pci0000:00/0000:00:02.0/sriov_numvfs"
+          value: "3"
+        - path: /etc/default/grub
+          option: "GRUB_CMDLINE_LINUX_DEFAULT"
+          value: '"quiet intel_iommu=on i915.enable_guc=3 i915.max_vfs=3 module_blacklist=xe"'
 
+    - name: "Edit blacklist.conf (i915)"
+      ansible.builtin.lineinfile:
+        path: "/etc/modprobe.d/blacklist.conf"
+        line: "blacklist xe"
+        state: present
+        create: true
+        mode: "644"
+
+    - name: "Waiting method"
+      block:
+        - name: "Create Waiting Scripts dir"
+          ansible.builtin.file:
+            path: "/etc/systemd/system/sysfsutils.service.d"
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
+
+        - name: "Create Waiting Script"
+          community.general.ini_file:
+            path: "/etc/systemd/system/sysfsutils.service.d/delay.conf"
+            section: "Service"
+            option: "ExecStartPre"
+            value: "/bin/sleep 5"
+            state: present
+            no_extra_spaces: true
+            mode: "644"
+
+
+- name: "Configure VFs for Proxmox (Xe)"
+  notify:
+    - "Run update-grub"
+    - "Run update-initramfs"
+    - "Restart sysfsutils"
+    - "Echo reboot notice"
+  when: common_hostinfo.shortname in proxmox_xe_nodes
+  block:
     - name: "Get device id"
       ansible.builtin.command:
         cmd: cat /sys/devices/pci0000:00/0000:00:02.0/device
@@ -56,29 +109,47 @@
       changed_when: false
       when:
         - not ansible_check_mode
-        - common_hostinfo.shortname in proxmox_xe_nodes
 
-    - name: "Configure GRUB CMDLINE for Proxmox (Xe)"
+    - name: "Edit Configures Ini files (Xe)"
       community.general.ini_file:
-        path: /etc/default/grub
-        option: "GRUB_CMDLINE_LINUX_DEFAULT"
-        value: '"quiet intel_iommu=on xe.max_vfs=7 xe.force_probe={{ device_id.stdout }} module_blacklist=i915"'
+        path: "{{ item.path }}"
+        option: "{{ item.option }}"
+        value: "{{ item.value }}"
         state: present
         no_extra_spaces: true
         mode: "644"
-      when: common_hostinfo.shortname in proxmox_xe_nodes
+      loop:
+        - path: "/etc/sysfs.conf"
+          option: "devices/pci0000:00/0000:00:02.0/sriov_numvfs"
+          value: "7"
+        - path: /etc/default/grub
+          option: "GRUB_CMDLINE_LINUX_DEFAULT"
+          value: '"quiet intel_iommu=on xe.max_vfs=7 xe.force_probe={{ device_id.stdout }} module_blacklist=i915"'
 
-    - name: "Install sysfsutils for allow VFs for Proxmox"
-      ansible.builtin.apt:
-        pkg: sysfsutils
+    - name: "Edit blacklist.conf (i915)"
+      ansible.builtin.lineinfile:
+        path: "/etc/modprobe.d/blacklist.conf"
+        line: "blacklist i915"
         state: present
-        update_cache: true
-
-    - name: "Configure VFs for Proxmox"
-      community.general.ini_file:
-        path: /etc/sysfs.conf
-        option: "devices/pci0000:00/0000:00:02.0/sriov_numvfs"
-        value: "7"
-        state: present
-        no_extra_spaces: false
+        create: true
         mode: "644"
+
+    - name: "Waiting method"
+      block:
+        - name: "Create Waiting Scripts dir"
+          ansible.builtin.file:
+            path: "/etc/systemd/system/sysfsutils.service.d"
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
+
+        - name: "Create Waiting Script"
+          community.general.ini_file:
+            path: "/etc/systemd/system/sysfsutils.service.d/delay.conf"
+            section: "Service"
+            option: "ExecStartPre"
+            value: "/bin/sleep 5"
+            state: present
+            no_extra_spaces: true
+            mode: "644"

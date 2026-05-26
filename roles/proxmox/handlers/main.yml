@@ -72,3 +72,11 @@
     state: restarted
     daemon_reload: true
   listen: "Restart systemd-logind"
+
+- name: "Restart sysfsutils"
+  ansible.builtin.systemd_service:
+    name: sysfsutils.service
+    state: restarted
+    enabled: true
+    daemon_reload: true
+  listen: "Restart sysfsutils"
