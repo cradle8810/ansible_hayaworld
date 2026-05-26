@@ -12,3 +12,10 @@
   register: retval
   changed_when: retval.rc == 0
   listen: "Run update-initramfs"
+
+- name: "Run ldconfig"
+  ansible.builtin.command:
+    cmd: ldconfig
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "Run ldconfig"

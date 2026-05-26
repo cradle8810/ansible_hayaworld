@@ -26,8 +26,7 @@
       ansible.builtin.import_role:
         name: igpu
       vars:
-        # TODO: 自前でコンパイルすること
-        igpu_vulkan_install: false
+        igpu_vulkan_install: true
       tags:
         - igpu
         - vulkan
