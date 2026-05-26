@@ -1,6 +1,6 @@
 [all]
 ai ansible_user=root ansible_host=ai.hayaworld.home
-ollama ansible_user=ansible ansible_host=ollama.hayaworld.home ansible_become_exe=/usr/bin/sudo.ws
+ollama ansible_user=ansible ansible_host=ollama.hayaworld.home
 console ansible_user=ansible ansible_host=console.hayaworld.home
 ds ansible_user=ansible ansible_host=192.168.88.123
 iso ansible_user=ansible ansible_host=iso.hayaworld.home
