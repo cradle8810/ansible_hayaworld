@@ -1,30 +1,4 @@
 ---
-- name: "GPU / Install Requirements"
-  ansible.builtin.apt:
-    pkg:
-      - build-essential
-      - dkms
-      - linux-image-generic-hwe-{{ ansible_facts["distribution_version"] }}
-      - linux-headers-generic-hwe-{{ ansible_facts["distribution_version"] }}
-    state: present
-    update_cache: true
-
-- name: "GPU / Download i915 Driver"
-  ansible.builtin.get_url:
-    url: "{{ igpu_i915_driver_url }}"
-    dest: "{{ igpu_i915_driver_dest }}"
-    checksum: "{{ igpu_i915_driver_checksum }}"
-    mode: '0600'
-
-- name: "GPU / Install i915 Driver"
-  ansible.builtin.apt:
-    deb: "{{ igpu_i915_driver_dest }}"
-    state: present
-  notify:
-    - "Run update-grub"
-    - "Run update-initramfs"
-    - "Echo reboot notice"
-
 - name: "GPU / Configure GRUB CMDLINE"
   community.general.ini_file:
     path: /etc/default/grub
@@ -64,3 +38,29 @@
     groups:
       - render
     append: true
+
+- name: "GPU / Install Requirements"
+  ansible.builtin.apt:
+    pkg:
+      - build-essential
+      - dkms
+      - linux-image-generic-hwe-{{ ansible_facts["distribution_version"] }}
+      - linux-headers-generic-hwe-{{ ansible_facts["distribution_version"] }}
+    state: present
+    update_cache: true
+
+- name: "GPU / Download i915 Driver"
+  ansible.builtin.get_url:
+    url: "{{ igpu_i915_driver_url }}"
+    dest: "{{ igpu_i915_driver_dest }}"
+    checksum: "{{ igpu_i915_driver_checksum }}"
+    mode: '0600'
+
+- name: "GPU / Install i915 Driver"
+  ansible.builtin.apt:
+    deb: "{{ igpu_i915_driver_dest }}"
+    state: present
+  notify:
+    - "Run update-grub"
+    - "Run update-initramfs"
+    - "Echo reboot notice"

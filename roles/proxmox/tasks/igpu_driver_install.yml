@@ -24,22 +24,6 @@
     state: present
   when: proxmox_vfs_kernel is defined
 
-- name: "Download i915 Driver"
-  ansible.builtin.get_url:
-    url: "{{ proxmox_i915_driver_url }}"
-    dest: "{{ proxmox_i915_driver_dest }}"
-    checksum: "{{ proxmox_i915_driver_checksum }}"
-    mode: '0600'
-
-- name: "Install i915 Driver"
-  ansible.builtin.apt:
-    deb: "{{ proxmox_i915_driver_dest }}"
-    state: present
-  notify:
-    - "Run update-grub"
-    - "Run update-initramfs"
-    - "Echo reboot notice"
-
 # https://github.com/strongtz/i915-sriov-dkms?tab=readme-ov-file#required-kernel-parameters
 - name: "Configure VFs for Proxmox (i915)"
   notify:
@@ -153,3 +137,19 @@
             state: present
             no_extra_spaces: true
             mode: "644"
+
+- name: "Download i915 Driver"
+  ansible.builtin.get_url:
+    url: "{{ proxmox_i915_driver_url }}"
+    dest: "{{ proxmox_i915_driver_dest }}"
+    checksum: "{{ proxmox_i915_driver_checksum }}"
+    mode: '0600'
+
+- name: "Install i915 Driver"
+  ansible.builtin.apt:
+    deb: "{{ proxmox_i915_driver_dest }}"
+    state: present
+  notify:
+    - "Run update-grub"
+    - "Run update-initramfs"
+    - "Echo reboot notice"
