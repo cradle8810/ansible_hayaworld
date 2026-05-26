@@ -47,7 +47,16 @@
     path: "/etc/ld.so.conf.d/vulkan.conf"
     line: "{{ igpu_vulkan_sdk_basepath }}/x86_64/lib"
     state: present
+    create: true
+    owner: root
+    group: root
+    mode: "0644"
   notify: "Run ldconfig"
+
+- name: "Vulkan / Remove original Vulkan Layerpath Symlinks"
+  ansible.builtin.file:
+    path: "/etc/vulkan/explicit_layer.d"
+    state: absent
 
 - name: "Vulkan / Create Vulkan Layerpath Symlinks"
   ansible.builtin.file:
