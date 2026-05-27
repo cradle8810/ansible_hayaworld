@@ -69,7 +69,6 @@ zramswap:
   percent: 50
 
 docker_config:
-  storage-driver: "btrfs"
   default-address-pools:
     - base: "172.18.2.0/24"
       size: 28

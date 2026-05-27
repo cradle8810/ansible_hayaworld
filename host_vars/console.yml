@@ -92,7 +92,6 @@ gui_install:
 gui_wayland: true
 
 docker_config:
-  storage-driver: "btrfs"
   default-address-pools:
     - base: "172.18.1.0/24"
       size: 28
