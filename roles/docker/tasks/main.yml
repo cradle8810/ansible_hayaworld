@@ -27,8 +27,8 @@
     name: geerlingguy.docker
 
 - name: "Disable CoW if btrfs"
-  when: docker_btrfs is defined and docker_btrfs
+  when: docker_btrfs is defined and docker_btrfs and docker_btrfs_drive_mount_path is defined
   ansible.builtin.command:
-    cmd: chattr +C /var/lib/docker
+    cmd: "chattr +C {{ docker_btrfs_drive_mount_path }}"
   register: retval
   changed_when: retval.rc == 0

@@ -59,7 +59,7 @@
         scrutiny_collector_cron: true
         scrutiny_collector_device:
           devices:
-            - device: /dev/sda
+            - device: '/dev/sda'
               type: 'sat'
             - device: /dev/sdb
               type: 'sat'
