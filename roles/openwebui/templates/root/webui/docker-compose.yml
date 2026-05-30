@@ -8,8 +8,7 @@ services:
       - open-webui:/app/backend/data
     environment:
       - OLLAMA_BASE_URL=http://ollama.hayaworld.home:11434
-      - AIOHTTP_CLIENT_TIMEOUT=''
-      - AIOHTTP_CLIENT_TIMEOUT_MODEL_LIST=''
+      - AIOHTTP_CLIENT_TIMEOUT=36000
     restart: unless-stopped
 
 volumes:
