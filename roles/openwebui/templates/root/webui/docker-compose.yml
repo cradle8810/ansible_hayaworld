@@ -9,6 +9,8 @@ services:
     environment:
       - OLLAMA_BASE_URL=http://ollama.hayaworld.home:11434
       - AIOHTTP_CLIENT_TIMEOUT=36000
+      - ENABLE_EVALUATION_ARENA_MODELS=False
+#      - ENABLE_PERSISTENT_CONFIG=false
     restart: unless-stopped
 
 volumes:
