@@ -19,15 +19,3 @@
     group: root
     mode: '0644'
   notify: "Up webui"
-
-- name: "Kill AppArmor"
-  ansible.builtin.command:
-    cmd: "aa-teardown"
-  register: retval
-  changed_when: retval.rc == 0
-
-- name: "Disable AppArmor"
-  ansible.builtin.systemd_service:
-    name: apparmor.service
-    state: stopped
-    enabled: false
