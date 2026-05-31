@@ -1,0 +1,10 @@
+---
+borg_skylark_address: "{{ network | selectattr('shortname', 'eq', 'skylark') | map(attribute='ipv4') | first }}"
+borg_device: "/dev/null"
+
+borg_hour: "*"
+borg_minute: "30"
+
+borg_keep_daily: 7
+borg_keep_weekly: 4
+borg_keep_monthly: 4

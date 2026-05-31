@@ -54,7 +54,7 @@
 - name: "Set crontab"
   ansible.builtin.cron:
     name: "Scrutiny Collector"
-    minute: "*/2"
+    hour: "*/2"
     job: "{{ scrutiny_collector_install_bin }}/scrutiny-collector run --config {{ scrutiny_collector_install_etc }}/collector.yaml > /dev/null 2>&1"
     cron_file: scrutiny-collector
     user: root

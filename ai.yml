@@ -27,6 +27,16 @@
       tags:
         - webui
 
+    - name: "Install BorgBackup and Configuration Backup"
+      ansible.builtin.import_role:
+        name: borg
+      vars:
+        borg_device: "/mnt/backup/Service_Backups/openwebui"
+        borg_sources:
+          - webui_open-webui
+      tags:
+        - borg
+
     - name: "Install Zabbix agent"
       ansible.builtin.import_tasks:
         file: tasks/zabbix-agent2.yml

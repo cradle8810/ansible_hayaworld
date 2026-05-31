@@ -1,0 +1,33 @@
+---
+# These tasks must be called from handler
+- name: "Check destination dir already initialized"
+  ansible.builtin.command:
+    cmd: >
+      docker compose run --rm
+        --entrypoint 'test' borgbackup
+        -f /target/backup_initized
+    chdir: /root/borgbackup
+  register: is_initialized
+  failed_when: false
+  changed_when: false
+
+- name: "Initialize Borgbackup destination dir"
+  ansible.builtin.command:
+    cmd: >
+      docker compose run --rm borgbackup
+        init --encryption=none /target
+    chdir: /root/borgbackup
+  register: retval
+  changed_when: retval.rc == 0
+  when: is_initialized.rc != 0
+
+- name: "Mark destination dir as already initialized"
+  ansible.builtin.command:
+    cmd: >
+      docker compose run --rm
+        --entrypoint 'touch' borgbackup
+        /target/backup_initized
+    chdir: /root/borgbackup
+  register: retval
+  changed_when: retval.rc == 0
+  when: is_initialized.rc != 0

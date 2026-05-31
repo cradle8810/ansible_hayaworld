@@ -1,0 +1,41 @@
+---
+- name: "Install nfs-common and crontab for mount backup"
+  ansible.builtin.apt:
+    pkg:
+      - nfs-common
+      - cron
+
+- name: "Mkdir for Borgbackup docker-compose"
+  ansible.builtin.file:
+    path: "/root/borgbackup"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: "Put BorgBackup docker-compose"
+  ansible.builtin.template:
+    src: "templates/root/borgbackup/docker-compose.yml.j2"
+    dest: "/root/borgbackup/docker-compose.yml"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "Initialize Borgbackup"
+
+- name: "Put BorgBackup exec script"
+  ansible.builtin.template:
+    src: "templates/root/borgbackup/borgbackup_start.sh.j2"
+    dest: "/root/borgbackup/borgbackup_start.sh"
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: "Set crontab"
+  ansible.builtin.cron:
+    name: "Borg Backup"
+    hour: "{{ borg_hour }}"
+    minute: "{{ borg_minute }}"
+    job: "/bin/sh /root/borgbackup/borgbackup_start.sh"
+    cron_file: borg_backup
+    user: root
+  notify: "Restart cron"
