@@ -1,0 +1,22 @@
+services:
+  borgbackup:
+    image: epicsoft/borgbackup
+    container_name: borgbackup
+    volumes:
+      - backup-nfs:/target
+{% for item in borg_sources %}      - {{ item }}:/source/{{ item }}:ro
+{% endfor %}
+    profiles:
+      - backup
+    environment:
+      - BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK=yes
+
+volumes:
+  webui_open-webui:
+    external: true
+  backup-nfs:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: "addr={{ borg_skylark_address }},hard,nolock,rsize=1048576,wsize=1048576,nfsvers=4"
+      device: ":{{ borg_device }}"
