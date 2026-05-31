@@ -1,0 +1,44 @@
+---
+- name: "Mount Skylark / Install dependency Cifs-utils"
+  ansible.builtin.apt:
+    name: "cifs-utils"
+    state: present
+    update_cache: true
+
+- name: "Mount Skylark / Check if dest dir"
+  ansible.builtin.stat:
+    path: "{{ mount_dest_path }}"
+    follow: true
+  register: destdir_stat
+  when: mount_dest_create
+  failed_when:
+    - mount_dest_path == ""
+  changed_when:
+    - destdir_stat.stat.isdir == false
+
+- name: "Mount Skylark / Create credential dir"
+  ansible.builtin.file:
+    path: "{{ mount_dest_path }}"
+    state: directory
+    owner: "root"
+    group: "root"
+    mode: '0755'
+  when:
+    - mount_dest_create
+    - destdir_stat.stat.writeable
+
+- name: "Mount Skylark / Copy credential file"
+  ansible.builtin.template:
+    src: templates/etc/samba/credentials.j2
+    dest: /etc/samba/credentials
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: "Mount Skylark / Mount skylark"
+  ansible.posix.mount:
+    src: "//{{ mount_skylark_ipv4 }}/{{ mount_src_path }}"
+    path: "{{ mount_dest_path }}"
+    opts: "{{ mount_opts_base }},{{ mount_opts_additional }}"
+    fstype: cifs
+    state: mounted

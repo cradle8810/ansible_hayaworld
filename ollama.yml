@@ -49,3 +49,21 @@
         file: tasks/ai/tailscale.yml
       tags:
         - tailscale
+
+    - name: "Mount skylark Model Dir"
+      tags:
+        - skylark
+      ansible.builtin.import_role:
+        name: mount_skylark
+      vars:
+        mount_src_path: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          30666333616462666433356131626538376632343632376234636535343963313432613237633136
+          3365356462616436326230316634386137363135376565320a366565343332333731303938623764
+          39613338393161303863616237313931633432303562666264346362663261613836646135346532
+          3135356338343038310a353566323431363261303635623537363161616131393466623965346163
+          34333066313333386366346563393562383864383266363630323466663831326165
+        mount_dest_path: "/home/hayato/Models"
+        mount_opts_additional: "ro"
+        mount_uid: "{{ user | selectattr('name', 'eq', 'hayato') | map(attribute='uid') | first }}"
+        mount_gid: "{{ user | selectattr('name', 'eq', 'hayato') | map(attribute='gid') | first }}"

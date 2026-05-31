@@ -15,9 +15,28 @@
   ansible.builtin.import_tasks:
     file: tasks/common/caps2ctrl.yml
 
-- name: "Desktop / Mount skylark"
-  ansible.builtin.import_tasks:
-    file: tasks/common/mount_skylark.yml
+- name: "Desktop / Mount skylark Home"
+  tags:
+    - skylark
+  ansible.builtin.include_role:
+    name: mount_skylark
+    public: true
+    apply:
+      tags:
+        - skylark
+  vars:
+    mount_src_path: "{{ mount_item.src_path }}"
+    mount_dest_path: "{{ mount_item.dest_path }}"
+    mount_opts_additional: ""
+    mount_uid: "{{ user | selectattr('name', 'eq', 'hayato') | map(attribute='uid') | first }}"
+    mount_gid: "{{ user | selectattr('name', 'eq', 'hayato') | map(attribute='gid') | first }}"
+  loop:
+    - src_path: "Home"
+      dest_path: "/home/hayato/Home"
+    - src_path: "Nullpo"
+      dest_path: "/home/hayato/Nullpo"
+  loop_control:
+    loop_var: mount_item
 
 - name: "Desktop / Install Initial Desktop Packages"
   ansible.builtin.import_tasks:
