@@ -1,6 +1,6 @@
 services:
   ollama:
-    image: ollama/ollama:0.30.0-rc27
+    image: ollama/ollama:0.30.0-rc31
     container_name: ollama
     ports:
       - "11434:11434"
