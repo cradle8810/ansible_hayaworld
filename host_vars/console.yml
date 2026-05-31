@@ -88,6 +88,7 @@ zramswap:
 gui_install:
   wine: false
   firefox: true
+  sushi: true
 
 gui_wayland: true
 
