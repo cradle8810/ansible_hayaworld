@@ -9,6 +9,7 @@ docker compose run --rm borgbackup create \
 docker compose run --rm borgbackup prune \
   --list \
   --glob-archives 'archive-*' \
+  --keep-hourly {{ borg_keep_hourly }} \
   --keep-daily {{ borg_keep_daily }} \
   --keep-weekly {{ borg_keep_weekly }} \
   --keep-monthly {{ borg_keep_monthly }} \
