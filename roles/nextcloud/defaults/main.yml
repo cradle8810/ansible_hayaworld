@@ -1,5 +1,5 @@
 nextcloud_nfs_server: "192.168.88.10"
-nextcloud_nfs_src: "/mnt/backup/nextcloud"
+nextcloud_nfs_src: "/mnt/backup/Service_Backups/nextcloud"
 nextcloud_nfs_dest: "/mnt/nextcloud"
 
 nextcloud_i915_driver_url: "{{ igpu_driver.url }}"
