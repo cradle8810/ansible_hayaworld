@@ -7,10 +7,49 @@ services:
     volumes:
       - open-webui:/app/backend/data
     environment:
-      - OLLAMA_BASE_URL=http://ollama.hayaworld.home:11434
-      - AIOHTTP_CLIENT_TIMEOUT=36000
-      - ENABLE_EVALUATION_ARENA_MODELS=False
-#      - ENABLE_PERSISTENT_CONFIG=false
+      # ENABLE_PERSISTENT_CONFIG: false
+      OLLAMA_BASE_URL: http://ollama.hayaworld.home:11434
+      AIOHTTP_CLIENT_TIMEOUT: 36000
+      ENABLE_EVALUATION_ARENA_MODELS: False
+      ENABLE_TITLE_GENERATION: True
+      DEFAULT_TITLE_GENERATION_PROMPT_TEMPLATE: |2
+        ### Task:
+        Summarize this chat in about 20 characters in Japanese, without emojis.
+
+        ### Guidelines:
+        - Consider the content of the chat so that it can be distinguished from other chats.
+        - DON'T USE emojis, quotation marks or special formatting.
+        - Write the title in Japanese.
+
+        ### Output:
+        JSON format: { "title": "your concise title here" }
+
+        ### Example:
+        JSON format: { "title": "タイトルの例 できるだけ詳しく" }
+
+        ### Chat History:
+        <chat_history>
+        {{MESSAGES:END:8}}
+        </chat_history>
+      ENABLE_TAGS_GENERATION: True
+      DEFAULT_TAGS_GENERATION_PROMPT_TEMPLATE: |2
+        ### Task:
+        Generate 1-5 broad tags categorizing the main themes of the chat history, along with 1-5 more specific subtopic tags.
+
+        ### Guidelines:
+        - Start with high-level domains (e.g., Science, Technology, Philosophy, Arts, Politics, Business, Health, Sports, Entertainment, Education)
+        - Consider including relevant subfields/subdomains if they are strongly represented throughout the conversation
+        - If content is too short (less than 3 messages) or too diverse, use only ["General"]
+        - Use English only
+        - Prioritize accuracy over specificity
+
+        ### Output:
+        JSON format: { "tags": ["tag1", "tag2", "tag3"] }
+
+        ### Chat History:
+        <chat_history>
+        {{MESSAGES:END:6}}
+        </chat_history>
     restart: unless-stopped
 
 volumes:
