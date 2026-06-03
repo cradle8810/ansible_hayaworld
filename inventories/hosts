@@ -35,7 +35,7 @@ diskmon ansible_user=root ansible_host=diskmon.hayaworld.home
 zabbix ansible_user=ansible ansible_host=zabbix.hayaworld.home
 
 [piholes]
-pi01 ansible_user=root ansible_host=192.168.88.148
+pi01 ansible_user=ansible ansible_host=192.168.88.148
 
 [vm]
 console
