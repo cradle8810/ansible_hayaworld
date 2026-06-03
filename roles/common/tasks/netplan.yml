@@ -5,6 +5,8 @@
   any_errors_fatal: true
   when:
     - common_hostinfo.shortname != "terminal"
+    - common_hostinfo.shortname != "pi01"
+    - common_hostinfo.shortname != "qd"
   notify: "Reconfigure netplan"
   vars:
     ipv4_addr: "{{ common_hostinfo.ipv4 }}"
@@ -58,7 +60,7 @@
   ansible.builtin.import_role:
     name: mrlesmithjr.netplan
   any_errors_fatal: true
-  when: common_hostinfo.shortname == "qs"
+  when: common_hostinfo.shortname == "qd"
   notify: "Reconfigure netplan"
   vars:
     ipv4_addr: "{{ common_hostinfo.ipv4 }}"
@@ -74,6 +76,35 @@
             nameservers:
               addresses:
                 "{{ subnet.dns4 }}"
+              search:
+                "{{ subnet.search }}"
+            routes:
+              "{{ subnet.routes }}"
+            mtu:
+              "{{ common_hostinfo.mtu }}"
+
+- name: "Common / Apply netplan config (pi01.hayaworld.home)"
+  ansible.builtin.import_role:
+    name: mrlesmithjr.netplan
+  any_errors_fatal: true
+  when:
+    - common_hostinfo.shortname == "pi01"
+  notify: "Reconfigure netplan"
+  vars:
+    ipv4_addr: "{{ common_hostinfo.ipv4 }}"
+    netplan_enabled: true
+    netplan_renderer: networkd
+    netplan_configuration:
+      network:
+        version: 2
+        ethernets:
+          enp6s18:
+            addresses:
+              - "{{ ipv4_addr }}/{{ subnet.mask }}"
+            nameservers:
+              addresses:
+                - 202.232.2.3
+                - 202.232.2.2
               search:
                 "{{ subnet.search }}"
             routes:

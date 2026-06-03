@@ -18,8 +18,8 @@
         name: common
       vars:
         common_firewall: "{{ firewall }}"
-        common_add_hosts: false
         common_install_users: false
+        common_install_langs: true
 
     - name: "Setup dnsmasq"
       ansible.builtin.import_role:
