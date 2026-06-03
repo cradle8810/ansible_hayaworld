@@ -5,6 +5,10 @@ services:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_bin
       - --default-authentication-plugin=mysql_native_password
+      - --innodb-flush-log-at-trx_commit=2
+      - --innodb_flush_method=O_DIRECT
+      - --innodb_buffer_pool_size=4G
+      - --skip-log-bin
     volumes:
       - mysql_data:/var/lib/mysql
       - backups:/backups
@@ -32,6 +36,11 @@ services:
       MYSQL_USER: {{ zabbix_mysql_user }}
       MYSQL_PASSWORD: {{ zabbix_mysql_password }}
       MYSQL_ROOT_PASSWORD: {{ zabbix_mysql_root_password }}
+      ZBX_CACHESIZE: 1024M
+      ZBX_VALUECACHESIZE: 256M
+      ZBX_TRENDCACHESIZE: 128M
+      ZBX_HISTORYCACHESIZE: 128M
+      ZBX_HISTORYINDEXCACHESIZE: 128M
     depends_on:
       db:
         condition: service_healthy
