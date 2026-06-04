@@ -70,7 +70,7 @@ firewall:
       - name: "Packer HTTP server"
         proto: "tcp"
         src: "192.168.88.0/24"
-        port: "8000"
+        port: "8000:8005"
       - name: "Runner Docker ssh"
         proto: "tcp"
         src: "172.17.0.0/16"
