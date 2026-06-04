@@ -82,25 +82,11 @@ network:
     sshuser: hayato
     self_org: true
     mtu: 9000
-  - hostname: runner03.hayaworld.home
-    interface: enp6s18
-    ipv4: 192.168.88.108
-    shortname: runner03
-    sshuser: ansible
-    self_org: true
-    mtu: 9000
   - hostname: log.hayaworld.home
     interface: enp6s18
     ipv4: 192.168.88.109
     shortname: log
     sshuser: hayato
-    self_org: true
-    mtu: 9000
-  - hostname: runner04.hayaworld.home
-    interface: enp6s18
-    ipv4: 192.168.88.110
-    shortname: ansible
-    sshuser: runner
     self_org: true
     mtu: 9000
   - hostname: scanner.hayaworld.home
@@ -122,20 +108,6 @@ network:
     ipv4: 192.168.88.117
     shortname: subtitle
     sshuser: hayato
-    self_org: true
-    mtu: 9000
-  - hostname: runner01.hayaworld.home
-    interface: enp6s18
-    ipv4: 192.168.88.118
-    shortname: runner01
-    sshuser: ansible
-    self_org: true
-    mtu: 9000
-  - hostname: runner02.hayaworld.home
-    interface: enp6s18
-    ipv4: 192.168.88.119
-    shortname: runner02
-    sshuser: ansible
     self_org: true
     mtu: 9000
   - hostname: ss.hayaworld.home
@@ -171,6 +143,34 @@ network:
     ipv4: 192.168.88.124
     shortname: zabbix
     sshuser: hayato
+    self_org: true
+    mtu: 9000
+  - hostname: runner01.hayaworld.home
+    interface: enp6s18
+    ipv4: 192.168.88.125
+    shortname: runner01
+    sshuser: ansible
+    self_org: true
+    mtu: 9000
+  - hostname: runner02.hayaworld.home
+    interface: enp6s18
+    ipv4: 192.168.88.126
+    shortname: runner02
+    sshuser: ansible
+    self_org: true
+    mtu: 9000
+  - hostname: runner03.hayaworld.home
+    interface: enp6s18
+    ipv4: 192.168.88.127
+    shortname: runner03
+    sshuser: ansible
+    self_org: true
+    mtu: 9000
+  - hostname: runner04.hayaworld.home
+    interface: enp6s18
+    ipv4: 192.168.88.128
+    shortname: ansible
+    sshuser: runner
     self_org: true
     mtu: 9000
   - hostname: terminal.hayaworld.home
