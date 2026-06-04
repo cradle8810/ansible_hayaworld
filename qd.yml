@@ -23,8 +23,8 @@
         common_pkg: "{{ apt }}"
         common_install_users: true
         common_network_nameserver_addresses:
-          - 202.232.2.3
-          - 202.232.2.2
+          - "202.232.2.3"
+          - "202.232.2.2"
 
     - name: "System Configurations"
       tags:

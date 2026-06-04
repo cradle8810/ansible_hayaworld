@@ -21,8 +21,8 @@
         common_install_users: false
         common_install_langs: true
         common_network_nameserver_addresses:
-          - 202.232.2.3
-          - 202.232.2.2
+          - "202.232.2.3"
+          - "202.232.2.2"
 
     - name: "Setup dnsmasq"
       ansible.builtin.import_role:

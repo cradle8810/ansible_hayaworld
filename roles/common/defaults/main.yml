@@ -4,3 +4,9 @@ common_install_langs: false
 common_install_users: false
 
 common_network_nameserver_addresses: "{{ subnet.dns4 }}"
+common_network_interface: "{{ common_hostinfo.interface }}"
+common_network_ipv4: "{{ common_hostinfo.ipv4 }}"
+common_network_subnetmask: "{{ subnet.mask }}"
+common_network_search: "{{ subnet.search }}"
+common_network_routes: "{{ subnet.routes }}"
+common_network_mtu: "{{ common_hostinfo.mtu }}"
