@@ -44,7 +44,7 @@ network:
     interface: enp6s18
     ipv4: 192.168.88.100
     shortname: rui
-    sshuser: root
+    sshuser: ansible
     self_org: true
     mtu: 9000
   - hostname: bluray.hayaworld.home
@@ -72,7 +72,7 @@ network:
     interface: enp6s18
     ipv4: 192.168.88.106
     shortname: ai
-    sshuser: root
+    sshuser: ansible
     self_org: true
     mtu: 9000
   - hostname: ollama.hayaworld.home
@@ -86,7 +86,7 @@ network:
     interface: enp6s18
     ipv4: 192.168.88.108
     shortname: runner03
-    sshuser: runner
+    sshuser: ansible
     self_org: true
     mtu: 9000
   - hostname: log.hayaworld.home
@@ -99,7 +99,7 @@ network:
   - hostname: runner04.hayaworld.home
     interface: enp6s18
     ipv4: 192.168.88.110
-    shortname: runner04
+    shortname: ansible
     sshuser: runner
     self_org: true
     mtu: 9000
@@ -114,7 +114,7 @@ network:
     interface: enp6s18
     ipv4: 192.168.88.114
     shortname: tsgw1
-    sshuser: root
+    sshuser: ansible
     self_org: true
     mtu: 9000
   - hostname: subtitle.hayaworld.home
@@ -128,28 +128,28 @@ network:
     interface: enp6s18
     ipv4: 192.168.88.118
     shortname: runner01
-    sshuser: runner
+    sshuser: ansible
     self_org: true
     mtu: 9000
   - hostname: runner02.hayaworld.home
     interface: enp6s18
     ipv4: 192.168.88.119
     shortname: runner02
-    sshuser: runner
+    sshuser: ansible
     self_org: true
     mtu: 9000
   - hostname: ss.hayaworld.home
     interface: enp6s18
     ipv4: 192.168.88.120
     shortname: ss
-    sshuser: root
+    sshuser: ansible
     self_org: true
     mtu: 9000
   - hostname: diskmon.hayaworld.home
     interface: enp6s18
     ipv4: 192.168.88.121
     shortname: diskmon
-    sshuser: root
+    sshuser: ansible
     self_org: true
     mtu: 9000
   - hostname: iso.hayaworld.home
