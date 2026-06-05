@@ -2,6 +2,8 @@
 - name: Install Docker
   ansible.builtin.import_role:
     name: docker
+  vars:
+    docker_drive_is_opt_docker: true
   tags:
     - docker
 

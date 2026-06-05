@@ -1,5 +1,5 @@
 [all]
-ai ansible_user=root ansible_host=ai.hayaworld.home
+ai ansible_user=ansible ansible_host=ai.hayaworld.home
 ollama ansible_user=ansible ansible_host=ollama.hayaworld.home
 console ansible_user=ansible ansible_host=console.hayaworld.home
 ds ansible_user=ansible ansible_host=192.168.88.123
@@ -7,10 +7,10 @@ iso ansible_user=ansible ansible_host=iso.hayaworld.home
 log ansible_user=ansible ansible_host=log.hayaworld.home
 macbook ansible_user=hayato
 qd ansible_user=ansible ansible_host=192.168.88.200
-rui ansible_user=root ansible_host=192.168.88.100
+rui ansible_user=ansible ansible_host=192.168.88.100
 scanner ansible_user=ansible ansible_host=scanner.hayaworld.home
 skylark ansible_user=hayato ansible_host=192.168.88.10
-ss ansible_user=root ansible_host=ss.hayaworld.home
+ss ansible_user=ansible ansible_host=ss.hayaworld.home
 terminal ansible_user=ansible ansible_host=terminal.hayaworld.home
 
 [proxmox]
@@ -20,16 +20,16 @@ nuc03 ansible_user=root ansible_host=192.168.88.13
 nuc04 ansible_user=root ansible_host=192.168.88.14
 
 [runners]
-runner01 ansible_user=root ansible_host=runner01.hayaworld.home
-runner02 ansible_user=root ansible_host=runner02.hayaworld.home
-runner03 ansible_user=root ansible_host=runner03.hayaworld.home
-runner04 ansible_user=root ansible_host=runner04.hayaworld.home
+runner01 ansible_user=ansible ansible_host=runner01.hayaworld.home
+runner02 ansible_user=ansible ansible_host=runner02.hayaworld.home
+runner03 ansible_user=ansible ansible_host=runner03.hayaworld.home
+runner04 ansible_user=ansible ansible_host=runner04.hayaworld.home
 
 [tailscale]
-tsgw1 ansible_user=root ansible_host=192.168.88.114
+tsgw1 ansible_user=ansible ansible_host=192.168.88.114
 
 [scrutiny]
-diskmon ansible_user=root ansible_host=diskmon.hayaworld.home
+diskmon ansible_user=ansible ansible_host=diskmon.hayaworld.home
 
 [watch]
 zabbix ansible_user=ansible ansible_host=zabbix.hayaworld.home

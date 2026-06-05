@@ -4,7 +4,7 @@ services:
     ports:
       - '8086:8086'
     volumes:
-      - ./influxdb:/var/lib/influxdb2
+      - influxdb:/var/lib/influxdb2
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8086/health"]
       interval: 5s
@@ -28,3 +28,6 @@ services:
     cap_add:
       - SYS_RAWIO
     restart: always
+
+volumes:
+  influxdb:

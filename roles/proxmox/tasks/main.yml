@@ -17,6 +17,14 @@
   ansible.builtin.import_tasks:
     file: tasks/memory_config.yml
 
+- name: Make mountpoint for ISO tmpfs
+  ansible.builtin.file:
+    path: "/iso_temp"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
 - name: "Mount tmpfs for /var/tmp"
   ansible.posix.mount:
     src: "tmpfs"
@@ -26,6 +34,7 @@
     state: mounted
   loop:
     - "/var/tmp"
+    - "/iso_temp"
 
 - name: WoL Service Settings
   ansible.builtin.import_tasks:

@@ -1,6 +1,6 @@
 - name: Play for ss store servers
   hosts: ss
-  remote_user: root
+  remote_user: ansible
   gather_facts: true
   become: true
 
@@ -25,5 +25,21 @@
         name: shortstory
       vars:
         shortstory_ipaddr: "192.168.88.120"
+        docker_drive_is_opt_docker: true
+        docker_btrfs: true
+        docker_drive_uuid: "5603a159-0211-4591-8be0-f61ab1007c60"
         docker_users:
           - hayato
+      tags:
+        - ss
+
+    - name: "Install BorgBackup and Configuration Backup"
+      ansible.builtin.import_role:
+        name: borg
+      vars:
+        borg_device: "/mnt/backup/Service_Backups/ss"
+        borg_sources:
+          - src: /ss/nginx/html
+            dest: html
+      tags:
+        - borg

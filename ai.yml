@@ -24,6 +24,10 @@
     - name: "Install OpenWebUI"
       ansible.builtin.import_role:
         name: openwebui
+      vars:
+        docker_drive_is_opt_docker: true
+        docker_btrfs: true
+        docker_drive_uuid: "5603a159-0211-4591-8be0-f61ab1007c60"
       tags:
         - webui
 
@@ -33,7 +37,8 @@
       vars:
         borg_device: "/mnt/backup/Service_Backups/openwebui"
         borg_sources:
-          - webui_open-webui
+          - src: webui_open-webui
+            dest: webui_open-webui
       tags:
         - borg
 
