@@ -1,4 +1,50 @@
 ---
+- name: Prepare Docker data dir
+  when: docker_drive_is_opt_docker
+  tags:
+    - mount
+  block:
+    - name: Create Docker Mount dir
+      ansible.builtin.file:
+        path: "/opt/docker"
+        state: directory
+        owner: root
+        group: root
+        mode: '0710'
+
+    - name: "Mount Docker drive"
+      ansible.posix.mount:
+        src: "UUID={{ docker_drive_uuid }}"
+        path: "/opt/docker"
+        opts: "defaults,compress=zstd:1"
+        fstype: btrfs
+        state: mounted
+
+    - name: Create Docker Mount dir
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0710'
+      loop:
+        - "/opt/docker"
+        - "/opt/docker/docker"
+        - "/opt/docker/containerd"
+
+    - name: "Make symlink from Docker drive"
+      ansible.builtin.file:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        state: link
+      loop:
+        - src: "/opt/docker/docker"
+          dest: "/var/lib/docker"
+        - src: "/opt/docker/containerd"
+          dest: "/var/lib/containerd"
+
 - name: Configuration Dir mkdir
   ansible.builtin.file:
     path: /etc/docker/
@@ -23,12 +69,12 @@
   when: docker_config is defined
 
 - name: Install Docker(ce)
-  ansible.builtin.import_role:
+  ansible.builtin.include_role:
     name: geerlingguy.docker
 
 - name: "Disable CoW if btrfs"
-  when: docker_btrfs is defined and docker_btrfs and docker_btrfs_drive_mount_path is defined
+  when: docker_btrfs and docker_drive_is_opt_docker
   ansible.builtin.command:
-    cmd: "chattr +C {{ docker_btrfs_drive_mount_path }}"
+    cmd: "chattr +C /opt/docker"
   register: retval
   changed_when: retval.rc == 0

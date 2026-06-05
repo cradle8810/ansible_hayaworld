@@ -1,46 +1,9 @@
 ---
-- name: Prepare Docker data dir
-  tags:
-    - mount
-  block:
-    - name: Create Docker Mount dir
-      ansible.builtin.file:
-        path: "{{ item }}"
-        state: directory
-        owner: root
-        group: root
-        mode: '0710'
-      loop:
-        - "/opt/docker"
-        - "/opt/docker/docker"
-        - "/opt/docker/containerd"
-
-    - name: "Mount Docker drive"
-      ansible.posix.mount:
-        src: "UUID={{ docker_drive_uuid }}"
-        path: "/opt/docker"
-        opts: "defaults,compress=zstd:1"
-        fstype: btrfs
-        state: mounted
-
-    - name: "Make symlink from Docker drive"
-      ansible.builtin.file:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-        owner: root
-        group: root
-        state: link
-      loop:
-        - src: "/opt/docker/docker"
-          dest: "/var/lib/docker"
-        - src: "/opt/docker/containerd"
-          dest: "/var/lib/containerd"
-
 - name: Install Docker
   ansible.builtin.include_role:
     name: docker
   vars:
-    docker_btrfs_drive_mount_path: "/opt/docker"
+    docker_drive_is_opt_docker: true
     docker_users:
       - hayato
 
