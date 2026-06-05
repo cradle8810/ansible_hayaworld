@@ -57,6 +57,12 @@
       ansible.builtin.import_tasks:
         file: tasks/dns/journalctl.yml
 
+    - name: Setup Tailscale
+      ansible.builtin.import_tasks:
+        file: tasks/rui/tailscale.yml
+      tags:
+        - tailscale
+
     - name: APC UPS Settings
       ansible.builtin.import_role:
         name: apcupsd
