@@ -11,6 +11,9 @@ services:
       timeout: 10s
       retries: 5
     restart: always
+    environment:
+      INFLUXD_STORAGE_CACHE_MAX_MEMORY_SIZE: 2147483648
+      INFLUXD_STORAGE_WAL_MAX_CONCURRENT_WRITES: 1
 
   scrutiny:
     image: ghcr.io/analogj/scrutiny:latest-web
