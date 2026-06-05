@@ -114,14 +114,14 @@ network:
     interface: enp6s18
     ipv4: 192.168.88.120
     shortname: ss
-    sshuser: ansible
+    sshuser: hayato
     self_org: true
     mtu: 9000
   - hostname: diskmon.hayaworld.home
     interface: enp6s18
     ipv4: 192.168.88.121
     shortname: diskmon
-    sshuser: ansible
+    sshuser: hayato
     self_org: true
     mtu: 9000
   - hostname: iso.hayaworld.home

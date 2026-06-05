@@ -37,7 +37,8 @@
       vars:
         borg_device: "/mnt/backup/Service_Backups/openwebui"
         borg_sources:
-          - webui_open-webui
+          - src: webui_open-webui
+            dest: webui_open-webui
       tags:
         - borg
 

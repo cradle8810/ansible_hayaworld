@@ -1,8 +1,9 @@
 ---
 - name: Play for Diskmonitor using Scrutiny
   hosts: diskmon
-  remote_user: root
+  remote_user: ansible
   gather_facts: true
+  become: true
 
   vars_files:
     - host_vars/networks.yml
@@ -19,7 +20,7 @@
       vars:
         common_firewall: "{{ firewall }}"
         common_pkg: "{{ apt }}"
-        common_install_users: false
+        common_install_users: true
 
     - name: "Configure Scrutiny"
       ansible.builtin.import_role:
@@ -31,6 +32,12 @@
         scrutiny_server_mail_smtp_port: "587"
         scrutiny_server_discord_webhook_id: "ID"
         scrutiny_server_discord_webhook_token: "TOKEN"
+        docker_drive_is_opt_docker: true
+        docker_btrfs: true
+        docker_drive_uuid: "5603a159-0211-4591-8be0-f61ab1007c60"
+        docker_users:
+          - ansible
+          - hayato
       tags:
         - scrutiny
 
@@ -70,3 +77,16 @@
       notify: "swappiness sysctl"
       tags:
         - swap
+
+    - name: "Install BorgBackup and Configuration Backup"
+      ansible.builtin.import_role:
+        name: borg
+      vars:
+        borg_device: "/mnt/backup/Service_Backups/diskmon"
+        borg_sources:
+          - src: influxdb
+            dest: influxdb
+          - src: scrutiny_influxdb
+            dest: scrutiny_influxdb
+      tags:
+        - borg

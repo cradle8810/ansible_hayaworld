@@ -24,4 +24,4 @@
 
 - name: Install Docker(ce)
   ansible.builtin.import_role:
-    name: geerlingguy.docker
+    name: docker
