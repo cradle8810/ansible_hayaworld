@@ -36,6 +36,7 @@ firewall:
         src: "::"
         port: "546"
 
+swappiness: 90
 zramswap:
   algo: lz4
   percent: 50
