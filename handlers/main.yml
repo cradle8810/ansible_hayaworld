@@ -5,12 +5,6 @@
     state: restarted
   listen: "Restart avahi-daemon"
 
-- name: Restart docker
-  ansible.builtin.systemd_service:
-    name: docker
-    state: restarted
-  listen: "Restart docker"
-
 - name: Restart rsyslog
   ansible.builtin.systemd_service:
     name: rsyslog
@@ -36,24 +30,12 @@
     enabled: true
   listen: "Restart systemd-resolved"
 
-- name: "Echo reboot notice"
-  ansible.builtin.debug:
-    msg: "Please Reboot Here."
-  listen: "Echo reboot notice"
-
 - name: "Reconfigure netplan"
   ansible.builtin.command:
     cmd: "netplan apply -f"
   register: retval
   changed_when: retval.rc == 0
   listen: "Reconfigure netplan"
-
-- name: "Tailscale sysctl restart"
-  ansible.builtin.command:
-    cmd: "sysctl -p /etc/sysctl.d/99-tailscale.conf"
-  register: retval
-  changed_when: retval.rc == 0
-  listen: "tailscale sysctl"
 
 - name: "Swappiness setting for nuc sysctl restart"
   ansible.builtin.command:
@@ -83,13 +65,6 @@
     enabled: true
   listen: "Restart cron"
 
-- name: Restart and update tailscale
-  ansible.builtin.systemd_service:
-    name: tailscaled
-    state: restarted
-    daemon_reload: true
-  listen: "Restart and update tailscale"
-
 - name: Restart zabbix-agent2
   ansible.builtin.systemd_service:
     name: zabbix-agent2
@@ -105,13 +80,6 @@
     enabled: true
     daemon_reload: true
   listen: "Restart snmpd"
-
-- name: "Apparmor Reconfig"
-  ansible.builtin.command:
-    cmd: "aa-complain /usr/sbin/snmpd"
-  register: retval
-  changed_when: retval.rc == 0
-  listen: "snmp apparmor"
 
 - name: "Common / Reload sysctl"
   ansible.builtin.command:

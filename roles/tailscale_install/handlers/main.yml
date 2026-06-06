@@ -1,0 +1,15 @@
+---
+- name: "Tailscale sysctl restart"
+  ansible.builtin.command:
+    cmd: "sysctl -p /etc/sysctl.d/99-tailscale.conf"
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "tailscale sysctl"
+
+- name: "Run Tailscale funnel"
+  when: tailscale_install_funnel
+  ansible.builtin.debug:
+    msg: |
+      Run That Command on This node:
+       tailscale funnel --bg --https={{ tailscale_install_funnel_external_port }} {{ tailscale_install_serve_url }}
+  listen: "Run funnel"

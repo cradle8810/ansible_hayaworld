@@ -57,9 +57,13 @@
       ansible.builtin.import_tasks:
         file: tasks/dns/journalctl.yml
 
-    - name: Setup Tailscale
-      ansible.builtin.import_tasks:
-        file: tasks/rui/tailscale.yml
+    - name: "Setup Tailscale Endpoint"
+      ansible.builtin.import_role:
+        name: tailscale_install
+      vars:
+        tailscale_install_tags:
+          - dns
+        tailscale_install_args: "--accept-dns=false --advertise-routes=192.168.88.100/32"
       tags:
         - tailscale
 
