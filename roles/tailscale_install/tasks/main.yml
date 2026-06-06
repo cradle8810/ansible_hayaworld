@@ -1,0 +1,62 @@
+---
+- name: "Set Packet forwarding"
+  when: "'advertise-routes' in tailscale_install_args"
+  community.general.ini_file:
+    path: "/etc/sysctl.d/99-tailscale.conf"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    state: present
+    no_extra_spaces: false
+    mode: "644"
+  notify: "tailscale sysctl"
+  loop:
+    - option: "net.ipv4.ip_forward"
+      value: "1"
+    - option: "net.ipv6.conf.all.forwarding"
+      value: "1"
+
+- name: "Setup Tailscale Endpoint for console"
+  when: not ansible_check_mode
+  ansible.builtin.import_role:
+    name: artis3n.tailscale.machine
+  vars:
+    tailscale_authkey: "{{ tailscale_install_client_secret }}"
+    tailscale_args: "{{ tailscale_install_args }}"
+    tailscale_oauth_ephemeral: false
+    tailscale_tags: "{{ tailscale_install_tags }}"
+
+- name: "Setup Tailscale Serve"
+  when:
+    - tailscale_install_serve
+    - not ansible_check_mode
+  block:
+    # tailscale_serve_retval == 0 when not configured
+    - name: "Check Tailscale serve configured"
+      ansible.builtin.shell:
+        cmd: |
+            set -o pipefail
+            tailscale serve status | grep 'No serve config'
+        executable: /bin/bash
+      register: tailscale_serve_retval
+      changed_when: false
+      failed_when: false
+
+    # This node doesn't need to reveal WebUI to the Internet.
+    - name: "Set Tailscale serve"
+      ansible.builtin.command:
+        cmd: >
+          tailscale serve --bg
+            --https={{ tailscale_install_serve_https_port }}
+            --set-path={{ tailscale_install_serve_set_path }}
+            {{ tailscale_install_serve_url }}
+      register: retval
+      changed_when: retval.rc == 0
+      when:
+        - tailscale_serve_retval.rc == 0
+      notify: "Run funnel"
+
+- name: "Tailscale Firewall accept"
+  community.general.ufw:
+    rule: allow
+    interface_in: tailscale0
+    proto: any

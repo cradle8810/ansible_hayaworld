@@ -5,9 +5,20 @@
   tags:
     - docker
 
-- name: Install Tailscale
-  ansible.builtin.import_tasks:
-    file: tasks/tailscale.yml
+- name: "Setup Tailscale Endpoint"
+  ansible.builtin.include_role:
+    name: tailscale_install
+    apply:
+      tags:
+        - tailscale
+  vars:
+    tailscale_install_tags:
+      - ds
+    tailscale_install_serve: true
+    tailscale_install_funnel: true
+    tailscale_install_serve_https_port: 443
+    tailscale_install_serve_set_path: "/"
+    tailscale_install_serve_url: "http://127.0.0.1:8080"
   tags:
     - tailscale
 

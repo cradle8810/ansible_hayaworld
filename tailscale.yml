@@ -20,9 +20,13 @@
         common_firewall: "{{ firewall }}"
         common_install_users: false
 
-    - name: Install Tailscale
-      ansible.builtin.import_tasks:
-        file: tasks/tailscale.yml
+    - name: "Setup Tailscale Endpoint"
+      ansible.builtin.import_role:
+        name: tailscale_install
+      vars:
+        tailscale_install_tags:
+          - gw
+        tailscale_install_args: "--accept-dns=true --advertise-routes=192.168.88.0/24"
       tags:
         - tailscale
 

@@ -112,15 +112,19 @@
       tags:
         - maintenance
       block:
-        - name: Install Tailscale as Exitnode/Subnet Router (for maintenance)
-          ansible.builtin.import_tasks:
-            file: tasks/tailscale.yml
-          tags:
-            - tailscale
-
-        - name: "Setup Tailscale serve"
-          ansible.builtin.import_tasks:
-            file: tasks/qd/tailscale.yml
+        - name: "Setup Tailscale Endpoint"
+          ansible.builtin.import_role:
+            name: tailscale_install
+          vars:
+            tailscale_install_tags:
+              - gw
+              - dns
+            tailscale_install_serve: true
+            tailscale_install_funnel: false
+            tailscale_install_serve_https_port: 443
+            tailscale_install_serve_set_path: "/"
+            tailscale_install_serve_url: "http://127.0.0.1:80"
+            tailscale_install_args: "--advertise-routes=192.168.88.0/24 --advertise-exit-node --accept-dns=false"
           tags:
             - tailscale
 

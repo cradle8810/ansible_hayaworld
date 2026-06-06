@@ -85,9 +85,11 @@
         - zram
 
     - name: "Setup Tailscale Endpoint"
-      ansible.builtin.import_tasks:
-        file: tasks/tailscale_console.yml
-      when: not ansible_check_mode
+      ansible.builtin.import_role:
+        name: tailscale_install
+      vars:
+        tailscale_install_tags:
+          - console
       tags:
         - tailscale
 
