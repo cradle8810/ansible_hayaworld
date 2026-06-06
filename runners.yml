@@ -102,3 +102,9 @@
         file: tasks/zabbix-agent2.yml
       tags:
         - zabbix
+
+    - name: Install/Config Zramswap
+      ansible.builtin.import_role:
+        name: zramswap
+      tags:
+        - zram

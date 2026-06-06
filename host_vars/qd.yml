@@ -84,10 +84,6 @@ firewall:
         src: "::/0"
         port: "546"
 
-zramswap:
-  algo: lz4
-  percent: 50
-
 ups:
   role: master
 

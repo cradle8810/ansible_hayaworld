@@ -73,14 +73,8 @@
       tags:
         - zabbix
 
-    - name: "Set Swappiness"
-      community.general.ini_file:
-        path: "/etc/sysctl.d/99-swappiness.conf"
-        option: "vm.swappiness"
-        value: "{{ swappiness }}"
-        state: present
-        no_extra_spaces: true
-        mode: "644"
-      notify: "swappiness sysctl"
+    - name: Install/Config Zramswap
+      ansible.builtin.import_role:
+        name: zramswap
       tags:
-        - swap
+        - zram

@@ -70,10 +70,10 @@
         - gui
 
     - name: Install/Config Zramswap
-      ansible.builtin.import_tasks:
-        file: tasks/zram.yml
+      ansible.builtin.import_role:
+        name: zramswap
       tags:
-        - services
+        - zram
 
     - name: "Configure Rsyslog"
       ansible.builtin.import_role:

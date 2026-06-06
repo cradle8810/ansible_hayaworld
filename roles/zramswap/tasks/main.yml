@@ -1,22 +1,27 @@
 ---
 - name: "Install and config zram-tools"
-  when:
-    ansible_facts.virtualization_type != 'lxc'
-  tags:
-    - zram
   block:
     - name: "Install zram-tools"
       ansible.builtin.apt:
         name: "zram-tools"
         state: present
         update_cache: true
-        cache_valid_time: "{{ apt_cache_valid_time }}"
 
     - name: "Setting zram configurations"
       ansible.builtin.template:
-        src: templates/all/etc/default/zramswap.j2
+        src: templates/etc/default/zramswap.j2
         dest: /etc/default/zramswap
         owner: root
         group: root
         mode: '0644'
       notify: "Restart zramswap"
+
+- name: "Set Swappiness"
+  community.general.ini_file:
+    path: "/etc/sysctl.d/99-swappiness.conf"
+    option: "vm.swappiness"
+    value: "{{ zramswap_swappiness }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  notify: "swappiness sysctl"

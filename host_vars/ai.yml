@@ -21,10 +21,6 @@ firewall:
         src: "::"
         port: "546"
 
-zramswap:
-  algo: lz4
-  percent: 50
-
 docker_config:
   default-address-pools:
     - base: "172.18.5.0/24"

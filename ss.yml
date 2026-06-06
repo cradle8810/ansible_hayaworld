@@ -43,3 +43,9 @@
             dest: html
       tags:
         - borg
+
+    - name: Install/Config Zramswap
+      ansible.builtin.import_role:
+        name: zramswap
+      tags:
+        - zram
