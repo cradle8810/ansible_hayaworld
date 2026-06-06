@@ -57,7 +57,3 @@ firewall:
         proto: "udp"
         src: "::"
         port: "546"
-
-zramswap:
-  algo: lz4
-  percent: 50

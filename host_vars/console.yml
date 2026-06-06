@@ -81,10 +81,6 @@ firewall:
         src: "::"
         port: "546"
 
-zramswap:
-  algo: lz4
-  percent: 50
-
 gui_install:
   wine: false
   firefox: true
