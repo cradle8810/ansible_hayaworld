@@ -1,0 +1,4 @@
+---
+zramswap_algo: lz4
+zramswap_percent: 50
+zramswap_priority: 100
