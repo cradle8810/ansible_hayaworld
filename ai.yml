@@ -53,3 +53,9 @@
         file: tasks/ai/tailscale.yml
       tags:
         - tailscale
+
+    - name: Install/Config Zramswap
+      ansible.builtin.import_role:
+        name: zramswap
+      tags:
+        - zram
