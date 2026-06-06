@@ -27,23 +27,10 @@
   changed_when: retval.rc == 0
   listen: "KSM cache extend"
 
-- name: Restart zramswap
-  ansible.builtin.systemd_service:
-    name: zramswap
-    state: restarted
-  listen: "Restart zramswap"
-
 - name: "Echo reboot notice"
   ansible.builtin.debug:
     msg: "Please Reboot Here."
   listen: "Echo reboot notice"
-
-- name: "Swappiness setting for nuc sysctl restart"
-  ansible.builtin.command:
-    cmd: "sysctl -p /etc/sysctl.d/99-swappiness.conf"
-  register: retval
-  changed_when: retval.rc == 0
-  listen: "swappiness sysctl"
 
 - name: "Restart cron"
   ansible.builtin.systemd_service:

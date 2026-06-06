@@ -14,28 +14,12 @@
     - "Restart ksmtuned"
 
 - name: Install/Config Zramswap
-  block:
-    - name: "Install Zramtools"
-      ansible.builtin.apt:
-        name: "zram-tools"
-        state: present
-        update_cache: true
-
-    - name: "Setting zram configurations"
-      ansible.builtin.template:
-        src: templates/etc/default/zramswap.j2
-        dest: /etc/default/zramswap
-        owner: root
-        group: root
-        mode: '0644'
-      notify: "Restart zramswap"
-
-- name: Set Swappiness
-  community.general.ini_file:
-    path: "/etc/sysctl.d/99-swappiness.conf"
-    option: "vm.swappiness"
-    value: "{{ proxmox_swappiness }}"
-    state: present
-    no_extra_spaces: true
-    mode: "644"
-  notify: "swappiness sysctl"
+  ansible.builtin.import_role:
+    name: zramswap
+  vars:
+    zramswap_algo: lz4
+    zramswap_percent: 15
+    zramswap_swappiness: 20
+    zramswap_priority: 100
+  tags:
+    - zram
