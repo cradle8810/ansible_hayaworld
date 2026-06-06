@@ -15,3 +15,13 @@
         group: root
         mode: '0644'
       notify: "Restart zramswap"
+
+- name: "Set Swappiness"
+  community.general.ini_file:
+    path: "/etc/sysctl.d/99-swappiness.conf"
+    option: "vm.swappiness"
+    value: "{{ zramswap_swappiness }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  notify: "swappiness sysctl"
