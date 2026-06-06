@@ -24,7 +24,7 @@
       ansible.builtin.get_url:
         url: "https://sourceforge.net/p/smartmontools/code/HEAD/tree/branches/RELEASE_7_5_DRIVEDB/smartmontools/drivedb.h?format=raw"
         dest: "/var/lib/smartmontools/drivedb/drivedb.h"
-        checksum: "sha256:c6a131b5d905b125e8c96c5ab239ee68bd5fa316a9a6c30593632d15738e54c3"
+        checksum: "sha256:cd5d34d9d618e09e8cba83b25556a7b9bd3fc81bb7917d8585b5f0544d729a6f"
         owner: root
         group: root
         mode: "0644"
