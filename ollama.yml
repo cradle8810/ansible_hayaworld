@@ -103,8 +103,6 @@
         no_extra_spaces: true
         mode: "644"
       loop:
-        - option: "vm.nr_hugepages"
-          value: "16384" # 32GiB (2M*16384)
         - option: "vm.max_map_count"
           value: "262144" # 2MiB Chunk
       notify: "hugepage sysctl"
