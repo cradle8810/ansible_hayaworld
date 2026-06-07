@@ -38,6 +38,17 @@
       tags:
         - ollama
 
+    - name: "Install BorgBackup and Configuration Backup"
+      ansible.builtin.import_role:
+        name: borg
+      vars:
+        borg_device: "/mnt/backup/Service_Backups/ollama"
+        borg_sources:
+          - src: ollama_ollama
+            dest: ollama_ollama
+      tags:
+        - borg
+
     - name: Install Zabbix agent
       ansible.builtin.import_tasks:
         file: tasks/zabbix-agent2.yml
