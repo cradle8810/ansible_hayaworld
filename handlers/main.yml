@@ -87,3 +87,10 @@
   register: retval
   changed_when: retval.rc == 0
   listen: "Reload sysctl"
+
+- name: "Enable Huge Page setting for nuc sysctl restart"
+  ansible.builtin.command:
+    cmd: "sysctl -p /etc/sysctl.d/99-hugepage.conf"
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "hugepage sysctl"
