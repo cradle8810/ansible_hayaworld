@@ -29,7 +29,7 @@ docker_users:
 
 borg_device: "/mnt/backup/Service_Backups/searxng"
 borg_sources:
-  - src: config
+  - src: "/root/searxng/config/"
     dest: config
   - src: data
     dest: data

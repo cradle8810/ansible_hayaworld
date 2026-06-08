@@ -25,6 +25,7 @@
         name: searxng
       tags:
         - searxng
+        - search
         - searching
 
     - name: "Install BorgBackup and Configuration Backup"

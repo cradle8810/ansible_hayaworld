@@ -22,7 +22,7 @@ services:
       - GLIBC_TUNABLES=glibc.malloc.hugetlb=1
       - ENABLE_WEB_SEARCH=true
       - WEB_SEARCH_ENGINE=searxng
-      - SEARXNG_QUERY_URL="http://searxng.hayaworld.home:8080/search?q=<query>&format=json"
+      - SEARXNG_QUERY_URL="https://searxng.{{ searxng_base_url_domain }}/search?q=<query>&format=json"
     ulimits:
       memlock:
         soft: -1

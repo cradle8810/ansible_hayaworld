@@ -5,10 +5,9 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - config:/etc/searxng
+      - ./config:/etc/searxng
       - data:/var/cache/searxng/
     restart: unless-stopped
 
 volumes:
-  config:
   data:
