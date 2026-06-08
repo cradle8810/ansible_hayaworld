@@ -18,8 +18,8 @@
         mode: '0755'
 
     - name: "Put Ollama docker-compose"
-      ansible.builtin.copy:
-        src: "templates/home/hayato/ollama/docker-compose.yml"
+      ansible.builtin.template:
+        src: "templates/home/hayato/ollama/docker-compose.yml.j2"
         dest: "/home/hayato/ollama/docker-compose.yml"
         owner: hayato
         group: hayato

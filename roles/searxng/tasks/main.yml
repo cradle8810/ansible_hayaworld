@@ -1,0 +1,46 @@
+---
+- name: "Install Docker"
+  ansible.builtin.include_role:
+    name: docker
+
+- name: "Put docker-compose.yml"
+  tags:
+    - docker
+    - compose
+  notify: "Up searxng container"
+  block:
+    - name: "Mkdir for searxng docker-compose"
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+      loop:
+        - "/root/searxng"
+        - "/root/searxng/config"
+
+    - name: "Put searxng docker-compose"
+      ansible.builtin.copy:
+        src: "roles/searxng/templates/root/searxng/docker-compose.yml"
+        dest: "/root/searxng/docker-compose.yml"
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: "Put searxng configs"
+      ansible.builtin.template:
+        src: "roles/searxng/templates/root/searxng/config/settings.yml.j2"
+        dest: "/root/searxng/config/settings.yml"
+        owner: root
+        group: root
+        mode: '0644'
+
+- name: "Setup Tailscale Endpoint"
+  ansible.builtin.include_role:
+    name: tailscale_install
+    apply:
+      tags:
+        - tailscale
+  tags:
+    - tailscale

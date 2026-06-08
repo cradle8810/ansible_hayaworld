@@ -9,6 +9,7 @@ macbook ansible_user=hayato
 qd ansible_user=ansible ansible_host=192.168.88.200
 rui ansible_user=ansible ansible_host=192.168.88.100
 scanner ansible_user=ansible ansible_host=scanner.hayaworld.home
+searxng ansible_user=ansible ansible_host=searxng.hayaworld.home
 skylark ansible_user=hayato ansible_host=192.168.88.10
 ss ansible_user=ansible ansible_host=ss.hayaworld.home
 terminal ansible_user=ansible ansible_host=terminal.hayaworld.home

@@ -1,0 +1,22 @@
+use_default_settings: True
+
+search:
+  formats:
+    - html
+    - json
+
+server:
+  base_url: False
+  port: 8080
+  bind_address: "127.0.0.1"
+  secret_key: "{{ searxng_secret_key }}"
+
+doi_resolvers:
+  oadoi.org: 'https://oadoi.org/'
+  doi.org: 'https://doi.org/'
+  doai.io: 'https://dissem.in/'
+  sci-hub.se: 'https://sci-hub.se/'
+  sci-hub.st: 'https://sci-hub.st/'
+  sci-hub.ru: 'https://sci-hub.ru/'
+
+default_doi_resolver: 'oadoi.org'

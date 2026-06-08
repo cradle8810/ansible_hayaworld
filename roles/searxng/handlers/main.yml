@@ -1,0 +1,6 @@
+---
+- name: "Start searxng Docker Compose"
+  community.docker.docker_compose_v2:
+    project_src: /root/searxng
+    state: present
+  listen: "Up searxng container"
