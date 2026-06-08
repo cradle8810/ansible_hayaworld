@@ -27,11 +27,6 @@
   changed_when: retval.rc == 0
   listen: "KSM cache extend"
 
-- name: "Echo reboot notice"
-  ansible.builtin.debug:
-    msg: "Please Reboot Here."
-  listen: "Echo reboot notice"
-
 - name: "Restart cron"
   ansible.builtin.systemd_service:
     name: cron.service

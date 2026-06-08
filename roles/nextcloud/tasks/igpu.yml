@@ -21,7 +21,6 @@
   notify:
     - "Run update-grub"
     - "Run update-initramfs"
-    - "Echo reboot notice"
 
 - name: "GPU / Install GPU Utilities"
   ansible.builtin.apt:
@@ -55,4 +54,3 @@
   notify:
     - "Run update-grub"
     - "Run update-initramfs"
-    - "Echo reboot notice"

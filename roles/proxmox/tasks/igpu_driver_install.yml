@@ -30,7 +30,6 @@
     - "Run update-grub"
     - "Run update-initramfs"
     - "Restart sysfsutils"
-    - "Echo reboot notice"
   when: common_hostinfo.shortname not in proxmox_xe_nodes
   block:
     - name: "Edit Configures Ini files (i915)"
@@ -83,7 +82,6 @@
     - "Run update-grub"
     - "Run update-initramfs"
     - "Restart sysfsutils"
-    - "Echo reboot notice"
   when: common_hostinfo.shortname in proxmox_xe_nodes
   block:
     - name: "Get device id"
@@ -152,4 +150,3 @@
   notify:
     - "Run update-grub"
     - "Run update-initramfs"
-    - "Echo reboot notice"
