@@ -3,6 +3,7 @@ ai ansible_user=ansible ansible_host=ai.hayaworld.home
 ollama ansible_user=ansible ansible_host=ollama.hayaworld.home
 console ansible_user=ansible ansible_host=console.hayaworld.home
 ds ansible_user=ansible ansible_host=192.168.88.123
+firecrawl ansible_user=ansible ansible_host=firecrawl.hayaworld.home
 iso ansible_user=ansible ansible_host=iso.hayaworld.home
 log ansible_user=ansible ansible_host=log.hayaworld.home
 macbook ansible_user=hayato

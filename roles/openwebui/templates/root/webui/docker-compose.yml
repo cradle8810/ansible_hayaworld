@@ -10,6 +10,8 @@ services:
       # ENABLE_PERSISTENT_CONFIG: false
       OLLAMA_BASE_URL: http://ollama.hayaworld.home:11434
       AIOHTTP_CLIENT_TIMEOUT: 36000
+      WEB_LOADER_TIMEOUT: 120000
+      FIRECRAWL_TIMEOUT: 120000
       ENABLE_EVALUATION_ARENA_MODELS: False
       ENABLE_TITLE_GENERATION: True
       DEFAULT_TITLE_GENERATION_PROMPT_TEMPLATE: |2
@@ -51,6 +53,17 @@ services:
         {{MESSAGES:END:6}}
         </chat_history>
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          pids: 65535
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65535
+        hard: 65535
 
 volumes:
   open-webui:

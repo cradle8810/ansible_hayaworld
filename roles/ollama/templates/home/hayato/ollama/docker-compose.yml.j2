@@ -23,10 +23,17 @@ services:
       - ENABLE_WEB_SEARCH=true
       - WEB_SEARCH_ENGINE=searxng
       - SEARXNG_QUERY_URL="https://searxng.{{ searxng_base_url_domain }}/search?q=<query>&format=json"
+    deploy:
+      resources:
+        limits:
+          pids: 65535
     ulimits:
       memlock:
         soft: -1
         hard: -1
+      nofile:
+        soft: 65535
+        hard: 65535
     cap_add:
       - SYS_ADMIN
       - IPC_LOCK

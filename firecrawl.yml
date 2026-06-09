@@ -20,50 +20,14 @@
       vars:
         common_firewall: "{{ firewall }}"
         common_install_users: true
+      tags:
+        - common
 
-    # NEED UPDATE
-    - name: "Install OpenWebUI"
+    - name: "Install firecrawl"
       ansible.builtin.import_role:
-        name: openwebui
-      vars:
-        docker_drive_is_opt_docker: true
-        docker_btrfs: true
-        docker_drive_uuid: "5603a159-0211-4591-8be0-f61ab1007c60"
+        name: firecrawl
       tags:
-        - webui
-
-    # NEED UPDATE
-    - name: "Install BorgBackup and Configuration Backup"
-      ansible.builtin.import_role:
-        name: borg
-      vars:
-        borg_device: "/mnt/backup/Service_Backups/openwebui"
-        borg_sources:
-          - src: webui_open-webui
-            dest: webui_open-webui
-      tags:
-        - borg
-
-    - name: "Install Zabbix agent"
-      ansible.builtin.import_tasks:
-        file: tasks/zabbix-agent2.yml
-      tags:
-        - zabbix
-
-    - name: "Setup Tailscale Endpoint"
-      ansible.builtin.import_role:
-        name: tailscale_install
-      vars:
-        tailscale_install_tags:
-          - ai
-        tailscale_install_serve: true
-        tailscale_install_funnel: true
-        tailscale_install_serve_https_port: 443
-        tailscale_install_serve_set_path: "/"
-        tailscale_install_serve_url: "http://127.0.0.1:8080"
-        tailscale_install_args: "--accept-dns=true"
-      tags:
-        - tailscale
+        - firecrawl
 
     - name: Install/Config Zramswap
       ansible.builtin.import_role:
