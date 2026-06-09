@@ -1,15 +1,18 @@
-use_default_settings: True
-
-search:
-  formats:
-    - html
-    - json
+use_default_settings: true
 
 server:
-  base_url: False
+  base_url: false
   port: 8080
   bind_address: "127.0.0.1"
   secret_key: "{{ searxng_secret_key }}"
+  method: "GET"
+  default_http_headers:
+    X-Content-Type-Options: nosniff
+    X-Download-Options: noopen
+    X-Robots-Tag: noindex, nofollow
+    Referrer-Policy: no-referrer
+  public_instance: false
+
 
 doi_resolvers:
   oadoi.org: 'https://oadoi.org/'
@@ -20,3 +23,304 @@ doi_resolvers:
   sci-hub.ru: 'https://sci-hub.ru/'
 
 default_doi_resolver: 'oadoi.org'
+
+search:
+  formats:
+    - html
+    - json
+  safe_search: 0
+  autocomplete: ""
+  favicon_resolver: "duckduckgo"
+  languages:
+    - all
+  max_page: 0
+
+ui:
+  default_locale: "ja"
+  query_in_title: false
+  center_alignment: false
+  cache_url: https://web.archive.org/web/
+  default_theme: simple
+  theme_args:
+    simple_style: auto
+  search_on_category_select: true
+  hotkeys: default
+  url_formatting: full
+  results_on_new_tab: true
+
+outgoing:
+  request_timeout: 10.0
+  max_request_timeout: 10.0
+  useragent_suffix: ""
+  pool_connections: 100
+  pool_maxsize: 10
+  enable_http2: true
+  max_redirects: 2
+
+categories_as_tabs:
+  general:
+  images:
+  videos:
+  news:
+  map:
+  it:
+  files:
+  social media:
+
+engines:
+  - name: startpage
+    engine: startpage
+    disabled: true
+
+  - name: radio browser
+    engine: radio_browser
+    disabled: true
+
+  - name: artic
+    engine: artic
+    disabled: true
+
+  - name: aol
+    engine: aol
+    disabled: false
+
+  - name: aol images
+    engine: aol
+    search_type: image
+    categories: [images]
+    disabled: false
+
+  - name: aol videos
+    engine: aol
+    search_type: video
+    categories: [videos]
+    disabled: false
+
+  - name: baidu
+    engine: baidu
+    disabled: false
+
+  - name: bing
+    engine: bing
+    disabled: false
+
+  - name: brave
+    engine: brave
+    time_range_support: true
+    paging: true
+    categories: [general, web]
+    brave_category: search
+
+  - name: brave.images
+    engine: brave
+    network: brave
+    categories: [images, web]
+    brave_category: images
+
+  - name: brave.videos
+    engine: brave
+    network: brave
+    categories: [videos, web]
+    brave_category: videos
+
+  - name: brave.news
+    engine: brave
+    network: brave
+    categories: news
+    brave_category: news
+
+  - name: dailymotion
+    engine: dailymotion
+    disabled: false
+
+  - name: deviantart
+    engine: deviantart
+    disabled: false
+
+  - name: dictzone
+    engine: dictzone
+    disabled: false
+
+  - name: duckduckgo
+    engine: duckduckgo
+    disabled: false
+
+  - name: github
+    engine: github
+    disabled: false
+
+  - name: gitlab
+    engine: gitlab
+    disabled: false
+
+  - name: google
+    engine: google
+    disabled: false
+    inactive: false
+
+  - name: google images
+    engine: google_images
+    disabled: false
+    inactive: false
+
+  - name: google news
+    engine: google_news
+    disabled: false
+    inactive: false
+
+  - name: google videos
+    engine: google_videos
+    disabled: false
+    inactive: false
+
+  - name: huggingface
+    engine: huggingface
+    disabled: false
+    inactive: false
+
+  - name: imgur
+    engine: imgur
+    disabled: false
+    inactive: false
+
+  - name: kickass
+    engine: kickass
+    disabled: false
+    inactive: false
+
+  - name: naver
+    engine: naver
+    disabled: false
+    inactive: false
+
+  - name: naver images
+    naver_category: images
+    categories: [images]
+    engine: naver
+    disabled: true
+    inactive: false
+
+  - name: naver news
+    naver_category: news
+    categories: [news]
+    engine: naver
+    disabled: false
+    inactive: false
+
+  - name: naver videos
+    naver_category: videos
+    categories: [videos]
+    engine: naver
+    disabled: false
+    inactive: false
+
+  - name: openstreetmap
+    engine: openstreetmap
+    disabled: false
+    inactive: false
+
+  - name: openverse
+    engine: openverse
+    disabled: false
+    inactive: false
+
+  - name: pexels
+    engine: pexels
+    disabled: false
+    inactive: false
+
+  - name: photon
+    engine: photon
+    disabled: false
+    inactive: false
+
+  - name: pixiv
+    engine: pixiv
+    disabled: false
+    remove_ai_images: true
+    inactive: false
+
+  - name: reddit
+    engine: reddit
+    disabled: false
+    inactive: false
+
+  - name: reuters
+    engine: reuters
+    disabled: false
+    inactive: false
+
+  - name: sepiasearch
+    engine: sepiasearch
+    disabled: false
+    inactive: false
+
+  - name: tootfinder
+    engine: tootfinder
+    disabled: false
+    inactive: false
+
+  - name: unsplash
+    engine: unsplash
+    disabled: false
+    inactive: false
+
+  - name: vimeo
+    engine: vimeo
+    disabled: false
+    inactive: false
+
+  - name: wikidata
+    engine: wikidata
+    disabled: false
+    inactive: false
+
+  - name: wikipedia
+    engine: wikipedia
+    disabled: false
+    inactive: false
+
+  - name: wikibooks
+    engine: mediawiki
+    disabled: false
+    inactive: false
+
+  - name: wikinews
+    engine: mediawiki
+    disabled: false
+    inactive: false
+
+  - name: wikiquote
+    engine: mediawiki
+    disabled: false
+    inactive: false
+
+  - name: wikisource
+    engine: mediawiki
+    disabled: false
+    inactive: false
+
+  - name: wikispecies
+    engine: mediawiki
+    disabled: false
+    inactive: false
+
+  - name: wiktionary
+    engine: mediawiki
+    disabled: false
+    inactive: false
+
+  - name: wttr
+    engine: wttr
+    disabled: false
+    inactive: false
+
+  - name: yahoo
+    engine: yahoo
+    disabled: false
+    inactive: false
+
+  - name: yandex
+    engine: yandex
+    disabled: false
+    inactive: false

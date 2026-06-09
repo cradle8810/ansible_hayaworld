@@ -1,0 +1,14 @@
+[favicons]
+cfg_schema = 1
+
+[favicons.cache]
+db_url = "/var/cache/searxng/faviconcache.db"
+LIMIT_TOTAL_BYTES = 2147483648
+HOLD_TIME = 5184000
+BLOB_MAX_BYTES = 81920
+MAINTENANCE_MODE = "off"
+MAINTENANCE_PERIOD = 600
+
+[favicons.proxy.resolver_map]
+"duckduckgo" = "searx.favicons.resolvers.duckduckgo"
+"allesedv" = "searx.favicons.resolvers.allesedv"
