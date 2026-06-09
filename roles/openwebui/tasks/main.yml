@@ -3,7 +3,7 @@
   ansible.builtin.import_role:
     name: docker
 
-- name: "Mkdir for Ollama docker-compose"
+- name: "Mkdir for OpenWebUI docker-compose"
   ansible.builtin.file:
     path: "/root/webui"
     state: directory
@@ -11,7 +11,7 @@
     group: root
     mode: '0755'
 
-- name: "Put Ollama docker-compose"
+- name: "Put OpenWebUI docker-compose"
   ansible.builtin.copy:
     src: "templates/root/webui/docker-compose.yml"
     dest: "/root/webui/docker-compose.yml"

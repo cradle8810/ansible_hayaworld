@@ -1,0 +1,6 @@
+---
+- name: "Start firecrawl Docker Compose"
+  community.docker.docker_compose_v2:
+    project_src: /root/firecrawl
+    state: present
+  listen: "Up firecrawl container"

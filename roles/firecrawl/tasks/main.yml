@@ -1,0 +1,17 @@
+---
+- name: "Install Docker"
+  ansible.builtin.include_role:
+    name: docker
+
+- name: "Initialize Borgbackup"
+  ansible.builtin.include_tasks:
+    file: tasks/install_firecrawl.yml
+
+- name: "Setup Tailscale Endpoint"
+  ansible.builtin.include_role:
+    name: tailscale_install
+    apply:
+      tags:
+        - tailscale
+  tags:
+    - tailscale

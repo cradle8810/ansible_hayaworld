@@ -1,0 +1,16 @@
+PORT=3002
+HOST=0.0.0.0
+
+USE_DB_AUTHENTICATION=false
+
+# Experimental: Use Ollama
+OLLAMA_BASE_URL=http://ollama.hayaworld.home:11434
+MODEL_NAME=Gemma4:E2B
+MODEL_EMBEDDING_NAME=ruri-large-customer-support-finetuned:latest
+
+SEARXNG_ENDPOINT=https://searxng.{{ searxng_base_url_domain }}
+
+MAX_CPU=0.9
+MAX_RAM=0.9
+
+ALLOW_LOCAL_WEBHOOKS=true
