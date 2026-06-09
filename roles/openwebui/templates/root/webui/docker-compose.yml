@@ -67,3 +67,7 @@ services:
 
 volumes:
   open-webui:
+
+networks:
+  default:
+    enable_ipv6: true

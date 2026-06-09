@@ -78,3 +78,18 @@
     cmd: "chattr +C /opt/docker"
   register: retval
   changed_when: retval.rc == 0
+
+- name: "Set IPv6 Routing"
+  community.general.ini_file:
+    path: "/etc/sysctl.d/99-ipv6-forward.conf"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  notify: "ipv6 forward sysctl"
+  loop:
+    - option: "net.ipv6.conf.all.forwarding"
+      value: 1
+    - option: "net.ipv6.conf.all.accept_ra"
+      value: 2

@@ -22,9 +22,11 @@ firewall:
         port: "546"
 
 docker_config:
-  default-address-pools:
-    - base: "172.18.5.0/24"
-      size: 28
+  ipv6: true
+  ip6tables: true
+  userland-proxy: false
   dns:
     - 192.168.88.100
     - 192.168.88.200
+  fixed-cidr-v6: "fd63:e64d:811c::1/64"
+  bip: "172.18.6.1/24"

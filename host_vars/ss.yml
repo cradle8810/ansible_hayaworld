@@ -37,8 +37,11 @@ nextcloud_domain: !vault |
   65333963393637313035623234653732366361356336323237613163636536626561
 
 docker_config:
-  log-driver: "syslog"
-  log-opts:
-    syslog-address: "unixgram:///dev/log"
-    tag: "{% raw %}nextcloud-aio/{{.Name}}{% endraw %}"
-    syslog-format: "rfc3164"
+  ipv6: true
+  ip6tables: true
+  userland-proxy: false
+  dns:
+    - 192.168.88.100
+    - 192.168.88.200
+  fixed-cidr-v6: "fdc8:5030:176e::1/64"
+  bip: "172.18.7.1/24"

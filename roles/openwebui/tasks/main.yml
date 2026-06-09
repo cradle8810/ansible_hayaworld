@@ -19,3 +19,12 @@
     group: root
     mode: '0644'
   notify: "Up webui"
+
+- name: "Setup Tailscale Endpoint"
+  ansible.builtin.include_role:
+    name: tailscale_install
+    apply:
+      tags:
+        - tailscale
+  tags:
+    - tailscale

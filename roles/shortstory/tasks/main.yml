@@ -18,7 +18,7 @@
     tailscale_install_funnel: true
     tailscale_install_serve_https_port: 443
     tailscale_install_serve_set_path: "/"
-    tailscale_install_serve_url: "http://127.0.0.1:8080"
+    tailscale_install_serve_url: "http://localhost:8080"
   tags:
     - tailscale
 

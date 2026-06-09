@@ -37,12 +37,15 @@ firewall:
         port: "546"
 
 docker_config:
-  default-address-pools:
-    - base: "172.18.4.0/24"
-      size: 28
+  ipv6: true
+  ip6tables: true
+  userland-proxy: false
   dns:
     - 192.168.88.100
     - 192.168.88.200
+  fixed-cidr-v6: "fdd8:9532:d5e1::1/64"
+  bip: "172.18.7.1/24"
+
 docker_btrfs: true
 docker_drive_uuid: "8ef3f125-188b-4662-bfca-699a71a20d15"
 

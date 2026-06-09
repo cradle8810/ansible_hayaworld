@@ -1,0 +1,8 @@
+---
+tailscale_install_tags:
+  - ai
+tailscale_install_serve: true
+tailscale_install_funnel: true
+tailscale_install_serve_https_port: 443
+tailscale_install_serve_set_path: "/"
+tailscale_install_serve_url: "http://localhost:8080"

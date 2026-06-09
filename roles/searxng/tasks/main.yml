@@ -1,6 +1,6 @@
 ---
 - name: "Install Docker"
-  ansible.builtin.include_role:
+  ansible.builtin.import_role:
     name: docker
 
 - name: "Put docker-compose.yml"
