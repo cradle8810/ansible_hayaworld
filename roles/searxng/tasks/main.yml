@@ -7,7 +7,7 @@
   tags:
     - docker
     - compose
-  notify: "Up searxng container"
+  notify: "Start searxng Docker Compose"
   block:
     - name: "Mkdir for searxng docker-compose"
       ansible.builtin.file:
@@ -32,6 +32,15 @@
       ansible.builtin.template:
         src: "roles/searxng/templates/root/searxng/config/settings.yml.j2"
         dest: "/root/searxng/config/settings.yml"
+        owner: root
+        group: root
+        mode: '0644'
+
+
+    - name: "Put searxng favicon configs"
+      ansible.builtin.copy:
+        src: "roles/searxng/templates/root/searxng/config/favicons.toml"
+        dest: "/root/searxng/config/favicons.toml"
         owner: root
         group: root
         mode: '0644'

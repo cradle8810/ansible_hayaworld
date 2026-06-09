@@ -1,4 +1,5 @@
-- name: Play for firecrawl
+---
+- name: Play for firecrawl backend
   hosts: firecrawl
   remote_user: ansible
   gather_facts: true
@@ -13,7 +14,7 @@
         file: handlers/main.yml
 
   tasks:
-    - name: Common Settings
+    - name: "Common Settings"
       ansible.builtin.import_role:
         name: common
       vars:
