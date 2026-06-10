@@ -6,15 +6,12 @@ services:
       - "8080:8080"
     volumes:
       - open-webui:/app/backend/data
+    env_file:
+      - environment.txt
     environment:
-      # ENABLE_PERSISTENT_CONFIG: false
-      OLLAMA_BASE_URL: http://ollama.hayaworld.home:11434
-      AIOHTTP_CLIENT_TIMEOUT: 36000
-      WEB_LOADER_TIMEOUT: 120000
-      FIRECRAWL_TIMEOUT: 120000
-      ENABLE_EVALUATION_ARENA_MODELS: False
-      ENABLE_TITLE_GENERATION: True
-      DEFAULT_TITLE_GENERATION_PROMPT_TEMPLATE: |2
+#      ENABLE_PERSISTENT_CONFIG: false
+#      RESET_CONFIG_ON_START: true
+      TITLE_GENERATION_PROMPT_TEMPLATE:  |2
         ### Task:
         Summarize this chat in about 20 characters in Japanese, without emojis.
 
@@ -24,19 +21,18 @@ services:
         - Write the title in Japanese.
 
         ### Output:
-        JSON format: { "title": "your concise title here" }
+        JSON format={ "title"="your concise title here" }
 
         ### Example:
-        JSON format: { "title": "タイトルの例 できるだけ詳しく" }
+        JSON format={ "title"="タイトルの例 できるだけ詳しく" }
 
         ### Chat History:
         <chat_history>
-        {{MESSAGES:END:8}}
+          {{MESSAGES:END:8}}
         </chat_history>
-      ENABLE_TAGS_GENERATION: True
-      DEFAULT_TAGS_GENERATION_PROMPT_TEMPLATE: |2
+      TAGS_GENERATION_PROMPT_TEMPLATE: |2
         ### Task:
-        Generate 1-5 broad tags categorizing the main themes of the chat history, along with 1-5 more specific subtopic tags.
+        Generate 1-10 broad tags categorizing the main themes of the chat history, along with 1-10 more specific subtopic tags.
 
         ### Guidelines:
         - Start with high-level domains (e.g., Science, Technology, Philosophy, Arts, Politics, Business, Health, Sports, Entertainment, Education)
@@ -46,11 +42,11 @@ services:
         - Prioritize accuracy over specificity
 
         ### Output:
-        JSON format: { "tags": ["tag1", "tag2", "tag3"] }
+        JSON format={ "tags"=["tag1", "tag2", "tag3"] }
 
         ### Chat History:
         <chat_history>
-        {{MESSAGES:END:6}}
+          {{MESSAGES:END:6}}
         </chat_history>
     restart: unless-stopped
     deploy:
