@@ -7,21 +7,25 @@
     docker_users:
       - hayato
 
-- name: "Install and Configure Ollama"
+- name: "Configure Ollama"
+  tags:
+    - set
   block:
-    - name: "Mkdir for Ollama docker-compose"
-      ansible.builtin.file:
-        path: "/home/hayato/ollama"
-        state: directory
-        owner: hayato
-        group: hayato
-        mode: '0755'
+    - name: "Install and Configure Ollama"
+      block:
+        - name: "Mkdir for Ollama docker-compose"
+          ansible.builtin.file:
+            path: "/home/hayato/ollama"
+            state: directory
+            owner: hayato
+            group: hayato
+            mode: '0755'
 
-    - name: "Put Ollama docker-compose"
-      ansible.builtin.template:
-        src: "templates/home/hayato/ollama/docker-compose.yml.j2"
-        dest: "/home/hayato/ollama/docker-compose.yml"
-        owner: hayato
-        group: hayato
-        mode: '0644'
-      notify: "Up ollama"
+        - name: "Put Ollama docker-compose"
+          ansible.builtin.copy:
+            src: "templates/home/hayato/ollama/docker-compose.yml"
+            dest: "/home/hayato/ollama/docker-compose.yml"
+            owner: hayato
+            group: hayato
+            mode: '0644'
+          notify: "Up ollama"
