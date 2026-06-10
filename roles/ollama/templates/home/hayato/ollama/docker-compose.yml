@@ -11,18 +11,19 @@ services:
     devices:
       - /dev/dri:/dev/dri
     environment:
-      - OLLAMA_VULKAN=1
-      - OLLAMA_ORIGINS="*"
-      - OLLAMA_INTEL_GPU=1
-      - OLLAMA_NUM_PARALLEL=1
-      - OLLAMA_FLASH_ATTENTION=false
-      - OLLAMA_IGPU_ENABLE=true
-      - OLLAMA_KEEP_ALIVE="-1"
-      - HUGETLB_MORECORE=yes
-      - GLIBC_TUNABLES=glibc.malloc.hugetlb=1
-      - ENABLE_WEB_SEARCH=true
-      - WEB_SEARCH_ENGINE=searxng
-      - SEARXNG_QUERY_URL="https://searxng.{{ searxng_base_url_domain }}/search?q=<query>&format=json"
+      GLIBC_TUNABLES: glibc.malloc.hugetlb=1
+      HUGETLB_MORECORE: yes
+      OLLAMA_FLASH_ATTENTION: true
+      OLLAMA_IGPU_ENABLE: true
+      OLLAMA_INTEL_GPU: 1
+      OLLAMA_KEEP_ALIVE: -1
+      OLLAMA_KV_CACHE_TYPE: q4_0
+      OLLAMA_NEW_ENGINE: 1
+      OLLAMA_NEW_ESTIMATES: 1
+      OLLAMA_NOPRUNE: true
+      OLLAMA_NUM_PARALLEL: 1
+      OLLAMA_ORIGINS: "*"
+      OLLAMA_VULKAN: 1
     deploy:
       resources:
         limits:
