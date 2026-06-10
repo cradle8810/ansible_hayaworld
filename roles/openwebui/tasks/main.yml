@@ -3,22 +3,41 @@
   ansible.builtin.import_role:
     name: docker
 
-- name: "Mkdir for OpenWebUI docker-compose"
-  ansible.builtin.file:
-    path: "/root/webui"
-    state: directory
-    owner: root
-    group: root
-    mode: '0755'
+- name: "Open WebUI Setup"
+  tags:
+    - set
+  block:
+    - name: "Mkdir for OpenWebUI docker-compose"
+      ansible.builtin.file:
+        path: "/root/webui"
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
 
-- name: "Put OpenWebUI docker-compose"
-  ansible.builtin.copy:
-    src: "templates/root/webui/docker-compose.yml"
-    dest: "/root/webui/docker-compose.yml"
-    owner: root
-    group: root
-    mode: '0644'
-  notify: "Up webui"
+    - name: "Put OpenWebUI docker-compose"
+      ansible.builtin.copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: '0644'
+      notify: "Up webui"
+      loop:
+        - src: "roles/openwebui/templates/root/webui/docker-compose.yml"
+          dest: "/root/webui/docker-compose.yml"
+
+    - name: "Put OpenWebUI docker-compose env file"
+      ansible.builtin.template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: '0644'
+      notify: "Up webui"
+      loop:
+        - src: "roles/openwebui/templates/root/webui/environment.txt.j2"
+          dest: "/root/webui/environment.txt"
 
 - name: "Setup Tailscale Endpoint"
   ansible.builtin.include_role:
