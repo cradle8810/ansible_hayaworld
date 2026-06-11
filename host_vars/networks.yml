@@ -40,6 +40,14 @@ network:
     self_org: false
     proxmox: true
     macaddress: "48:21:0b:5f:af:f5"
+  - hostname: nuc05.hayaworld.home
+    interface: enp86s0
+    ipv4: 192.168.88.15
+    shortname: nuc05
+    sshuser: root
+    self_org: false
+    proxmox: true
+    macaddress: "1c:69:7a:a1:4f:c5"
   - hostname: rui.hayaworld.home
     interface: enp6s18
     ipv4: 192.168.88.100
