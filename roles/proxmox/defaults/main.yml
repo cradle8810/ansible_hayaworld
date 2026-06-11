@@ -1,6 +1,7 @@
 proxmox_i915_driver_checksum: "{{ igpu_driver.checksum }}"
 proxmox_i915_driver_dest: "{{ igpu_driver.dest }}"
 proxmox_i915_driver_url: "{{ igpu_driver.url }}"
+proxmox_do_not_install_i915: false
 
 proxmox_ksm:
   - option: "KSM_SLEEP_MSEC"

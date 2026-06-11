@@ -1,0 +1,2 @@
+---
+proxmox_do_not_install_i915: true
