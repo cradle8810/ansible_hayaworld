@@ -5,27 +5,21 @@
     state: present
     update_cache: true
 
-- name: "Mount Skylark / Check if dest dir"
-  ansible.builtin.stat:
+- name: "Mount Skylark / Create Mountpoint dir"
+  ansible.builtin.file:
     path: "{{ mount_dest_path }}"
-    follow: true
-  register: destdir_stat
-  when: mount_dest_create
-  failed_when:
-    - mount_dest_path == ""
-  changed_when:
-    - destdir_stat.stat.isdir == false
+    state: directory
+    owner: "{{ mount_dest_dir_owner }}"
+    group: "{{ mount_dest_dir_group }}"
+    mode: '0755'
 
 - name: "Mount Skylark / Create credential dir"
   ansible.builtin.file:
-    path: "{{ mount_dest_path }}"
+    path: "/etc/samba/"
     state: directory
     owner: "root"
     group: "root"
     mode: '0755'
-  when:
-    - mount_dest_create
-    - destdir_stat.stat.writeable
 
 - name: "Mount Skylark / Copy credential file"
   ansible.builtin.template:

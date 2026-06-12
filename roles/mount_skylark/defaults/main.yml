@@ -20,6 +20,8 @@ mount_opts_additional: ""
 
 mount_src_path: ""
 mount_dest_path: ""
+mount_dest_dir_owner: "hayato"
+mount_dest_dir_group: "hayato"
 mount_dest_create: true
 
 mount_uid: 0
