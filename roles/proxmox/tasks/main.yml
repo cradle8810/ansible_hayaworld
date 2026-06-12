@@ -2,7 +2,7 @@
 - name: I915 Driver Install
   ansible.builtin.import_tasks:
     file: tasks/igpu_driver_install.yml
-  when: not proxmox_do_not_install_i915
+  when: common_hostinfo.shortname in proxmox_xe_nodes
   tags:
     - igpu
 

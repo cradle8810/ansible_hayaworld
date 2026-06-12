@@ -5,7 +5,7 @@
   register: proxmox_kernel_version
   changed_when: false
 
-- name: "Install i915 Driver Dependency Pkgs"
+- name: "Install Xe Driver Dependency Pkgs"
   ansible.builtin.apt:
     pkg:
       - "proxmox-headers-{{ proxmox_kernel_version.stdout }}"
@@ -16,7 +16,7 @@
       - vainfo
     state: present
 
-- name: "Install i915 Driver Dependency Kernel(Unsigned) for Proxmox"
+- name: "Install Xe Driver Dependency Kernel(Unsigned) for Proxmox"
   ansible.builtin.apt:
     pkg:
       - "proxmox-default-headers"
@@ -25,64 +25,11 @@
   when: proxmox_vfs_kernel is defined
 
 # https://github.com/strongtz/i915-sriov-dkms?tab=readme-ov-file#required-kernel-parameters
-- name: "Configure VFs for Proxmox (i915)"
+- name: "Configure VFs for Proxmox (Xe)"
   notify:
     - "Run update-grub"
     - "Run update-initramfs"
     - "Restart sysfsutils"
-  when: common_hostinfo.shortname not in proxmox_xe_nodes
-  block:
-    - name: "Edit Configures Ini files (i915)"
-      community.general.ini_file:
-        path: "{{ item.path }}"
-        option: "{{ item.option }}"
-        value: "{{ item.value }}"
-        state: present
-        no_extra_spaces: true
-        mode: "644"
-      loop:
-        - path: "/etc/sysfs.conf"
-          option: "devices/pci0000:00/0000:00:02.0/sriov_numvfs"
-          value: "2"
-        - path: /etc/default/grub
-          option: "GRUB_CMDLINE_LINUX_DEFAULT"
-          value: '"quiet intel_iommu=on iommu=pt i915.enable_guc=3 i915.enable_dc=0 i915.enable_psr=0 i915.max_vfs=2 module_blacklist=xe"'
-
-    - name: "Edit blacklist.conf (i915)"
-      ansible.builtin.lineinfile:
-        path: "/etc/modprobe.d/blacklist.conf"
-        line: "blacklist xe"
-        state: present
-        create: true
-        mode: "644"
-
-    - name: "Waiting method"
-      block:
-        - name: "Create Waiting Scripts dir"
-          ansible.builtin.file:
-            path: "/etc/systemd/system/sysfsutils.service.d"
-            state: directory
-            owner: root
-            group: root
-            mode: '0755'
-
-        - name: "Create Waiting Script"
-          community.general.ini_file:
-            path: "/etc/systemd/system/sysfsutils.service.d/delay.conf"
-            section: "Service"
-            option: "ExecStartPre"
-            value: "/bin/sleep 5"
-            state: present
-            no_extra_spaces: true
-            mode: "644"
-
-
-- name: "Configure VFs for Proxmox (i915/NUC13)"
-  notify:
-    - "Run update-grub"
-    - "Run update-initramfs"
-    - "Restart sysfsutils"
-  when: common_hostinfo.shortname in proxmox_xe_nodes
   block:
     - name: "Get device id"
       ansible.builtin.command:
@@ -92,7 +39,7 @@
       when:
         - not ansible_check_mode
 
-    - name: "Edit Configures Ini files (i915/NUC13)"
+    - name: "Edit Configures Ini files (Xe)"
       community.general.ini_file:
         path: "{{ item.path }}"
         option: "{{ item.option }}"
@@ -106,12 +53,12 @@
           value: "2"
         - path: /etc/default/grub
           option: "GRUB_CMDLINE_LINUX_DEFAULT"
-          value: '"intel_iommu=on i915.enable_guc=3 i915.enable_dc=0 i915.enable_psr=0 i915.max_vfs=2 module_blacklist=xe"'
+          value: '"quiet intel_iommu=on xe.max_vfs=2 xe.force_probe={{ device_id.stdout }} module_blacklist=i915"'
 
     - name: "Edit blacklist.conf (i915)"
       ansible.builtin.lineinfile:
         path: "/etc/modprobe.d/blacklist.conf"
-        line: "blacklist xe"
+        line: "blacklist i915"
         state: present
         create: true
         mode: "644"

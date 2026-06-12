@@ -10,3 +10,5 @@ igpu_vulkan_sdk_basepath: "/opt/vulkan"
 
 igpu_kernel_install: false
 igpu_kernel_version: "7.0"
+
+igpu_devicename: "a7a0"
