@@ -19,7 +19,18 @@
         name: common
       vars:
         common_firewall: "{{ firewall }}"
-        common_install_users: false
+        common_install_users: true
+
+    # https://vulkan.lunarg.com/sdk/home#linux
+    - name: "Install iGPU Relational things"
+      ansible.builtin.import_role:
+        name: igpu
+      vars:
+        igpu_kernel_install: false
+        igpu_vulkan_install: true
+      tags:
+        - igpu
+        - vulkan
 
     - name: "Install OpenWebUI"
       ansible.builtin.import_role:
@@ -39,6 +50,8 @@
         borg_sources:
           - src: webui_open-webui
             dest: webui_open-webui
+          - src: qdrant_qdrant_storage
+            dest: qdrant_qdrant_storage
       tags:
         - borg
 
@@ -66,5 +79,20 @@
     - name: Install/Config Zramswap
       ansible.builtin.import_role:
         name: zramswap
+      tags:
+        - zram
+
+    - name: "Enable Huge Pages"
+      community.general.ini_file:
+        path: "/etc/sysctl.d/99-hugepage.conf"
+        option: "{{ item.option }}"
+        value: "{{ item.value }}"
+        state: present
+        no_extra_spaces: true
+        mode: "644"
+      loop:
+        - option: "vm.max_map_count"
+          value: "262144" # 2MiB Chunk
+      notify: "hugepage sysctl"
       tags:
         - zram

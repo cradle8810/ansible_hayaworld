@@ -13,7 +13,7 @@ services:
     environment:
       GLIBC_TUNABLES: glibc.malloc.hugetlb=1
       HUGETLB_MORECORE: yes
-      OLLAMA_FLASH_ATTENTION: true
+      OLLAMA_FLASH_ATTENTION: false
       OLLAMA_IGPU_ENABLE: true
       OLLAMA_INTEL_GPU: 1
       OLLAMA_KEEP_ALIVE: -1

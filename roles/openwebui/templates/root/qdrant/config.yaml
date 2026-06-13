@@ -1,0 +1,8 @@
+---
+# https://qdrant.tech/documentation/ops-configuration/running-with-gpu/
+gpu:
+  indexing: true
+  force_half_precision: false
+  parallel_indexes: 1
+  allow_integrated: true
+  allow_emulated: false

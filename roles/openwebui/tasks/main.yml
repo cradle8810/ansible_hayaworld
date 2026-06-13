@@ -39,6 +39,44 @@
         - src: "roles/openwebui/templates/root/webui/environment.txt.j2"
           dest: "/root/webui/environment.txt"
 
+- name: "Qdrant Setup"
+  tags:
+    - qdrant
+  block:
+    - name: "Mkdir for Qdrant docker-compose"
+      ansible.builtin.file:
+        path: "/root/qdrant"
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: "Put Qdrant docker-compose"
+      ansible.builtin.copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: '0644'
+      notify: "Up webui"
+      loop:
+        - src: "roles/openwebui/templates/root/qdrant/docker-compose.yml"
+          dest: "/root/qdrant/docker-compose.yml"
+        - src: "roles/openwebui/templates/root/qdrant/config.yaml"
+          dest: "/root/qdrant/config.yaml"
+
+    - name: "Put Qdrant docker-compose env file"
+      ansible.builtin.template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: '0644'
+      notify: "Up webui"
+      loop:
+        - src: "roles/openwebui/templates/root/qdrant/environment.txt.j2"
+          dest: "/root/qdrant/environment.txt"
+
 - name: "Setup Tailscale Endpoint"
   ansible.builtin.include_role:
     name: tailscale_install
