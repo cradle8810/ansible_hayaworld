@@ -53,7 +53,7 @@ services:
         </chat_history>
       DEFAULT_QUERY_GENERATION_PROMPT_TEMPLATE: |2
         ### Task:
-        Analyze the chat history to determine the necessity of generating search queries, in the given language. By default, **prioritize generating 1-3 broad and relevant search queries** unless it is absolutely certain that no additional information is required. The aim is to retrieve comprehensive, updated, and valuable information even with minimal uncertainty. If no search is unequivocally needed, return an empty list.
+        Analyze the chat history to determine the necessity of generating search queries, in the given language. By default, **prioritize generating 1-5 broad and relevant search queries** unless it is absolutely certain that no additional information is required. The aim is to retrieve comprehensive, updated, and valuable information even with minimal uncertainty. If no search is unequivocally needed, return an empty list.
 
         ### Guidelines:
         - OUTPUT JSON QUERIES MUST BE JAPANESE. 検索クエリは日本語で必ず返すこと。
