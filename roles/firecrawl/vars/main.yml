@@ -8,6 +8,7 @@ tailscale_install_serve_set_path: "/"
 tailscale_install_serve_url: "http://127.0.0.1:8080"
 
 docker_install: false
+tailscale_install: false
 
 searxng_base_url_domain:
   !vault |
@@ -18,4 +19,5 @@ searxng_base_url_domain:
     3434653561313934300a333365313361626130663331396539393432346639373738653938613463
     66356461356664313938313664373033613139343537316264393237633237313438
 
-firecrawl_version: 'v2.10'
+firecrawl_zip: "https://github.com/firecrawl/firecrawl/archive/refs/tags/v2.10.zip"
+firecrawl_zip_checksum: "sha256:ceb4d30dc59c58a30b758398b19c4bd88b7df9e4cec3435e43bc6b01cdc76630"

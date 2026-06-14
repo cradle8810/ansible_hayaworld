@@ -33,6 +33,7 @@
         name: firecrawl
       vars:
         docker_install: false
+        tailscale_install: false
       tags:
         - firecrawl
 

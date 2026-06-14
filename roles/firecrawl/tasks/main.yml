@@ -16,3 +16,4 @@
         - tailscale
   tags:
     - tailscale
+  when: tailscale_install

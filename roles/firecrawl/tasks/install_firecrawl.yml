@@ -2,6 +2,11 @@
 - name: "Install"
   notify: "Up firecrawl container"
   block:
+    - name: "Install unzip"
+      ansible.builtin.apt:
+        pkg: libarchive-tools
+        state: present
+
     - name: "Mkdir for firecrawl"
       ansible.builtin.file:
         path: "{{ item }}"
@@ -12,16 +17,35 @@
       loop:
         - "/root/firecrawl"
 
-    - name: "Git Checkout"
-      ansible.builtin.git:
-        repo: 'https://github.com/firecrawl/firecrawl.git'
-        dest: /root/firecrawl
-        version: "{{ firecrawl_version }}"
+    - name: "Download ZIP"
+      ansible.builtin.get_url:
+        url: "{{ firecrawl_zip }}"
+        dest: "/root/"
+        checksum: "{{ firecrawl_zip_checksum }}"
+        owner: root
+        group: root
+        mode: "0644"
+      register: firecrawl_zip_dl
+
+    - name: "Unarchive ZIP"
+      ansible.builtin.command:
+        cmd: "bsdtar --strip-components=1 -xf {{ firecrawl_zip_dl.dest }} --strip-components=1 -C /root/firecrawl"
+      when: firecrawl_zip_dl.changed # noqa: no-handler
+      register: retval
+      changed_when: retval.rc == 0
 
     - name: "Put Configurations"
       ansible.builtin.template:
         src: "templates/root/firecrawl/dotenv.j2"
         dest: "/root/firecrawl/.env"
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: "Put docker-compose.yml"
+      ansible.builtin.template:
+        src: "templates/root/firecrawl/docker-compose.yaml"
+        dest: "/root/firecrawl/docker-compose.yaml"
         owner: root
         group: root
         mode: '0644'
