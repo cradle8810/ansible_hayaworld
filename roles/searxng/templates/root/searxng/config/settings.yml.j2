@@ -51,7 +51,6 @@ ui:
 outgoing:
   request_timeout: 10.0
   max_request_timeout: 10.0
-  useragent_suffix: ""
   pool_connections: 100
   pool_maxsize: 10
   enable_http2: true
@@ -79,6 +78,11 @@ engines:
   - name: artic
     engine: artic
     disabled: true
+
+  - name: 
+    engine: pinterest
+    disabled: true
+    inactive: true
 
   - name: aol
     engine: aol
@@ -324,3 +328,19 @@ engines:
     engine: yandex
     disabled: false
     inactive: false
+
+  - name: e621
+    engine: json
+    shortcut: e6
+    categories: images
+    search_url: "https://e621.net/posts.json/?rating:safe&tags={query}&page={pageno}"
+    disabled: false
+    inactive: false
+    engine: json_engine
+    paging: true
+    results_query: "posts"
+    url_query: "id"
+    url_prefix: "https://e621.net/posts/"
+    title_query: "description"
+    content_query: "description"
+    thumbnail_query: "preview/url"
