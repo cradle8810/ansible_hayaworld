@@ -49,4 +49,5 @@ docker_config:
 docker_btrfs: true
 docker_drive_uuid: "8ef3f125-188b-4662-bfca-699a71a20d15"
 
-zramswap_swappiness: 120
+zramswap_swappiness: 10
+zramswap_percent: 20
