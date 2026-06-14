@@ -28,6 +28,14 @@
         - search
         - searching
 
+    - name: "Install firecrawl"
+      ansible.builtin.import_role:
+        name: firecrawl
+      vars:
+        docker_install: false
+      tags:
+        - firecrawl
+
     - name: "Install BorgBackup and Configuration Backup"
       ansible.builtin.import_role:
         name: borg

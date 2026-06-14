@@ -2,6 +2,7 @@
 - name: "Install Docker"
   ansible.builtin.include_role:
     name: docker
+  when: docker_install
 
 - name: "Initialize Borgbackup"
   ansible.builtin.include_tasks:

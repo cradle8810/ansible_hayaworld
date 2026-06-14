@@ -7,6 +7,8 @@ tailscale_install_serve_https_port: 443
 tailscale_install_serve_set_path: "/"
 tailscale_install_serve_url: "http://127.0.0.1:8080"
 
+docker_install: false
+
 searxng_base_url_domain:
   !vault |
     $ANSIBLE_VAULT;1.1;AES256

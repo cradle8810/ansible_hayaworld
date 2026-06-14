@@ -90,13 +90,6 @@ network:
     sshuser: hayato
     self_org: true
     mtu: 9000
-  - hostname: firecrawl.hayaworld.home
-    interface: enp6s18
-    ipv4: 192.168.88.108
-    shortname: firecrawl
-    sshuser: hayato
-    self_org: true
-    mtu: 9000
   - hostname: log.hayaworld.home
     interface: enp6s18
     ipv4: 192.168.88.109

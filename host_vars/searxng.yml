@@ -10,6 +10,10 @@ firewall:
         proto: "tcp"
         src: "0.0.0.0/0"
         port: "8080"
+      - name: "Firecrawl server"
+        proto: "tcp"
+        src: "0.0.0.0/0"
+        port: "3002"
     ipv6:
       - name: "DHCPv6 Client from service line"
         proto: "udp"
@@ -19,6 +23,10 @@ firewall:
         proto: "tcp"
         src: "::"
         port: "8080"
+      - name: "Firecrawl server"
+        proto: "tcp"
+        src: "::"
+        port: "3002"
 
 docker_drive_is_opt_docker: true
 docker_btrfs: true
