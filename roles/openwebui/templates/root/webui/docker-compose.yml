@@ -12,8 +12,8 @@ services:
       - environment.txt
     environment:
   # https://docs.openwebui.com/reference/env-configuration/
-#      ENABLE_PERSISTENT_CONFIG: false
-#      RESET_CONFIG_ON_START: true
+ #     ENABLE_PERSISTENT_CONFIG: false
+ #     RESET_CONFIG_ON_START: true
       TITLE_GENERATION_PROMPT_TEMPLATE:  |2
         ### Task:
         Summarize this chat in about 20 characters in Japanese, without emojis.
