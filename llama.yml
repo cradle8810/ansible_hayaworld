@@ -1,6 +1,6 @@
 ---
 - name: Play for AI base VM
-  hosts: ollama
+  hosts: llama
   remote_user: ansible
   gather_facts: true
   become: true
@@ -32,20 +32,28 @@
         - igpu
         - vulkan
 
-    - name: "Install Ollama"
+    - name: "Install Vim"
+      ansible.builtin.apt:
+        pkg: vim
+        state: present
+        update_cache: true
+
+    - name: "Install llama"
       ansible.builtin.import_role:
-        name: ollama
+        name: llama-swap
       tags:
-        - ollama
+        - llama
 
     - name: "Install BorgBackup and Configuration Backup"
       ansible.builtin.import_role:
         name: borg
       vars:
-        borg_device: "/mnt/backup/Service_Backups/ollama"
+        borg_device: "/mnt/backup/Service_Backups/llama-swap"
         borg_sources:
-          - src: ollama_ollama
-            dest: ollama_ollama
+          - src: llama-swap_models
+            dest: llama-swap_models
+          - src: /home/hayato/llama
+            dest: llama
       tags:
         - borg
 
@@ -54,21 +62,6 @@
         file: tasks/zabbix-agent2.yml
       tags:
         - zabbix
-
-    - name: "Setup Tailscale Endpoint"
-      ansible.builtin.import_role:
-        name: tailscale_install
-      vars:
-        tailscale_install_tags:
-          - ai
-        tailscale_install_serve: true
-        tailscale_install_funnel: false
-        tailscale_install_serve_https_port: 8443
-        tailscale_install_serve_set_path: "/"
-        tailscale_install_serve_url: "http://127.0.0.1:11434"
-        tailscale_install_args: "--accept-dns=true"
-      tags:
-        - tailscale
 
     - name: "Mount skylark Model Dir"
       tags:

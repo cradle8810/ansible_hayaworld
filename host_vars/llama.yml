@@ -14,14 +14,14 @@ firewall:
         proto: "tcp"
         src: "192.168.88.106/24"
         port: "10050"
-      - name: "Ollama from service line"
+      - name: "llama from service line"
         proto: "tcp"
         src: "192.168.88.0/24"
-        port: '11434'
-      - name: "Ollama from ISP Shared"
+        port: '80'
+      - name: "llama from ISP Shared"
         proto: "tcp"
         src: "100.64.0.0/10"
-        port: '11434'
+        port: '80'
       - name: "Tika from service line"
         proto: "tcp"
         src: "192.168.88.0/24"
@@ -35,6 +35,10 @@ firewall:
         proto: "udp"
         src: "::"
         port: "546"
+      - name: "llama from service line"
+        proto: "tcp"
+        src: "::"
+        port: '80'
 
 docker_config:
   ipv6: true
