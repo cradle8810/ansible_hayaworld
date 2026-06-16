@@ -83,13 +83,6 @@
             no_extra_spaces: true
             mode: "644"
 
-    - name: "ENOSPC workaround"
-      ansible.builtin.copy:
-        src: templates/etc/modprobe.d/vfio.conf
-        dest: /etc/modprobe.d/vfio.conf
-        owner: root
-        group: root
-        mode: '0644'
 
 - name: "Download i915 Driver"
   ansible.builtin.get_url:

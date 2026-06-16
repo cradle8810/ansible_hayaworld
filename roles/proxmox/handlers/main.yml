@@ -62,3 +62,19 @@
     enabled: true
     daemon_reload: true
   listen: "Restart sysfsutils"
+
+- name: "Restart pvedaemon.service"
+  ansible.builtin.systemd_service:
+    name: pvedaemon.service
+    state: restarted
+    enabled: true
+    daemon_reload: true
+  listen: "Restart pvedaemon.service"
+
+- name: "Restart pve-ha-lrm.service"
+  ansible.builtin.systemd_service:
+    name: pve-ha-lrm.service
+    state: restarted
+    enabled: true
+    daemon_reload: true
+  listen: "Restart pve-ha-lrm.service"

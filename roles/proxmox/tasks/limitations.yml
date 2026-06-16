@@ -1,0 +1,76 @@
+---
+- name: "ENOSPC workaround (VFIO)"
+  ansible.builtin.copy:
+    src: templates/etc/modprobe.d/vfio.conf
+    dest: /etc/modprobe.d/vfio.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Make limitation settings directory
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  loop:
+    - /etc/systemd/system/pvedaemon.service.d
+    - /etc/systemd/system/pve-guests.service.d
+    - /etc/systemd/system/pve-ha-lrm.service.d
+    - /etc/security/limits.d/
+
+- name: "Memory Limini Infinity (pvedaemon.service.d)"
+  community.general.ini_file:
+    path: "/etc/systemd/system/pvedaemon.service.d/limits.conf"
+    section: "Service"
+    option: "{{ item }}"
+    value: "infinity"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  loop:
+    - LimitNOFILE
+    - LimitMEMLOCK
+    - LimitNPROC
+    - TasksMax
+  notify: "Restart pvedaemon.service"
+
+- name: "Memory Limini Infinity (pve-guests.service.d)"
+  community.general.ini_file:
+    path: "/etc/systemd/system/pve-guests.service.d/limits.conf"
+    section: "Service"
+    option: "{{ item }}"
+    value: "infinity"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  loop:
+    - LimitNOFILE
+    - LimitMEMLOCK
+    - LimitNPROC
+    - TasksMax
+
+- name: "Memory Limini Infinity (pve-ha-lrm.service.d)"
+  community.general.ini_file:
+    path: "/etc/systemd/system/pve-ha-lrm.service.d/limits.conf"
+    section: "Service"
+    option: "{{ item }}"
+    value: "infinity"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  loop:
+    - LimitNOFILE
+    - LimitMEMLOCK
+    - LimitNPROC
+    - TasksMax
+  notify: "Restart pve-ha-lrm.service"
+
+- name: "Put limits file"
+  ansible.builtin.copy:
+    src: "templates/etc/security/limits.d/90-rs-proxmox.conf"
+    dest: "/etc/security/limits.d/90-rs-proxmox.conf"
+    owner: root
+    group: root
+    mode: '0640'

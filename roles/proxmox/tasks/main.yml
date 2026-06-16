@@ -18,6 +18,10 @@
   ansible.builtin.import_tasks:
     file: tasks/memory_config.yml
 
+- name: Limitation unlimited config
+  ansible.builtin.import_tasks:
+    file: tasks/limitations.yml
+
 - name: Make mountpoint for ISO tmpfs
   ansible.builtin.file:
     path: "/iso_temp"
