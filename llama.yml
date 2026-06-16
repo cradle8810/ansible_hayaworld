@@ -50,8 +50,8 @@
       vars:
         borg_device: "/mnt/backup/Service_Backups/llama-swap"
         borg_sources:
-          - src: llama-swap_models
-            dest: llama-swap_models
+          - src: llama_models
+            dest: llama_models
           - src: /home/hayato/llama
             dest: llama
       tags:
