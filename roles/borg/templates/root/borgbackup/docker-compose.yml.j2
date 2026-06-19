@@ -12,8 +12,6 @@ services:
       - BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK=yes
 
 volumes:
-  webui_open-webui:
-    external: true
   backup-nfs:
     driver: local
     driver_opts:

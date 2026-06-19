@@ -134,7 +134,7 @@
       vars:
         borg_device: "/mnt/backup/Service_Backups/console"
         borg_sources:
-          - src: /home/hayato
+          - src: /home
             dest: home
       tags:
         - borg
