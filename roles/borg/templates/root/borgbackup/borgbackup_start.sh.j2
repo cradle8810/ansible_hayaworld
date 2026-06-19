@@ -2,6 +2,8 @@
 cd /root/borgbackup
 
 docker compose run --rm borgbackup create \
+  --one-file-system \
+  --sparse \
   --compression lz4 \
   /target::"archive-{now:%Y-%m-%d-%H%M%S}" \
   /source
