@@ -66,6 +66,17 @@ docker_config:
     syslog-address: "unixgram:///dev/log"
     tag: "{% raw %}nextcloud-aio/{{.Name}}{% endraw %}"
     syslog-format: "rfc3164"
+  ipv6: true
+  ip6tables: true
+  userland-proxy: false
+  dns:
+    - 192.168.88.100
+    - 192.168.88.200
+  fixed-cidr-v6: "fd5a:aab9:4bed::1/64"
+  bip: "172.18.8.1/24"
+  default-network-opts:
+    bridge:
+      com.docker.network.enable_ipv6: "true"
 
 swappiness: 10
 
