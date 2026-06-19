@@ -1,12 +1,16 @@
 #!/bin/bash
 cd /root/borgbackup
 
-docker compose run --rm borgbackup create \
-  --one-file-system \
-  --sparse \
-  --compression lz4 \
-  /target::"archive-{now:%Y-%m-%d-%H%M%S}" \
-  /source
+docker compose run --rm \
+  --entrypoint "sh -c \
+    'borg create \
+      --one-file-system \
+      --sparse \
+      --compression lz4 \
+      --list \
+      /target::"archive-{now:%Y-%m-%d-%H%M%S}" \
+      /source/*'" \
+  borgbackup
 
 docker compose run --rm borgbackup prune \
   --list \
