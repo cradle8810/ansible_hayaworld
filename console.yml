@@ -127,3 +127,14 @@
         file: tasks/zabbix-agent2.yml
       tags:
         - zabbix
+
+    - name: "Install BorgBackup and Configuration Backup"
+      ansible.builtin.import_role:
+        name: borg
+      vars:
+        borg_device: "/mnt/backup/Service_Backups/console"
+        borg_sources:
+          - src: /home/hayato
+            dest: home
+      tags:
+        - borg
