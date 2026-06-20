@@ -41,3 +41,10 @@
             type: 'sat,auto'
       tags:
         - scrutiny
+
+    - name: "Install Locales"
+      ansible.builtin.apt:
+        name: locales
+        state: present
+        update_cache: true
+      notify: "locale gen for skylark"
