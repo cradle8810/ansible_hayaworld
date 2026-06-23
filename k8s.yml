@@ -20,6 +20,16 @@
         common_firewall: "{{ firewall }}"
         common_install_users: true
 
+    - name: "Setup Tailscale Endpoint"
+      ansible.builtin.import_role:
+        name: tailscale_install
+      vars:
+        tailscale_install_tags:
+          - k8s
+        tailscale_install_args: "--accept-dns=true"
+      tags:
+        - tailscale
+
     - name: Install Containerd
       ansible.builtin.include_role:
         name: containerd
@@ -43,6 +53,40 @@
         kubernetes_allow_pods_on_control_plane: true
       tags:
         - k8s
+
+    - name: Install helm
+      ansible.builtin.include_role:
+        name: geerlingguy.helm
+        apply:
+          tags:
+            - k8s
+            - helm
+      vars:
+        helm_version: 'v3.21.2'
+      tags:
+        - k8s
+        - helm
+
+    - name: "Install Tailscale Helm chart"
+      when: inventory_hostname == 'k01'
+      ansible.builtin.shell:
+        cmd: |
+          set -o pipefail &&
+          helm repo add tailscale https://pkgs.tailscale.com/helmcharts &&
+          helm repo update &&
+          helm upgrade \
+            --install \
+            tailscale-operator \
+            tailscale/tailscale-operator \
+            --namespace=tailscale \
+            --create-namespace \
+            --set-string oauth.clientId="{{ OAUTH_CLIENT_ID }}" \
+            --set-string oauth.clientSecret="{{ OAUTH_CLIENT_SECRET }}" \
+      register: tailscale_helm_install
+      changed_when: tailscale_helm_install.rc != 0
+      tags:
+        - k8s
+        - helm
 
     - name: APC UPS Settings
       ansible.builtin.import_role:
