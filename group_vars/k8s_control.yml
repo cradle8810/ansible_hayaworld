@@ -1,0 +1,42 @@
+---
+firewall:
+  policy: deny
+  allow_rules:
+    ipv4:
+      - name: "SSH from service line"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: '22'
+      - name: "K8s API Server"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: "6443"
+      - name: "K8s etcd"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: "2379:2380"
+      - name: "Kubelet API"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: "10250"
+      - name: "Kube Scheduler"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: "10259"
+      - name: "Kube-Controller-Manager"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: "10257"
+    ipv6:
+      - name: "DHCPv6 Client from service line"
+        proto: "udp"
+        src: "::"
+        port: "546"
+
+rsyslog:
+  rsyslog_client_additional_actions: |
+    if ($msg contains "Attempting to mount") or
+       ($msg contains "enabling forceuid mount option implicitly") or
+       ($msg contains "enabling forcegid mount option implicitly") then {
+        stop
+    }

@@ -39,10 +39,22 @@ zabbix ansible_user=ansible ansible_host=zabbix.hayaworld.home
 [piholes]
 pi01 ansible_user=ansible ansible_host=192.168.88.148
 
-[k8s]
-k01 ansible_user=ansible ansible_host=k01.hayaworld.home
+[k8s:children]
+k8s_control
+k8s_worker
+
+[k8s_control]
+k01 ansible_user=ansible ansible_host=k01.hayaworld.home 
+
+[k8s_control:vars]
+kubernetes_role="control_plane"
+
+[k8s_worker]
 k02 ansible_user=ansible ansible_host=k02.hayaworld.home
 k03 ansible_user=ansible ansible_host=k03.hayaworld.home
+
+[k8s_worker:vars]
+kubernetes_role="nodes"
 
 [vm]
 console

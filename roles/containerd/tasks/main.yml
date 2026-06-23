@@ -1,0 +1,76 @@
+---
+- name: Prepare containerd data dir
+  when: containerd_drive_is_opt_docker
+  tags:
+    - mount
+  block:
+    - name: Create containerd Mount dir
+      ansible.builtin.file:
+        path: "/opt/docker"
+        state: directory
+        owner: root
+        group: root
+        mode: '0710'
+
+    - name: "Mount containerd drive"
+      ansible.posix.mount:
+        src: "UUID={{ containerd_drive_uuid }}"
+        path: "/opt/docker"
+        opts: "defaults,compress=zstd:1"
+        fstype: btrfs
+        state: mounted
+
+    - name: Create containerd Mount dir
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0710'
+      loop:
+        - "/opt/docker"
+        - "/opt/docker/docker"
+        - "/opt/docker/containerd"
+
+    - name: "Make symlink from Docker drive"
+      ansible.builtin.file:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        state: link
+      loop:
+        - src: "/opt/docker/docker"
+          dest: "/var/lib/docker"
+        - src: "/opt/docker/containerd"
+          dest: "/var/lib/containerd"
+
+- name: Install Docker(ce)
+  ansible.builtin.include_role:
+    name: geerlingguy.containerd
+
+- name: "Disable CoW if btrfs"
+  when: containerd_btrfs and containerd_drive_is_opt_docker
+  ansible.builtin.command:
+    cmd: "chattr +C /opt/docker"
+  register: retval
+  changed_when: retval.rc == 0
+
+- name: "Set IPv6 Routing"
+  community.general.ini_file:
+    path: "/etc/sysctl.d/99-ipv6-forward.conf"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    state: present
+    no_extra_spaces: true
+    mode: "644"
+  notify: "ipv6 forward sysctl"
+  loop:
+    - option: "net.ipv6.conf.all.forwarding"
+      value: 1
+    - option: "net.ipv6.conf.all.accept_ra"
+      value: 2
+    - option: "net.bridge.bridge-nf-call-ip6tables"
+      value: 0
+    - option: "net.bridge.bridge-nf-call-iptables"
+      value: 0
