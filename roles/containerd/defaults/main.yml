@@ -1,3 +1,0 @@
----
-containerd_drive_is_opt_docker: false
-containerd_btrfs: false

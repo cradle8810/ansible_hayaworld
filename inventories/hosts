@@ -54,7 +54,7 @@ k02 ansible_user=ansible ansible_host=k02.hayaworld.home
 k03 ansible_user=ansible ansible_host=k03.hayaworld.home
 
 [k8s_worker:vars]
-kubernetes_role="nodes"
+kubernetes_role="node"
 
 [vm]
 console

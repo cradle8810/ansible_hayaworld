@@ -1,0 +1,3 @@
+---
+k8s_drive_is_opt_docker: false
+k8s_btrfs: false

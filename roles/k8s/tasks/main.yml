@@ -1,0 +1,163 @@
+---
+- name: Prepare containerd data dir
+  when: k8s_drive_is_opt_docker
+  tags:
+    - mount
+  block:
+    - name: Create containerd Mount dir
+      ansible.builtin.file:
+        path: "/opt/docker"
+        state: directory
+        owner: root
+        group: root
+        mode: '0710'
+
+    - name: "Mount containerd drive"
+      ansible.posix.mount:
+        src: "UUID={{ k8s_drive_uuid }}"
+        path: "/opt/docker"
+        opts: "defaults,compress=zstd:1"
+        fstype: btrfs
+        state: mounted
+      register: containerd_image_drive_mount
+
+    - name: Create containerd Mount dir
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0710'
+      loop:
+        - "/opt/docker"
+        - "/opt/docker/docker"
+        - "/opt/docker/containerd"
+        - "/opt/docker/etcd"
+
+    - name: "Disable CoW if btrfs"
+      when:
+        - k8s_btrfs
+        - k8s_drive_is_opt_docker
+        - containerd_image_drive_mount.changed
+      ansible.builtin.command:
+        cmd: "chattr +C /opt/docker"
+      register: retval
+      changed_when: retval.rc == 0
+
+    - name: "Make symlink from Docker drive"
+      ansible.builtin.file:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        state: link
+      loop:
+        - src: "/opt/docker/docker"
+          dest: "/var/lib/docker"
+        - src: "/opt/docker/containerd"
+          dest: "/var/lib/containerd"
+        - src: "/opt/docker/etcd"
+          dest: "/var/lib/etcd"
+
+# Requirement for installing k8s, otherwise k8s role dies.
+- name: IP Forwarding
+  block:
+    - name: "Add br_netfilter kernel module"
+      ansible.builtin.lineinfile:
+        path: /etc/modules-load.d/br_netfilter.conf
+        regexp: '^br_netfilter$'
+        line: "br_netfilter"
+        state: present
+        mode: "644"
+        create: true
+      register: br_netfilter_add
+
+    - name: "IPv4 Forwarding Apply"
+      ansible.builtin.command:
+        cmd: "modprobe br_netfilter"
+      when: br_netfilter_add.changed  # noqa: no-handler
+      register: retval
+      changed_when: retval.rc == 0
+
+    - name: "Set IPv4 forwarding"
+      community.general.ini_file:
+        path: "/etc/sysctl.d/99-ipv4-forward.conf"
+        option: "{{ item.option }}"
+        value: "{{ item.value }}"
+        state: present
+        no_extra_spaces: false
+        mode: "644"
+      loop:
+        - option: "net.ipv4.ip_forward"
+          value: "1"
+      register: ipv4_forward
+
+    - name: "Set IPv6 Routing"
+      community.general.ini_file:
+        path: "/etc/sysctl.d/99-ipv6-forward.conf"
+        option: "{{ item.option }}"
+        value: "{{ item.value }}"
+        state: present
+        no_extra_spaces: true
+        mode: "644"
+      loop:
+        - option: "net.ipv6.conf.all.forwarding"
+          value: 1
+        - option: "net.ipv6.conf.all.accept_ra"
+          value: 2
+        - option: "net.bridge.bridge-nf-call-ip6tables"
+          value: 0
+        - option: "net.bridge.bridge-nf-call-iptables"
+          value: 0
+      register: ipv6_forward
+
+    - name: "IPv4 Forwarding Apply"
+      ansible.builtin.command:
+        cmd: "sysctl -p /etc/sysctl.d/99-ipv4-forward.conf"
+      when: ipv4_forward.changed  # noqa: no-handler
+      register: retval
+      changed_when: retval.rc == 0
+
+    - name: "IPv6 Forwarding Apply"
+      ansible.builtin.command:
+        cmd: "sysctl -p /etc/sysctl.d/99-ipv6-forward.conf"
+      when: ipv6_forward.changed  # noqa: no-handler
+      register: retval
+      changed_when: retval.rc == 0
+
+- name: Install Containerd
+  ansible.builtin.include_role:
+    name: geerlingguy.containerd
+
+- name: Install k8s
+  ansible.builtin.include_role:
+    name: geerlingguy.kubernetes
+  vars:
+    kubernetes_allow_pods_on_control_plane: true
+    kubernetes_pod_network:
+      cni: 'flannel'
+      cidr: '10.244.0.0/16'
+
+- name: Install helm
+  ansible.builtin.include_role:
+    name: geerlingguy.helm
+  vars:
+    helm_version: 'v3.21.2'
+
+- name: "Install Tailscale Helm chart"
+  when: inventory_hostname == 'k01'
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail &&
+      helm repo add tailscale https://pkgs.tailscale.com/helmcharts &&
+      helm repo update &&
+      helm upgrade \
+        --install \
+        tailscale-operator \
+        tailscale/tailscale-operator \
+        --namespace=tailscale \
+        --create-namespace \
+        --set-string oauth.clientId="{{ k8s_OAUTH_CLIENT_ID }}" \
+        --set-string oauth.clientSecret="{{ k8s_OAUTH_CLIENT_SECRET }}" \
+  register: tailscale_helm_install
+  changed_when: tailscale_helm_install.rc != 0
