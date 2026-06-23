@@ -125,6 +125,13 @@
       register: retval
       changed_when: retval.rc == 0
 
+- name: Install Prerequirements
+  ansible.builtin.apt:
+    pkg:
+      - nfs-common
+    state: present
+    update_cache: true
+
 - name: Install Containerd
   ansible.builtin.include_role:
     name: geerlingguy.containerd
@@ -161,3 +168,15 @@
         --set-string oauth.clientSecret="{{ k8s_OAUTH_CLIENT_SECRET }}" \
   register: tailscale_helm_install
   changed_when: tailscale_helm_install.rc != 0
+
+- name: "Install NFS Provisioner Helm chart"
+  when: inventory_hostname == 'k01'
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail &&
+      helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/ &&
+      helm install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner \
+        --set nfs.server="{{ k8s_nfs_server }}" \
+        --set nfs.path="{{ k8s_nfs_path }}"
+  register: nfs_helm_install
+  changed_when: nfs_helm_install.rc != 0

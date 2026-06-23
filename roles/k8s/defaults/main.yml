@@ -1,3 +1,6 @@
 ---
 k8s_drive_is_opt_docker: false
 k8s_btrfs: false
+
+k8s_nfs_server: "192.168.88.10"
+k8s_nfs_path: "/mnt/tank/skylark/k8s_nfs"
