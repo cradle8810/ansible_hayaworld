@@ -195,6 +195,27 @@ network:
     sshuser: ansible
     self_org: true
     mtu: 9000
+  - hostname: k01.hayaworld.home
+    interface: enp6s18
+    ipv4: 192.168.88.131
+    shortname: k01
+    sshuser: ansible
+    self_org: true
+    mtu: 9000
+  - hostname: k02.hayaworld.home
+    interface: enp6s18
+    ipv4: 192.168.88.132
+    shortname: k02
+    sshuser: ansible
+    self_org: true
+    mtu: 9000
+  - hostname: k03.hayaworld.home
+    interface: enp6s18
+    ipv4: 192.168.88.133
+    shortname: k03
+    sshuser: ansible
+    self_org: true
+    mtu: 9000
   - hostname: pi01.hayaworld.home
     interface: enp6s18
     ipv4: 192.168.88.148

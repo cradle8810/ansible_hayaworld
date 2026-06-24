@@ -1,0 +1,262 @@
+---
+- name: Prepare containerd data dir
+  when: k8s_drive_is_opt_docker
+  tags:
+    - mount
+  block:
+    - name: Create containerd Mount dir
+      ansible.builtin.file:
+        path: "/opt/docker"
+        state: directory
+        owner: root
+        group: root
+        mode: '0710'
+
+    - name: "Mount containerd drive"
+      ansible.posix.mount:
+        src: "UUID={{ k8s_drive_uuid }}"
+        path: "/opt/docker"
+        opts: "defaults,compress=zstd:1"
+        fstype: btrfs
+        state: mounted
+      register: containerd_image_drive_mount
+
+    - name: Create containerd Mount dir
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0710'
+      loop:
+        - "/opt/docker"
+        - "/opt/docker/docker"
+        - "/opt/docker/containerd"
+        - "/opt/docker/etcd"
+
+    - name: "Disable CoW if btrfs"
+      when:
+        - k8s_btrfs
+        - k8s_drive_is_opt_docker
+        - containerd_image_drive_mount.changed
+      ansible.builtin.command:
+        cmd: "chattr +C /opt/docker"
+      register: retval
+      changed_when: retval.rc == 0
+
+    - name: "Make symlink from Docker drive"
+      ansible.builtin.file:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        state: link
+      loop:
+        - src: "/opt/docker/docker"
+          dest: "/var/lib/docker"
+        - src: "/opt/docker/containerd"
+          dest: "/var/lib/containerd"
+        - src: "/opt/docker/etcd"
+          dest: "/var/lib/etcd"
+
+# Requirement for installing k8s, otherwise k8s role dies.
+- name: IP Forwarding
+  block:
+    - name: "Add br_netfilter kernel module"
+      ansible.builtin.lineinfile:
+        path: /etc/modules-load.d/br_netfilter.conf
+        regexp: '^br_netfilter$'
+        line: "br_netfilter"
+        state: present
+        mode: "644"
+        create: true
+      register: br_netfilter_add
+
+    - name: "IPv4 Forwarding Apply"
+      ansible.builtin.command:
+        cmd: "modprobe br_netfilter"
+      when: br_netfilter_add.changed  # noqa: no-handler
+      register: retval
+      changed_when: retval.rc == 0
+
+    - name: "Set IPv4 forwarding"
+      community.general.ini_file:
+        path: "/etc/sysctl.d/99-ipv4-forward.conf"
+        option: "{{ item.option }}"
+        value: "{{ item.value }}"
+        state: present
+        no_extra_spaces: false
+        mode: "644"
+      loop:
+        - option: "net.ipv4.ip_forward"
+          value: "1"
+      register: ipv4_forward
+
+    - name: "Set IPv6 Routing"
+      community.general.ini_file:
+        path: "/etc/sysctl.d/99-ipv6-forward.conf"
+        option: "{{ item.option }}"
+        value: "{{ item.value }}"
+        state: present
+        no_extra_spaces: true
+        mode: "644"
+      loop:
+        - option: "net.ipv6.conf.all.forwarding"
+          value: 1
+        - option: "net.ipv6.conf.all.accept_ra"
+          value: 2
+        - option: "net.bridge.bridge-nf-call-ip6tables"
+          value: 0
+        - option: "net.bridge.bridge-nf-call-iptables"
+          value: 0
+      register: ipv6_forward
+
+    - name: "IPv4 Forwarding Apply"
+      ansible.builtin.command:
+        cmd: "sysctl -p /etc/sysctl.d/99-ipv4-forward.conf"
+      when: ipv4_forward.changed  # noqa: no-handler
+      register: retval
+      changed_when: retval.rc == 0
+
+    - name: "IPv6 Forwarding Apply"
+      ansible.builtin.command:
+        cmd: "sysctl -p /etc/sysctl.d/99-ipv6-forward.conf"
+      when: ipv6_forward.changed  # noqa: no-handler
+      register: retval
+      changed_when: retval.rc == 0
+
+    - name: "Change ufw forward policy"
+      community.general.ini_file:
+        path: "/etc/default/ufw"
+        option: "DEFAULT_FORWARD_POLICY"
+        value: "ACCEPT"
+        state: present
+        no_extra_spaces: true
+        mode: "644"
+      register: ufw_policy
+
+    - name: "Apply ufw forward policy"
+      ansible.builtin.command:
+        cmd: "ufw reload"
+      when: ufw_policy.changed  # noqa: no-handler
+      register: retval
+      changed_when: retval.rc == 0
+
+- name: Install Prerequirements
+  ansible.builtin.apt:
+    pkg:
+      - nfs-common
+      - python3-kubernetes
+    state: present
+    update_cache: true
+
+- name: Install Containerd
+  ansible.builtin.include_role:
+    name: geerlingguy.containerd
+
+- name: Install k8s
+  ansible.builtin.include_role:
+    name: geerlingguy.kubernetes
+  vars:
+    kubernetes_allow_pods_on_control_plane: true
+    kubernetes_pod_network:
+      cni: 'none'
+      cidr: '10.244.0.0/16'
+    kubernetes_config_kubelet_configuration:
+      cgroupDriver: systemd
+      failSwapOn: false
+    kubernetes_join_command_extra_opts: "--ignore-preflight-errors=Swap"
+    kubernetes_ignore_preflight_errors: 'all'
+    kubernetes_config_init_configuration:
+      localAPIEndpoint:
+        advertiseAddress: "{{ kubernetes_apiserver_advertise_address | default(ansible_default_ipv4.address, true) }}"
+      nodeRegistration:
+        ignorePreflightErrors:
+          - all
+      timeouts:
+        controlPlaneComponentHealthCheck: "1h"
+        kubernetesAPICall: "10m"
+
+- name: Deploy Flannel networking idempotently using admin.conf
+  when: kubernetes_role == "control_plane"
+  kubernetes.core.k8s:
+    src: https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+    kubeconfig: /etc/kubernetes/admin.conf
+    state: present
+
+- name: "Set flannel interface ufw rules"
+  block:
+    - name: "Allow for flannel interface (in)"
+      community.general.ufw:
+        rule: allow
+        interface_in: flannel.1
+        proto: any
+
+    - name: "Allow for flannel interface (out)"
+      community.general.ufw:
+        rule: allow
+        interface_out: flannel.1
+        proto: any
+
+    - name: "Allow for flannel routed interface (in)"
+      community.general.ufw:
+        rule: allow
+        route: true
+        interface_in: flannel.1
+        proto: any
+
+    - name: "Allow for flannel routed interface (out)"
+      community.general.ufw:
+        rule: allow
+        route: true
+        interface_out: flannel.1
+        proto: any
+
+- name: Install helm
+  ansible.builtin.include_role:
+    name: geerlingguy.helm
+  vars:
+    helm_version: 'v3.21.2'
+
+- name: "Installing essential Helm Chart"
+  when: kubernetes_role == "control_plane"
+  block:
+    - name: "Install Tailscale Helm chart"
+      block:
+        - name: "Add Tailscale helm repo"
+          kubernetes.core.helm_repository:
+            name: tailscale
+            repo_url: https://pkgs.tailscale.com/helmcharts
+
+        - name: "Deploy Tailscale helm"
+          kubernetes.core.helm:
+            name: tailscale-operator
+            chart_ref: tailscale/tailscale-operator
+            release_namespace: tailscale
+            create_namespace: true
+            update_repo_cache: true
+            set_values:
+              - value: oauth.clientId="{{ k8s_OAUTH_CLIENT_ID }}"
+                value_type: string
+              - value: oauth.clientSecret="{{ k8s_OAUTH_CLIENT_SECRET }}"
+                value_type: string
+
+    - name: "Install NFS Client Helm chart"
+      block:
+        - name: "Add NFS Client helm repo"
+          kubernetes.core.helm_repository:
+            name: nfs-subdir-external-provisioner
+            repo_url: "https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner"
+
+        - name: "Deploy Tailscale helm"
+          kubernetes.core.helm:
+            name: nfs-subdir-external-provisioner
+            chart_ref: nfs-subdir-external-provisioner/nfs-subdir-external-provisioner
+            release_namespace: nfs-storage
+            create_namespace: true
+            update_repo_cache: true
+            set_values:
+              - value: nfs.server="{{ k8s_nfs_server }}"
+                value_type: string
+              - value: nfs.path="{{ k8s_nfs_path }}"
+                value_type: string

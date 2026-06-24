@@ -12,17 +12,17 @@
     - name: "Common / Set Firewall Allow Rules (IPv4)"
       community.general.ufw:
         rule: allow
-        proto: "{{ item.proto }}"
-        src: "{{ item.src }}"
-        port: "{{ item.port }}"
+        proto: "{{ item.proto | default(omit) }}"
+        src: "{{ item.src | default(omit) }}"
+        port: "{{ item.port | default(omit) }}"
       loop: "{{ common_firewall.allow_rules.ipv4 }}"
 
     - name: "Common / Set Firewall Allow Rules (IPv6)"
       community.general.ufw:
         rule: allow
-        proto: "{{ item.proto }}"
-        src: "{{ item.src }}"
-        port: "{{ item.port }}"
+        proto: "{{ item.proto | default(omit) }}"
+        src: "{{ item.src | default(omit) }}"
+        port: "{{ item.port | default(omit) }}"
       loop: "{{ common_firewall.allow_rules.ipv6 }}"
 
     - name: Set logging

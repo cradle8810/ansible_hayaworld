@@ -13,6 +13,12 @@ roles:
     src: https://github.com/MonolithProjects/ansible-github_actions_runner
   - name: nginxinc.nginx
     version: '0.25.0'
+  - name: geerlingguy.kubernetes
+    version: 8.2.0
+  - name: geerlingguy.helm
+    version: 1.0.1
+  - name: geerlingguy.containerd
+    version: 1.4.1
 
 collections:
   - name: ansible.netcommon
@@ -24,3 +30,5 @@ collections:
     version: '11.0.0'
   - name: artis3n.tailscale
     version: '1.2.1'
+  - name: kubernetes.core
+    version: '6.4.0'
