@@ -176,6 +176,14 @@
       timeouts:
         controlPlaneComponentHealthCheck: "1h"
         kubernetesAPICall: "10m"
+    kubernetes_config_cluster_configuration:
+      etcd:
+        local:
+          extraArgs:
+            - name: heartbeat-interval
+              value: "500"
+            - name: election-timeout
+              value: "5000"
 
 - name: Deploy Flannel networking idempotently using admin.conf
   when: kubernetes_role == "control_plane"
