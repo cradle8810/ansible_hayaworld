@@ -184,6 +184,8 @@
               value: "500"
             - name: election-timeout
               value: "5000"
+      networking:
+        podSubnet: "10.244.0.0/16"
 
 - name: Deploy Flannel networking idempotently using admin.conf
   when: kubernetes_role == "control_plane"
