@@ -94,6 +94,6 @@
     - option: "net.ipv6.conf.all.accept_ra"
       value: 2
     - option: "net.bridge.bridge-nf-call-ip6tables"
-      value: 0
+      value: 1
     - option: "net.bridge.bridge-nf-call-iptables"
-      value: 0
+      value: 1

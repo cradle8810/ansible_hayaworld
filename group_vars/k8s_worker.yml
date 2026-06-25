@@ -20,6 +20,12 @@ firewall:
         proto: "udp"
         src: "::"
         port: "546"
+      - name: "Allow flannel virtual interface IP address"
+        src: "fd09:09c5:5ecd::/48"
+      - name: "Allow k8s service subnet IP address"
+        src: "fdd4:6e2b:a5f9::/108"
+      - name: "Allow link-local IP address"
+        src: "fe80::/16"
 
 rsyslog:
   rsyslog_client_additional_actions: |

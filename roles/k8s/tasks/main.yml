@@ -106,9 +106,9 @@
         - option: "net.ipv6.conf.all.accept_ra"
           value: 2
         - option: "net.bridge.bridge-nf-call-ip6tables"
-          value: 0
+          value: 1
         - option: "net.bridge.bridge-nf-call-iptables"
-          value: 0
+          value: 1
       register: ipv6_forward
 
     - name: "IPv4 Forwarding Apply"
@@ -185,42 +185,78 @@
             - name: election-timeout
               value: "5000"
       networking:
-        podSubnet: "10.244.0.0/16"
+        podSubnet: "10.244.0.0/16,fd09:09c5:5ecd::/48"
+        serviceSubnet: "10.96.0.0/16,fdd4:6e2b:a5f9::/108"
 
 - name: Deploy Flannel networking idempotently using admin.conf
-  when: kubernetes_role == "control_plane"
-  kubernetes.core.k8s:
-    src: https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-    kubeconfig: /etc/kubernetes/admin.conf
-    state: present
+  block:
+    - name: Check flannel definition file
+      ansible.builtin.stat:
+        path: "/root/kube-flannel.yml"
+      register: kube_flannel_yml
+
+    - name: Download flannel definition
+      when: not kube_flannel_yml.stat.exists
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+        dest: /root/kube-flannel.yml
+        checksum: "sha256:8731070bca4303bbe7f7a0c7fbcab8d5fc6fb16a3f61629cbecea7bf6caab7ca"
+        mode: "0644"
+
+    - name: Add IPv6 Support to flannel
+      ansible.builtin.lineinfile:
+        path: /root/kube-flannel.yml
+        regexp: '^\s+"Network": "10.244.0.0/16",$'
+        line: '      "Network": "10.244.0.0/16", "EnableIPv6": true, "IPv6Network": "fd09:09c5:5ecd::/48",'
+        state: present
+        mode: "644"
+
+    - name: Deploy Flannel networking idempotently using admin.conf
+      when: kubernetes_role == "control_plane"
+      kubernetes.core.k8s:
+        src: /root/kube-flannel.yml
+        kubeconfig: /etc/kubernetes/admin.conf
+        state: present
 
 - name: "Set flannel interface ufw rules"
   block:
     - name: "Allow for flannel interface (in)"
       community.general.ufw:
         rule: allow
-        interface_in: flannel.1
+        interface_in: "{{ item }}"
         proto: any
+      loop:
+        - flannel.1
+        - flannel-v6.1
 
     - name: "Allow for flannel interface (out)"
       community.general.ufw:
         rule: allow
-        interface_out: flannel.1
+        interface_out: "{{ item }}"
         proto: any
+      loop:
+        - flannel.1
+        - flannel-v6.1
 
     - name: "Allow for flannel routed interface (in)"
       community.general.ufw:
         rule: allow
         route: true
-        interface_in: flannel.1
+        interface_in: "{{ item }}"
         proto: any
+      loop:
+        - flannel.1
+        - flannel-v6.1
 
     - name: "Allow for flannel routed interface (out)"
       community.general.ufw:
         rule: allow
         route: true
-        interface_out: flannel.1
+        interface_out: "{{ item }}"
         proto: any
+      loop:
+        - flannel.1
+        - flannel-v6.1
 
 - name: Install helm
   ansible.builtin.include_role:
