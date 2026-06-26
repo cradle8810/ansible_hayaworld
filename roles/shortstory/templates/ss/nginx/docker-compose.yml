@@ -3,11 +3,14 @@ services:
     image: nginx
     container_name: ss-nginx
     restart: always
-    network_mode: "host"
+    ports:
+      - "80:80"
+      - "443:443"
     volumes:
       - ./conf.d:/etc/nginx/conf.d:ro
       - ./html:/usr/share/nginx/html:ro
-
+      - /etc/ssl/certs/hayaworld_cert.pem:/certs/hayaworld_cert.pem:ro
+      - /etc/ssl/private/hayaworld_priv.pem:/certs/hayaworld_priv.pem:ro
 networks:
   default:
     enable_ipv6: true

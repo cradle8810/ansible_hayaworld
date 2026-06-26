@@ -14,7 +14,7 @@
 
 - name: Copy Nginx Configurations
   ansible.builtin.copy:
-    src: templates/ss/nginx/conf.d/default.conf.j2
+    src: templates/ss/nginx/conf.d/default.conf
     dest: /ss/nginx/conf.d/default.conf
     owner: hayato
     group: hayato
