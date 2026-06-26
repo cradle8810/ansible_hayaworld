@@ -1,0 +1,7 @@
+---
+- name: "Update Root CAs"
+  ansible.builtin.command:
+    cmd: "update-ca-certificates"
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "update-ca-certificates"

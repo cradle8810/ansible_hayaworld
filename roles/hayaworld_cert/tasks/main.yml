@@ -1,0 +1,29 @@
+---
+- name: "Make hayaworld.home Root CA dir"
+  ansible.builtin.file:
+    path: "/usr/local/share/ca-certificates"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: "Put hayaworld root CA cert"
+  ansible.builtin.copy:
+    src: "templates/usr/local/share/ca-certificates/ca.crt"
+    dest: "/usr/local/share/ca-certificates/ca.crt"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "update-ca-certificates"
+
+- name: "Put hayaworld root CA cert"
+  ansible.builtin.copy:
+    src: "templates/etc/ssl/{{ item }}"
+    dest: "/etc/ssl/{{ item }}"
+    owner: root
+    group: root
+    mode: '0600'
+  loop:
+    - "certs/hayaworld_cert.pem"
+    - "private/hayaworld_priv.pem"
+  notify: "update-ca-certificates"
