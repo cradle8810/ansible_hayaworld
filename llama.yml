@@ -40,7 +40,7 @@
 
     - name: "Install llama"
       ansible.builtin.import_role:
-        name: llama-swap
+        name: llama_swap
       tags:
         - llama
 
