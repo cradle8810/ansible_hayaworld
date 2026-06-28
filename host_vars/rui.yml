@@ -2,16 +2,11 @@
 rui_info: "{{ network | selectattr('shortname', 'eq', 'rui') | first }}"
 qd_info: "{{ network | selectattr('shortname', 'eq', 'qd') | first }}"
 
-dnsmasq:
-  domain: hayaworld.home
-  local: /hayaworld.home/
-  listen_address: "{{ rui_info.ipv4 }}"
-  interface: "{{ rui_info.interface }}"
-  dns:
-    cache_size: 4000
-  logs:
-    log_facility: local5
-    log_to: "log.hayaworld.home"
+dnsmasq_domain: hayaworld.home
+dnsmasq_local: /hayaworld.home/
+dnsmasq_dns_cache_size: 4000
+dnsmasq_logs_log_facility: local5
+dnsmasq_logs_log_to: "log.hayaworld.home"
 
 dhcp:
   interface: "{{ rui_info.interface }}"

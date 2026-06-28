@@ -1,10 +1,10 @@
 conf-dir=/etc/dnsmasq.d,*.conf
 no-resolv
 
-domain={{ dnsmasq.domain }}
-local={{ dnsmasq.local }}
+domain={{ dnsmasq_domain }}
+local={{ dnsmasq_local }}
 
-cache-size={{ dnsmasq.dns.cache_size }}
+cache-size={{ dnsmasq_dns_cache_size }}
 
 resolv-file=/etc/dnsmasq.d/resolv.txt
 addn-hosts=/etc/hayaworld_hosts
@@ -15,7 +15,7 @@ server=/v4flets-east.jp/123.107.190.7
 server=/speed.flets/123.107.190.7
 
 #log-queries
-log-facility={{ dnsmasq.logs.log_facility }}
+log-facility={{ dnsmasq_logs_log_facility }}
 
 {% for dns_server in outer_dns_servers.ipv4 %}
 server={{ dns_server.addr }}#{{ dns_server.port }}
