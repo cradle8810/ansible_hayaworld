@@ -2,16 +2,11 @@
 rui_info: "{{ network | selectattr('shortname', 'eq', 'rui') | first }}"
 qd_info: "{{ network | selectattr('shortname', 'eq', 'qd') | first }}"
 
-dnsmasq:
-  domain: hayaworld.home
-  local: /hayaworld.home/
-  listen_address: "{{ rui_info.ipv4 }}"
-  interface: "{{ rui_info.interface }}"
-  dns:
-    cache_size: 4000
-  logs:
-    log_facility: local5
-    log_to: "log.hayaworld.home"
+dnsmasq_domain: hayaworld.home
+dnsmasq_local: /hayaworld.home/
+dnsmasq_dns_cache_size: 4000
+dnsmasq_logs_log_facility: local5
+dnsmasq_logs_log_to: "log.hayaworld.home"
 
 dhcp:
   interface: "{{ rui_info.interface }}"
@@ -111,3 +106,15 @@ rsyslog_client_additional_actions: |
   if ($msg contains "/run/systemd/journal/dev-log") then {
     stop
   }
+
+docker_drive_is_opt_docker: false
+docker_btrfs: true
+docker_config:
+  ipv6: true
+  ip6tables: true
+  userland-proxy: false
+  dns:
+    - 192.168.88.100
+    - 192.168.88.200
+  fixed-cidr-v6: "fd56:1011:9fca::/64"
+  bip: "172.18.8.1/24"

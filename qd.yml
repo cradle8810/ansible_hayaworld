@@ -79,8 +79,6 @@
         - name: "Setup dnsmasq as resolve hayaworld.home"
           ansible.builtin.import_role:
             name: dns
-          vars:
-            dns_cname: "{{ cname }}"
 
         - name: "Setup Upstream DNS Server with pihole"
           ansible.builtin.import_role:
