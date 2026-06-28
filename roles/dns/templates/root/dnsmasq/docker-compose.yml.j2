@@ -1,0 +1,18 @@
+services:
+  dnsmasq:
+    image: dockurr/dnsmasq
+    container_name: dnsmasq
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+    restart: always
+    volumes:
+      - ./dnsmasq.conf:/etc/dnsmasq.conf
+      - ./hayaworld_hosts:/etc/hayaworld_hosts
+
+networks:
+  default:
+    enable_ipv6: true

@@ -1,15 +1,6 @@
 ---
-- name: "Dnsmasq / Stop and remove systemd-resolved.service"
-  ansible.builtin.systemd_service:
-    name: systemd-resolved.service
-    state: stopped
-    enabled: false
-    masked: true
-  listen: "Mask systemd-resolved"
-
-- name: "Dnsmasq / Start and enable dnsmasq"
-  ansible.builtin.systemd_service:
-    name: dnsmasq
-    state: restarted
-    enabled: true
+- name: "Start dnsmasq Docker Compose"
+  community.docker.docker_compose_v2:
+    project_src: /root/dnsmasq
+    state: present
   listen: "Restart dnsmasq"

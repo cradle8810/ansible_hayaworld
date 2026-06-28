@@ -1,15 +1,13 @@
 conf-dir=/etc/dnsmasq.d,*.conf
+no-resolv
 
 domain={{ dnsmasq.domain }}
 local={{ dnsmasq.local }}
 
-listen-address={{ dnsmasq.listen_address }}
-interface={{ dnsmasq.interface }}
-
 cache-size={{ dnsmasq.dns.cache_size }}
-dhcp-sequential-ip
 
 resolv-file=/etc/dnsmasq.d/resolv.txt
+addn-hosts=/etc/hayaworld_hosts
 
 # IPv4 NGN Forwarding
 server=/flets/123.107.190.7
@@ -17,5 +15,14 @@ server=/v4flets-east.jp/123.107.190.7
 server=/speed.flets/123.107.190.7
 
 #log-queries
-#log-dhcp
 log-facility={{ dnsmasq.logs.log_facility }}
+
+{% for dns_server in outer_dns_servers.ipv4 %}
+server={{ dns_server.addr }}#{{ dns_server.port }}
+{% endfor %}
+
+{% if dns_cname is defined %}
+{% for item in dns_cname %}
+cname={{ item.name }},{{ item.real }}
+{% endfor %}
+{% endif %}

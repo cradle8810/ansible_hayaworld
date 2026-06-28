@@ -1,6 +1,40 @@
 ---
-- name: "DNSmasq / Setting DNSmasq"
-  ansible.builtin.import_tasks:
-    file: tasks/dnsmasq.yml
-  tags:
-    - dnsmasq
+- name: "Install Docker"
+  when: docker_install
+  ansible.builtin.import_role:
+    name: docker
+  vars:
+    docker_users:
+      - root
+
+- name: "Stop and remove systemd-resolved.service"
+  ansible.builtin.systemd_service:
+    name: systemd-resolved.service
+    state: stopped
+    enabled: false
+    masked: true
+
+- name: "Create DNSmasq config dir"
+  ansible.builtin.file:
+    path: "/root/dnsmasq"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: "Copy configuration files"
+  ansible.builtin.template:
+    src: "templates/{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: '0644'
+  loop:
+    - src: "root/dnsmasq/dnsmasq.conf.j2"
+      dest: "/root/dnsmasq/dnsmasq.conf"
+    - src: "root/dnsmasq/hayaworld_hosts.j2"
+      dest: "/root/dnsmasq/hayaworld_hosts"
+    - src: "root/dnsmasq/docker-compose.yml.j2"
+      dest: "/root/dnsmasq/docker-compose.yml"
+  notify:
+    - "Restart dnsmasq"
