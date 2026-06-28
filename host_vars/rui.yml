@@ -111,3 +111,15 @@ rsyslog_client_additional_actions: |
   if ($msg contains "/run/systemd/journal/dev-log") then {
     stop
   }
+
+docker_drive_is_opt_docker: false
+docker_btrfs: true
+docker_config:
+  ipv6: true
+  ip6tables: true
+  userland-proxy: false
+  dns:
+    - 192.168.88.100
+    - 192.168.88.200
+  fixed-cidr-v6: "fd56:1011:9fca::/64"
+  bip: "172.18.8.1/24"

@@ -37,6 +37,16 @@
       tags:
         - mount
 
+    - name: Install Docker
+      ansible.builtin.import_role:
+        name: docker
+      vars:
+        docker_users:
+          - ansible
+          - hayato
+      tags:
+        - docker
+
     - name: "Setup dnsmasq"
       ansible.builtin.import_role:
         name: dns
