@@ -1,6 +1,6 @@
 ---
-- name: Play for qd.hayaworld.home
-  hosts: qd
+- name: Play for DNS servers
+  hosts: dns
   remote_user: ansible
   gather_facts: true
   become: true
@@ -20,15 +20,51 @@
         name: common
       vars:
         common_firewall: "{{ firewall }}"
-        common_pkg: "{{ apt }}"
+        common_add_hosts: true
         common_install_users: true
         common_network_nameserver_addresses:
           - "202.232.2.3"
           - "202.232.2.2"
 
+    - name: "Install Applications"
+      tags:
+        - apps
+      block:
+        - name: Install Docker
+          ansible.builtin.import_role:
+            name: docker
+          vars:
+            docker_users:
+              - ansible
+              - hayato
+          tags:
+            - docker
+
+        - name: "Setup dnsmasq"
+          ansible.builtin.import_role:
+            name: dns
+          vars:
+            dns_cname: "{{ cname }}"
+          tags:
+            - dns
+
+        - name: "Setup Upstream DNS Server with pihole"
+          ansible.builtin.import_role:
+            name: pihole
+          vars:
+            pihole_install_docker: false
+
+        - name: "Setup Kea DHCP Server"
+          ansible.builtin.import_role:
+            name: dhcp
+          vars:
+            dhcp_info: "{{ dhcp }}"
+          tags:
+            - dhcp
+
     - name: "System Configurations"
       tags:
-        - system
+        - config
       block:
         - name: Mount tmpfs for temporary dirs
           ansible.posix.mount:
@@ -40,63 +76,10 @@
           loop:
             - "/home/ansible/.ansible"
             - "/var/cache/apt/archives"
-            - "/var/log/kea"
-            - "/var/log"
           tags:
             - mount
 
-        - name: Setup journalctl
-          ansible.builtin.import_tasks:
-            file: tasks/dns/journalctl.yml
-
-        - name: Install/Config Zramswap
-          ansible.builtin.import_role:
-            name: zramswap
-          tags:
-            - zram
-
-    - name: Install QDevice for NUC(Proxmox)
-      ansible.builtin.import_tasks:
-        file: tasks/qd/nuc_quorum_install.yml
-      tags:
-        - quorum
-        - proxmox
-
-    - name: "Install Docker"
-      ansible.builtin.import_role:
-        name: docker
-      vars:
-        docker_users:
-          - ansible
-          - hayato
-      tags:
-        - docker
-
-    - name: "Installing Services for DNS"
-      tags:
-        - dns
-      block:
-        - name: "Setup dnsmasq as resolve hayaworld.home"
-          ansible.builtin.import_role:
-            name: dns
-
-        - name: "Setup Upstream DNS Server with pihole"
-          ansible.builtin.import_role:
-            name: pihole
-          vars:
-            pihole_install_docker: false
-
-    - name: "DHCP Server Configurations"
-      tags:
-        - dhcp
-      block:
-        - name: "Setup Kea DHCP Server"
-          ansible.builtin.import_role:
-            name: dhcp
-          vars:
-            dhcp_info: "{{ dhcp }}"
-
-        - name: "Set Swappiness"
+        - name: "No localbind"
           community.general.ini_file:
             path: "/etc/sysctl.d/00-localbind.conf"
             option: "net.ipv4.ip_nonlocal_bind"
@@ -105,6 +88,16 @@
             no_extra_spaces: true
             mode: "644"
           notify: "localbind sysctl"
+
+        - name: Install/Config Zramswap
+          ansible.builtin.import_role:
+            name: zramswap
+          tags:
+            - zram
+
+        - name: Setup journalctl
+          ansible.builtin.import_tasks:
+            file: tasks/dns/journalctl.yml
 
     - name: "Installing Maintenance Tools"
       tags:
@@ -122,7 +115,7 @@
             tailscale_install_serve_https_port: 443
             tailscale_install_serve_set_path: "/"
             tailscale_install_serve_url: "http://127.0.0.1:80"
-            tailscale_install_args: "--advertise-routes=192.168.88.0/24 --advertise-exit-node --accept-dns=false"
+            tailscale_install_args: "--accept-dns=false"
           tags:
             - tailscale
 
@@ -131,14 +124,6 @@
             file: tasks/zabbix-agent2.yml
           tags:
             - zabbix
-
-        - name: Install SNMPv2
-          ansible.builtin.import_tasks:
-            file: tasks/qd/snmpd.yml
-          vars:
-            ipaddr: "{{ common_hostinfo.ipv4 }}"
-          tags:
-            - snmp
 
         - name: "Configure Rsyslog"
           ansible.builtin.import_role:
@@ -158,6 +143,11 @@
             - apc
             - ups
 
+    - name: "Installing For qd(HW) Tools"
+      when: is_hardware
+      tags:
+        - qd
+      block:
         - name: Scrutiny collector setting
           ansible.builtin.import_role:
             name: scrutiny_collector
@@ -166,3 +156,34 @@
             scrutiny_collector_cron: true
           tags:
             - scrutiny
+
+        - name: Install QDevice for NUC(Proxmox)
+          ansible.builtin.import_tasks:
+            file: tasks/qd/nuc_quorum_install.yml
+          tags:
+            - quorum
+            - proxmox
+
+        - name: Install SNMPv2
+          ansible.builtin.import_tasks:
+            file: tasks/qd/snmpd.yml
+          vars:
+            ipaddr: "{{ common_hostinfo.ipv4 }}"
+          tags:
+            - snmp
+
+        - name: "Setup Tailscale Endpoint (for HW)"
+          ansible.builtin.import_role:
+            name: tailscale_install
+          vars:
+            tailscale_install_tags:
+              - gw
+              - dns
+            tailscale_install_serve: true
+            tailscale_install_funnel: false
+            tailscale_install_serve_https_port: 443
+            tailscale_install_serve_set_path: "/"
+            tailscale_install_serve_url: "http://127.0.0.1:80"
+            tailscale_install_args: "--advertise-routes=192.168.88.0/24 --advertise-exit-node --accept-dns=false"
+          tags:
+            - tailscale

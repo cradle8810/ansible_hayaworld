@@ -7,13 +7,6 @@
     docker_users:
       - root
 
-- name: "Stop and remove systemd-resolved.service"
-  ansible.builtin.systemd_service:
-    name: systemd-resolved.service
-    state: stopped
-    enabled: false
-    masked: true
-
 - name: "Create DNSmasq config dir"
   ansible.builtin.file:
     path: "/root/dnsmasq"

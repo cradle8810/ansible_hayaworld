@@ -270,7 +270,7 @@ subnet:
 
 outer_dns_servers:
   ipv4:
-    - addr: 192.168.88.148
-      port: 53
+    - addr: 192.168.88.100
+      port: 5353
     - addr: 192.168.88.200
       port: 5353
