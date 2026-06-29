@@ -36,5 +36,7 @@
       dest: "/root/dnsmasq/hayaworld_hosts"
     - src: "root/dnsmasq/docker-compose.yml.j2"
       dest: "/root/dnsmasq/docker-compose.yml"
+    - src: "root/dnsmasq/Dockerfile"
+      dest: "/root/dnsmasq/Dockerfile"
   notify:
     - "Restart dnsmasq"

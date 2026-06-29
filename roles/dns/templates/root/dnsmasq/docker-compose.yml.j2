@@ -1,6 +1,8 @@
 services:
   dnsmasq:
-    image: dockurr/dnsmasq
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: dnsmasq
     ports:
       - "53:53/udp"
