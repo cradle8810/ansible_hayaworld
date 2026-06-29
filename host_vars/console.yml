@@ -94,6 +94,6 @@ docker_config:
       size: 28
   dns:
     - 192.168.88.100
-    - 192.168.88.150
+    - 192.168.88.200
 
 docker_btrfs: true
