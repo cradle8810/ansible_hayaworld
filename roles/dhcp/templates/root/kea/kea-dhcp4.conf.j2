@@ -1,7 +1,7 @@
 {
 "Dhcp4": {
   "interfaces-config": {
-    "interfaces": ["{{ dhcp_info.interface }}"],
+    "interfaces": [ "*" ],
     "dhcp-socket-type": "raw",
     "outbound-interface": "use-routing"
   },
@@ -41,11 +41,11 @@
 
   "hooks-libraries": [
     {
-      "library": "{{ dhcp.lib_base }}/libdhcp_lease_cmds.so",
+      "library": "/usr/lib/kea/hooks/libdhcp_lease_cmds.so",
       "parameters": { }
     },
     {
-      "library": "{{ dhcp.lib_base }}/libdhcp_ha.so",
+      "library": "/usr/lib/kea/hooks/libdhcp_ha.so",
       "parameters": {
         "high-availability": [ {
           "this-server-name": "{{ dhcp_info.me.name }}",
@@ -95,7 +95,7 @@
         "name": "kea-dhcp4",
         "output_options": [
             {
-                "output": "syslog:local7",
+                "output": "stdout",
                 "pattern": "%D{{ '{%' }}Y-%m-%d %H:%M:%S.%q} %-5p [%c/%i.%t] %m\n"
             }
         ],
