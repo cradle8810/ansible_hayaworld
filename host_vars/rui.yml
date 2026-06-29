@@ -9,7 +9,6 @@ dnsmasq_logs_log_facility: local5
 dnsmasq_logs_log_to: "log.hayaworld.home"
 
 dhcp:
-  interface: "{{ rui_info.interface }}"
   me:
     name: "rui"
     ipaddr: "{{ rui_info.ipv4 }}"
@@ -114,7 +113,12 @@ docker_config:
   ip6tables: true
   userland-proxy: false
   dns:
-    - 192.168.88.100
-    - 192.168.88.200
+    - 202.232.2.3
+    - 202.232.2.2
   fixed-cidr-v6: "fd56:1011:9fca::/64"
   bip: "172.18.8.1/24"
+  log-driver: "syslog"
+  log-opts:
+    syslog-address: "unixgram:///dev/log"
+    tag: "{% raw %}{{.Name}}{% endraw %}"
+    syslog-format: "rfc3164"
