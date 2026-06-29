@@ -1,0 +1,20 @@
+---
+services:
+  kea:
+    image: docker.cloudsmith.io/isc/docker/kea-dhcp4
+    container_name: kea-dhcp4-server
+    network_mode: host
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+    restart: unless-stopped
+    volumes:
+      - /root/kea:/etc/kea:ro
+      - type: tmpfs
+        target: /var/lib/kea
+        tmpfs:
+          size: 50M
+
+networks:
+  default:
+    enable_ipv6: true

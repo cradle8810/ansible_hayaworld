@@ -104,7 +104,6 @@ dhcp:
     name: "qd"
     ipaddr: "{{ qd_info.ipv4 }}"
   search_domain: "hayaworld.home"
-  lib_base: "/usr/lib/x86_64-linux-gnu/kea/hooks"
   peer4:
     - name: "qd"
       url: "http://{{ qd_info.ipv4 }}:8080/"
@@ -130,3 +129,20 @@ dhcp:
     gw: "{{ subnet.gw4 }}"
     dns: "{{ qd_info.ipv4 }},{{ rui_info.ipv4 }}"
     lease_db: "/var/lib/kea/kea-leases4.csv"
+
+docker_drive_is_opt_docker: false
+docker_btrfs: true
+docker_config:
+  ipv6: true
+  ip6tables: true
+  userland-proxy: false
+  dns:
+    - 202.232.2.3
+    - 202.232.2.2
+  fixed-cidr-v6: "fdee:2e8b:0087::/64"
+  bip: "172.18.10.1/24"
+  log-driver: "syslog"
+  log-opts:
+    syslog-address: "unixgram:///dev/log"
+    tag: "{% raw %}{{.Name}}{% endraw %}"
+    syslog-format: "rfc3164"

@@ -1,43 +1,31 @@
 ---
-- name: "Kea DHCP / Gather Installed Packages"
-  ansible.builtin.package_facts:
-    manager: auto
+- name: "Install Docker"
+  when: docker_install
+  ansible.builtin.import_role:
+    name: docker
+  vars:
+    docker_users:
+      - root
 
-- name: "Kea DHCP / Install Kea DHCPv4 Server"
-  ansible.builtin.apt:
-    name: "kea-dhcp4-server"
-    state: present
-    update_cache: true
-  notify:
-    - "Restart kea-dhcpv4"
-  when: not 'kea-dhcp4-server' in ansible_facts.packages
+- name: "Create Kea-DHCP config dir"
+  ansible.builtin.file:
+    path: "/root/kea"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
 
-- name: "Kea DHCP / Copy DHCPv4 Config"
+- name: "Copy configuration files"
   ansible.builtin.template:
-    src: templates/etc/kea/kea-dhcp4.conf.j2
-    dest: /etc/kea/kea-dhcp4.conf
+    src: "templates/{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: root
     mode: '0644'
+  loop:
+    - src: "root/kea/kea-dhcp4.conf.j2"
+      dest: "/root/kea/kea-dhcp4.conf"
+    - src: "root/kea/docker-compose.yml.j2"
+      dest: "/root/kea/docker-compose.yml"
   notify:
-    - "Restart kea-dhcpv4"
-
-- name: "Kea DHCP / Make firectory for lease file"
-  ansible.builtin.file:
-    path: "/var/lib/kea"
-    state: directory
-    owner: "_kea"
-    group: "_kea"
-    mode: '0755'
-  notify:
-    - "Restart kea-dhcpv4"
-
-- name: "Kea DHCP /Mount tmpfs for lease file"
-  ansible.posix.mount:
-    src: "tmpfs"
-    path: "/var/lib/kea"
-    opts: "defaults"
-    fstype: tmpfs
-    state: mounted
-  notify:
-    - "Restart kea-dhcpv4"
+    - "Restart kea"
