@@ -1,11 +1,7 @@
 ---
 - name: Install Docker
-  ansible.builtin.import_role:
+  ansible.builtin.include_role:
     name: docker
-  vars:
-    docker_drive_is_opt_docker: true
-  tags:
-    - docker
 
 - name: "Configure Zabbix"
   notify: "Up docker-compose"
