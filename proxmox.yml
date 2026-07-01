@@ -68,6 +68,6 @@
 
     - name: Zabbix Agent Config
       ansible.builtin.import_tasks:
-        file: tasks/proxmox/zabbix-agent2.yml
+        file: tasks/zabbix-agent2.yml
       tags:
         - zabbix

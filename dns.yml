@@ -119,6 +119,20 @@
           tags:
             - tailscale
 
+        - name: Add zabbix.hayaworld.home entry to hosts(5)
+          ansible.builtin.lineinfile:
+            path: /etc/hosts
+            regexp: '^{{ z.ipv4 | replace(match, replace) }}'
+            line: "{{ z.ipv4 }} {{ z.shortname }} {{ z.hostname }}"
+            state: present
+            mode: "644"
+          vars:
+            z: "{{ network | selectattr('shortname', 'eq', 'zabbix') | first }}"
+            match: '.'
+            replace: '\.'
+          tags:
+            - zabbix
+
         - name: Install Zabbix agent
           ansible.builtin.import_tasks:
             file: tasks/zabbix-agent2.yml
