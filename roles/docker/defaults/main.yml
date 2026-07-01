@@ -1,3 +1,6 @@
 ---
+# docker_btrfs will be deplicated
 docker_drive_is_opt_docker: false
 docker_btrfs: false
+docker_drive_fstype: btrfs
+docker_drive_opts: "defaults,compress=zstd:1"

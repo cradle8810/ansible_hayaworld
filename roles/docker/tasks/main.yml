@@ -16,8 +16,8 @@
       ansible.posix.mount:
         src: "UUID={{ docker_drive_uuid }}"
         path: "/opt/docker"
-        opts: "defaults,compress=zstd:1"
-        fstype: btrfs
+        opts: "{{ docker_drive_opts }}"
+        fstype: "{{ docker_drive_fstype }}"
         state: mounted
 
     - name: Create Docker Mount dir
@@ -73,7 +73,7 @@
     name: geerlingguy.docker
 
 - name: "Disable CoW if btrfs"
-  when: docker_btrfs and docker_drive_is_opt_docker
+  when: (docker_btrfs and docker_drive_is_opt_docker) or docker_drive_fstype == 'btrfs'
   ansible.builtin.command:
     cmd: "chattr +C /opt/docker"
   register: retval
