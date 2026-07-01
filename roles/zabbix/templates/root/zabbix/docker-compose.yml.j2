@@ -41,6 +41,7 @@ services:
       ZBX_TRENDCACHESIZE: 128M
       ZBX_HISTORYCACHESIZE: 128M
       ZBX_HISTORYINDEXCACHESIZE: 128M
+      ZBX_STARTPINGERS: 10
     depends_on:
       db:
         condition: service_healthy
