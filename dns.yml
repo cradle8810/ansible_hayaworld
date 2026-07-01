@@ -37,6 +37,7 @@
             docker_users:
               - ansible
               - hayato
+            docker_btrfs: false
           tags:
             - docker
 
