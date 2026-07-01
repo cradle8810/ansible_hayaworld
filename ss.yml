@@ -49,3 +49,9 @@
         name: zramswap
       tags:
         - zram
+
+    - name: Install Zabbix agent
+      ansible.builtin.import_tasks:
+        file: tasks/zabbix-agent2.yml
+      tags:
+        - zabbix
