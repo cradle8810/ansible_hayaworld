@@ -5,18 +5,20 @@ services:
     volumes:
       - /opt/data/mongodb:/data/db
 
-  # Graylog requires Opensearch 2.0.0. The latest version doesn't work with it.
+  # Graylog requires Opensearch 3.0.0. The latest version doesn't work with it.
   opensearch:
-    image: "opensearchproject/opensearch:2.0.0"
+    image: "opensearchproject/opensearch:2.19.5"
     restart: always
     environment:
       - "OPENSEARCH_INITIAL_ADMIN_PASSWORD={{ graylog_opensearch_initial_admin_password }}"
-      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m -XX:-UseContainerSupport -Dopensearch.set.netty.runtime.available.processors=false -Dopensearch.monitoring.enabled=false -XX:+IgnoreUnrecognizedVMOptions"
       - "bootstrap.memory_lock=true"
       - "discovery.type=single-node"
       - "action.auto_create_index=false"
       - "plugins.security.disabled=true"
       - "path.repo=/usr/share/opensearch/backup"
+      - DISABLE_INSTALL_DEMO_CONFIG=true
+      - JAVA_TOOL_OPTIONS="-XX:-UseContainerSupport -Dopensearch.set.netty.runtime.available.processors=false"
     ports:
       - "9200:9200"
     ulimits:
@@ -29,9 +31,11 @@ services:
     volumes:
       - /opt/data/opensearch:/usr/share/opensearch/data
       - backup_opensearch:/usr/share/opensearch/backup
+    security_opt:
+      - seccomp:unconfined
 
   graylog:
-    image: "graylog/graylog:7.0"
+    image: "graylog/graylog:7.1.4"
     depends_on:
       mongodb:
         condition: service_started

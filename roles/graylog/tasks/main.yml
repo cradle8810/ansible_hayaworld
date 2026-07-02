@@ -1,4 +1,12 @@
 ---
+- name: Install Docker
+  ansible.builtin.include_role:
+    name: docker
+  vars:
+    docker_drive_is_opt_docker: false
+    docker_users:
+      - hayato
+
 - name: Graylog Configurations
   block:
     - name: Make Project Directory
@@ -58,6 +66,18 @@
         mode: "644"
       notify:
         - "Reload sysctl"
+
+    - name: "Configure GRUB CMDLINE for enabling cgroup v1"
+      community.general.ini_file:
+        path: /etc/default/grub
+        option: "GRUB_CMDLINE_LINUX_DEFAULT"
+        value: '"SYSTEMD_CGROUP_ENABLE_LEGACY_FORCE=1 systemd.unified_cgroup_hierarchy=0"'
+        state: present
+        no_extra_spaces: true
+        mode: "644"
+      notify:
+        - "Run update-grub"
+        - "Run update-initramfs"
 
 - name: Backup Configurations
   block:
