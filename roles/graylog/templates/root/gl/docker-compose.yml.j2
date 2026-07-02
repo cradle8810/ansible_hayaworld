@@ -1,6 +1,6 @@
 services:
   mongodb:
-    image: "mongo:8.2.3-noble"
+    image: "mongo:latest"
     restart: always
     volumes:
       - /opt/data/mongodb:/data/db
@@ -50,16 +50,16 @@ services:
     volumes:
       - /opt/data/graylog:/usr/share/graylog/data
 
-  backup_mongodb:
-    image: docker:cli
-    depends_on:
-      mongodb:
-        condition: service_started
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./backup-mondodb.sh:/usr/local/bin/backup-mondodb.sh:ro
-      - backup_mongodb:{{ graylog_backup_dest }}
-    entrypoint: ["/bin/sh", "/usr/local/bin/backup-mondodb.sh"]
+#  backup_mongodb:
+#    image: docker:cli
+#    depends_on:
+#      mongodb:
+#        condition: service_started
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock:ro
+#      - ./backup-mondodb.sh:/usr/local/bin/backup-mondodb.sh:ro
+#      - backup_mongodb:{{ graylog_backup_dest }}
+#    entrypoint: ["/bin/sh", "/usr/local/bin/backup-mondodb.sh"]
 
   backup_opensearch:
     image: alpine/curl
