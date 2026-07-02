@@ -132,6 +132,8 @@
       ansible.builtin.import_role:
         name: borg
       vars:
+        borg_hour: "18"
+        borg_minute: "40"
         borg_device: "/mnt/backup/Service_Backups/console"
         borg_sources:
           - src: /home
