@@ -21,7 +21,7 @@
         state: mounted
 
     - name: "Disable CoW if btrfs"
-      when: docker_btrfs or docker_drive_fstype == 'btrfs')
+      when: docker_btrfs or docker_drive_fstype == 'btrfs'
       ansible.builtin.command:
         cmd: "chattr +C /opt/docker"
       register: retval
