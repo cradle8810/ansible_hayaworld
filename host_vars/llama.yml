@@ -17,11 +17,11 @@ firewall:
       - name: "llama from service line"
         proto: "tcp"
         src: "192.168.88.0/24"
-        port: '80'
+        port: '8080'
       - name: "llama from ISP Shared"
         proto: "tcp"
         src: "100.64.0.0/10"
-        port: '80'
+        port: '8080'
       - name: "Tika from service line"
         proto: "tcp"
         src: "192.168.88.0/24"
@@ -49,9 +49,6 @@ docker_config:
     - 192.168.88.200
   fixed-cidr-v6: "fdd8:9532:d5e1::1/64"
   bip: "172.18.7.1/24"
-
-docker_btrfs: true
-docker_drive_uuid: "8ef3f125-188b-4662-bfca-699a71a20d15"
 
 zramswap_swappiness: 10
 zramswap_percent: 20

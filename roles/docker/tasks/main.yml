@@ -20,6 +20,13 @@
         fstype: "{{ docker_drive_fstype }}"
         state: mounted
 
+    - name: "Disable CoW if btrfs"
+      when: docker_btrfs or docker_drive_fstype == 'btrfs')
+      ansible.builtin.command:
+        cmd: "chattr +C /opt/docker"
+      register: retval
+      changed_when: retval.rc == 0
+
     - name: Create Docker Mount dir
       ansible.builtin.file:
         path: "{{ item }}"
@@ -67,17 +74,16 @@
     mode: '0644'
   notify: "Restart docker"
   when: docker_config is defined
+  register: config_update
+
+- name: "Apt update"
+  when: config_update.changed # noqa: no-handler
+  ansible.builtin.apt:
+    update_cache: true
 
 - name: Install Docker(ce)
   ansible.builtin.include_role:
     name: geerlingguy.docker
-
-- name: "Disable CoW if btrfs"
-  when: (docker_btrfs and docker_drive_is_opt_docker) or (docker_btrfs and docker_drive_fstype == 'btrfs')
-  ansible.builtin.command:
-    cmd: "chattr +C /opt/docker"
-  register: retval
-  changed_when: retval.rc == 0
 
 - name: "Set IPv6 Routing"
   community.general.ini_file:

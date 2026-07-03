@@ -1,0 +1,30 @@
+---
+- name: Install Docker
+  ansible.builtin.include_role:
+    name: docker
+  vars:
+    docker_users:
+      - hayato
+
+- name: "Configure llama-swap"
+  tags:
+    - set
+  block:
+    - name: "Install and Configure tika"
+      block:
+        - name: "Mkdir for tika docker-compose"
+          ansible.builtin.file:
+            path: "/home/hayato/tika"
+            state: directory
+            owner: hayato
+            group: hayato
+            mode: '0755'
+
+        - name: "Put tika docker-compose"
+          ansible.builtin.copy:
+            src: "templates/home/hayato/tika/docker-compose.yml"
+            dest: "/home/hayato/tika/docker-compose.yml"
+            owner: hayato
+            group: hayato
+            mode: '0644'
+          notify: "Up llama"
