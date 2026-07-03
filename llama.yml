@@ -73,11 +73,20 @@
       ansible.builtin.git:
         repo: "{{ item.repo }}"
         dest: "{{ item.dest }}"
+        update: false
       loop:
         - repo: "https://github.com/ggml-org/llama.cpp.git"
           dest: "/home/hayato/Source/llama.cpp"
         - repo: "https://github.com/mostlygeek/llama-swap.git"
           dest: "/home/hayato/Source/llama-swap"
+
+    - name: "Put build script"
+      ansible.builtin.copy:
+        src: "templates/llama/home/hayato/Source/llama.cpp/build.sh"
+        dest: "/home/hayato/Source/llama.cpp/build.sh"
+        owner: hayato
+        group: hayato
+        mode: '0640'
 
     - name: "Setup Tailscale Endpoint"
       ansible.builtin.include_role:
