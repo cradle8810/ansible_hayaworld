@@ -32,38 +32,63 @@
         - igpu
         - vulkan
 
-    - name: "Install Vim"
+    - name: "Install Tools"
       ansible.builtin.apt:
-        pkg: vim
+        pkg:
+          - vim
+          - lsof
+          - nvtop
+          - vulkan-tools
+          - rsync
         state: present
         update_cache: true
 
-    - name: "Install llama"
+    - name: "Install tika"
       ansible.builtin.import_role:
-        name: llama_swap
+        name: tika
       vars:
-        docker_drive_is_opt_docker: true
-        docker_btrfs: false
-        docker_drive_fstype: ext4
-        docker_drive_opts: "defaults,noatime,async"
-        docker_drive_uuid: "8ef3f125-188b-4662-bfca-699a71a20d15"
-        docker_users:
-          - hayato
+        docker_drive_is_opt_docker: false
       tags:
-        - llama
+        - tika
 
-    - name: "Install BorgBackup and Configuration Backup"
-      ansible.builtin.import_role:
-        name: borg
-      vars:
-        borg_device: "/mnt/backup/Service_Backups/llama-swap"
-        borg_sources:
-          - src: llama_models
-            dest: llama_models
-          - src: /home/hayato/llama
-            dest: llama
+    - name: Create Docker Mount dir
+      ansible.builtin.file:
+        path: "/opt/models"
+        state: directory
+        owner: hayato
+        group: hayato
+        mode: '0755'
+
+    - name: "Mount Skylark / Mount skylark"
+      ansible.posix.mount:
+        src: "UUID=8ef3f125-188b-4662-bfca-699a71a20d15"
+        path: "/opt/models"
+        opts: "defaults,noatime,async"
+        fstype: ext4
+        state: mounted
+
+    - name: "Clone llama-swap from GitHub" # noqa: latest
+      ansible.builtin.git:
+        repo: https://github.com/mostlygeek/llama-swap.git
+        dest: /home/hayato/Source/llama-swap
+
+    - name: "Setup Tailscale Endpoint"
+      ansible.builtin.include_role:
+        name: tailscale_install
+        apply:
+          tags:
+            - tailscale
       tags:
-        - borg
+        - tailscale
+      vars:
+        tailscale_install_tags:
+          - ai
+        tailscale_install_serve: true
+        tailscale_install_funnel: true
+        tailscale_install_serve_https_port: 443
+        tailscale_install_serve_set_path: "/"
+        tailscale_install_serve_url: "http://localhost:8080"
+        tailscale_install_args: "--accept-dns=false"
 
     - name: Install Zabbix agent
       ansible.builtin.import_tasks:
