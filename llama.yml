@@ -32,19 +32,6 @@
         - igpu
         - vulkan
 
-    - name: "Install Tools"
-      ansible.builtin.apt:
-        pkg:
-          - vim
-          - lsof
-          - nvtop
-          - vulkan-tools
-          - rsync
-          - build-essential
-          - cmake
-        state: present
-        update_cache: true
-
     - name: "Install tika"
       ansible.builtin.import_role:
         name: tika
@@ -53,40 +40,58 @@
       tags:
         - tika
 
-    - name: Create Docker Mount dir
-      ansible.builtin.file:
-        path: "/opt/models"
-        state: directory
-        owner: hayato
-        group: hayato
-        mode: '0755'
+    - name: "Build llamas"
+      tags:
+        - llama
+      block:
+        - name: Create Model Mount dir
+          ansible.builtin.file:
+            path: "/opt/models"
+            state: directory
+            owner: hayato
+            group: hayato
+            mode: '0755'
 
-    - name: "Mount Skylark / Mount skylark"
-      ansible.posix.mount:
-        src: "UUID=8ef3f125-188b-4662-bfca-699a71a20d15"
-        path: "/opt/models"
-        opts: "defaults,noatime,async"
-        fstype: ext4
-        state: mounted
+        - name: "Mount Skylark / Mount skylark"
+          ansible.posix.mount:
+            src: "UUID=8ef3f125-188b-4662-bfca-699a71a20d15"
+            path: "/opt/models"
+            opts: "defaults,noatime,async"
+            fstype: ext4
+            state: mounted
 
-    - name: "Clone llama-swap from GitHub" # noqa: latest
-      ansible.builtin.git:
-        repo: "{{ item.repo }}"
-        dest: "{{ item.dest }}"
-        update: false
-      loop:
-        - repo: "https://github.com/ggml-org/llama.cpp.git"
-          dest: "/home/hayato/Source/llama.cpp"
-        - repo: "https://github.com/mostlygeek/llama-swap.git"
-          dest: "/home/hayato/Source/llama-swap"
+        - name: "Install Tools"
+          ansible.builtin.apt:
+            pkg:
+              - vim
+              - lsof
+              - nvtop
+              - vulkan-tools
+              - rsync
+              - build-essential
+              - cmake
+              - ccache
+            state: present
+            update_cache: true
 
-    - name: "Put build script"
-      ansible.builtin.copy:
-        src: "templates/llama/home/hayato/Source/llama.cpp/build.sh"
-        dest: "/home/hayato/Source/llama.cpp/build.sh"
-        owner: hayato
-        group: hayato
-        mode: '0755'
+        - name: "Clone llama-swap from GitHub" # noqa: latest
+          ansible.builtin.git:
+            repo: "{{ item.repo }}"
+            dest: "{{ item.dest }}"
+            update: false
+          loop:
+            - repo: "https://github.com/ggml-org/llama.cpp.git"
+              dest: "/home/hayato/Source/llama.cpp"
+            - repo: "https://github.com/mostlygeek/llama-swap.git"
+              dest: "/home/hayato/Source/llama-swap"
+
+        - name: "Put build script"
+          ansible.builtin.copy:
+            src: "templates/llama/home/hayato/Source/llama.cpp/build.sh"
+            dest: "/home/hayato/Source/llama.cpp/build.sh"
+            owner: hayato
+            group: hayato
+            mode: '0755'
 
     - name: "Setup Tailscale Endpoint"
       ansible.builtin.include_role:
