@@ -18,7 +18,7 @@ OLLAMA_HOST=0.0.0.0:11434
 
 # OpenAI
 ENABLE_OPENAI_API=true
-OPENAI_API_BASE_URL="http://llama.{{ tailscale_domain }}/v1"
+OPENAI_API_BASE_URL="https://llama.{{ tailscale_domain }}/v1"
 
 # AIO Client
 AIOHTTP_CLIENT_TIMEOUT=''
@@ -47,7 +47,7 @@ CHUNK_OVERLAP=50
 CHUNK_SIZE=1000
 ENABLE_RAG_HYBRID_SEARCH_ENRICHED_TEXTS=false
 RAG_HYBRID_BM25_WEIGHT=0.5
-RAG_OLLAMA_BASE_URL="http://ollama.{{ tailscale_domain }}:11434"
+RAG_OLLAMA_BASE_URL="https://ollama.{{ tailscale_domain }}:11434"
 RAG_TEXT_SPLITTER=character
 ENABLE_RAG_HYBRID_SEARCH=true
 ENABLE_QUERIES_CACHE=true
@@ -60,7 +60,7 @@ RAG_EMBEDDING_CONCURRENT_REQUESTS=1
 RAG_EMBEDDING_ENGINE=openai
 RAG_EMBEDDING_MODEL="ruri-v3:310m"
 RAG_EMBEDDING_TIMEOUT=''
-RAG_OPENAI_API_BASE_URL="http://llama.{{ tailscale_domain }}/v1"
+RAG_OPENAI_API_BASE_URL="https://llama.{{ tailscale_domain }}/v1"
 RAG_EMBEDDING_OPENAI_BATCH_SIZE="8192"
 
 # RAG-Vector DB
@@ -80,10 +80,10 @@ RAG_RERANKING_MODEL="japanese-bge-reranker-v2-m3-v1"
 RAG_TOP_K_RERANKER=8
 RAG_TOP_K=20
 RAG_RELEVANCE_THRESHOLD=0.2
-RAG_EXTERNAL_RERANKER_URL="http://llama.{{ tailscale_domain }}/v1/reranking"
+RAG_EXTERNAL_RERANKER_URL="https://llama.{{ tailscale_domain }}/v1/reranking"
 
 # RAG-tika
-TIKA_SERVER_URL="http://ollama.{{ tailscale_domain }}:9998"
+TIKA_SERVER_URL="https://llama.{{ tailscale_domain }}:9998"
 CONTENT_EXTRACTION_ENGINE=tika
 
 # Web
