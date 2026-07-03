@@ -40,6 +40,8 @@
           - nvtop
           - vulkan-tools
           - rsync
+          - build-essential
+          - cmake
         state: present
         update_cache: true
 
@@ -69,8 +71,13 @@
 
     - name: "Clone llama-swap from GitHub" # noqa: latest
       ansible.builtin.git:
-        repo: https://github.com/mostlygeek/llama-swap.git
-        dest: /home/hayato/Source/llama-swap
+        repo: "{{ item.repo }}"
+        dest: "{{ item.dest }}"
+      loop:
+        - repo: "https://github.com/ggml-org/llama.cpp.git"
+          dest: "/home/hayato/Source/llama.cpp"
+        - repo: "https://github.com/mostlygeek/llama-swap.git"
+          dest: "/home/hayato/Source/llama-swap"
 
     - name: "Setup Tailscale Endpoint"
       ansible.builtin.include_role:
