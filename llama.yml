@@ -86,7 +86,7 @@
         dest: "/home/hayato/Source/llama.cpp/build.sh"
         owner: hayato
         group: hayato
-        mode: '0640'
+        mode: '0755'
 
     - name: "Setup Tailscale Endpoint"
       ansible.builtin.include_role:
