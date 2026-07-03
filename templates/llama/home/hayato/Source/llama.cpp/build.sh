@@ -9,4 +9,4 @@ VULKAN_SDK=/opt/vulkan/x86_64 cmake -B build \
   -DVulkan_LIBRARY=/opt/vulkan/x86_64/lib/VulkanLoader/lib/libvulkan.solibvulkan.so \
   -DVulkan_INCLUDE_DIR=/opt/vulkan/x86_64/include
 
-cmake --build build --config Release
+cmake --build build --config Release -j $(nproc)
