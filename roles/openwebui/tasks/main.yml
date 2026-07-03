@@ -4,6 +4,7 @@
     name: docker
 
 - name: "Open WebUI Setup"
+  notify: "Up webui"
   tags:
     - set
   block:
@@ -40,6 +41,7 @@
           dest: "/root/webui/environment.txt"
 
 - name: "Qdrant Setup"
+  notify: "Up qdrant"
   tags:
     - qdrant
   block:
