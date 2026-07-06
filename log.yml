@@ -38,8 +38,8 @@
           ansible.posix.mount:
             src: "UUID={{ graylog_drive_uuid }}"
             path: "/opt/data"
-            opts: "defaults,compress=zstd:3"
-            fstype: btrfs
+            opts: "defaults,noatime,async"
+            fstype: ext4
             state: mounted
 
     - name: "Install and Configure Graylog"

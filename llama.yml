@@ -41,6 +41,14 @@
     - name: "Install llama"
       ansible.builtin.import_role:
         name: llama_swap
+      vars:
+        docker_drive_is_opt_docker: true
+        docker_btrfs: false
+        docker_drive_fstype: ext4
+        docker_drive_opts: "defaults,noatime,async"
+        docker_drive_uuid: "8ef3f125-188b-4662-bfca-699a71a20d15"
+        docker_users:
+          - hayato
       tags:
         - llama
 

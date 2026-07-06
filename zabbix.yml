@@ -22,9 +22,16 @@
         common_pkg: "{{ apt }}"
         common_install_users: true
 
-    - name: Common Settings
+    - name: Install Zabbix
       ansible.builtin.import_role:
         name: zabbix
+      vars:
+        docker_drive_is_opt_docker: true
+        docker_btrfs: false
+        docker_drive_fstype: ext4
+        docker_drive_opts: "defaults,noatime,async"
+      tags:
+        - zabbix
 
     - name: APC UPS Settings
       ansible.builtin.import_role:
@@ -58,7 +65,7 @@
         tailscale_install_funnel: true
         tailscale_install_serve_https_port: 443
         tailscale_install_serve_set_path: "/"
-        tailscale_install_serve_url: "http://127.0.0.1:8443"
+        tailscale_install_serve_url: "http://127.0.0.1:8080"
       tags:
         - tailscale
 
