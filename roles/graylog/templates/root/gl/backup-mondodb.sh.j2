@@ -1,7 +1,0 @@
-#!/bin/sh
-
-BACKUP_DIR="{{ graylog_backup_dest }}"
-DATE=$(date +%Y%m%d_%H%M)
-
-# Mongodump
-docker exec gl-mongodb-1 mongodump --archive > ${BACKUP_DIR}/mongodb/mongodb_${DATE}.archive

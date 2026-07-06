@@ -51,6 +51,21 @@
         - graylog
         - rsyslog
 
+    - name: "Install BorgBackup and Configuration Backup"
+      ansible.builtin.import_role:
+        name: borg
+      vars:
+        borg_device: "/mnt/backup/Service_Backups/graylog"
+        borg_sources:
+          - src: /opt/data/mongodb
+            dest: mongodb
+          - src: /opt/data/graylog
+            dest: graylog
+          - src: /opt/data/opensearch
+            dest: opensearch
+      tags:
+        - borg
+
     - name: APC UPS Settings
       ansible.builtin.import_role:
         name: apcupsd

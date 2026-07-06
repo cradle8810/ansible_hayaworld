@@ -86,34 +86,6 @@
         name: "nfs-common"
         state: present
 
-    - name: Put Backup Script
-      ansible.builtin.template:
-        src: "templates/root/gl/{{ item.src }}"
-        dest: "{{ graylog_project_root }}/{{ item.dest }}"
-        owner: root
-        group: root
-        mode: '0700'
-      loop:
-        - src: backup-mondodb.sh.j2
-          dest: backup-mondodb.sh
-        - src: backup-opensearch.j2
-          dest: backup-opensearch.sh
-      notify: "Restart cron"
-
-    - name: Set crontab for backup
-      ansible.builtin.cron:
-        name: "{{ item.name }}"
-        minute: "15"
-        job: "{{ item.job }}"
-        cron_file: dump-logs
-        user: root
-      loop:
-        - name: "Dump MongoDB"
-          job: "cd /root/gl && docker compose run --rm backup_mongodb"
-        - name: "Dump Opensearch"
-          job: "cd /root/gl && docker compose run --rm backup_opensearch"
-      notify: "Restart cron"
-
     - name: Check is there backup path on Opensearch
       ansible.builtin.stat:
         path: "{{ graylog_data_root }}/opensearch_backup_configured"
