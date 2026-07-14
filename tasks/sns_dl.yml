@@ -97,13 +97,6 @@
     - item.username != 'ansible'
   no_log: true
 
-- name: Download twitter-loader
-  ansible.builtin.unarchive:
-    src: "https://github.com/mmpx12/twitter-media-downloader/releases/download/v1.14.2/twitter-media-downloader-v1.14.2-linux-amd64.tar.gz"
-    dest: /opt/bin/
-    remote_src: true
-    mode: "0755"
-
 - name: Install instaloader
   ansible.builtin.pip:
     name: "git+https://github.com/instaloader/instaloader@v4.15.2"
