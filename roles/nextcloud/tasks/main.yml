@@ -42,5 +42,6 @@
     - tailscale
 
 - name: "Install iGPU Drivers"
+  when: nextcloud_i915_driver_install
   ansible.builtin.import_tasks:
     file: tasks/igpu.yml
