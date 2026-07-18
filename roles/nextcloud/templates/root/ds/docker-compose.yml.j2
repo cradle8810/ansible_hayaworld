@@ -15,7 +15,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
       - OVERWRITEPROTOCOL=https
-      - OVERWRITEHOST=ds.{{ nextcloud_domain }}
+      - OVERWRITEHOST={{ nextcloud_hostname }}.{{ nextcloud_domain }}
       - NEXTCLOUD_ADDITIONAL_APKS=imagemagick ffmpeg intel-media-driver libva-utils mesa-vulkan-intel xf86-video-intel mesa-utils mesa opencl
       - NEXTCLOUD_ADDITIONAL_PHP_EXTENSIONS=imagick exif
       - NEXTCLOUD_ENABLE_DRI_DEVICE=true

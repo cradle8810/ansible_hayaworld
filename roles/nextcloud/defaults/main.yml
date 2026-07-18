@@ -5,3 +5,5 @@ nextcloud_nfs_dest: "/mnt/nextcloud"
 nextcloud_i915_driver_url: "{{ igpu_driver.url }}"
 nextcloud_i915_driver_dest: "{{ igpu_driver.dest }}"
 nextcloud_i915_driver_checksum: "{{ igpu_driver.checksum }}"
+
+nextcloud_i915_driver_install: true

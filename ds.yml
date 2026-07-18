@@ -26,7 +26,15 @@
       ansible.builtin.import_role:
         name: nextcloud
       vars:
+        nextcloud_i915_driver_install: true
+        nextcloud_hostname: ds
         docker_drive_is_opt_docker: true
+        docker_btrfs: false
+        docker_drive_fstype: ext4
+        docker_drive_opts: "defaults,noatime,async"
+        docker_drive_uuid: "397a73b4-c584-4a22-a093-15df469b5360"
+        docker_users:
+          - hayato
       tags:
         - nextcloud
 

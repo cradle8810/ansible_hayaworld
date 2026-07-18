@@ -48,6 +48,7 @@
     mode: '0600'
 
 - name: "GPU / Install i915 Driver"
+  when: nextcloud_i915_driver_install
   ansible.builtin.apt:
     deb: "{{ nextcloud_i915_driver_dest }}"
     state: present

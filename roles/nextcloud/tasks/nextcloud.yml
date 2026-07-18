@@ -68,7 +68,7 @@
   block:
     - name: "Initialize Directories (NextCloud)"
       ansible.builtin.file:
-        path: "/root/ds/"
+        path: "/root/{{ nextcloud_hostname }}/"
         state: directory
         owner: root
         group: root
@@ -77,7 +77,7 @@
     - name: "Put NextCould AIO Docker Compose"
       ansible.builtin.template:
         src: templates/root/ds/docker-compose.yml.j2
-        dest: /root/ds/docker-compose.yml
+        dest: /root/{{ nextcloud_hostname }}/docker-compose.yml
         owner: root
         group: root
         mode: '0644'
@@ -87,7 +87,7 @@
     name: "Set crontab for run cron.php"
     minute: "*/5"
     job: "docker exec --user www-data nextcloud-aio-nextcloud php -f /var/www/html/cron.php"
-    cron_file: ds-nextcloud-cron_php
+    cron_file: "{{ nextcloud_hostname }}-nextcloud-cron_php"
     user: root
   notify: "Restart cron"
   tags:
@@ -99,7 +99,7 @@
     minute: "50"
     hour: "*/6"
     job: "docker exec -it nextcloud-aio-nextcloud php occ files:scan --all > /dev/null"
-    cron_file: ds-nextcloud-cron_files_scan_all
+    cron_file: "{{ nextcloud_hostname }}-nextcloud-cron_files_scan_all"
     user: root
   notify: "Restart cron"
   tags:
