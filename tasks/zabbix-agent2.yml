@@ -25,7 +25,7 @@
     - option: "Server"
       value: "zabbix.hayaworld.home"
     - option: "ServerActive"
-      value: "zabbix.hayaworld.home"
+      value: "{{ common_hostinfo.shortname }}.hayaworld.home"
     - option: "Hostname"
       value: "{{ common_hostinfo.shortname }}.hayaworld.home"
     - option: "AllowKey"

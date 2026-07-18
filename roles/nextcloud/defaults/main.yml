@@ -7,3 +7,5 @@ nextcloud_i915_driver_dest: "{{ igpu_driver.dest }}"
 nextcloud_i915_driver_checksum: "{{ igpu_driver.checksum }}"
 
 nextcloud_i915_driver_install: true
+
+nextcloud_version: "20260409_094910"

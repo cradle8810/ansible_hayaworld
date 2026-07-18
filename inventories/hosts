@@ -1,8 +1,9 @@
 [all]
 ai ansible_user=ansible ansible_host=ai.hayaworld.home
-llama ansible_user=ansible ansible_host=llama.hayaworld.home
+bs ansible_user=ansible ansible_host=bs.hayaworld.home
 console ansible_user=ansible ansible_host=console.hayaworld.home
 ds ansible_user=ansible ansible_host=192.168.88.123
+llama ansible_user=ansible ansible_host=llama.hayaworld.home
 iso ansible_user=ansible ansible_host=iso.hayaworld.home
 log ansible_user=ansible ansible_host=log.hayaworld.home
 macbook ansible_user=hayato

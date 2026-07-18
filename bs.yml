@@ -1,0 +1,72 @@
+---
+- name: Play for NextCloud (BS)
+  hosts: bs
+  remote_user: root
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - host_vars/networks.yml
+
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+
+  tasks:
+    - name: Common Settings
+      ansible.builtin.import_role:
+        name: common
+      vars:
+        common_firewall: "{{ firewall }}"
+        common_pkg: "{{ apt }}"
+        common_install_users: true
+
+    - name: "Install Nextcloud"
+      ansible.builtin.import_role:
+        name: nextcloud
+      vars:
+        nextcloud_version: "20260515_145717"
+        nextcloud_i915_driver_install: false
+        nextcloud_hostname: bs
+        nextcloud_nfs_src: "/mnt/backup/Service_Backups/bs"
+        docker_drive_is_opt_docker: true
+        docker_btrfs: false
+        docker_drive_fstype: ext4
+        docker_drive_opts: "defaults,noatime,async"
+        docker_drive_uuid: "397a73b4-c584-4a22-a093-15df469b5360"
+        docker_users:
+          - hayato
+      tags:
+        - nextcloud
+
+    - name: APC UPS Settings
+      ansible.builtin.import_role:
+        name: apcupsd
+      vars:
+        apcupsd_role: "slave"
+        apcupsd_timeout: 60
+      tags:
+        - apc
+        - ups
+
+    - name: "Configure Rsyslog"
+      ansible.builtin.import_role:
+        name: rsyslog_client
+      vars:
+        rsyslog_client_additional_actions: "{{ rsyslog.rsyslog_client_additional_actions }}"
+        rsyslog_client_journald_persistent: false
+      tags:
+        - rsyslog
+
+    - name: Install Zabbix agent
+      ansible.builtin.import_tasks:
+        file: tasks/zabbix-agent2.yml
+      tags:
+        - zabbix
+
+    - name: Install/Config Zramswap
+      ansible.builtin.import_role:
+        name: zramswap
+      tags:
+        - zram

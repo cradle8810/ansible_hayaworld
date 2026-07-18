@@ -1,7 +1,7 @@
 services:
   nextcloud:
     container_name: nextcloud-aio-mastercontainer
-    image: ghcr.io/nextcloud-releases/all-in-one:20260409_094910
+    image: ghcr.io/nextcloud-releases/all-in-one:{{ nextcloud_version }}
     restart: always
     init: true
     user: root
