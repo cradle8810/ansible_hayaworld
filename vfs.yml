@@ -1,6 +1,6 @@
 ---
-- name: Play for NextCloud (BS)
-  hosts: bs
+- name: Play for NextCloud (VFS)
+  hosts: vfs
   remote_user: root
   gather_facts: true
   become: true
@@ -27,9 +27,9 @@
         name: nextcloud
       vars:
         nextcloud_version: "20260515_145717"
-        nextcloud_i915_driver_install: false
-        nextcloud_hostname: bs
-        nextcloud_nfs_src: "/mnt/backup/Service_Backups/bs"
+        nextcloud_i915_driver_install: true
+        nextcloud_hostname: vfs
+        nextcloud_nfs_src: "/mnt/backup/Service_Backups/vfs"
         docker_drive_is_opt_docker: true
         docker_btrfs: false
         docker_drive_fstype: ext4

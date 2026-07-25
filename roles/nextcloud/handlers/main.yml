@@ -1,7 +1,7 @@
 ---
 - name: "Start NextCloud Docker Compose"
   community.docker.docker_compose_v2:
-    project_src: /root/ds/
+    project_src: /root/{{ nextcloud_hostname }}
     state: present
   listen: "Exec NextCloud"
 

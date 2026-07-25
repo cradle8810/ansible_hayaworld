@@ -1,10 +1,9 @@
 [all]
 ai ansible_user=ansible ansible_host=ai.hayaworld.home
-bs ansible_user=ansible ansible_host=bs.hayaworld.home
 console ansible_user=ansible ansible_host=console.hayaworld.home
 ds ansible_user=ansible ansible_host=192.168.88.123
-llama ansible_user=ansible ansible_host=llama.hayaworld.home
 iso ansible_user=ansible ansible_host=iso.hayaworld.home
+llama ansible_user=ansible ansible_host=llama.hayaworld.home
 log ansible_user=ansible ansible_host=log.hayaworld.home
 macbook ansible_user=hayato
 scanner ansible_user=ansible ansible_host=scanner.hayaworld.home
@@ -12,6 +11,7 @@ searxng ansible_user=ansible ansible_host=searxng.hayaworld.home
 skylark ansible_user=hayato ansible_host=192.168.88.10
 ss ansible_user=ansible ansible_host=ss.hayaworld.home
 terminal ansible_user=ansible ansible_host=terminal.hayaworld.home
+vfs ansible_user=ansible ansible_host=vfs.hayaworld.home
 
 [dns]
 qd ansible_user=ansible ansible_host=192.168.88.200

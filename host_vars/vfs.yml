@@ -1,4 +1,5 @@
 apt:
+  - cifs-utils
   - cron
   - nfs-common
 
