@@ -96,8 +96,8 @@
 - name: "Set crontab for run file rescan"
   ansible.builtin.cron:
     name: "Set crontab for run file rescan"
-    minute: "50"
-    hour: "*/4"
+    minute: "{{ nextcloud_fullscan_minute }}"
+    hour: "{{ nextcloud_fullscan_hour }}"
     job: "docker exec -it --user www-data nextcloud-aio-nextcloud php occ files:scan --all"
     cron_file: "{{ nextcloud_hostname }}-nextcloud-cron_files_scan_all"
     user: root

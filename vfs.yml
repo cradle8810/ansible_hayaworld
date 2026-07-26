@@ -30,6 +30,8 @@
         nextcloud_i915_driver_install: true
         nextcloud_hostname: vfs
         nextcloud_nfs_src: "/mnt/backup/Service_Backups/vfs"
+        nextcloud_fullscan_minute: "50"
+        nextcloud_fullscan_hour: "1"
         docker_drive_is_opt_docker: true
         docker_btrfs: false
         docker_drive_fstype: ext4
