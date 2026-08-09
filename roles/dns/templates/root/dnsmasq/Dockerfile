@@ -3,6 +3,7 @@ FROM ubuntu:26.04
 RUN apt update && \
     apt install -y --no-install-recommends \
       dnsmasq \
+      dnsutils \
     && \
     apt clean && \
     rm -fr /var/cache/apt
