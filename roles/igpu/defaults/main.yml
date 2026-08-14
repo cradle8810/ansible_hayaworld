@@ -3,9 +3,9 @@ igpu_i915_driver_dest: "{{ igpu_driver.dest }}"
 igpu_i915_driver_checksum: "{{ igpu_driver.checksum }}"
 
 igpu_vulkan_install: false
-igpu_vulkan_sdk_url: "https://sdk.lunarg.com/sdk/download/1.4.350.1/linux/vulkansdk-linux-x86_64-1.4.350.1.tar.xz"
+igpu_vulkan_sdk_url: "https://sdk.lunarg.com/sdk/download/1.4.357.1/linux/vulkansdk-linux-x86_64-1.4.357.1.tar.xz"
 igpu_vulkan_sdk_filename: "{{ (igpu_vulkan_sdk_url | urlsplit('path')) | basename }}"
-igpu_vulkan_sdk_sha256: "6cce33c7e5383814150c5041820769d93c65a1fd883002e5949b067045a07daa"
+igpu_vulkan_sdk_sha256: "4b41e3b30e8aedaa5dac7c136561ab463eb316a25a54e2c6245f2c299ea1fb85"
 igpu_vulkan_sdk_basepath: "/opt/vulkan"
 
 igpu_kernel_install: false
