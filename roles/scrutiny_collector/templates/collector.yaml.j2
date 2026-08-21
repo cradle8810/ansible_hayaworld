@@ -6,7 +6,8 @@ api:
   endpoint: "http://{{ scrutiny_collector_server_ipaddr }}:8080"
 
 {% if scrutiny_collector_device is defined %}
-{{ scrutiny_collector_device | to_yaml }}
+devices:
+{{ scrutiny_collector_device | to_yaml | indent(2, first=true)}}
 {% endif %}
 
 commands:
