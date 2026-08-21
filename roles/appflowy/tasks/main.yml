@@ -41,6 +41,15 @@
         group: root
         mode: '0755'
 
+    - name: "Git clone from GitHub"
+      ansible.builtin.git:
+        repo: "{{ item.repo }}"
+        dest: "{{ item.dest }}"
+        update: false
+      loop:
+        - repo: "https://github.com/AppFlowy-IO/AppFlowy-Cloud"
+          dest: "/root/appflowy"
+
     - name: "Copy configuration files"
       ansible.builtin.template:
         src: "templates/{{ item.src }}"
@@ -53,10 +62,8 @@
           dest: "/root/appflowy/.env"
         - src: "root/appflowy/docker-compose.yml.j2"
           dest: "/root/appflowy/docker-compose.yml"
-        - src: "root/appflowy/init.sql"
-          dest: "/root/appflowy/init.sql"
-        - src: "root/appflowy/nginx.conf"
-          dest: "/root/appflowy/nginx.conf"
+#        - src: "root/appflowy/init.sql"
+#          dest: "/root/appflowy/init.sql"
       notify:
         - "Restart Appflowy" 
 
