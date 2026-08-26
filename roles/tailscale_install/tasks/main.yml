@@ -15,6 +15,18 @@
     - option: "net.ipv6.conf.all.forwarding"
       value: "1"
 
+- name: "Funnel usage check"
+  block:
+    - name: "Add tailscale funnel tag since this node will use tailscale funnel (Yes)"
+      ansible.builtin.set_fact:
+        tailscale_real_tags: "{{ tailscale_install_tags + ['funnel'] }}"
+      when: tailscale_install_funnel
+
+    - name: "This node don't use tailscale funnel"
+      ansible.builtin.set_fact:
+        tailscale_real_tags: "{{ tailscale_install_tags }}"
+      when: not tailscale_install_funnel
+
 - name: "Setup Tailscale Endpoint for console"
   when: not ansible_check_mode
   ansible.builtin.import_role:
@@ -23,7 +35,7 @@
     tailscale_authkey: "{{ tailscale_install_client_secret }}"
     tailscale_args: "{{ tailscale_install_args }}"
     tailscale_oauth_ephemeral: false
-    tailscale_tags: "{{ tailscale_install_tags }}"
+    tailscale_tags: "{{ tailscale_real_tags }}"
 
 - name: "Setup Tailscale Serve"
   when:
