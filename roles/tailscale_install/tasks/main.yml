@@ -53,7 +53,32 @@
       changed_when: retval.rc == 0
       when:
         - tailscale_serve_retval.rc == 0
-      notify: "Run funnel"
+
+- name: "Setup Tailscale Funnel"
+  when:
+    - tailscale_install_serve
+    - tailscale_install_funnel
+    - not ansible_check_mode
+  block:
+    # tailscale_funnel_retval.rc == 0 when not configured
+    - name: "Check Tailscale funnel configured"
+      ansible.builtin.shell:
+        cmd: |
+            set -o pipefail
+            tailscale funnel status | grep 'tailnet only'
+        executable: /bin/bash
+      register: tailscale_funnel_retval
+      changed_when: false
+      failed_when: false
+
+    - name: "Run Tailscale funnel"
+      when:
+        - tailscale_funnel_retval.rc == 0
+      ansible.builtin.command:
+        cmd: |
+          tailscale funnel --bg --https={{ tailscale_install_funnel_external_port }} {{ tailscale_install_serve_url }}
+      register: retval
+      changed_when: retval.rc == 0
 
 - name: "Tailscale Firewall accept"
   community.general.ufw:
