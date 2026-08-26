@@ -1,0 +1,6 @@
+---
+- name: "Start Appflowy Docker Compose"
+  community.docker.docker_compose_v2:
+    project_src: /root/appflowy
+    state: present
+  listen: "Restart Appflowy"

@@ -1,0 +1,90 @@
+---
+- name: Install Docker
+  ansible.builtin.import_role:
+    name: docker
+  vars:
+    docker_users:
+      - root
+
+- name: "Setup Tailscale Endpoint"
+  ansible.builtin.include_role:
+    name: tailscale_install
+    apply:
+      tags:
+        - tailscale
+  vars:
+    tailscale_install_tags:
+      - ds
+    tailscale_install_serve: true
+    tailscale_install_funnel: true
+    tailscale_install_serve_https_port: 443
+    tailscale_install_serve_set_path: "/"
+    tailscale_install_serve_url: "http://127.0.0.1:8081"
+    tailscale_install_args: "--accept-dns=true"
+  tags:
+    - tailscale
+
+- name: "Install iGPU Drivers"
+  when: appflowy_i915_driver_install
+  ansible.builtin.import_role:
+    name: igpu
+
+- name: "Install Appflowy"
+  tags:
+    - config
+  block:
+    - name: "Create docker compose dir"
+      ansible.builtin.file:
+        path: "/root/appflowy"
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: "Git clone from GitHub"
+      ansible.builtin.git:
+        repo: "{{ item.repo }}"
+        dest: "{{ item.dest }}"
+        update: false
+        version: 138462f
+      loop:
+        - repo: "https://github.com/AppFlowy-IO/AppFlowy-Cloud"
+          dest: "/root/appflowy"
+
+    - name: "Copy configuration files"
+      ansible.builtin.template:
+        src: "templates/{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: '0644'
+      loop:
+        - src: "root/appflowy/dev.env.j2"
+          dest: "/root/appflowy/.env"
+        - src: "root/appflowy/docker-compose.yml.j2"
+          dest: "/root/appflowy/docker-compose.yml"
+#        - src: "root/appflowy/init.sql"
+#          dest: "/root/appflowy/init.sql"
+      notify:
+        - "Restart Appflowy"
+
+- name: "Install BorgBackup and Configuration Backup"
+  ansible.builtin.import_role:
+    name: borg
+  vars:
+    borg_device: "/mnt/backup/Service_Backups/appflowy"
+    borg_sources:
+      - src: postgres_data
+        dest: postgres_data
+      - src: minio_data
+        dest: minio_data
+      - src: keyword_index_data
+        dest: keyword_index_data
+    borg_hour: "*/12"
+    borg_minute: "30"
+    borg_keep_hourly: 10
+    borg_keep_daily: 10
+    borg_keep_weekly: 8
+    borg_keep_monthly: 8
+  tags:
+    - borg

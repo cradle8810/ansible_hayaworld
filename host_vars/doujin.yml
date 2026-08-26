@@ -1,0 +1,71 @@
+---
+firewall:
+  policy: deny
+  allow_rules:
+    ipv4:
+      - name: "SSH from service line"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: '22'
+      - name: "Zabbix from Zabbix-server"
+        proto: "tcp"
+        src: "192.168.88.106/24"
+        port: "10050"
+      - name: "Appflowy Gotrue HTTPS(For gotrue)"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: "443"
+      - name: "Appflowy Gotrue HTTPS(From docker)"
+        proto: "tcp"
+        src: "172.21.0.0/16"
+        port: "443"
+      - name: "Appflowy Gotrue"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: "9999"
+      - name: "Appflowy Admin Console"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: "8000"
+      - name: "Appflowy Frontend"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: "3000"
+      - name: "Appflowy Minio API"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: "9000"
+      - name: "Appflowy Minio API (From docker)"
+        proto: "tcp"
+        src: "172.21.0.0/16"
+        port: "9000"
+      - name: "Appflowy minio backend"
+        proto: "tcp"
+        src: "192.168.88.0/24"
+        port: "9001"
+      - name: "Appflowy minio backend (From docker)"
+        proto: "tcp"
+        src: "172.21.0.0/16"
+        port: "9001"
+      - name: "Appflowy Frontend via Tailscale"
+        proto: "tcp"
+        src: "100.64.0.0/10"
+        port: "3000"
+      - name: "Appflowy Admin Console via Tailscale"
+        proto: "tcp"
+        src: "100.64.0.0/10"
+        port: "8000"
+    ipv6:
+      - name: "DHCPv6 Client from service line"
+        proto: "udp"
+        src: "::"
+        port: "546"
+
+docker_config:
+  ipv6: true
+  ip6tables: true
+  userland-proxy: false
+  dns:
+    - 100.100.100.100
+  fixed-cidr-v6: "fd40:8a43:6f4d::1/64"
+  bip: "172.18.12.1/24"
