@@ -37,6 +37,32 @@
     tailscale_oauth_ephemeral: false
     tailscale_tags: "{{ tailscale_real_tags }}"
 
+- name: "Rename when this node's name doesn't the same of hostname"
+  block:
+    # tailscale_serve_retval == 0 when not configured
+    - name: "Check this machine's node name"
+      ansible.builtin.shell:
+        cmd: |
+            set -o pipefail
+            tailscale whoami | grep 'Name' | awk -F':' '{print $2}' | tr -d ' '
+        executable: /bin/bash
+      register: tailscale_nodename_retval
+      changed_when: false
+      failed_when: false
+
+    - name: "Debug"
+      ansible.builtin.debug:
+        msg: "{{ tailscale_nodename_retval }}, {{ common_hostinfo.shortname }}.{{ tailscale_domain }}"
+
+    - name: "Fix this machine's node name"
+      ansible.builtin.command:
+        cmd: >
+          tailscale set --hostname "{{ common_hostinfo.shortname }}"
+      register: retval
+      changed_when: retval.rc == 0
+      when:
+        - tailscale_nodename_retval.stdout != (common_hostinfo.shortname ~ "." ~ tailscale_domain)
+
 - name: "Setup Tailscale Serve"
   when:
     - tailscale_install_serve
