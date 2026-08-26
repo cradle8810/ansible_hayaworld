@@ -46,6 +46,7 @@
         repo: "{{ item.repo }}"
         dest: "{{ item.dest }}"
         update: false
+        version: 138462f
       loop:
         - repo: "https://github.com/AppFlowy-IO/AppFlowy-Cloud"
           dest: "/root/appflowy"
