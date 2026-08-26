@@ -8,6 +8,11 @@
   vars_files:
     - host_vars/networks.yml
 
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+
   tasks:
     - name: "Common / Set Hostinfo"
       ansible.builtin.set_fact:
