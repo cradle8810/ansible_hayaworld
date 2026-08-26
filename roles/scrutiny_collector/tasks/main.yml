@@ -15,9 +15,9 @@
 
 - name: "Download scrutiny-collector"
   ansible.builtin.get_url:
-    url: "https://github.com/AnalogJ/scrutiny/releases/download/v0.9.2/scrutiny-collector-metrics-linux-amd64"
+    url: "https://github.com/AnalogJ/scrutiny/releases/download/v0.9.3/scrutiny-collector-metrics-linux-amd64"
     dest: "{{ scrutiny_collector_install_bin }}/scrutiny-collector"
-    checksum: "sha256:a8f0c8efe23afbae07957fe7ebd29ed6b3aecdf40bc00cc300c042b77b80c851"
+    checksum: "sha256:7be2294470a087083bab66c1fea8e1b4c278920b5c46ab80ed2c0cc8c4c0a2c3"
     owner: root
     group: root
     mode: "0755"

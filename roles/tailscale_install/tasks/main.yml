@@ -15,6 +15,18 @@
     - option: "net.ipv6.conf.all.forwarding"
       value: "1"
 
+- name: "Funnel usage check"
+  block:
+    - name: "Add tailscale funnel tag since this node will use tailscale funnel (Yes)"
+      ansible.builtin.set_fact:
+        tailscale_real_tags: "{{ tailscale_install_tags + ['funnel'] }}"
+      when: tailscale_install_funnel
+
+    - name: "This node don't use tailscale funnel"
+      ansible.builtin.set_fact:
+        tailscale_real_tags: "{{ tailscale_install_tags }}"
+      when: not tailscale_install_funnel
+
 - name: "Setup Tailscale Endpoint for console"
   when: not ansible_check_mode
   ansible.builtin.import_role:
@@ -23,7 +35,33 @@
     tailscale_authkey: "{{ tailscale_install_client_secret }}"
     tailscale_args: "{{ tailscale_install_args }}"
     tailscale_oauth_ephemeral: false
-    tailscale_tags: "{{ tailscale_install_tags }}"
+    tailscale_tags: "{{ tailscale_real_tags }}"
+
+- name: "Rename when this node's name doesn't the same of hostname"
+  block:
+    # tailscale_serve_retval == 0 when not configured
+    - name: "Check this machine's node name"
+      ansible.builtin.shell:
+        cmd: |
+            set -o pipefail
+            tailscale whoami | grep 'Name' | awk -F':' '{print $2}' | tr -d ' '
+        executable: /bin/bash
+      register: tailscale_nodename_retval
+      changed_when: false
+      failed_when: false
+
+    - name: "Debug"
+      ansible.builtin.debug:
+        msg: "{{ tailscale_nodename_retval }}, {{ common_hostinfo.shortname }}.{{ tailscale_domain }}"
+
+    - name: "Fix this machine's node name"
+      ansible.builtin.command:
+        cmd: >
+          tailscale set --hostname "{{ common_hostinfo.shortname }}"
+      register: retval
+      changed_when: retval.rc == 0
+      when:
+        - tailscale_nodename_retval.stdout != (common_hostinfo.shortname ~ "." ~ tailscale_domain)
 
 - name: "Setup Tailscale Serve"
   when:
@@ -53,7 +91,32 @@
       changed_when: retval.rc == 0
       when:
         - tailscale_serve_retval.rc == 0
-      notify: "Run funnel"
+
+- name: "Setup Tailscale Funnel"
+  when:
+    - tailscale_install_serve
+    - tailscale_install_funnel
+    - not ansible_check_mode
+  block:
+    # tailscale_funnel_retval.rc == 0 when not configured
+    - name: "Check Tailscale funnel configured"
+      ansible.builtin.shell:
+        cmd: |
+            set -o pipefail
+            tailscale funnel status | grep 'tailnet only'
+        executable: /bin/bash
+      register: tailscale_funnel_retval
+      changed_when: false
+      failed_when: false
+
+    - name: "Run Tailscale funnel"
+      when:
+        - tailscale_funnel_retval.rc == 0
+      ansible.builtin.command:
+        cmd: |
+          tailscale funnel --bg --https={{ tailscale_install_funnel_external_port }} {{ tailscale_install_serve_url }}
+      register: retval
+      changed_when: retval.rc == 0
 
 - name: "Tailscale Firewall accept"
   community.general.ufw:

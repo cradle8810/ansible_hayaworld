@@ -65,7 +65,7 @@
 #        - src: "root/appflowy/init.sql"
 #          dest: "/root/appflowy/init.sql"
       notify:
-        - "Restart Appflowy" 
+        - "Restart Appflowy"
 
 - name: "Install BorgBackup and Configuration Backup"
   ansible.builtin.import_role:

@@ -5,6 +5,7 @@
   register: retval
   changed_when: retval.rc == 0
   listen: "tailscale sysctl"
+<<<<<<< HEAD
 
 - name: "Run Tailscale funnel"
   when: tailscale_install_funnel
@@ -13,3 +14,5 @@
   listen: "Run funnel"
   register: retval
   changed_when: retval.rc == 0
+=======
+>>>>>>> origin/master
