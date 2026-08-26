@@ -25,6 +25,6 @@
   ansible.posix.mount:
     src: "UUID={{ homedir.UUID }}"
     path: "/home"
-    opts: "defaults,noatime,async"
+    opts: "defaults,noatime"
     fstype: ext4
     state: mounted
