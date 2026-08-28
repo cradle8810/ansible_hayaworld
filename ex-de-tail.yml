@@ -1,0 +1,30 @@
+- name: Play for Tailscale servers on AWS Frankfurt
+  hosts: localhost
+  remote_user: ubuntu
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - host_vars/networks.yml
+
+  handlers:
+    - name: Restart handler tasks
+      ansible.builtin.import_tasks:
+        file: handlers/main.yml
+
+  tasks:
+    - name: Common Settings
+      ansible.builtin.import_role:
+        name: common_aws
+      vars:
+        common_install_users: false
+
+    - name: "Setup Tailscale Endpoint"
+      ansible.builtin.import_role:
+        name: tailscale_install
+      vars:
+        tailscale_install_tags:
+          - gw
+        tailscale_install_args: "--accept-dns=false"
+      tags:
+        - tailscale
