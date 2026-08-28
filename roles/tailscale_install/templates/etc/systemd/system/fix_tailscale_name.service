@@ -1,0 +1,12 @@
+[Unit]
+Description=Fix tailscale hostname
+After=network.target
+
+[Service]
+User=root
+ExecStart=/etc/systemd/system/fix_tailscale_name.sh
+Restart=always
+type=simple
+
+[Install]
+WantedBy=multi-user.target

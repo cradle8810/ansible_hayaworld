@@ -119,3 +119,19 @@
     rule: allow
     interface_in: tailscale0
     proto: any
+
+- name: "Put hostname fix scripts"
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "{{ item.perm }}"
+  loop:
+    - src: "roles/tailscale_install/templates/etc/systemd/system/fix_tailscale_name.sh"
+      dest: "/etc/systemd/system/fix_tailscale_name.sh"
+      perm: "0755"
+    - src: "roles/tailscale_install/templates/etc/systemd/system/fix_tailscale_name.service"
+      dest: "/etc/systemd/system/fix_tailscale_name.service"
+      perm: "0644"
+  notify: "Hostname Fix service Apply"
