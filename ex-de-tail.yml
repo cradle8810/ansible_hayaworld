@@ -1,9 +1,6 @@
 - name: Play for Tailscale servers on AWS Frankfurt
   hosts: localhost
-  remote_user: ubuntu
   gather_facts: true
-  become: true
-  become_flags: "-i"
 
   vars_files:
     - host_vars/networks.yml
