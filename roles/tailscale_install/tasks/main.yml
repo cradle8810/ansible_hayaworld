@@ -50,18 +50,14 @@
       changed_when: false
       failed_when: false
 
-    - name: "Debug"
-      ansible.builtin.debug:
-        msg: "{{ tailscale_nodename_retval }}, {{ common_hostinfo.shortname }}.{{ tailscale_domain }}"
-
     - name: "Fix this machine's node name"
       ansible.builtin.command:
         cmd: >
-          tailscale set --hostname "{{ common_hostinfo.shortname }}"
+          tailscale set --hostname "{{ tailscale_shortname }}"
       register: retval
       changed_when: retval.rc == 0
       when:
-        - tailscale_nodename_retval.stdout != (common_hostinfo.shortname ~ "." ~ tailscale_domain)
+        - tailscale_nodename_retval.stdout != (tailscale_shortname ~ "." ~ tailscale_domain)
 
 - name: "Setup Tailscale Serve"
   when:

@@ -26,5 +26,6 @@
         tailscale_install_tags:
           - gw
         tailscale_install_args: "--accept-dns=false"
+        tailscale_shortname: "ex-de-tail"
       tags:
         - tailscale

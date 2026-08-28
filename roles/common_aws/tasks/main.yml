@@ -1,8 +1,4 @@
 ---
-- name: "Common / Set user facts"
-  ansible.builtin.import_tasks:
-    file: tasks/set-users-facts.yml
-
 - name: "Common / Scale up for nf_conntrack_max"
   ansible.builtin.import_tasks:
     file: tasks/increase-nf_conntrack_max.yml
