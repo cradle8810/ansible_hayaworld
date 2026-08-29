@@ -132,5 +132,6 @@
         borg_exclude_files_list:
           - /source/home/hayato/.cache/thumbnails/
           - /source/home/hayato/.config/google-chrome/Default/Service Worker/
+          - /source/home/hayato/.vscode-server
       tags:
         - borg
