@@ -129,5 +129,8 @@
         borg_sources:
           - src: /home
             dest: home
+        borg_exclude_files_list:
+          - /source/home/hayato/.cache/thumbnails/
+          - /source/home/hayato/.config/google-chrome/Default/Service Worker/
       tags:
         - borg
