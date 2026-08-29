@@ -1,0 +1,3 @@
+{% if borg_exclude_files_list is defined %}
+{{ borg_exclude_files_list | join('\n') }}
+{% endif %}

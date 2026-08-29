@@ -8,6 +8,7 @@ docker compose run --rm \
       --sparse \
       --compression lz4 \
       --list \
+      --exclude-from /root/borgbackup/exclude.txt \
       /target::"archive-{now:%Y-%m-%d-%H%M%S}" \
       /source/*'" \
   borgbackup

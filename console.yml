@@ -109,15 +109,6 @@
       tags:
         - rsyslog
 
-    - name: "Put periodic home dir backup"
-      ansible.builtin.import_tasks:
-        file: tasks/periodic_backup_home.yml
-      vars:
-        nfs_server: "skylark.hayaworld.home"
-        hostname: "{{ common_hostinfo.shortname }}"
-      tags:
-        - backup
-
     - name: Make Started Services
       ansible.builtin.import_tasks:
         file: tasks/service_start.yml
@@ -138,5 +129,9 @@
         borg_sources:
           - src: /home
             dest: home
+        borg_exclude_files_list:
+          - /source/home/hayato/.cache/thumbnails/
+          - /source/home/hayato/.config/google-chrome/Default/Service Worker/
+          - /source/home/hayato/.vscode-server
       tags:
         - borg

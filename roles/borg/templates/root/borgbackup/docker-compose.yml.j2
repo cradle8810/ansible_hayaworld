@@ -4,6 +4,7 @@ services:
     container_name: borgbackup
     volumes:
       - backup-nfs:/target
+      - /root/borgbackup/exclude.txt:/root/borgbackup/exclude.txt
 {% for item in borg_sources %}      - {{ item.src }}:/source/{{ item.dest }}:ro
 {% endfor %}
     profiles:
