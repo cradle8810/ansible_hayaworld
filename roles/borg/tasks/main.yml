@@ -30,6 +30,14 @@
     group: root
     mode: '0755'
 
+- name: "Put BorgBackup exclude file list"
+  ansible.builtin.template:
+    src: "roles/borg/templates/root/borgbackup/exclude.txt.j2"
+    dest: "/root/borgbackup/exclude.txt"
+    owner: root
+    group: root
+    mode: '0600'
+
 - name: "Set crontab"
   ansible.builtin.cron:
     name: "Borg Backup"
