@@ -1,5 +1,7 @@
 - name: Play for Tailscale servers on AWS Frankfurt
   gather_facts: true
+  remote_user: ansible
+  become: true
   hosts: all
 
   vars_files:
