@@ -50,18 +50,14 @@
       changed_when: false
       failed_when: false
 
-    - name: "Debug"
-      ansible.builtin.debug:
-        msg: "{{ tailscale_nodename_retval }}, {{ common_hostinfo.shortname }}.{{ tailscale_domain }}"
-
     - name: "Fix this machine's node name"
       ansible.builtin.command:
         cmd: >
-          tailscale set --hostname "{{ common_hostinfo.shortname }}"
+          tailscale set --hostname "{{ tailscale_shortname }}"
       register: retval
       changed_when: retval.rc == 0
       when:
-        - tailscale_nodename_retval.stdout != (common_hostinfo.shortname ~ "." ~ tailscale_domain)
+        - tailscale_nodename_retval.stdout != (tailscale_shortname ~ "." ~ tailscale_domain)
 
 - name: "Setup Tailscale Serve"
   when:
@@ -123,3 +119,19 @@
     rule: allow
     interface_in: tailscale0
     proto: any
+
+- name: "Put hostname fix scripts"
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "{{ item.perm }}"
+  loop:
+    - src: "roles/tailscale_install/templates/etc/systemd/system/fix_tailscale_name.sh"
+      dest: "/etc/systemd/system/fix_tailscale_name.sh"
+      perm: "0755"
+    - src: "roles/tailscale_install/templates/etc/systemd/system/fix_tailscale_name.service"
+      dest: "/etc/systemd/system/fix_tailscale_name.service"
+      perm: "0644"
+  notify: "Hostname Fix service Apply"

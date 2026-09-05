@@ -1,0 +1,100 @@
+---
+- name: "Common / Scale up for nf_conntrack_max"
+  ansible.builtin.import_tasks:
+    file: tasks/increase-nf_conntrack_max.yml
+
+- name: "Common / Stop Systemd-resolved"
+  ansible.builtin.import_tasks:
+    file: tasks/stop-systemd-resolved.yml
+
+- name: "Common / Locale Settings"
+  block:
+    - name: "Common / Set timezone to Asia/Tokyo"
+      community.general.timezone:
+        name: Asia/Tokyo
+
+    - name: "Common / Install locale en_US"
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: true
+        cache_valid_time: "{{ common_apt.cache_valid_time }}"
+      loop:
+        - locales-all
+        - language-pack-en
+      when: common_install_langs
+
+    - name: "Common / Set locale as en_US.UTF-8"
+      community.general.locale_gen:
+        name: "en_US.UTF-8"
+        state: present
+
+- name: "Common / NTP Settings"
+  ansible.builtin.import_role:
+    name: geerlingguy.ntp
+  vars:
+    ntp_package: chrony
+    ntp_config_file: /etc/chrony/chrony.conf
+    ntp_cron_daemon: chrony
+    ntp_daemon: chrony
+    ntp_enabled: true
+    ntp_timezone: "Asia/Tokyo"
+    ntp_servers: "{{ common_ntp.ntp_servers }}"
+    ntp_tinker_panic: true
+    ntp_manage_config: true
+  tags:
+    - ntp
+
+- name: "Common / Apt install"
+  ansible.builtin.import_tasks:
+    file: tasks/apt.yml
+
+- name: "Common / Users Settings"
+  when: common_install_users
+  tags:
+    - users
+  block:
+    - name: "Common / Usermod"
+      ansible.builtin.import_tasks:
+        file: tasks/usermod.yml
+      tags:
+        - users
+
+    - name: "Common / Put authorized Key for hayato"
+      ansible.builtin.import_tasks:
+        file: tasks/authorized_keys.yml
+      tags:
+        - users
+
+    - name: "Common / Increase User file descriptors"
+      ansible.builtin.import_tasks:
+        file: tasks/increase-fd.yml
+      tags:
+        - users
+
+- name: "Common / Hayaworld Root CA install"
+  ansible.builtin.import_tasks:
+    file: tasks/hayaworld_rootCA.yml
+  tags:
+    - ca
+
+- name: "Common / Stop Unused services (Common)"
+  ansible.builtin.import_tasks:
+    file: tasks/stop-services.yml
+  tags:
+    - stop_services
+
+- name: "Common / Configure Restart When Kernel Panic happened"
+  when:
+    ansible_facts.virtualization_type != 'lxc'
+  ansible.builtin.import_tasks:
+    file: tasks/restart_when_panic.yml
+  tags:
+    - panic
+
+- name: "Common / Install Cron"
+  ansible.builtin.apt:
+    name: cron
+    state: present
+    update_cache: true
+    cache_valid_time: "{{ common_apt.cache_valid_time }}"
