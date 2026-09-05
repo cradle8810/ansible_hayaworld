@@ -1,6 +1,6 @@
 - name: Play for Tailscale servers on AWS Frankfurt
-  hosts: localhost
   gather_facts: true
+  hosts: all
 
   vars_files:
     - host_vars/networks.yml
