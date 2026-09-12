@@ -52,9 +52,9 @@
       vars:
         borg_device: "/mnt/backup/Service_Backups/openwebui"
         borg_sources:
-          - src: webui_open-webui
+          - src: /var/lib/docker/volumes/webui_open-webui
             dest: webui_open-webui
-          - src: qdrant_qdrant_storage
+          - src: /var/lib/docker/volumes/qdrant_qdrant_storage
             dest: qdrant_qdrant_storage
         borg_hour: "*/12"
         borg_minute: "30"
