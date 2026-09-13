@@ -22,6 +22,12 @@
         common_pkg: "{{ apt }}"
         common_install_users: true
 
+    - name: "Install Affine"
+      ansible.builtin.import_role:
+        name: affine
+      tags:
+        - affine
+
     - name: APC UPS Settings
       ansible.builtin.import_role:
         name: apcupsd

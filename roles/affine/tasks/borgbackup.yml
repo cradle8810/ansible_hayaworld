@@ -1,0 +1,21 @@
+---
+- name: "Install BorgBackup and Configuration Backup"
+  ansible.builtin.import_role:
+    name: borg
+  vars:
+    borg_device: "/mnt/backup/Service_Backups/affine"
+    borg_sources:
+      - src: /var/lib/docker/volumes/affine_affine_storage
+        dest: affine_affine_storage
+      - src: /var/lib/docker/volumes/affine_manticore
+        dest: affine_manticore
+      - src: /var/lib/docker/volumes/affine_postgress
+        dest: affine_postgress
+    borg_hour: "*/6"
+    borg_minute: "30"
+    borg_keep_hourly: 20
+    borg_keep_daily: 10
+    borg_keep_weekly: 8
+    borg_keep_monthly: 8
+  tags:
+    - borg

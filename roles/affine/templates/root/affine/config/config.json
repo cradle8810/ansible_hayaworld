@@ -1,0 +1,14 @@
+{
+  "$schema": "https://github.com/toeverything/affine/releases/latest/download/config.schema.json",
+  "server": {
+    "name": "Hayaworld Doujin DB",
+    "externalUrl": "https://{{ affine_external_fqdn }}:3000"
+  },
+  "copilot": {
+    "enabled": false,
+    "byok": {
+      "enabled": false,
+      "allowCustomEndpoint": false
+    }
+  }
+}

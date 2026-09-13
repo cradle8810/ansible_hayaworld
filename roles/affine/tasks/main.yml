@@ -1,0 +1,71 @@
+---
+- name: Install Docker
+  ansible.builtin.import_role:
+    name: docker
+  vars:
+    docker_drive_fstype: ext4
+    docker_drive_is_opt_docker: true
+    docker_drive_opts: "defaults,noatime,async"
+    docker_drive_uuid: "397a73b4-c584-4a22-a093-15df469b5360"
+    docker_users:
+      - hayato
+
+- name: "Setup Tailscale Endpoint"
+  ansible.builtin.include_role:
+    name: tailscale_install
+    apply:
+      tags:
+        - tailscale
+  vars:
+    tailscale_install_tags:
+      - ds
+      - funnel
+    tailscale_install_serve: true
+    tailscale_install_funnel: true
+    tailscale_install_serve_https_port: 443
+    tailscale_install_serve_set_path: "/"
+    tailscale_install_serve_url: "http://127.0.0.1:3000"
+    tailscale_install_args: "--accept-dns=true"
+  tags:
+    - tailscale
+
+- name: "Install Affine"
+  tags:
+    - config
+  block:
+    - name: "Create docker compose dir"
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+      loop:
+        - "/root/affine"
+        - "/root/affine/config"
+
+    - name: "Copy configuration files"
+      ansible.builtin.template:
+        src: "templates/{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: "{{ item.mode }}"
+      loop:
+        - src: "root/affine/docker-compose.yml"
+          dest: "/root/affine/docker-compose.yml"
+          mode: '0644'
+        - src: "root/affine/config/config.json"
+          dest: "/root/affine/config/config.json"
+          mode: '0644'
+        - src: "root/affine/enable-feature.sh"
+          dest: "/root/affine/enable-feature.sh"
+          mode: '0755'
+      notify:
+        - "Restart Affine"
+
+- name: "Initialize Borgbackup"
+  ansible.builtin.include_tasks:
+    file: tasks/borgbackup.yml
+  tags:
+    - borg

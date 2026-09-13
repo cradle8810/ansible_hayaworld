@@ -1,0 +1,6 @@
+---
+- name: "Start Affine Docker Compose"
+  community.docker.docker_compose_v2:
+    project_src: /root/affine
+    state: present
+  listen: "Restart Affine"
