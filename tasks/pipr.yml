@@ -5,4 +5,4 @@
     checksum: "{{ pipr.checksum }}"
     dest: /opt/bin/pipr
     mode: "0755"
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_facts['distribution'] == "Ubuntu"

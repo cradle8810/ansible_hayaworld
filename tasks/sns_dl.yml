@@ -11,13 +11,13 @@
     pkg:
       - python3-pip
     cache_valid_time: "{{ apt_cache_valid_time }}"
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_facts['distribution'] == "Ubuntu"
 
 - name: Install pip3 (macOS)
   community.general.homebrew:
     name: pipx
     state: present
-  when: ansible_distribution == "MacOSX"
+  when: ansible_facts['distribution'] == "MacOSX"
 
 - name: Download yt-dlp (Linux)
   ansible.builtin.get_url:
@@ -25,7 +25,7 @@
     dest: /opt/bin/yt-dlp
     checksum: "{{ ytdlp.linux.checksum }}"
     mode: "0755"
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_facts['distribution'] == "Ubuntu"
 
 - name: Install yt-dlp-FixupMtime
   ansible.builtin.pip:
@@ -53,7 +53,7 @@
     group: "{{ item.username }}"
   loop: "{{ user }}"
   when:
-    - ansible_distribution == "Ubuntu"
+    - ansible_facts['distribution'] == "Ubuntu"
     - item.username != 'ansible'
   no_log: true
 
@@ -67,7 +67,7 @@
     follow: false
   loop: "{{ user }}"
   when:
-    - ansible_distribution == "Ubuntu"
+    - ansible_facts['distribution'] == "Ubuntu"
     - item.username != 'ansible'
   no_log: true
 
@@ -80,7 +80,7 @@
     group: "staff"
   loop: "{{ user }}"
   when:
-    - ansible_distribution == "MacOSX"
+    - ansible_facts['distribution'] == "MacOSX"
     - item.username != 'ansible'
   no_log: true
 
@@ -93,7 +93,7 @@
     state: link
   loop: "{{ user }}"
   when:
-    - ansible_distribution == "MacOSX"
+    - ansible_facts['distribution'] == "MacOSX"
     - item.username != 'ansible'
   no_log: true
 
