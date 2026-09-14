@@ -12,4 +12,4 @@
     dest: /opt/bin/packer
     mode: "0755"
     decompress: true
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_facts['distribution'] == "Ubuntu"

@@ -38,7 +38,7 @@
   vars:
     url: "https://dl.winehq.org/wine-builds/ubuntu/"
     key: "/etc/apt/keyrings/winehq.key"
-    os: "{{ ansible_distribution_release }}"
+    os: "{{ ansible_facts['distribution_release'] }}"
 
 - name: "Wine / Install Wine"
   ansible.builtin.apt:

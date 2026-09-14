@@ -9,4 +9,4 @@
     no_extra_spaces: true
     mode: "644"
   notify: "Daemon Reload"
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_facts['distribution'] == "Ubuntu"

@@ -1,7 +1,7 @@
 ---
 - name: "Common / Stop services (24.04)"
   when:
-    - ansible_distribution_release == 'noble'
+    - ansible_facts['distribution_release'] == 'noble'
   ansible.builtin.systemd_service:
     name: "{{ item }}"
     state: stopped
@@ -16,7 +16,7 @@
 
 - name: "Common / Stop services (25.04)"
   when:
-    - ansible_distribution_release == 'plucky'
+    - ansible_facts['distribution_release'] == 'plucky'
   ansible.builtin.systemd_service:
     name: "{{ item }}"
     state: stopped
