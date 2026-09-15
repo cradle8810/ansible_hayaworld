@@ -27,16 +27,12 @@ gui_additional_packages:
   - bleachbit
   - emacs
   - gimp
-  - heif-thumbnailer
-  - libheif1
-  - libheif-examples
-  - libheif-plugin-libde265
-  - libheif-plugin-x265
-  - libheif-plugin-aomdec
-  - libheif-plugin-aomenc
-  - libheif-plugin-dav1d
   - thunderbird
   - wireshark
+  - heif-gdk-pixbuf
+  - libheif-plugin-libde265
+  - libheif-examples
+  - heif-thumbnailer
 
 remove:
   - gnome-power-manager
