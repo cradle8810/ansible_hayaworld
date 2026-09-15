@@ -115,6 +115,7 @@
       changed_when: retval.rc == 0
 
 - name: "Tailscale Firewall accept"
+  when: tailscale_ufw_enable
   community.general.ufw:
     rule: allow
     interface_in: tailscale0

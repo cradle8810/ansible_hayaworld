@@ -25,3 +25,5 @@ tailscale_domain: !vault |
   34343932303231343764653861656166636432646566306165393236613861386333
 
 tailscale_shortname: "{{ common_hostinfo.shortname }}"
+
+tailscale_ufw_enable: true
