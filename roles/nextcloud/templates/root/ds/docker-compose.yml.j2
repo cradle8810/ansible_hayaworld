@@ -18,7 +18,6 @@ services:
       - OVERWRITEHOST={{ nextcloud_hostname }}.{{ nextcloud_domain }}
       - NEXTCLOUD_ADDITIONAL_APKS=imagemagick ffmpeg intel-media-driver libva-utils mesa-vulkan-intel xf86-video-intel mesa-utils mesa opencl
       - NEXTCLOUD_ADDITIONAL_PHP_EXTENSIONS=imagick exif
-      - NEXTCLOUD_ENABLE_DRI_DEVICE=true
       - NEXTCLOUD_MEMORY_LIMIT=3072M
       - NEXTCLOUD_MAX_TIME=36000
       - SKIP_DOMAIN_VALIDATION=true
