@@ -26,7 +26,7 @@
       ansible.builtin.import_role:
         name: nextcloud
       vars:
-        nextcloud_version: "20260825_084538"
+        nextcloud_version: "20260916_075031"
         nextcloud_i915_driver_install: true
         nextcloud_hostname: vfs
         nextcloud_nfs_src: "/mnt/backup/Service_Backups/vfs"

@@ -8,7 +8,7 @@ nextcloud_i915_driver_checksum: "{{ igpu_driver.checksum }}"
 
 nextcloud_i915_driver_install: true
 
-nextcloud_version: "20260825_084538"
+nextcloud_version: "20260916_075031"
 
 nextcloud_fullscan_minute: "50"
 nextcloud_fullscan_hour: "*/4"
