@@ -22,17 +22,19 @@
         common_pkg: "{{ apt }}"
         common_install_users: true
 
-    - name: "Install Appflowy"
+    - name: "Install NocoDB"
       ansible.builtin.import_role:
-        name: appflowy
+        name: nocodb
       vars:
+        docker_drive_is_opt_docker: true
         docker_drive_fstype: ext4
         docker_drive_opts: "defaults,noatime,async"
         docker_drive_uuid: "397a73b4-c584-4a22-a093-15df469b5360"
         docker_users:
           - hayato
+          - ansible
       tags:
-        - appflowy
+        - nocodb
 
     - name: APC UPS Settings
       ansible.builtin.import_role:

@@ -1,0 +1,6 @@
+---
+- name: "Start NocoDB Docker Compose"
+  community.docker.docker_compose_v2:
+    project_src: /root/nocodb
+    state: present
+  listen: "Restart NocoDB"
