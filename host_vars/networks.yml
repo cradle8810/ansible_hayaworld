@@ -195,6 +195,13 @@ network:
     sshuser: runner
     self_org: true
     mtu: 9000
+  - hostname: gs.hayaworld.home
+    interface: enp6s18
+    ipv4: 192.168.88.129
+    shortname: ansible
+    sshuser: runner
+    self_org: true
+    mtu: 9000
   - hostname: terminal.hayaworld.home
     interface: enx6c1ff7023273
     ipv4: 192.168.88.130

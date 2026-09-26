@@ -13,6 +13,7 @@ skylark ansible_user=hayato ansible_host=192.168.88.10
 ss ansible_user=ansible ansible_host=ss.hayaworld.home
 terminal ansible_user=ansible ansible_host=terminal.hayaworld.home
 vfs ansible_user=ansible ansible_host=vfs.hayaworld.home
+gs ansible_user=ansible ansible_host=gs.hayaworld.home
 
 [dns]
 qd ansible_user=ansible ansible_host=192.168.88.200
