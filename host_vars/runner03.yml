@@ -5,8 +5,6 @@ runners:
       github_repo: ansible_hayaworld
     - runner_name: periodic_twitter_dl_03-01
       github_repo: periodic_twitter_dl
-    - runner_name: periodic_backup_03-01
-      github_repo: periodic_backup
     - runner_name: ect03
       github_repo: ect
 

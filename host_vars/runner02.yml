@@ -3,8 +3,6 @@ runners:
   runners:
     - runner_name: ect02
       github_repo: ect
-    - runner_name: periodic_backup_02-01
-      github_repo: periodic_backup
     - runner_name: ansible_hayaworld_02-01
       github_repo: ansible_hayaworld
 
