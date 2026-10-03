@@ -23,14 +23,6 @@
     - name: Install SearXNG
       ansible.builtin.import_role:
         name: searxng
-      vars:
-        docker_drive_is_opt_docker: true
-        docker_btrfs: false
-        docker_drive_fstype: ext4
-        docker_drive_opts: "defaults,noatime,async"
-        docker_drive_uuid: "32bf2d7a-b259-4c7d-bc0d-a4bb8d7d732c"
-        docker_users:
-          - hayato
       tags:
         - searxng
         - search
