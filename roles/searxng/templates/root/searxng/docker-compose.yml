@@ -8,10 +8,28 @@ services:
       - ./config:/etc/searxng
       - data:/var/cache/searxng/
     restart: unless-stopped
+    networks:
+      - default
+      - backend
+
+  valkey:
+    container_name: searxng-valkey
+    image: docker.io/valkey/valkey:9-alpine
+    command: valkey-server --save 30 1 --loglevel warning
+    restart: always
+    volumes:
+      - valkey:/data/
+    networks:
+      - backend
 
 volumes:
   data:
+  valkey:
 
 networks:
   default:
     enable_ipv6: true
+  backend:
+    driver: bridge
+    enable_ipv6: true
+    internal: true
