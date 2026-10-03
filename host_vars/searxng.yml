@@ -29,8 +29,13 @@ firewall:
         port: "3002"
 
 docker_drive_is_opt_docker: true
-docker_btrfs: true
-docker_drive_uuid: "5603a159-0211-4591-8be0-f61ab1007c60"
+docker_btrfs: false
+docker_drive_fstype: ext4
+docker_drive_opts: "defaults,noatime,async"
+docker_drive_uuid: "32bf2d7a-b259-4c7d-bc0d-a4bb8d7d732c"
+docker_users:
+  - hayato
+  - ansible
 docker_config:
   ipv6: true
   ip6tables: true
@@ -40,10 +45,6 @@ docker_config:
     - 192.168.88.200
   fixed-cidr-v6: "fd25:5951:9b0d:1::/64"
   bip: "172.18.5.1/24"
-
-docker_users:
-  - hayato
-  - ansible
 
 borg_device: "/mnt/backup/Service_Backups/searxng"
 borg_sources:

@@ -13,6 +13,8 @@ server:
     Referrer-Policy: no-referrer
   public_instance: false
 
+valkey:
+  url: valkey://valkey:6379/0
 
 doi_resolvers:
   oadoi.org: 'https://oadoi.org/'
@@ -29,7 +31,8 @@ search:
     - html
     - json
   safe_search: 0
-  autocomplete: ""
+  autocomplete: 'google'
+  autocomplete_min: 4
   favicon_resolver: "duckduckgo"
   languages:
     - all
@@ -55,6 +58,10 @@ outgoing:
   pool_maxsize: 10
   enable_http2: true
   max_redirects: 2
+
+plugins:
+  searx.plugins.infinite_scroll.SXNGPlugin:
+    active: true
 
 categories_as_tabs:
   general:
@@ -83,22 +90,6 @@ engines:
     engine: pinterest
     disabled: true
     inactive: true
-
-  - name: aol
-    engine: aol
-    disabled: false
-
-  - name: aol images
-    engine: aol
-    search_type: image
-    categories: [images]
-    disabled: false
-
-  - name: aol videos
-    engine: aol
-    search_type: video
-    categories: [videos]
-    disabled: false
 
   - name: baidu
     engine: baidu
@@ -235,17 +226,6 @@ engines:
 
   - name: photon
     engine: photon
-    disabled: false
-    inactive: false
-
-  - name: pixiv
-    engine: pixiv
-    disabled: false
-    remove_ai_images: true
-    inactive: false
-
-  - name: reddit
-    engine: reddit
     disabled: false
     inactive: false
 
