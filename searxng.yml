@@ -20,7 +20,7 @@
         common_firewall: "{{ firewall }}"
         common_install_users: true
 
-    - name: Install ShortStory Store
+    - name: Install SearXNG
       ansible.builtin.import_role:
         name: searxng
       vars:
