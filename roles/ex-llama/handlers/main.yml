@@ -1,0 +1,14 @@
+---
+- name: "Git clone scripts Apply"
+  ansible.builtin.systemd_service:
+    name: git_glone_llama_sources.service
+    state: restarted
+    enabled: true
+    daemon_reload: true
+  listen: "Git clone scripts Apply"
+
+- name: "Start tika Docker Compose"
+  community.docker.docker_compose_v2:
+    project_src: /opt/ai/sources/tika"
+    state: present
+  listen: "Up tika"

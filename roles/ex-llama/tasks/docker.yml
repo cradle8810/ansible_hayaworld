@@ -1,0 +1,7 @@
+---
+- name: Install Docker
+  ansible.builtin.include_role:
+    name: docker
+  vars:
+    docker_users:
+      - ubuntu

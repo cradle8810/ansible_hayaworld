@@ -1,0 +1,39 @@
+---
+- name: "Mount drive for ai binary and model store"
+  ansible.posix.mount:
+    src: "UUID=91f8b12d-7561-4600-92c1-618e0b7e4943"
+    path: "/opt/ai/mnt"
+    opts: "defaults,noatime"
+    fstype: ext4
+    state: mounted
+
+# Before you need to mount EBS with ext4 formatted to /opt/ai/binaries
+- name: Create Directories for AI tools
+  ansible.builtin.file:
+    path: "/opt/models"
+    state: directory
+    owner: hayato
+    group: hayato
+    mode: '0755'
+  loop:
+    - /opt/ai
+    - /opt/ai/sources
+    - /opt/ai/sources/tika
+    - /opt/ai/mnt/binaries
+    - /opt/ai/mnt/models
+
+- name: Install Docker
+  ansible.builtin.include_role:
+    name: docker
+  vars:
+    docker_users:
+      - ubuntu
+    docker_drive_is_opt_docker: false
+
+- name: Install tika
+  ansible.builtin.import_tasks:
+    file: roles/ex-llama/tasks/tika.yml
+
+- name: Install llama
+  ansible.builtin.import_tasks:
+    file: roles/ex-llama/tasks/llama.yml

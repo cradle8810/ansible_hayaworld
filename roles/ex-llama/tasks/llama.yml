@@ -1,0 +1,39 @@
+---
+- name: "Install Tools"
+  ansible.builtin.apt:
+    pkg:
+      - vim
+      - lsof
+      - nvtop
+      - rsync
+      - build-essential
+      - cmake
+      - ccache
+    state: present
+    update_cache: true
+
+- name: "Put build script"
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: ubuntu
+    group: ubuntu
+    mode: '0755'
+  loop:
+    - src: "roles/ex-llama/templates/opt/ai/llama-build.sh"
+      dest: "/opt/ai/llama-build.sh"
+    - src: "roles/ex-llama/templates/opt/ai/git_clone.sh"
+      dest: "/opt/ai/git_clone.sh"
+
+- name: "Put git clone scripts"
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "{{ item.perm }}"
+  loop:
+    - src: "templates/etc/systemd/system/git_glone_llama_sources.service"
+      dest: "/etc/systemd/system/git_glone_llama_sources.service"
+      perm: "0644"
+  notify: "Git clone scripts Apply"

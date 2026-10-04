@@ -1,0 +1,13 @@
+[Unit]
+Description=Git pull sources
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+ExecStart=/opt/ai/git_clone.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

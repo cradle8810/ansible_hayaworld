@@ -1,0 +1,35 @@
+services:
+  nextcloud:
+    container_name: nextcloud-aio-mastercontainer
+    image: ghcr.io/nextcloud-releases/all-in-one:{{ nextcloud_version }}
+    restart: always
+    init: true
+    user: root
+    privileged: true
+    security_opt:
+      - label:disable
+    ports:
+      - "8080:8080"
+    volumes:
+      - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - OVERWRITEPROTOCOL=https
+      - OVERWRITEHOST={{ nextcloud_hostname }}.{{ nextcloud_domain }}
+      - NEXTCLOUD_ADDITIONAL_APKS=imagemagick ffmpeg intel-media-driver libva-utils mesa-vulkan-intel xf86-video-intel mesa-utils mesa opencl
+      - NEXTCLOUD_ADDITIONAL_PHP_EXTENSIONS=imagick exif
+      - NEXTCLOUD_MEMORY_LIMIT=3072M
+      - NEXTCLOUD_MAX_TIME=36000
+      - SKIP_DOMAIN_VALIDATION=true
+      - APACHE_PORT=11000
+      - APACHE_IP_BINDING=0.0.0.0
+    devices:
+      - /dev/dri:/dev/dri
+
+volumes:
+  nextcloud_aio_mastercontainer:
+    name: nextcloud_aio_mastercontainer
+
+networks:
+  default:
+    enable_ipv6: true

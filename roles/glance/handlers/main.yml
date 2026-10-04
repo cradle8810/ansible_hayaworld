@@ -1,0 +1,41 @@
+---
+- name: "Start NextCloud Docker Compose"
+  community.docker.docker_compose_v2:
+    project_src: /root/{{ nextcloud_hostname }}
+    state: present
+  listen: "Exec NextCloud"
+
+- name: "Start NextCloud Proxy Compose"
+  community.docker.docker_compose_v2:
+    project_src: /root/proxy/
+    state: present
+  listen: "Exec Proxy"
+
+- name: "Run Tailscale funnel"
+  ansible.builtin.debug:
+    msg: |
+      Run That Command on This node:
+       tailscale funnel --bg --https=443 http://localhost:8880
+  listen: "Run funnel"
+  changed_when: true
+
+- name: "Restart and update systemd-logind"
+  ansible.builtin.systemd_service:
+    name: systemd-logind
+    state: restarted
+    daemon_reload: true
+  listen: "Restart systemd-logind"
+
+- name: "Run update-grub"
+  ansible.builtin.command:
+    cmd: update-grub
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "Run update-grub"
+
+- name: "Run update-initramfs"
+  ansible.builtin.command:
+    cmd: update-initramfs -u -k all
+  register: retval
+  changed_when: retval.rc == 0
+  listen: "Run update-initramfs"

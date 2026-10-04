@@ -1,0 +1,17 @@
+---
+- name: "Mkdir for tika docker-compose"
+  ansible.builtin.file:
+    path: "/opt/ai/sources/tika"
+    state: directory
+    owner: ubuntu
+    group: ubuntu
+    mode: '0755'
+
+- name: "Put tika docker-compose"
+  ansible.builtin.copy:
+    src: "templates/opt/ai/sources/tika/docker-compose.yml"
+    dest: "/opt/ai/sources/tika/docker-compose.yml"
+    owner: ubuntu
+    group: ubuntu
+    mode: '0644'
+  notify: "Up tika"

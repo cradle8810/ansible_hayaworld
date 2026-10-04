@@ -1,0 +1,47 @@
+---
+- name: Add user for nextcloud execution
+  ansible.builtin.user:
+    name: "www-data"
+    shell: /bin/false
+    uid: 33
+    group: "www-data"
+    groups:
+      - render
+      - www-data
+    append: true
+    expires: -1
+    password: '!'
+
+- name: Install Docker
+  ansible.builtin.import_role:
+    name: docker
+  vars:
+    docker_users:
+      - root
+
+- name: "Install and Configure NextCloud"
+  ansible.builtin.import_tasks:
+    file: tasks/nextcloud.yml
+
+- name: "Setup Tailscale Endpoint"
+  ansible.builtin.include_role:
+    name: tailscale_install
+    apply:
+      tags:
+        - tailscale
+  vars:
+    tailscale_install_tags:
+      - ds
+    tailscale_install_serve: true
+    tailscale_install_funnel: true
+    tailscale_install_serve_https_port: 443
+    tailscale_install_serve_set_path: "/"
+    tailscale_install_serve_url: "http://127.0.0.1:8880"
+    tailscale_install_args: "--accept-dns=true"
+  tags:
+    - tailscale
+
+- name: "Install iGPU Drivers"
+  when: nextcloud_i915_driver_install
+  ansible.builtin.import_tasks:
+    file: tasks/igpu.yml
