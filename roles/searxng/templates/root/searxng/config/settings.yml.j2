@@ -12,6 +12,7 @@ server:
     X-Robots-Tag: noindex, nofollow
     Referrer-Policy: no-referrer
   public_instance: false
+  limiter: false
 
 valkey:
   url: valkey://valkey:6379/0
@@ -39,7 +40,7 @@ search:
   max_page: 0
 
 ui:
-  default_locale: "ja"
+  default_locale: "ja-JP"
   query_in_title: false
   center_alignment: false
   cache_url: https://web.archive.org/web/
