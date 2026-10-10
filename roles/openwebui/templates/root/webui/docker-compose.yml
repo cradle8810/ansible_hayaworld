@@ -24,10 +24,10 @@ services:
         - Write the title in Japanese.
 
         ### Output:
-        JSON format={ "title"="your concise title here" }
+        {"title"="your concise title here"}
 
         ### Example:
-        JSON format={ "title"="タイトルの例 できるだけ詳しく" }
+        {"title"="タイトルの例 できるだけ詳しく"}
 
         ### Chat History:
         <chat_history>
@@ -45,7 +45,10 @@ services:
         - Prioritize accuracy over specificity
 
         ### Output:
-        JSON format={ "tags"=["tag1", "tag2", "tag3"] }
+        { "tags"=["tag1", "tag2", "tag3"] }
+
+        ### Example:
+        { "tags"=["タグ", "サンプル"] }
 
         ### Chat History:
         <chat_history>
