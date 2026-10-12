@@ -22,12 +22,13 @@ services:
         - Consider the content of the chat so that it can be distinguished from other chats.
         - DON'T USE emojis, quotation marks or special formatting.
         - Write the title in Japanese.
+        - Response must be a JSON object with a \"follow_ups\" key containing an array of strings, no extra text or formatting.
 
         ### Output:
-        {"title"="your concise title here"}
+        {"title": "your concise title here"}
 
         ### Example:
-        {"title"="タイトルの例 できるだけ詳しく"}
+        {"title": "タイトルの例 できるだけ詳しく"}
 
         ### Chat History:
         <chat_history>
@@ -43,12 +44,13 @@ services:
         - If content is too short (less than 3 messages) or too diverse, use only ["General"]
         - Use English only
         - Prioritize accuracy over specificity
+        - Response must be a JSON object with a \"follow_ups\" key containing an array of strings, no extra text or formatting.
 
         ### Output:
-        { "tags"=["tag1", "tag2", "tag3"] }
+        { "tags": ["tag1", "tag2", "tag3"] }
 
         ### Example:
-        { "tags"=["タグ", "サンプル"] }
+        { "tags": ["タグ", "サンプル"] }
 
         ### Chat History:
         <chat_history>
@@ -67,6 +69,7 @@ services:
         - Be concise and focused on composing high-quality search queries, avoiding unnecessary elaboration, commentary, or assumptions.
         - Today's date is: {{CURRENT_DATE}}.
         - Always prioritize providing actionable and broad queries that maximize informational coverage.
+        - Response must be a JSON object with a \"follow_ups\" key containing an array of strings, no extra text or formatting.
 
         ### Output:
         Strictly return in JSON format: 
