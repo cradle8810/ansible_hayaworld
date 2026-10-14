@@ -1,18 +1,18 @@
 #!/bin/sh
+set -e
 
-#rm -fr build
-
-export VULKAN_SDK=/opt/vulkan/x86_64 
+export VULKAN_SDK="/opt/vulkan/x86_64"
+export PATH="${VULKAN_SDK}/bin:${PATH}"
+export LD_LIBRARY_PATH="/opt/vulkan/x86_64/lib/VulkanLoader/lib:${VULKAN_SDK}/lib:${LD_LIBRARY_PATH}"
 
 cmake -B build \
-  -DGGML_VULKAN=1 \
-  -DBUILD_SHARED_LIBS=ON \
-  -DCMAKE_CXX_FLAGS=-fPIC \
-  -DCMAKE_C_FLAGS=-fPIC \
-  -DVulkan_LIBRARY=/opt/vulkan/x86_64/lib/VulkanLoader/lib/libvulkan.so \
-  -DVulkan_INCLUDE_DIR=/opt/vulkan/x86_64/include
+  -DCMAKE_BUILD_TYPE=Release \
+  -DGGML_VULKAN=ON \
+  -DBUILD_SHARED_LIBS=OFF \
+  -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+  -DVulkan_LIBRARY="/opt/vulkan/x86_64/lib/VulkanLoader/lib/libvulkan.so" \
+  -DVulkan_INCLUDE_DIR="${VULKAN_SDK}/include"
 
 cmake --build build --config Release -j $(nproc)
 
-cd build/
-sudo make install
+sudo cmake --install build
