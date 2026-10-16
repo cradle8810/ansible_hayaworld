@@ -41,10 +41,10 @@ services:
         ### Guidelines:
         - Start with high-level domains (e.g., Science, Technology, Philosophy, Arts, Politics, Business, Health, Sports, Entertainment, Education)
         - Consider including relevant subfields/subdomains if they are strongly represented throughout the conversation
-        - If content is too short (less than 3 messages) or too diverse, use only ["General"]
         - Use English only
         - Prioritize accuracy over specificity
-        - Response must be a JSON object with a \"follow_ups\" key containing an array of strings, no extra text or formatting.
+        - Answer MUST contain seven or more tags.
+        - All tags must be one word.
 
         ### Output:
         { "tags": ["tag1", "tag2", "tag3"] }
@@ -54,11 +54,11 @@ services:
 
         ### Chat History:
         <chat_history>
-          {{MESSAGES:END:6}}
+        {{MESSAGES:END:6}}
         </chat_history>
       DEFAULT_QUERY_GENERATION_PROMPT_TEMPLATE: |2
         ### Task:
-        Analyze the chat history to determine the necessity of generating search queries, in the given language. By default, **prioritize generating 1-5 broad and relevant search queries** unless it is absolutely certain that no additional information is required. The aim is to retrieve comprehensive, updated, and valuable information even with minimal uncertainty. If no search is unequivocally needed, return an empty list.
+        Analyze the chat history to determine the necessity of generating search queries, in the given language. By default, **prioritize generating 1-10 broad and relevant search queries** unless it is absolutely certain that no additional information is required. The aim is to retrieve comprehensive, updated, and valuable information even with minimal uncertainty. If no search is unequivocally needed, return an empty list.
 
         ### Guidelines:
         - OUTPUT JSON QUERIES MUST BE JAPANESE. 検索クエリは日本語で必ず返すこと。
@@ -69,7 +69,7 @@ services:
         - Be concise and focused on composing high-quality search queries, avoiding unnecessary elaboration, commentary, or assumptions.
         - Today's date is: {{CURRENT_DATE}}.
         - Always prioritize providing actionable and broad queries that maximize informational coverage.
-        - Response must be a JSON object with a \"follow_ups\" key containing an array of strings, no extra text or formatting.
+        - Answer MUST contain five or more queries.
 
         ### Output:
         Strictly return in JSON format: 
